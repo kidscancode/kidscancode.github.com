@@ -127,7 +127,11 @@ Our Raspberry Pi Kits include everything you need to get started:
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-
+</script>
+<script>
+  $(document).ready(function(){
+    $('.carousel').carousel();
+  });
 </script>
 </body>
 </html>
