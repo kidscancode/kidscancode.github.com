@@ -129,6 +129,10 @@ body {
         color: #909090;
     }
 
+    .img-polaroid {
+        padding: 5px;
+    }
+
     .footer {
       background-color: #77a62b;
       background-image: -moz-linear-gradient(top, #77a62b, #a6c471);
