@@ -133,6 +133,14 @@ body {
         padding: 5px;
     }
 
+    .terms-btn {
+
+    }
+
+    .reg-form {
+      text-align: center;
+    }
+
     .footer {
       background-color: #77a62b;
       background-image: -moz-linear-gradient(top, #77a62b, #a6c471);
