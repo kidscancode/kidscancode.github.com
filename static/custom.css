@@ -201,6 +201,10 @@ body {
               box-shadow: 0 0 0 rgba(0, 105, 214, 0.25);
     }
 
+    .class-list dt {
+      font-size: 18px;
+    }
+
     /* Carousel customization */
     .carousel {
       margin-bottom: 15px;
