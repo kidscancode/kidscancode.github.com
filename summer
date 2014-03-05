@@ -29,7 +29,7 @@
         <ul class="nav pull-right">
           <!-- <li ><a href="/"><i class="icon-home icon-large"></i>Home</a></li>-->
           <li ><a href="classes.html"><i class="icon-lightbulb icon-large"></i>Classes</a></li>
-          <li class="active"><a href="classes.html"><i class="icon-edit icon-large"></i>Sign Up</a></li>
+          <li ><a href="classes.html"><i class="icon-edit icon-large"></i>Sign Up</a></li>
           <li ><a href="blog/"><i class="icon-pencil icon-large"></i>News</a></li>
           <li ><a href="contact.html"><i class="icon-comments icon-large"></i>Contact</a></li>
           <li ><a href="resources.html"><i class="icon-book icon-large"></i>Resources</a></li>
@@ -51,37 +51,13 @@
 <!-- PAGE CONTENT
     ================================================ -->
 
+
 <div class="container">
 <div class="row">
     <div class="span1"></div>
-    <div class="span10 reg-form">
-<script type="text/javascript" src="https://secure.jotformpro.com/jsform/33209395874969"></script>
-<br>
-<br>
-<br>
-<br>
-<br>
-<!-- We're sorry, but the maximum number of students has been reached for this class.  We are exploring the possibility of adding a second session.  If you'd like to be added to the waiting list, please <a href="contact.html">contact us</a>. -->
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+    <div class="span10">
+
+
     </div>
     <div class="span1"></div>
 </div>
