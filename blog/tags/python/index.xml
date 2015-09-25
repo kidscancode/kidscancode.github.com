@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Python on KCC Blog </title>
+      <generator uri="https://gohugo.io">Hugo</generator>
+    <link>/blog/tags/python/</link>
+    <language>en-us</language>
+    
+    
+    <updated>Thu, 24 Sep 2015 12:26:33 PDT</updated>
+    
+    <item>
+      <title>Why Python?</title>
+      <link>/blog/2015/09/whypython/</link>
+      <pubDate>Thu, 24 Sep 2015 12:26:33 PDT</pubDate>
+      
+      <guid>/blog/2015/09/whypython/</guid>
+      <description>
+
+&lt;p&gt;There are a huge number of programming languages out there.  You&amp;rsquo;ve probably heard of one or two, even if you&amp;rsquo;re not a programmer yourself - Java, C++, Swift, etc.  But what are they all about and how do you choose which one to learn?&lt;/p&gt;
+
+&lt;p&gt;There&amp;rsquo;s really not one perfect answer to this question, but personally, I prefer Python for teaching kids for a number of reasons.  I&amp;rsquo;ll go into some of those reasons below, but if I had to boil it down to a few bullet points, they would be these:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;It&amp;rsquo;s great for beginners&lt;/li&gt;
+&lt;li&gt;It&amp;rsquo;s not a &amp;ldquo;teaching&amp;rdquo; language&lt;/li&gt;
+&lt;li&gt;It&amp;rsquo;s very widely used&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;programming-languages-are-tools:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;Programming languages are tools&lt;/h2&gt;
+
+&lt;p&gt;Programming languages can be thought of as tools in a toolbox.  You wouldn&amp;rsquo;t use a hammer to cut a piece of wood, and likewise a programmer will often choose a particular language based on what type of project they&amp;rsquo;re working on, or what the other members of their team may be using.  Most programmers will learn multiple languages over the course of their careers.&lt;/p&gt;
+
+&lt;p&gt;While that may sound daunting, the good news is that programming languages are not like human languages.  Learning Italian does not make it any easier to learn Japanese because the two are completely unrelated.  Programming languages, however, are all very similar in most respects.  Once you&amp;rsquo;ve learned one, the next one will be much easier - so it makes sense to choose a beginner-friendly language for your first.&lt;/p&gt;
+
+&lt;p&gt;Ultimately, learning to code is about learning how to think about problems and how to convince a computer to do what you want it to do.  You have to take a given problem or task and break it down into small manageable pieces that a computer can understand. The actual programming language is secondary, and by far the easier part of the learning process.&lt;/p&gt;
+
+&lt;h2 id=&#34;python-is-great-for-beginners:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;Python is great for beginners&lt;/h2&gt;
+
+&lt;p&gt;Beginners need to start out by doing simple things.  Learning to code is hard enough when you&amp;rsquo;ve never been exposed to it before. The more the language can get out of your way and let you focus on the concepts, the better you&amp;rsquo;ll be able to understand them.  Some languages were just never intended to be for beginners (I&amp;rsquo;m looking at you, Java).&lt;/p&gt;
+
+&lt;p&gt;Python was designed from the start to be a &lt;em&gt;readable&lt;/em&gt; language, which is one of the things that makes it so friendly for beginners.  There are no semicolons or curly brackets to keep track of, so it&amp;rsquo;s easier to look at and comprehend.  Because good formatting is required, it forces the programmer to think about how the code is organized.&lt;/p&gt;
+
+&lt;p&gt;For example, here is the code to print the words &amp;ldquo;Hello, World!&amp;rdquo; to the screen in Python:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Hello, World!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;By comparison, here is what you would need to type for Java:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;HelloWorld&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color: #66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color: #f8f8f2&#34;&gt;System&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Hello, World&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Or this, for C:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt; &lt;span style=&#34;color: #75715e&#34;&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
+ &lt;span style=&#34;color: #75715e&#34;&gt;#include &amp;lt;stdlib.h&amp;gt;&lt;/span&gt;
+
+ &lt;span style=&#34;color: #66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
+ &lt;span style=&#34;color: #f8f8f2&#34;&gt;{&lt;/span&gt;
+     &lt;span style=&#34;color: #f8f8f2&#34;&gt;puts(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Hello World!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;);&lt;/span&gt;
+     &lt;span style=&#34;color: #66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;EXIT_SUCCESS;&lt;/span&gt;
+ &lt;span style=&#34;color: #f8f8f2&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Beginners are not ready for some of the more advanced concepts required to explain what each of those lines of Java or C does, so most beginner classes are forced to gloss over them with &amp;ldquo;just type it and you&amp;rsquo;ll learn why later.&amp;rdquo;  In contrast, in Python it&amp;rsquo;s easy to do easy things.  Especially when teaching children, this is a very important factor.&lt;/p&gt;
+
+&lt;p&gt;As another example, let&amp;rsquo;s look at the loop.  Loops are a very important part of programming; they tell the computer to repeat some code over and over.  Here&amp;rsquo;s how you print &amp;ldquo;hello&amp;rdquo; five times in Python:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;range(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;):&lt;/span&gt;
+    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Versus Java:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;Hello&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color: #66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color: #66d9ef&#34;&gt;for&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;++)&lt;/span&gt;
+            &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
+                &lt;span style=&#34;color: #f8f8f2&#34;&gt;System&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;hello&lt;/span&gt;&lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;);&lt;/span&gt;
+            &lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;The C-style loop syntax (initialize; test; update) is very tricky to get right at first - there&amp;rsquo;s a lot to unpack there.  And don&amp;rsquo;t even get me started on all those curly brackets.&lt;/p&gt;
+
+&lt;h2 id=&#34;but-it-s-not-only-for-beginners:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;But it&amp;rsquo;s not &lt;em&gt;only&lt;/em&gt; for beginners&lt;/h2&gt;
+
+&lt;p&gt;A lot of programming curriculum addresses the friendliness problem by using specialized teaching languages that simplify things for the classroom environment.  The problem with this solution is that it sets a ceiling on how far students can go; when they reach the limits of the teaching language and want to move on to &amp;ldquo;real&amp;rdquo; programming, they are forced to start over with a whole new system.&lt;/p&gt;
+
+&lt;p&gt;Python, while very friendly to beginners, is widely used by experts as well.  It is very popular both in industry and academia.  According to a recent survey, many of the top engineering schools use it (&lt;a href=&#34;http://cacm.acm.org/blogs/blog-cacm/176450-python-is-now-the-most-popular-introductory-teaching-language-at-top-us-universities/fulltext&#34;&gt;http://cacm.acm.org/blogs/blog-cacm/176450-python-is-now-the-most-popular-introductory-teaching-language-at-top-us-universities/fulltext&lt;/a&gt;). It&amp;rsquo;s also an increasingly popular alternative to expensive systems like Matlab for scientific computing applications.&lt;/p&gt;
+
+&lt;p&gt;Another very important point: Python is free and runs on any kind of computer.  Because it&amp;rsquo;s not a commercial product tied to a particular platform, students are not limited by what they might have access to at home/school or required to invest in any expensive software to get started.&lt;/p&gt;
+
+&lt;p&gt;All of this means that there is a vast amount of available resources for Python - books, videos, web tutorials, and online courses.  The Python community is very large and welcoming to newcomers.&lt;/p&gt;
+
+&lt;h3 id=&#34;what-about-javascript:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;What about Javascript?&lt;/h3&gt;
+
+&lt;p&gt;Javascript (not to be confused with Java - the two are completely unrelated) is another popular choice for teaching kids programming.  Its advantage is its ubiquity: all you need is a web browser, so there&amp;rsquo;s nothing to install.  For that reason, many sites like Khan Academy and code.org have chosen it.  However, I find its syntax to be a little less friendly than Python, so it&amp;rsquo;s not my first choice in the classroom.  It would make a great second language for app/game development, though.&lt;/p&gt;
+
+&lt;h2 id=&#34;final-thoughts:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;Final thoughts&lt;/h2&gt;
+
+&lt;p&gt;Learning to code is the important thing - which language should be a matter of practicality.&lt;/p&gt;
+
+&lt;p&gt;Ultimately, the best answer to the question of what programming language to learn is the one that you will have the most support in.  There is a wealth of material on the Internet to help learn any language.  However, new programmers, especially kids, often get stuck and just need someone who can help them get over that speed bump.  If a student is learning at home and they have an Uncle or Aunt who&amp;rsquo;s a Java programmer, then that&amp;rsquo;s going to be a more effective choice than one with no support available.&lt;/p&gt;
+
+&lt;p&gt;Over the past few years, I&amp;rsquo;ve taught hundreds of kids in beginner and intermediate level Python classes and I&amp;rsquo;ve been very happy with Python as our language of choice.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

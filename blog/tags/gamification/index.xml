@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Gamification on KCC Blog </title>
+      <generator uri="https://gohugo.io">Hugo</generator>
+    <link>/blog/tags/gamification/</link>
+    <language>en-us</language>
+    
+    
+    <updated>Sun, 23 Aug 2015 20:38:26 PDT</updated>
+    
+    <item>
+      <title>Gamification and Education</title>
+      <link>/blog/2015/08/gamification1/</link>
+      <pubDate>Sun, 23 Aug 2015 20:38:26 PDT</pubDate>
+      
+      <guid>/blog/2015/08/gamification1/</guid>
+      <description>&lt;p&gt;&amp;ldquo;Gamification&amp;rdquo; is the application of game design and gaming mechanics in non-gaming contexts.  When you see LinkedIn giving you a &amp;ldquo;profile score,&amp;rdquo; that&amp;rsquo;s gamification at work.  Done well, it can be a great method of incentivizing users to be more active.  In fact, in the absence of formal gamification features, users will often &amp;ldquo;gamify&amp;rdquo; things themselves - from people on Facebook who try and get more Likes than their friends, to drivers trying to time it so they don&amp;rsquo;t hit any red lights.  Our brains are wired for play, and we&amp;rsquo;re always looking for ways to get that feeling of reward that comes from a win.&lt;/p&gt;
+
+&lt;p&gt;Gamification is also a big buzzword in education these days.  However, when you think about it, it&amp;rsquo;s not really a new idea at all.  Teachers have long offered incentives to students who meet certain behavior or academic goals - think gold stars, prize boxes, and extra credit points.  In point of fact, there&amp;rsquo;s nothing really conceptually different between getting an &amp;ldquo;A&amp;rdquo; on the report card and a &amp;ldquo;High Score&amp;rdquo; at the end of a game level.  In both cases, you move up to the next level and start again with more challenging material/opponents.&lt;/p&gt;
+
+&lt;p&gt;What&amp;rsquo;s different today is that with the rise of the electronic gaming industry, we have developed a whole new suite of tools and structures for harnessing the psychology of players and collecting data on what works and what doesn&amp;rsquo;t.  Especially in the free-to-play market (disclaimer: I have worked for several free-to-play publishers), data analysis and incentivization have become highly refined tools that drive game design and can directly affect the success/failure of a title.&lt;/p&gt;
+
+&lt;p&gt;This is where the objections to gamification, especially in the context of education, usually stem.  There are any number of examples of free-to-play &amp;ldquo;games&amp;rdquo; that are really nothing more than barely disguised Skinner boxes designed to exploit players&amp;rsquo; addictive tendencies in the hopes of coercing a click on the &amp;ldquo;Buy now&amp;rdquo; button.  However, ultimately gamification is nothing but a tool and just like any tool, it can be applied poorly and lead to results opposite of those intended.
+I believe that gamification promises to provide powerful tools to drive learning in a positive way, both online and in the classroom.  I&amp;rsquo;m certainly not alone in this belief, and over the next few months, I&amp;rsquo;ll be looking into a variety of projects in this space and writing about them here.&lt;/p&gt;
+
+&lt;p&gt;If you have any questions or comments, please feel free to reach out to me at the contact link on the right, or join us on &lt;a href=&#34;http://facebook.com/Kidscancode/&#34;&gt;Facebook&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
