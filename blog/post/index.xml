@@ -113,8 +113,7 @@ $ pip3 install hg+http://bitbucket.org/pygame/pygame
 
 &lt;p&gt;Choose &amp;ldquo;Save&amp;rdquo; and let the file download.&lt;/p&gt;
 
-&lt;p&gt;Now, you need to go to the command line.  In your Start Menu search for &amp;ldquo;command&amp;rdquo; and you&amp;rsquo;ll see a button for &amp;ldquo;Command Prompt&amp;rdquo;.  The window will look like this:
-&lt;PICTURE&gt;&lt;/p&gt;
+&lt;p&gt;Now, you need to go to the command line.  In your Start Menu search for &amp;ldquo;command&amp;rdquo; and you&amp;rsquo;ll see a button for &amp;ldquo;Command Prompt&amp;rdquo;.&lt;/p&gt;
 
 &lt;p&gt;Type the following:&lt;/p&gt;
 
