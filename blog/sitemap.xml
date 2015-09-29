@@ -3,8 +3,13 @@
   
   <url>
     <loc>/blog/</loc>
-    <lastmod>2015-09-24T12:26:33-07:00</lastmod>
+    <lastmod>2015-09-28T17:26:33-07:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/2015/09/pygame_install/</loc>
+    <lastmod>2015-09-28T17:26:33-07:00</lastmod>
   </url>
   
   <url>

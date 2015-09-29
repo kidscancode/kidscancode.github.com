@@ -7,7 +7,136 @@
     <language>en-us</language>
     
     
-    <updated>Thu, 24 Sep 2015 12:26:33 PDT</updated>
+    <updated>Mon, 28 Sep 2015 17:26:33 PDT</updated>
+    
+    <item>
+      <title>Installing Pygame</title>
+      <link>/blog/2015/09/pygame_install/</link>
+      <pubDate>Mon, 28 Sep 2015 17:26:33 PDT</pubDate>
+      
+      <guid>/blog/2015/09/pygame_install/</guid>
+      <description>
+
+&lt;p&gt;Making games is a great way to improve your programming skills while making something fun at the same time.  Pygame is a set of tools for Python that make it easy to work with graphics and sound.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, installing Pygame is not as easy as using it is.  Below you&amp;rsquo;ll find the best directions we&amp;rsquo;ve found for getting it working on your system.  Follow the directions below, and let us know in the comments below if you have any problems.&lt;/p&gt;
+
+&lt;h1 id=&#34;installing-pygame-for-os-x:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Installing Pygame for OS X&lt;/h1&gt;
+
+&lt;p&gt;Note: For most of these instructions you will need to use the command line. Don&amp;rsquo;t be intimidated - programmers work on the command line all the time.  Once you get used to it, you&amp;rsquo;ll find it&amp;rsquo;s the quickest and easiest way to do lots of useful things on the computer.&lt;/p&gt;
+
+&lt;p&gt;You access the command line by running the Terminal application - click on the Spotlight icon and type &amp;ldquo;terminal&amp;rdquo; to find it.&lt;/p&gt;
+
+&lt;h3 id=&#34;step-1-install-xcode-command-line-tools:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step 1: Install XCode command line tools&lt;/h3&gt;
+
+&lt;p&gt;XCode is the tool from Apple for creating Mac and iOS applications.  It can be installed from the &lt;a href=&#34;https://itunes.apple.com/us/app/xcode/id497799835?mt=12&#34;&gt;App Store&lt;/a&gt; (it&amp;rsquo;s free).  When it&amp;rsquo;s finished, type the following at the command line:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ xcode-select --install
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;step-2-install-homebrew-http-brew-sh:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step 2: Install Homebrew (&lt;a href=&#34;http://brew.sh&#34;&gt;http://brew.sh&lt;/a&gt;)&lt;/h3&gt;
+
+&lt;p&gt;Homebrew is a tool to easily install all kinds of software from the command line.  It saves you having to go to a bunch of different sites and download lots of individual installers.  Copy and paste this on the command line:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and follow the directions.  You&amp;rsquo;ll also need to install Homebrew Cask (&lt;a href=&#34;http://caskroom.io):&#34;&gt;http://caskroom.io):&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ brew install caskroom/cask/brew-cask
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;step-3-install-the-rest-of-the-software:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step 3: Install the rest of the software&lt;/h3&gt;
+
+&lt;p&gt;Now we can start installing all the requirements for Pygame.  Just type the following commands one at a time and let the computer do its thing:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ brew cask install xquartz
+
+$ brew install python3
+
+$ brew install python
+
+$ brew install git
+
+$ brew install sdl sdl_image sdl_ttf portmidi libogg libvorbis
+
+$ brew install sdl_mixer —with-libvorbis
+
+$ brew tap homebrew/headonly
+
+$ brew install --HEAD smpeg
+
+$ brew install mercurial
+
+$ pip3 install hg+http://bitbucket.org/pygame/pygame
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;step-4-see-if-it-works:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step 4: See if it works!&lt;/h3&gt;
+
+&lt;p&gt;Now we can see if it works.  Run Python from the command line:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ python3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and try loading Pygame:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; import pygame
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you don&amp;rsquo;t see an error message, you&amp;rsquo;re all set!  Now head over to our &lt;a href=&#34;https://www.youtube.com/c/KidsCanCodeOrg&#34;&gt;YouTube Channel&lt;/a&gt; and start coding!&lt;/p&gt;
+
+&lt;h3 id=&#34;important:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Important&lt;/h3&gt;
+
+&lt;p&gt;You will not be able to use Pygame from IDLE.  You will need to run your programs from the command line like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ python3 mygame.py
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Some code editors will also let you run Python programs from inside the program, but we&amp;rsquo;ll talk about that in a separate post.&lt;/p&gt;
+
+&lt;h1 id=&#34;installing-pygame-for-windows:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Installing Pygame for Windows&lt;/h1&gt;
+
+&lt;h3 id=&#34;step-1-install-python:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step 1: Install Python&lt;/h3&gt;
+
+&lt;p&gt;If you haven&amp;rsquo;t already, go to &lt;a href=&#34;http://python.org/&#34;&gt;http://python.org/&lt;/a&gt; and download the latest Python installer.  Click on &amp;ldquo;Downloads&amp;rdquo; and choose &amp;ldquo;Download Python 3.5.0&amp;rdquo; (or whatever the latest version is).&lt;/p&gt;
+
+&lt;p&gt;When the download finishes, choose &amp;ldquo;run&amp;rdquo; - you may need to open your Downloads folder and double-click on the installer file.&lt;/p&gt;
+
+&lt;p&gt;Check the box labeled &amp;ldquo;Add Python 3.5 to PATH&amp;rdquo; and then click &amp;ldquo;Customize Installation&amp;rdquo;.  Under &amp;ldquo;Optional Features&amp;rdquo; make sure all the boxes are checked.  Under &amp;ldquo;Advanced Options&amp;rdquo; you can leave it as-is.  Then click the Install button and let the computer complete the process.&lt;/p&gt;
+
+&lt;h3 id=&#34;step-2-install-pygame-for-windows:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step 2: Install Pygame for Windows&lt;/h3&gt;
+
+&lt;p&gt;Click &lt;a href=&#34;http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame&#34;&gt;here&lt;/a&gt; and download the appropriate installer for your computer.  For most people, this will be the latest 32-bit installer, for example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pygame‑1.9.2a0‑cp35‑none‑win32.whl
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Choose &amp;ldquo;Save&amp;rdquo; and let the file download.&lt;/p&gt;
+
+&lt;p&gt;Now, you need to go to the command line.  In your Start Menu search for &amp;ldquo;command&amp;rdquo; and you&amp;rsquo;ll see a button for &amp;ldquo;Command Prompt&amp;rdquo;.  The window will look like this:
+&lt;PICTURE&gt;&lt;/p&gt;
+
+&lt;p&gt;Type the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;C:\Users\name\&amp;gt; cd Downloads
+C:\Users\name\Downloads&amp;gt; pip install pygame-1.9.2a0-cp35-none-win32.whl
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;step3-see-if-it-works:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step3: See if it works!&lt;/h3&gt;
+
+&lt;p&gt;Now we can see if it works.  Run Python from the command line:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;C:\Users\name\Downloads&amp;gt; python
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and try loading Pygame:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; import pygame
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you don&amp;rsquo;t see an error message, you&amp;rsquo;re all set!  Now head over to our &lt;a href=&#34;https://www.youtube.com/c/KidsCanCodeOrg&#34;&gt;YouTube Channel&lt;/a&gt; and start coding!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Why Python?</title>
