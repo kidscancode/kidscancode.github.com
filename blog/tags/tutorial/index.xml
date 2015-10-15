@@ -60,6 +60,7 @@ $ brew linkapps python3
 
 $ brew linkapps python
 
+
 $ brew install git
 
 $ brew install sdl sdl_image sdl_ttf portmidi libogg libvorbis

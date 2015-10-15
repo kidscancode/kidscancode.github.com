@@ -7,7 +7,126 @@
     <language>en-us</language>
     
     
-    <updated>Mon, 28 Sep 2015 17:26:33 PDT</updated>
+    <updated>Tue, 13 Oct 2015 19:04:12 PDT</updated>
+    
+    <item>
+      <title>Common Struggles</title>
+      <link>/blog/2015/10/struggles/</link>
+      <pubDate>Tue, 13 Oct 2015 19:04:12 PDT</pubDate>
+      
+      <guid>/blog/2015/10/struggles/</guid>
+      <description>
+
+&lt;p&gt;Over the past few years, I&amp;rsquo;ve taught hundreds of kids to code using Python in workshops, after school programs, and as part of school curriculum.  Most of the students I teach are around middle school age (11-14).  I find this age to be a great time to start learning.  The kids are very engaged and capable - and very motivated to learn, if given the chance.&lt;/p&gt;
+
+&lt;p&gt;I prefer Python for teaching kids for a &lt;a href=&#34;http://kidscancode.org/blog/2015/09/whypython/&#34;&gt;number of reasons&lt;/a&gt;, foremost because it&amp;rsquo;s a very beginner-friendly language.  That said, however, there are still a number of very common areas where kids tend to struggle the most.&lt;/p&gt;
+
+&lt;p&gt;Below is a list of the problems I encounter most often in the classroom:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Nested parentheses&lt;/li&gt;
+&lt;li&gt;Missing colons&lt;/li&gt;
+&lt;li&gt;Indentation&lt;/li&gt;
+&lt;li&gt;IDLE issues&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;nested-parentheses:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;Nested parentheses&lt;/h3&gt;
+
+&lt;p&gt;One of the most common syntax errors I see among students is leaving off the ending parentheses when one statement is nested inside another. Nested parentheses happen frequently, and help with both readability and reducing code complexity.&lt;/p&gt;
+
+&lt;p&gt;For example, instead of doing this:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;angle&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;randrange(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;360&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color: #f8f8f2&#34;&gt;turtle&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;left(angle)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;We can simplify by nesting the randrange() call inside the parentheses of the left() function:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;turtle&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;left(randrange(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;360&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Often, the first time they see something like this, the question from my students will be &amp;ldquo;Why are there two parentheses at the end?&amp;rdquo;  It&amp;rsquo;s very important to emphasize that parentheses come in pairs and there should never be an odd one out.  Sometimes, I&amp;rsquo;ll encourage students to use spaces to highlight the nesting (although &lt;a href=&#34;https://www.python.org/dev/peps/pep-0008/&#34;&gt;PEP8&lt;/a&gt; fanatics will cringe):&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;turtle&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;left(&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;randrange(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;360&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&#34;missing-colons-on-loops-and-functions:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;Missing colons on loops and functions&lt;/h3&gt;
+
+&lt;p&gt;One of the first constructions students learn is the for loop, which allows you to repeat a block of code multiple times:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;range(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;):&lt;/span&gt;
+    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(i)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;That colon at the end of the first line is very important, because it indicates that the indented code coming after it is the block that belongs to the loop (ie the code that is to be repeated).&lt;/p&gt;
+
+&lt;p&gt;Forgetting to type this colon has a couple of implications.  In addition to resulting in an &amp;ldquo;expected an indented block&amp;rdquo; error message, it also means that the editor (usually IDLE when working with beginners) won&amp;rsquo;t automatically indent the next line - so now the student has two problems: adding the colon and fixing the indenting.&lt;/p&gt;
+
+&lt;h3 id=&#34;indentation:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;Indentation&lt;/h3&gt;
+
+&lt;p&gt;As shown in the previous example, indentation is important to Python.  It indicates code blocks and how they are related.  IDLE actually does a pretty good job of trying to automatically indent, but it only goes in the forward direction - if you need to unindent one level, you have to hit &amp;ldquo;Backspace.&amp;rdquo;  This leads to problems like the following, which will result in an &amp;ldquo;syntax error&amp;rdquo; message:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;guess&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;secret:&lt;/span&gt;
+    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Too high!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color: #66d9ef&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;guess&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;secret:&lt;/span&gt;
+        &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Too low!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color: #66d9ef&#34;&gt;else&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;:&lt;/span&gt;
+            &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;You got it!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;The correct indentation:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;guess&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;secret:&lt;/span&gt;
+    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Too high!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color: #66d9ef&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;guess&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;secret:&lt;/span&gt;
+    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Too low!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color: #66d9ef&#34;&gt;else&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;You got it!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;h3 id=&#34;idle-issues:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;IDLE issues&lt;/h3&gt;
+
+&lt;p&gt;IDLE is the code editor and development environment that is installed automatically when Python is installed on your computer.  It&amp;rsquo;s a great tool for beginners, because it allows them to get started right away without needing to install any additional, complex software development tools.  However, it also has a number of annoying quirks that can waste huge amounts of a beginning coder&amp;rsquo;s time.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Multiple windows&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This is the single biggest time waster and source of frustration.  When you launch IDLE, you first see a shell window.  If you want to start typing a new program, that means opening another window (which will be the same size, so now they&amp;rsquo;re overlapping).  When you run your program, the output shows up in the shell window (if it&amp;rsquo;s text-based) or in yet another window (if it&amp;rsquo;s graphical). Kids are constantly forced to struggle with moving overlapping windows around to find the one they need.  Often, they&amp;rsquo;ll close the Shell window, thinking they don&amp;rsquo;t need it, only to find that it being automatically reopened the next time they run their program.  To top it all off, IDLE doesn&amp;rsquo;t even try to remember window positions, so even if you do get things arranged in some sort of useful fashion, the next time you open a new window it all begins again.&lt;/p&gt;
+
+&lt;p&gt;I showed this to a usability expert once and she thought it was a nightmare. I am constantly amazed at how patient and accepting kids are of these problems.  Often, I am more frustrated as the instructor than the kids are with the whole process.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Unfriendly naming&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;When you&amp;rsquo;ve typed your code and it&amp;rsquo;s time to try running it, you need to click on the &amp;ldquo;Run&amp;rdquo; menu.  This is fine, but there are three options in this menu, and it&amp;rsquo;s impossible for a beginner to guess which is the right one.  There&amp;rsquo;s &amp;ldquo;Python Shell&amp;rdquo; (which we already have popping up all the time anyway), &amp;ldquo;Check Module&amp;rdquo;, and &amp;ldquo;Run Module.&amp;rdquo;  The correct choice is &amp;ldquo;Run Module&amp;rdquo;, which just leads me to teaching them to use the &amp;ldquo;F5&amp;rdquo; shortcut as soon as possible.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Error popups&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Errors can be quite confusing in IDLE.  Sometimes they generate popups (ex: &amp;ldquo;invalid syntax&amp;rdquo; or &amp;ldquo;expected an indented block&amp;rdquo;) while others show up in the Python Shell window.  The popups are especially troublesome, because they&amp;rsquo;re modal (meaning you must click &amp;ldquo;Ok&amp;rdquo; on them before you can do anything else) but not always on top.  So what happens is a student will see the message and then click on their code window to see what&amp;rsquo;s happening.  Now there&amp;rsquo;s a tiny modal window hiding where it can&amp;rsquo;t be seen and the student is unable to type and thinks their computer has crashed.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Poor font options&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This one is mainly a problem for me as a teacher.  There are only a limited number of font size options (with 22 being the largest).  When I&amp;rsquo;m displaying code on the projector, it can sometimes be hard to read from across the room, or I&amp;rsquo;d like to zoom in on a particular chunk of code.  In any other editor on the market, you can hit a +/- key combination to zoom the font size as big or small as you like, but in IDLE you are stuck with limited settings.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-note-on-typing:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;A note on typing&lt;/h3&gt;
+
+&lt;p&gt;All the above notwithstanding, I must point out here that the single most important factor in my experience that determines how much a student struggles with the learning to code is typing ability.  A student who is spending time and mental energy on hunting for the right keys is taking attention away from understanding the difficult concepts of the lesson.  In addition, they&amp;rsquo;re slower than other students so they start to feel pressure to keep up, which leads to a frustrating experience all around.&lt;/p&gt;
+
+&lt;p&gt;There are many great free typing practice websites to choose from. My favorite is &lt;a href=&#34;http://typing.com&#34;&gt;Typing.com&lt;/a&gt;. Encourage your kids to practice - they&amp;rsquo;ll thank you later!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Installing Pygame</title>
@@ -59,6 +178,7 @@ $ brew install python
 $ brew linkapps python3
 
 $ brew linkapps python
+
 
 $ brew install git
 
