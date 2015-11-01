@@ -3,7 +3,7 @@
   <channel>
       <title>Pygame on KCC Blog </title>
       <generator uri="https://gohugo.io">Hugo</generator>
-    <link>http://localhost:1313/blog/tags/pygame/</link>
+    <link>/blog/tags/pygame/</link>
     <language>en-us</language>
     
     
@@ -11,10 +11,10 @@
     
     <item>
       <title>Installing Pygame</title>
-      <link>http://localhost:1313/blog/2015/09/pygame_install/</link>
+      <link>/blog/2015/09/pygame_install/</link>
       <pubDate>Mon, 28 Sep 2015 17:26:33 PDT</pubDate>
       
-      <guid>http://localhost:1313/blog/2015/09/pygame_install/</guid>
+      <guid>/blog/2015/09/pygame_install/</guid>
       <description>
 
 &lt;p&gt;Making games is a great way to improve your programming skills while making something fun at the same time.  Pygame is a set of tools for Python that make it easy to work with graphics and sound.&lt;/p&gt;
