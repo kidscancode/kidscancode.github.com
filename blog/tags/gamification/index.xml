@@ -3,7 +3,7 @@
   <channel>
       <title>Gamification on KCC Blog </title>
       <generator uri="https://gohugo.io">Hugo</generator>
-    <link>/blog/tags/gamification/</link>
+    <link>http://localhost:1313/blog/tags/gamification/</link>
     <language>en-us</language>
     
     
@@ -11,10 +11,10 @@
     
     <item>
       <title>Gamification and Education</title>
-      <link>/blog/2015/08/gamification1/</link>
+      <link>http://localhost:1313/blog/2015/08/gamification1/</link>
       <pubDate>Sun, 23 Aug 2015 20:38:26 PDT</pubDate>
       
-      <guid>/blog/2015/08/gamification1/</guid>
+      <guid>http://localhost:1313/blog/2015/08/gamification1/</guid>
       <description>&lt;p&gt;&amp;ldquo;Gamification&amp;rdquo; is the application of game design and gaming mechanics in non-gaming contexts.  When you see LinkedIn giving you a &amp;ldquo;profile score,&amp;rdquo; that&amp;rsquo;s gamification at work.  Done well, it can be a great method of incentivizing users to be more active.  In fact, in the absence of formal gamification features, users will often &amp;ldquo;gamify&amp;rdquo; things themselves - from people on Facebook who try and get more Likes than their friends, to drivers trying to time it so they don&amp;rsquo;t hit any red lights.  Our brains are wired for play, and we&amp;rsquo;re always looking for ways to get that feeling of reward that comes from a win.&lt;/p&gt;
 
 &lt;p&gt;Gamification is also a big buzzword in education these days.  However, when you think about it, it&amp;rsquo;s not really a new idea at all.  Teachers have long offered incentives to students who meet certain behavior or academic goals - think gold stars, prize boxes, and extra credit points.  In point of fact, there&amp;rsquo;s nothing really conceptually different between getting an &amp;ldquo;A&amp;rdquo; on the report card and a &amp;ldquo;High Score&amp;rdquo; at the end of a game level.  In both cases, you move up to the next level and start again with more challenging material/opponents.&lt;/p&gt;

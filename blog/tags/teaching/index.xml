@@ -3,18 +3,81 @@
   <channel>
       <title>Teaching on KCC Blog </title>
       <generator uri="https://gohugo.io">Hugo</generator>
-    <link>/blog/tags/teaching/</link>
+    <link>http://localhost:1313/blog/tags/teaching/</link>
     <language>en-us</language>
     
     
-    <updated>Tue, 13 Oct 2015 19:04:12 PDT</updated>
+    <updated>Sun, 01 Nov 2015 12:04:02 -0700</updated>
+    
+    <item>
+      <title>Coding is a Life Skill</title>
+      <link>http://localhost:1313/blog/2015/11/life_skill/</link>
+      <pubDate>Sun, 01 Nov 2015 12:04:02 -0700</pubDate>
+      
+      <guid>http://localhost:1313/blog/2015/11/life_skill/</guid>
+      <description>
+
+&lt;h1 id=&#34;learning-to-code-is-a-life-skill:54a9d675a59537331ba31cd49ae01870&#34;&gt;Learning to code is a life skill&lt;/h1&gt;
+
+&lt;p&gt;I have often said that I believe computer programming should be adopted as a core curriculum subject in primary school, just like science, history, or math.  I often give presentations to this effect for parents, teachers, and school administrators.  In this article, I&amp;rsquo;ll explore a few of the reasons why I believe so strongly in the power of early CS education.&lt;/p&gt;
+
+&lt;p&gt;When considering the place of computer science in the curriculum, let&amp;rsquo;s first look at why we teach other core subjects.&lt;/p&gt;
+
+&lt;p&gt;We teach science because we want children to understand the world around them, and the scientific method is a fantastic intellectual tool for investigating the world around you. In a modern society, where scientific advancements directly affect so many aspects of our lives, it is advantageous to have a good understanding of how science works.&lt;/p&gt;
+
+&lt;p&gt;In the same way, learning about history or math contribute to a better understanding of the world by providing perspectives and ways of thinking that we wouldn&amp;rsquo;t otherwise know.  In particular, I&amp;rsquo;ll talk about the use of math in more detail below.&lt;/p&gt;
+
+&lt;h3 id=&#34;but-what-about-kids-who-aren-t-interested-in-becoming-programmers:54a9d675a59537331ba31cd49ae01870&#34;&gt;&amp;ldquo;But what about kids who aren&amp;rsquo;t interested in becoming programmers?&amp;rdquo;&lt;/h3&gt;
+
+&lt;p&gt;We don&amp;rsquo;t teach science and math because we expect every child to grow up and become a scientist or engineer. The goal of a general education is to produce a well-rounded individual who has a good understanding of the world.  It&amp;rsquo;s also important because it gives kids a chance to discover their aptitudes. If a child is never even exposed to a particular subject, how can they find or develop a passion for it?&lt;/p&gt;
+
+&lt;p&gt;Even kids whose talents lie in a non-technical direction can benefit from a solid understanding of how technology works.  Regardless of your future path, it&amp;rsquo;s very likely that you will be using and interacting with technology to some extent in your career and daily life.&lt;/p&gt;
+
+&lt;h3 id=&#34;coding-is-problem-solving:54a9d675a59537331ba31cd49ae01870&#34;&gt;Coding is problem solving&lt;/h3&gt;
+
+&lt;p&gt;Programming a computer is an exercise in problem solving and logic.  In order to successfully program a computer to perform a particular task, the programmer has to break the problem down into manageable, bite-sized steps and &amp;ldquo;teach&amp;rdquo; those steps to the computer.&lt;/p&gt;
+
+&lt;p&gt;Even outside of computer programming, this is a hugely valuable skill.  Being able to tackle complex problems and break them down is something that many professions can benefit from.  Think about complicated situations that you&amp;rsquo;ve had to deal with in your work or personal life.  Consider a lawyer, for example, constructing an argument based on a set of facts, or an architect designing all the many systems that go into a new building.  These are all very similar processes of logic and problem solving.&lt;/p&gt;
+
+&lt;h3 id=&#34;it-s-empowering:54a9d675a59537331ba31cd49ae01870&#34;&gt;It&amp;rsquo;s empowering&lt;/h3&gt;
+
+&lt;p&gt;Predicting the future is notoriously difficult, but it&amp;rsquo;s probably a safe bet to say that today&amp;rsquo;s kids will not have &lt;em&gt;less&lt;/em&gt; technology around them when they grow up.  Those students who have developed an understanding of how technology works will be better equipped to deal with the ways that technology impacts their lives.&lt;/p&gt;
+
+&lt;p&gt;Programming a computer is not the same as simply using it. Learning to program changes you from a passive consumer of technology to an active creator of it.  It&amp;rsquo;s like the difference between being a reader and knowing how to write, or a movie-goer versus a filmmaker.  You are better equipped to evaluate, understand, and even change, the technology that surrounds you instead of just accepting it as it is presented to you.&lt;/p&gt;
+
+&lt;p&gt;Plus, imagine how positive would it be if tomorrow&amp;rsquo;s law and policy makers were to have a better understanding of technology and its impact on society.&lt;/p&gt;
+
+&lt;!-- ### It complements many other subjects
+Programming has many practical applications to other areas of knowledge. --&gt;
+
+&lt;h3 id=&#34;it-pays-to-start-young:54a9d675a59537331ba31cd49ae01870&#34;&gt;It pays to start young&lt;/h3&gt;
+
+&lt;p&gt;For those students who &lt;em&gt;do&lt;/em&gt; have an aptitude and interest in computer science and/or software engineering, there is a huge benefit to being exposed to those subjects at an early age.&lt;/p&gt;
+
+&lt;p&gt;Like many skills, becoming accomplished at programming takes practice.  It can be likened to playing the piano - no matter how naturally talented the player, there is no substitute for lots and lots of practice.  Students whose first exposure to programming doesn&amp;rsquo;t happen until they reach college will be at a disadvantage to those who have already been coding for years.  In my own experience, I have interviewed recent college graduates who, while completing a computer science degree, are not sufficiently experienced in programming to be able to fulfill the requirements of an entry level coding position.  They just haven&amp;rsquo;t had enough practice.&lt;/p&gt;
+
+&lt;h3 id=&#34;it-has-a-future:54a9d675a59537331ba31cd49ae01870&#34;&gt;It has a future&lt;/h3&gt;
+
+&lt;p&gt;Computer technology is becoming more and more deeply integrated into our world.  Mobile computing, robotics, nanotechnology and other fields are rapidly growing and all will need programmers to make them work.  Medical and other scientific research fields now use computers extensively - indeed, they can&amp;rsquo;t be done without computing anymore.&lt;/p&gt;
+
+&lt;p&gt;To illustrate this fact, as of last year, the unemployment rate in the high tech sector was around 3%, with that of programmers in specific being half that.  During the recent recession, coders were relatively immune to the downturn in employment. Tomorrow&amp;rsquo;s programmers will continue to be in demand as these and other technology fields continue to grow.&lt;/p&gt;
+
+&lt;h3 id=&#34;conclusion:54a9d675a59537331ba31cd49ae01870&#34;&gt;Conclusion&lt;/h3&gt;
+
+&lt;p&gt;These are just a few of the ways that early computer science education can benefit today&amp;rsquo;s students.  In short: we need kids who are prepared for the high tech future.&lt;/p&gt;
+
+&lt;p&gt;None of these recommendations should be taken as promoting a particular &lt;em&gt;specific&lt;/em&gt; technology kids should learn (although I am a strong advocate for the &lt;a href=&#34;http://python.org/&#34;&gt;Python programming language&lt;/a&gt; and its &lt;a href=&#34;http://kidscancode.org/blog/2015/09/whypython/&#34;&gt;benefits for beginners&lt;/a&gt;).  Technology is changing all the time - today&amp;rsquo;s popular platforms will be tomorrow&amp;rsquo;s quaint memory. However, the &lt;em&gt;concepts&lt;/em&gt; of programming remain the same: problem solving, computational thinking, and logic.&lt;/p&gt;
+
+&lt;p&gt;I welcome your comments and questions below.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Common Struggles</title>
-      <link>/blog/2015/10/struggles/</link>
+      <link>http://localhost:1313/blog/2015/10/struggles/</link>
       <pubDate>Tue, 13 Oct 2015 19:04:12 PDT</pubDate>
       
-      <guid>/blog/2015/10/struggles/</guid>
+      <guid>http://localhost:1313/blog/2015/10/struggles/</guid>
       <description>
 
 &lt;p&gt;Over the past few years, I&amp;rsquo;ve taught hundreds of kids to code using Python in workshops, after school programs, and as part of school curriculum.  Most of the students I teach are around middle school age (11-14).  I find this age to be a great time to start learning.  The kids are very engaged and capable - and very motivated to learn, if given the chance.&lt;/p&gt;
@@ -130,10 +193,10 @@
     
     <item>
       <title>Why Python?</title>
-      <link>/blog/2015/09/whypython/</link>
+      <link>http://localhost:1313/blog/2015/09/whypython/</link>
       <pubDate>Thu, 24 Sep 2015 12:26:33 PDT</pubDate>
       
-      <guid>/blog/2015/09/whypython/</guid>
+      <guid>http://localhost:1313/blog/2015/09/whypython/</guid>
       <description>
 
 &lt;p&gt;There are a huge number of programming languages out there.  You&amp;rsquo;ve probably heard of one or two, even if you&amp;rsquo;re not a programmer yourself - Java, C++, Swift, etc.  But what are they all about and how do you choose which one to learn?&lt;/p&gt;
@@ -239,10 +302,10 @@
     
     <item>
       <title>Gamification and Education</title>
-      <link>/blog/2015/08/gamification1/</link>
+      <link>http://localhost:1313/blog/2015/08/gamification1/</link>
       <pubDate>Sun, 23 Aug 2015 20:38:26 PDT</pubDate>
       
-      <guid>/blog/2015/08/gamification1/</guid>
+      <guid>http://localhost:1313/blog/2015/08/gamification1/</guid>
       <description>&lt;p&gt;&amp;ldquo;Gamification&amp;rdquo; is the application of game design and gaming mechanics in non-gaming contexts.  When you see LinkedIn giving you a &amp;ldquo;profile score,&amp;rdquo; that&amp;rsquo;s gamification at work.  Done well, it can be a great method of incentivizing users to be more active.  In fact, in the absence of formal gamification features, users will often &amp;ldquo;gamify&amp;rdquo; things themselves - from people on Facebook who try and get more Likes than their friends, to drivers trying to time it so they don&amp;rsquo;t hit any red lights.  Our brains are wired for play, and we&amp;rsquo;re always looking for ways to get that feeling of reward that comes from a win.&lt;/p&gt;
 
 &lt;p&gt;Gamification is also a big buzzword in education these days.  However, when you think about it, it&amp;rsquo;s not really a new idea at all.  Teachers have long offered incentives to students who meet certain behavior or academic goals - think gold stars, prize boxes, and extra credit points.  In point of fact, there&amp;rsquo;s nothing really conceptually different between getting an &amp;ldquo;A&amp;rdquo; on the report card and a &amp;ldquo;High Score&amp;rdquo; at the end of a game level.  In both cases, you move up to the next level and start again with more challenging material/opponents.&lt;/p&gt;

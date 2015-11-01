@@ -3,7 +3,7 @@
   <channel>
       <title>Python on KCC Blog </title>
       <generator uri="https://gohugo.io">Hugo</generator>
-    <link>/blog/tags/python/</link>
+    <link>http://localhost:1313/blog/tags/python/</link>
     <language>en-us</language>
     
     
@@ -11,10 +11,10 @@
     
     <item>
       <title>Common Struggles</title>
-      <link>/blog/2015/10/struggles/</link>
+      <link>http://localhost:1313/blog/2015/10/struggles/</link>
       <pubDate>Tue, 13 Oct 2015 19:04:12 PDT</pubDate>
       
-      <guid>/blog/2015/10/struggles/</guid>
+      <guid>http://localhost:1313/blog/2015/10/struggles/</guid>
       <description>
 
 &lt;p&gt;Over the past few years, I&amp;rsquo;ve taught hundreds of kids to code using Python in workshops, after school programs, and as part of school curriculum.  Most of the students I teach are around middle school age (11-14).  I find this age to be a great time to start learning.  The kids are very engaged and capable - and very motivated to learn, if given the chance.&lt;/p&gt;
@@ -130,10 +130,10 @@
     
     <item>
       <title>Installing Pygame</title>
-      <link>/blog/2015/09/pygame_install/</link>
+      <link>http://localhost:1313/blog/2015/09/pygame_install/</link>
       <pubDate>Mon, 28 Sep 2015 17:26:33 PDT</pubDate>
       
-      <guid>/blog/2015/09/pygame_install/</guid>
+      <guid>http://localhost:1313/blog/2015/09/pygame_install/</guid>
       <description>
 
 &lt;p&gt;Making games is a great way to improve your programming skills while making something fun at the same time.  Pygame is a set of tools for Python that make it easy to work with graphics and sound.&lt;/p&gt;
@@ -263,10 +263,10 @@ C:\Users\name\Downloads&amp;gt; pip install pygame-1.9.2a0-cp35-none-win32.whl
     
     <item>
       <title>Why Python?</title>
-      <link>/blog/2015/09/whypython/</link>
+      <link>http://localhost:1313/blog/2015/09/whypython/</link>
       <pubDate>Thu, 24 Sep 2015 12:26:33 PDT</pubDate>
       
-      <guid>/blog/2015/09/whypython/</guid>
+      <guid>http://localhost:1313/blog/2015/09/whypython/</guid>
       <description>
 
 &lt;p&gt;There are a huge number of programming languages out there.  You&amp;rsquo;ve probably heard of one or two, even if you&amp;rsquo;re not a programmer yourself - Java, C++, Swift, etc.  But what are they all about and how do you choose which one to learn?&lt;/p&gt;
