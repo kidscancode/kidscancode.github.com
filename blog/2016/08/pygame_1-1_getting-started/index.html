@@ -1,0 +1,378 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.16" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Pygame Lesson 1-1: Getting Started &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">3</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">4</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">6</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">4</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2016 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Pygame Lesson 1-1: Getting Started</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Fri, Aug 12, 2016</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/python">python</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/pygame">pygame</a>
+			  
+			</h6></span>
+
+			      
+
+<p>This is part 1 of our tutorial series, &ldquo;Game Development with Pygame&rdquo;.  It is intended for beginner/intermediate programmers who are interested in game development and improving their Python coding skills.</p>
+
+<p>You can watch a video version of this lesson here:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VO8rTszcW4s" frameborder="0" allowfullscreen></iframe>
+
+<h3 id="what-is-pygame">What is Pygame?</h3>
+
+<p>Pygame is a &ldquo;game library&rdquo; - a set of tools to help programmers making games.  Some of these things are:</p>
+
+<ul>
+<li>Graphics and animation</li>
+<li>Sound (including music)</li>
+<li>Control (keyboard, mouse, gamepad, etc.)</li>
+</ul>
+
+<h3 id="game-loop">Game Loop</h3>
+
+<p>At the heart of every game is a loop, which we call the &ldquo;Game Loop&rdquo;.  This loop is constantly running, over and over again, doing all the things that are needed to make the game work.  Each time the game goes through this loop is called a <em>frame</em>.</p>
+
+<p>Each frame, many different things may happen, but they can be organized into three different categories:</p>
+
+<h4 id="1-process-input-or-events">1. Process Input (or Events)</h4>
+
+<p>This means anything from outside your game that you want to pay attention to - anything that you need the game to respond to. These may be keys being pressed on the keyboard, the mouse being clicked, etc.</p>
+
+<h4 id="2-update-game">2. Update Game</h4>
+
+<p>This means changing anything that needs to change on this frame.  If a character is up in the air, gravity needs to pull it down.  If two objects run into each other, they need to explode.</p>
+
+<h4 id="3-render-or-draw">3. Render (or Draw)</h4>
+
+<p>In this step, we draw everything on the screen.  Backgrounds, characters, menus, or anything else that the player needs to see must be drawn on the screen in its correct, updated location.</p>
+
+<h4 id="clock">Clock</h4>
+
+<p>One other important aspect of the loop is controlling how fast the whole loop runs.  You may have heard the term <em>FPS</em>, which stands for Frames Per Second. This means how many times per second should this loop happen.  This is important because you don&rsquo;t want your game to run too fast or too slow.  You also don&rsquo;t want it to run at a different speed on different computers - if your character should take 10 seconds to run across the screen, that should be true no matter what computer it&rsquo;s happening on.</p>
+
+<h2 id="building-a-pygame-template">Building a Pygame Template</h2>
+
+<p>Now that we know what pieces we need to make the game work, we can start writing some code.  To begin with, we&rsquo;re going to make a simple pygame program that does nothing but open a window and run a game loop.  This will be a great starting point for any pygame project you want to make.</p>
+
+<p>At the top of our program, we&rsquo;re going to import the libraries we need and set a few variables for our game options:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Pygame template - skeleton for a new pygame project</span>
+<span class="kn">import</span> <span class="nn">pygame</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">WIDTH</span> <span class="o">=</span> <span class="mi">360</span>  <span class="c1"># width of our game window</span>
+<span class="n">HEIGHT</span> <span class="o">=</span> <span class="mi">480</span> <span class="c1"># height of our game window</span>
+<span class="n">FPS</span> <span class="o">=</span> <span class="mi">30</span> <span class="c1"># frames per second</span>
+</code></pre></div>
+
+
+<p>Next we need to open the game window:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># initialize pygame and create window</span>
+<span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>  <span class="c1"># for sound</span>
+<span class="n">screen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">((</span><span class="n">WIDTH</span><span class="p">,</span> <span class="n">HEIGHT</span><span class="p">))</span>
+<span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s2">&quot;My Game&quot;</span><span class="p">)</span>
+<span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p><code>pygame.init()</code> is the command to start up pygame and &ldquo;initialize&rdquo; it (which is a fancy word for start).  <code>screen</code> will refer to our game screen, and we create it at the size we set in our configuration constants.  Finally, we create a <code>clock</code> so that we will be able to make sure our game runs at the FPS we want.</p>
+
+<p>Now it&rsquo;s time to make the game loop:
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Game Loop</span>
+<span class="n">running</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">while</span> <span class="n">running</span><span class="p">:</span>
+    <span class="c1"># Process input (events)</span>
+    <span class="c1"># Update</span>
+    <span class="c1"># Render (draw)</span>
+</code></pre></div>
+</p>
+
+<p>Here is our game loop, which is a <code>while</code> loop controlled by the variable <code>running</code>.  If we ever want the game to end, we just have to set <code>running</code> to <code>False</code> and the loop will end.  Now we can fill in each of the sections with some basic code.</p>
+
+<h3 id="render-draw-section">Render / Draw Section</h3>
+
+<p>We&rsquo;ll start with the <em>Draw</em> section.  We don&rsquo;t have any characters yet, but we can fill the screen with a solid color. To do this, we need to talk about how computers handle color.</p>
+
+<p>Computer screens are made up of pixels, and these pixels have 3 parts to them: red, green, and blue.  How much each part is lit up determines what color that pixel is, like this:</p>
+
+<p><img src="/blog/img/rgb_color_explain.png" width="400"></p>
+
+<p>Each of the three primary colors can have a value between 0 (off) and 255 (100% on), so there are 256 different possibilities for each of the three primary colors.  Here  are some examples of some colors you can make:</p>
+
+<p><img src="/blog/img/rgb_color_example.png" width="400"></p>
+
+<p>You can find the total number of colors a computer can display by multiplying:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="o">&gt;&gt;&gt;</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span><span class="mi">777</span><span class="p">,</span><span class="mi">216</span>
+</code></pre></div>
+
+
+<p>Now that we understand colors, let&rsquo;s define a few at the top of our program:
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Colors (R, G, B)</span>
+<span class="n">BLACK</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">WHITE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">RED</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">GREEN</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">BLUE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+</code></pre></div>
+
+And then we can have our draw section fill the screen.
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="c1"># Draw / render</span>
+    <span class="n">screen</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+</code></pre></div>
+
+However, this isn&rsquo;t quite enough, because of the way computer displays work.  Changing a pixel on the screen means telling the video card to tell the monitor to change the
+actual pixel.  In computer terms, this is a very, very slow process.  So if you have a lot of things to draw on the screen, it can take a very long time to draw them all.  We can fix this in a clever way by using something called <em>double-buffering</em>.  This sounds fancy, but it really just means this:</p>
+
+<p>Imagine we had one of those whiteboards that is 2-sided and can flip over to show one side or the other.  The front will be the display (the screen the player sees), while the back is hidden and only the computer can &ldquo;see&rdquo; it.  Every frame, we do all of our drawing on the back side - every character, every bullet, every sparkly light, etc.  Then, when we&rsquo;re done, we flip the board over and show the new frame.  This means that we&rsquo;re only doing that slow process of talking to the display <em>once</em> every frame, and not for every single thing on the screen.</p>
+
+<p>All this happens automatically in pygame.  You just have to tell it to flip that whiteboard when you&rsquo;ve finished drawing.  In fact, the command is even named <code>flip()</code>:
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="c1"># Draw / render</span>
+    <span class="n">screen</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+    <span class="c1"># *after* drawing everything, flip the display</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
+</code></pre></div>
+
+Just make sure that you always do <code>flip()</code> <em>last</em>.  If you try to draw something after the flip, it won&rsquo;t be seen!</p>
+
+<h3 id="input-events-section">Input / Events Section</h3>
+
+<p>We don&rsquo;t have a game just yet, so we can&rsquo;t really say what keys or mouse buttons or other controls we want to listen for.  However, there&rsquo;s one important event that we need to set up.  If you tried running the program right now, you&rsquo;d see that you have a problem: there&rsquo;s no way to close the window!  Clicking on the &lsquo;X&rsquo; in the corner doesn&rsquo;t work.  That&rsquo;s because that&rsquo;s actually an event, and we need to tell our program to listen for that event and have it exit the game.</p>
+
+<p>Events can happen any time.  What if the player clicks the &lsquo;jump&rsquo; button while the update or draw part of the loop is happening?  You don&rsquo;t want to just ignore that input - the player will be frustrated.  So what Pygame does is save up all the events that have happened since the last frame.  That way if the player is quickly mashing lots of buttons, you can make sure you know about all of them.  This will be a list, so we run a <code>for</code> loop to look at all of them:</p>
+
+<p><div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+        <span class="c1"># check for closing window</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+            <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
+</code></pre></div>
+
+Pygame has lots of events that it is able to look for.  <code>pygame.QUIT</code> is the event that happens when the &lsquo;X&rsquo; is clicked, so we set <code>running</code> to <code>False</code> and the game loop will end.</p>
+
+<h3 id="controlling-fps">Controlling FPS</h3>
+
+<p>We don&rsquo;t really have anything to put in the &lsquo;Update&rsquo; section yet, but we do still need to make sure we use our <code>FPS</code> setting to control the speed.  We can do that like this:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">while</span> <span class="n">running</span><span class="p">:</span>
+    <span class="c1"># keep loop running at the right speed</span>
+    <span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">FPS</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>The <code>tick()</code> command tells pygame to figure out how long the loop took and then pause for however long it takes to make the whole loop (meaning the whole frame) to last the right amount of time. If we set <code>FPS</code> to 30, that means we want a frame to last <sup>1</sup>&frasl;<sub>30</sub> or 0.03 seconds.  If our loop code (updating, drawing, etc) only takes 0.01 seconds, then pygame will wait for 0.02 seconds, for example.</p>
+
+<h3 id="wrapping-up">Wrapping up</h3>
+
+<p>Finally, let&rsquo;s make sure that when the game loop does end, we actually destroy the game window.  We do this by putting <code>pygame.quit()</code> at the very end of our code.  So our final pygame template looks like this:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Pygame template - skeleton for a new pygame project</span>
+<span class="kn">import</span> <span class="nn">pygame</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">WIDTH</span> <span class="o">=</span> <span class="mi">360</span>
+<span class="n">HEIGHT</span> <span class="o">=</span> <span class="mi">480</span>
+<span class="n">FPS</span> <span class="o">=</span> <span class="mi">30</span>
+
+<span class="c1"># define colors</span>
+<span class="n">WHITE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">BLACK</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">RED</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">GREEN</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">BLUE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+
+<span class="c1"># initialize pygame and create window</span>
+<span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<span class="n">screen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">((</span><span class="n">WIDTH</span><span class="p">,</span> <span class="n">HEIGHT</span><span class="p">))</span>
+<span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s2">&quot;My Game&quot;</span><span class="p">)</span>
+<span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+
+<span class="c1"># Game loop</span>
+<span class="n">running</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">while</span> <span class="n">running</span><span class="p">:</span>
+    <span class="c1"># keep loop running at the right speed</span>
+    <span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">FPS</span><span class="p">)</span>
+    <span class="c1"># Process input (events)</span>
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+        <span class="c1"># check for closing window</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+            <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="c1"># Update</span>
+
+    <span class="c1"># Draw / render</span>
+    <span class="n">screen</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+    <span class="n">all_sprites</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
+    <span class="c1"># *after* drawing everything, flip the display</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
+
+<span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>Congratulations!  You have a working Pygame template.  Save this file with a good name, something like <code>pygame template.py</code> so that you can re-use this every time you start on a new Pygame project.</p>
+
+<p>In the next tutorial, we&rsquo;ll use this template as the starting point for learning how to draw objects on the screen and make them move around.</p>
+
+<h3 id="a-href-blog-2016-08-pygame-1-2-working-with-sprites-part-2-working-with-sprites-a"><a href="/blog/2016/08/pygame_1-2_working-with-sprites/">Part 2: Working with Sprites </a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://kidscancode.org/python-install.html">Installing Python</a></li>
+<li><a href="http://kidscancode.org/blog/2015/09/pygame_install/">Installing Pygame</a></li>
+<li><a href="https://www.youtube.com/watch?v=uve1tjVIQ6c&ab_channel=KidsCanCode">Setting up Atom</a></li>
+</ul>
+
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>

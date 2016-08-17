@@ -121,6 +121,7 @@ strong {
 ul, ol, dl {
   margin-top: 0;
   margin-bottom: 1rem;
+  font-size: 1.2rem;
 }
 
 dt {
@@ -156,10 +157,10 @@ pre {
   font-family: "Ubuntu Mono", Menlo, Monaco, "Courier New", monospace;
 }
 code {
-  padding: .25em .5em;
-  font-size: 85%;
-  color: #eee;
-  background-color: #f9f9f9;
+  padding: .25em .1em;
+  font-size: 120%;
+  color: #202020;
+  /*background-color: #202020;*/
   border-radius: 3px;
 }
 pre {
@@ -178,7 +179,7 @@ pre {
 }
 pre code {
   padding: 0;
-  font-size: 100%;
+  font-size: 125%;
   /*color: inherit;*/
   background-color: transparent;
 }

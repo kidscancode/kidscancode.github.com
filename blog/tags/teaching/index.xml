@@ -25,19 +25,19 @@
 
 &lt;p&gt;In the same way, learning about history or math contribute to a better understanding of the world by providing perspectives and ways of thinking that we wouldn&amp;rsquo;t otherwise know.  In particular, I&amp;rsquo;ll talk about the use of math in more detail below.&lt;/p&gt;
 
-&lt;h3 id=&#34;but-what-about-kids-who-aren-t-interested-in-becoming-programmers:54a9d675a59537331ba31cd49ae01870&#34;&gt;&amp;ldquo;But what about kids who aren&amp;rsquo;t interested in becoming programmers?&amp;rdquo;&lt;/h3&gt;
+&lt;h3 id=&#34;but-what-about-kids-who-aren-t-interested-in-becoming-programmers&#34;&gt;&amp;ldquo;But what about kids who aren&amp;rsquo;t interested in becoming programmers?&amp;rdquo;&lt;/h3&gt;
 
 &lt;p&gt;We don&amp;rsquo;t teach science and math because we expect every child to grow up and become a scientist or engineer. The goal of a general education is to produce a well-rounded individual who has a good understanding of the world.  It&amp;rsquo;s also important because it gives kids a chance to discover their aptitudes. If a child is never even exposed to a particular subject, how can they find or develop a passion for it?&lt;/p&gt;
 
 &lt;p&gt;Even kids whose talents lie in a non-technical direction can benefit from a solid understanding of how technology works.  Regardless of your future path, it&amp;rsquo;s very likely that you will be using and interacting with technology to some extent in your career and daily life.&lt;/p&gt;
 
-&lt;h3 id=&#34;coding-is-problem-solving:54a9d675a59537331ba31cd49ae01870&#34;&gt;Coding is problem solving&lt;/h3&gt;
+&lt;h3 id=&#34;coding-is-problem-solving&#34;&gt;Coding is problem solving&lt;/h3&gt;
 
 &lt;p&gt;Programming a computer is an exercise in problem solving and logic.  In order to successfully program a computer to perform a particular task, the programmer has to break the problem down into manageable, bite-sized steps and &amp;ldquo;teach&amp;rdquo; those steps to the computer.&lt;/p&gt;
 
 &lt;p&gt;Even outside of computer programming, this is a hugely valuable skill.  Being able to tackle complex problems and break them down is something that many professions can benefit from.  Think about complicated situations that you&amp;rsquo;ve had to deal with in your work or personal life.  Consider a lawyer, for example, constructing an argument based on a set of facts, or an architect designing all the many systems that go into a new building.  These are all very similar processes of logic and problem solving.&lt;/p&gt;
 
-&lt;h3 id=&#34;it-s-empowering:54a9d675a59537331ba31cd49ae01870&#34;&gt;It&amp;rsquo;s empowering&lt;/h3&gt;
+&lt;h3 id=&#34;it-s-empowering&#34;&gt;It&amp;rsquo;s empowering&lt;/h3&gt;
 
 &lt;p&gt;Predicting the future is notoriously difficult, but it&amp;rsquo;s probably a safe bet to say that today&amp;rsquo;s kids will not have &lt;em&gt;less&lt;/em&gt; technology around them when they grow up.  Those students who have developed an understanding of how technology works will be better equipped to deal with the ways that technology impacts their lives.&lt;/p&gt;
 
@@ -48,19 +48,19 @@
 &lt;!-- ### It complements many other subjects
 Programming has many practical applications to other areas of knowledge. --&gt;
 
-&lt;h3 id=&#34;it-pays-to-start-young:54a9d675a59537331ba31cd49ae01870&#34;&gt;It pays to start young&lt;/h3&gt;
+&lt;h3 id=&#34;it-pays-to-start-young&#34;&gt;It pays to start young&lt;/h3&gt;
 
 &lt;p&gt;For those students who &lt;em&gt;do&lt;/em&gt; have an aptitude and interest in computer science and/or software engineering, there is a huge benefit to being exposed to those subjects at an early age.&lt;/p&gt;
 
 &lt;p&gt;Like many skills, becoming accomplished at programming takes practice.  It can be likened to playing the piano - no matter how naturally talented the player, there is no substitute for lots and lots of practice.  Students whose first exposure to programming doesn&amp;rsquo;t happen until they reach college will be at a disadvantage to those who have already been coding for years.  In my own experience, I have interviewed recent college graduates who, while completing a computer science degree, are not sufficiently experienced in programming to be able to fulfill the requirements of an entry level coding position.  They just haven&amp;rsquo;t had enough practice.&lt;/p&gt;
 
-&lt;h3 id=&#34;it-has-a-future:54a9d675a59537331ba31cd49ae01870&#34;&gt;It has a future&lt;/h3&gt;
+&lt;h3 id=&#34;it-has-a-future&#34;&gt;It has a future&lt;/h3&gt;
 
 &lt;p&gt;Computer technology is becoming more and more deeply integrated into our world.  Mobile computing, robotics, nanotechnology and other fields are rapidly growing and all will need programmers to make them work.  Medical and other scientific research fields now use computers extensively - indeed, they can&amp;rsquo;t be done without computing anymore.&lt;/p&gt;
 
 &lt;p&gt;To illustrate this fact, as of last year, the unemployment rate in the high tech sector was around 3%, with that of programmers in specific being half that.  During the recent recession, coders were relatively immune to the downturn in employment. Tomorrow&amp;rsquo;s programmers will continue to be in demand as these and other technology fields continue to grow.&lt;/p&gt;
 
-&lt;h3 id=&#34;conclusion:54a9d675a59537331ba31cd49ae01870&#34;&gt;Conclusion&lt;/h3&gt;
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
 
 &lt;p&gt;These are just a few of the ways that early computer science education can benefit today&amp;rsquo;s students.  In short: we need kids who are prepared for the high tech future.&lt;/p&gt;
 
@@ -91,67 +91,67 @@ Programming has many practical applications to other areas of knowledge. --&gt;
 &lt;li&gt;IDLE issues&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;nested-parentheses:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;Nested parentheses&lt;/h3&gt;
+&lt;h3 id=&#34;nested-parentheses&#34;&gt;Nested parentheses&lt;/h3&gt;
 
 &lt;p&gt;One of the most common syntax errors I see among students is leaving off the ending parentheses when one statement is nested inside another. Nested parentheses happen frequently, and help with both readability and reducing code complexity.&lt;/p&gt;
 
 &lt;p&gt;For example, instead of doing this:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;angle&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;randrange(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;360&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;turtle&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;left(angle)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;angle&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;randrange&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;360&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;turtle&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;left&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;angle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;We can simplify by nesting the randrange() call inside the parentheses of the left() function:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;turtle&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;left(randrange(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;360&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;turtle&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;left&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;randrange&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;360&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;Often, the first time they see something like this, the question from my students will be &amp;ldquo;Why are there two parentheses at the end?&amp;rdquo;  It&amp;rsquo;s very important to emphasize that parentheses come in pairs and there should never be an odd one out.  Sometimes, I&amp;rsquo;ll encourage students to use spaces to highlight the nesting (although &lt;a href=&#34;https://www.python.org/dev/peps/pep-0008/&#34;&gt;PEP8&lt;/a&gt; fanatics will cringe):&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;turtle&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;left(&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;randrange(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;360&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;turtle&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;left&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;randrange&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;360&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h3 id=&#34;missing-colons-on-loops-and-functions:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;Missing colons on loops and functions&lt;/h3&gt;
+
+&lt;h3 id=&#34;missing-colons-on-loops-and-functions&#34;&gt;Missing colons on loops and functions&lt;/h3&gt;
 
 &lt;p&gt;One of the first constructions students learn is the for loop, which allows you to repeat a block of code multiple times:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;range(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;):&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(i)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;That colon at the end of the first line is very important, because it indicates that the indented code coming after it is the block that belongs to the loop (ie the code that is to be repeated).&lt;/p&gt;
 
 &lt;p&gt;Forgetting to type this colon has a couple of implications.  In addition to resulting in an &amp;ldquo;expected an indented block&amp;rdquo; error message, it also means that the editor (usually IDLE when working with beginners) won&amp;rsquo;t automatically indent the next line - so now the student has two problems: adding the colon and fixing the indenting.&lt;/p&gt;
 
-&lt;h3 id=&#34;indentation:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;Indentation&lt;/h3&gt;
+&lt;h3 id=&#34;indentation&#34;&gt;Indentation&lt;/h3&gt;
 
 &lt;p&gt;As shown in the previous example, indentation is important to Python.  It indicates code blocks and how they are related.  IDLE actually does a pretty good job of trying to automatically indent, but it only goes in the forward direction - if you need to unindent one level, you have to hit &amp;ldquo;Backspace.&amp;rdquo;  This leads to problems like the following, which will result in an &amp;ldquo;syntax error&amp;rdquo; message:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;guess&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;secret:&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Too high!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;guess&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;secret:&lt;/span&gt;
-        &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Too low!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color: #66d9ef&#34;&gt;else&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;:&lt;/span&gt;
-            &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;You got it!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;guess&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;secret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;Too high!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;guess&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;secret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;Too low!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;You got it!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;The correct indentation:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;guess&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;secret:&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Too high!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #66d9ef&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;guess&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;secret:&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Too low!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #66d9ef&#34;&gt;else&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;:&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;You got it!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;guess&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;secret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;Too high!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;guess&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;secret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;Too low!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;You got it!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h3 id=&#34;idle-issues:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;IDLE issues&lt;/h3&gt;
+
+&lt;h3 id=&#34;idle-issues&#34;&gt;IDLE issues&lt;/h3&gt;
 
 &lt;p&gt;IDLE is the code editor and development environment that is installed automatically when Python is installed on your computer.  It&amp;rsquo;s a great tool for beginners, because it allows them to get started right away without needing to install any additional, complex software development tools.  However, it also has a number of annoying quirks that can waste huge amounts of a beginning coder&amp;rsquo;s time.&lt;/p&gt;
 
@@ -181,7 +181,7 @@ Programming has many practical applications to other areas of knowledge. --&gt;
 
 &lt;p&gt;This one is mainly a problem for me as a teacher.  There are only a limited number of font size options (with 22 being the largest).  When I&amp;rsquo;m displaying code on the projector, it can sometimes be hard to read from across the room, or I&amp;rsquo;d like to zoom in on a particular chunk of code.  In any other editor on the market, you can hit a +/- key combination to zoom the font size as big or small as you like, but in IDLE you are stuck with limited settings.&lt;/p&gt;
 
-&lt;h3 id=&#34;a-note-on-typing:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;A note on typing&lt;/h3&gt;
+&lt;h3 id=&#34;a-note-on-typing&#34;&gt;A note on typing&lt;/h3&gt;
 
 &lt;p&gt;All the above notwithstanding, I must point out here that the single most important factor in my experience that determines how much a student struggles with the learning to code is typing ability.  A student who is spending time and mental energy on hunting for the right keys is taking attention away from understanding the difficult concepts of the lesson.  In addition, they&amp;rsquo;re slower than other students so they start to feel pressure to keep up, which leads to a frustrating experience all around.&lt;/p&gt;
 
@@ -207,7 +207,7 @@ Programming has many practical applications to other areas of knowledge. --&gt;
 &lt;li&gt;It&amp;rsquo;s very widely used&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;programming-languages-are-tools:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;Programming languages are tools&lt;/h2&gt;
+&lt;h2 id=&#34;programming-languages-are-tools&#34;&gt;Programming languages are tools&lt;/h2&gt;
 
 &lt;p&gt;Programming languages can be thought of as tools in a toolbox.  You wouldn&amp;rsquo;t use a hammer to cut a piece of wood, and likewise a programmer will often choose a particular language based on what type of project they&amp;rsquo;re working on, or what the other members of their team may be using.  Most programmers will learn multiple languages over the course of their careers.&lt;/p&gt;
 
@@ -215,7 +215,7 @@ Programming has many practical applications to other areas of knowledge. --&gt;
 
 &lt;p&gt;Ultimately, learning to code is about learning how to think about problems and how to convince a computer to do what you want it to do.  You have to take a given problem or task and break it down into small manageable pieces that a computer can understand. The actual programming language is secondary, and by far the easier part of the learning process.&lt;/p&gt;
 
-&lt;h2 id=&#34;python-is-great-for-beginners:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;Python is great for beginners&lt;/h2&gt;
+&lt;h2 id=&#34;python-is-great-for-beginners&#34;&gt;Python is great for beginners&lt;/h2&gt;
 
 &lt;p&gt;Beginners need to start out by doing simple things.  Learning to code is hard enough when you&amp;rsquo;ve never been exposed to it before. The more the language can get out of your way and let you focus on the concepts, the better you&amp;rsquo;ll be able to understand them.  Some languages were just never intended to be for beginners (I&amp;rsquo;m looking at you, Java).&lt;/p&gt;
 
@@ -223,58 +223,58 @@ Programming has many practical applications to other areas of knowledge. --&gt;
 
 &lt;p&gt;For example, here is the code to print the words &amp;ldquo;Hello, World!&amp;rdquo; to the screen in Python:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Hello, World!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;Hello, World!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;By comparison, here is what you would need to type for Java:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;HelloWorld&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color: #f8f8f2&#34;&gt;System&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Hello, World&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;HelloWorld&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;Hello, World&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;Or this, for C:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt; &lt;span style=&#34;color: #75715e&#34;&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
- &lt;span style=&#34;color: #75715e&#34;&gt;#include &amp;lt;stdlib.h&amp;gt;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span&gt;&lt;/span&gt; &lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+ &lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
 
- &lt;span style=&#34;color: #66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
- &lt;span style=&#34;color: #f8f8f2&#34;&gt;{&lt;/span&gt;
-     &lt;span style=&#34;color: #f8f8f2&#34;&gt;puts(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Hello World!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;);&lt;/span&gt;
-     &lt;span style=&#34;color: #66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;EXIT_SUCCESS;&lt;/span&gt;
- &lt;span style=&#34;color: #f8f8f2&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+ &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+ &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+     &lt;span class=&#34;n&#34;&gt;puts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;Hello World!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+     &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;EXIT_SUCCESS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+ &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;Beginners are not ready for some of the more advanced concepts required to explain what each of those lines of Java or C does, so most beginner classes are forced to gloss over them with &amp;ldquo;just type it and you&amp;rsquo;ll learn why later.&amp;rdquo;  In contrast, in Python it&amp;rsquo;s easy to do easy things.  Especially when teaching children, this is a very important factor.&lt;/p&gt;
 
 &lt;p&gt;As another example, let&amp;rsquo;s look at the loop.  Loops are a very important part of programming; they tell the computer to repeat some code over and over.  Here&amp;rsquo;s how you print &amp;ldquo;hello&amp;rdquo; five times in Python:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;range(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;):&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;Versus Java:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;Hello&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color: #66d9ef&#34;&gt;for&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;++)&lt;/span&gt;
-            &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
-                &lt;span style=&#34;color: #f8f8f2&#34;&gt;System&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;hello&lt;/span&gt;&lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;);&lt;/span&gt;
-            &lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Hello&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++)&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;“&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hello&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;The C-style loop syntax (initialize; test; update) is very tricky to get right at first - there&amp;rsquo;s a lot to unpack there.  And don&amp;rsquo;t even get me started on all those curly brackets.&lt;/p&gt;
 
-&lt;h2 id=&#34;but-it-s-not-only-for-beginners:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;But it&amp;rsquo;s not &lt;em&gt;only&lt;/em&gt; for beginners&lt;/h2&gt;
+&lt;h2 id=&#34;but-it-s-not-only-for-beginners&#34;&gt;But it&amp;rsquo;s not &lt;em&gt;only&lt;/em&gt; for beginners&lt;/h2&gt;
 
 &lt;p&gt;A lot of programming curriculum addresses the friendliness problem by using specialized teaching languages that simplify things for the classroom environment.  The problem with this solution is that it sets a ceiling on how far students can go; when they reach the limits of the teaching language and want to move on to &amp;ldquo;real&amp;rdquo; programming, they are forced to start over with a whole new system.&lt;/p&gt;
 
@@ -284,11 +284,11 @@ Programming has many practical applications to other areas of knowledge. --&gt;
 
 &lt;p&gt;All of this means that there is a vast amount of available resources for Python - books, videos, web tutorials, and online courses.  The Python community is very large and welcoming to newcomers.&lt;/p&gt;
 
-&lt;h3 id=&#34;what-about-javascript:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;What about Javascript?&lt;/h3&gt;
+&lt;h3 id=&#34;what-about-javascript&#34;&gt;What about Javascript?&lt;/h3&gt;
 
 &lt;p&gt;Javascript (not to be confused with Java - the two are completely unrelated) is another popular choice for teaching kids programming.  Its advantage is its ubiquity: all you need is a web browser, so there&amp;rsquo;s nothing to install.  For that reason, many sites like Khan Academy and code.org have chosen it.  However, I find its syntax to be a little less friendly than Python, so it&amp;rsquo;s not my first choice in the classroom.  It would make a great second language for app/game development, though.&lt;/p&gt;
 
-&lt;h2 id=&#34;final-thoughts:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;Final thoughts&lt;/h2&gt;
+&lt;h2 id=&#34;final-thoughts&#34;&gt;Final thoughts&lt;/h2&gt;
 
 &lt;p&gt;Learning to code is the important thing - which language should be a matter of practicality.&lt;/p&gt;
 

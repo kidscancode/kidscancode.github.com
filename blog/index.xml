@@ -7,7 +7,524 @@
     <language>en-us</language>
     
     
-    <updated>Sun, 01 Nov 2015 12:04:02 -0700</updated>
+    <updated>Mon, 15 Aug 2016 20:14:12 PDT</updated>
+    
+    <item>
+      <title>Pygame Lesson 1-3: More About Sprites</title>
+      <link>/blog/2016/08/pygame_1-3_more-about-sprites/</link>
+      <pubDate>Mon, 15 Aug 2016 20:14:12 PDT</pubDate>
+      
+      <guid>/blog/2016/08/pygame_1-3_more-about-sprites/</guid>
+      <description>
+
+&lt;p&gt;This is part 3 of our tutorial series, &amp;ldquo;Game Development with Pygame&amp;rdquo;.  It is intended for beginner/intermediate programmers who are interested in game development and improving their Python coding skills.  You should start with &lt;a href=&#34;/blog/blog/2016/08/pygame_1-1_getting-started/&#34;&gt;Part 1: Getting Started &lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:&lt;/p&gt;
+
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/fcryHcZE_sM&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;h3 id=&#34;moving-to-graphical-sprites&#34;&gt;Moving to graphical sprites&lt;/h3&gt;
+
+&lt;p&gt;Colored rectangles are fine - they&amp;rsquo;re a great way to start and make sure you have the basics of your game working, but sooner or later you&amp;rsquo;re going to want to use a cool spaceship image or character for your sprite. This leads us to the first issue: where do you get your game graphics.&lt;/p&gt;
+
+&lt;h3 id=&#34;where-to-find-art&#34;&gt;Where to find art&lt;/h3&gt;
+
+&lt;p&gt;When you need art for your game, you have 3 choices:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Draw it yourself&lt;/li&gt;
+&lt;li&gt;Find an artist to draw it for you&lt;/li&gt;
+&lt;li&gt;Use pre-existing art from the Internet&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;1 and 2 are fine if you or your friends are artistically inclined, but for most programmers (yours truly included), creating nice-looking art is not in our skill set.  So that leaves the Internet, and it&amp;rsquo;s very important to remember that you shouldn&amp;rsquo;t use art that you do not have the right to use.  While it&amp;rsquo;s easy enough to search and find a picture of Mario or your favorite Pokemon, that doesn&amp;rsquo;t mean that it&amp;rsquo;s OK for you to use it in your game, especially if you plan to put it online and let other people see it.&lt;/p&gt;
+
+&lt;p&gt;Fortunately, there&amp;rsquo;s a good solution: &lt;a href=&#34;http://opengameart.org&#34;&gt;OpenGameArt.org&lt;/a&gt;.  This website is loaded with tons of art, sound, music, and more - and it&amp;rsquo;s all generously licensed by the artists for you to use in your games.  One of the best artists you can find there is named Kenney (just put his name in the search box).&lt;/p&gt;
+
+&lt;p&gt;You can also visit &lt;a href=&#34;http://kenny.nl&#34;&gt;Kenney&amp;rsquo;s website&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The reason I love to use Kenney&amp;rsquo;s art (besides the fact that it&amp;rsquo;s very high quality) is that he likes to release it in packs.  This means that you can get sets of art that will all match in style, instead of trying to mix and match images from multiple artists.&lt;/p&gt;
+
+&lt;p&gt;For this lesson, we&amp;rsquo;re going to use Kenney&amp;rsquo;s &lt;a href=&#34;http://opengameart.org/content/platformer-art-complete-pack-often-updated&#34;&gt;Platformer Art Complete Pack&lt;/a&gt;, which has lots of graphics for making a platformer-style game.  Go ahead and download it and unzip. We&amp;rsquo;re going to use the image &amp;ldquo;p1_jump.png&amp;rdquo;:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/p1_jump.png&#34;&gt; &lt;img src=&#34;/blog/blog/img/p1_jump.png&#34;&gt; &lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;You can also just click on the image above to download the player image.&lt;/p&gt;
+
+&lt;h3 id=&#34;organizing-your-game-assets&#34;&gt;Organizing your game assets&lt;/h3&gt;
+
+&lt;p&gt;First we need a folder to hold our &lt;em&gt;assets&lt;/em&gt;, which is a term game developers use to refer to things like art and sound.  I called the folder &amp;ldquo;img&amp;rdquo; for short, and I put the player image into it.&lt;/p&gt;
+
+&lt;p&gt;To use this image in our game, we need to tell Pygame to load the picture file, which means we need our program to know where the file is located.  Depending on what kind of computer you are using, this can be different, and we want to be able to run our program on any computer, so we need to load a Python library called &lt;code&gt;os&lt;/code&gt;, and then specify where our game is located:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;pygame&lt;/span&gt;
+ &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;random&lt;/span&gt;
+ &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;os&lt;/span&gt;
+
+ &lt;span class=&#34;c1&#34;&gt;# set up asset folders&lt;/span&gt;
+ &lt;span class=&#34;n&#34;&gt;game_folder&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dirname&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__file__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The special Python variable &lt;code&gt;__file__&lt;/code&gt; refers to whatever folder your game code is saved in, and the command &lt;code&gt;os.path.dirname&lt;/code&gt; figures out the &lt;em&gt;path&lt;/em&gt; to that folder.  For example, on my computer, the path to my code is this:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;/Users/chris/Documents/gamedev/tutorials/1-3 sprite example.py&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;But I&amp;rsquo;m using a computer running OS X. If you&amp;rsquo;re using Windows, your path might look like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;C:\Users\chris\Documents\python\game.py&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;As you can see, different operating systems use different ways of describing where things are located on the computer.  By using the &lt;code&gt;os.path&lt;/code&gt; command, we can let the computer figure out what the right path is (whether to use &amp;ldquo;/&amp;rdquo; or &amp;ldquo;\&amp;rdquo; for example.)&lt;/p&gt;
+
+&lt;p&gt;Now, we can specify our &amp;ldquo;img&amp;rdquo; folder:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;pygame&lt;/span&gt;
+ &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;random&lt;/span&gt;
+ &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;os&lt;/span&gt;
+
+ &lt;span class=&#34;c1&#34;&gt;# set up asset folders&lt;/span&gt;
+ &lt;span class=&#34;n&#34;&gt;game_folder&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dirname&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__file__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+ &lt;span class=&#34;n&#34;&gt;img_folder&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;game_folder&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;img&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+ &lt;span class=&#34;n&#34;&gt;player_img&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;load&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;img_folder&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;p1_jump.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;convert&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now we&amp;rsquo;ve loaded our image by using &lt;code&gt;pygame.image.load()&lt;/code&gt; and we&amp;rsquo;ve made sure to use &lt;code&gt;convert()&lt;/code&gt;, which will speed up Pygame&amp;rsquo;s drawing by converting the image into a format that will be faster to draw on the screen. Now we&amp;rsquo;re ready to replace the plain green square in our sprite with our fancy player image:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;player_img&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;center&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Notice we&amp;rsquo;ve deleted the &lt;code&gt;self.image.fill(GREEN)&lt;/code&gt; commmand - we don&amp;rsquo;t need it to be filled with a solid color anymore.  &lt;code&gt;get_rect()&lt;/code&gt; will still work just fine, because it looks at whatever &lt;code&gt;self.image&lt;/code&gt; is to figure out what the bounding rectangle should be.&lt;/p&gt;
+
+&lt;p&gt;Now if you run the program, you should see a nice little cartoon alien running across the screen.  But we have a problem - one we can&amp;rsquo;t see because the background is currently black.  Change the &lt;code&gt;screen.fill()&lt;/code&gt; command at the bottom to something else - I decided to use &lt;code&gt;BLUE&lt;/code&gt;.  Now you can see the issue:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/sprite_example_4.gif&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;When you have an image file on the computer, that file is always a rectangular grid of pixels. No matter what shape you&amp;rsquo;ve drawn, there&amp;rsquo;s still a border of pixels filling the &amp;ldquo;background&amp;rdquo; of your image.  What we need to do is tell Pygame to ignore the pixels in the image that we don&amp;rsquo;t care about.  In this image, those pixels happen to be black, so we can add the following:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;player_img&lt;/span&gt;
+	&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_colorkey&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;BLACK&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;center&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;set_colorkey()&lt;/code&gt; just tells Pygame that when we draw the image we want to ignore any pixels of the specified color.  Now our image looks much better:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/sprite_example_5.gif&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Congratulations, you have now learned the basics of working with Pygame!  Now it&amp;rsquo;s time to start making a real game.  We have created a few tutorials showing the process of creating a full game from start to finish.  They get more complex as we go, so it&amp;rsquo;s recommended that you follow them in order.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;&#34;&gt;Click here&lt;/a&gt; for the full list of tutorials.&lt;/p&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/python-install.html&#34;&gt;Installing Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/blog/2015/09/pygame_install/&#34;&gt;Installing Pygame&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uve1tjVIQ6c&amp;ab_channel=KidsCanCode&#34;&gt;Setting up Atom&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Pygame Lesson 1-2: Working with Sprites</title>
+      <link>/blog/2016/08/pygame_1-2_working-with-sprites/</link>
+      <pubDate>Mon, 15 Aug 2016 13:14:12 PDT</pubDate>
+      
+      <guid>/blog/2016/08/pygame_1-2_working-with-sprites/</guid>
+      <description>
+
+&lt;p&gt;This is part 2 of our tutorial series, &amp;ldquo;Game Development with Pygame&amp;rdquo;.  It is intended for beginner/intermediate programmers who are interested in game development and improving their Python coding skills.  You should start with &lt;a href=&#34;/blog/blog/2016/08/pygame_1-1_getting-started/&#34;&gt;Part 1: Getting Started &lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:&lt;/p&gt;
+
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/Eltz-XJMxuU&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;h3 id=&#34;what-is-a-sprite&#34;&gt;What is a sprite?&lt;/h3&gt;
+
+&lt;p&gt;A &lt;em&gt;sprite&lt;/em&gt; is a computer graphics term for any object on the screen that can move around.  When you play any 2D game, all the objects you see on the screen are sprites. Sprites can be animated, they can be controlled by the player, and they can even interact with each other.&lt;/p&gt;
+
+&lt;p&gt;We will take care of updating and drawing our sprites in the &lt;em&gt;UPDATE&lt;/em&gt; and &lt;em&gt;DRAW&lt;/em&gt; sections of our game loop.  But you can probably imagine, if your game has a large number of sprites then these sections of your game loop could get very long and complicated.  Fortunately, Pygame has a good solution for this: the &lt;em&gt;sprite group&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;A sprite group is just a collection of sprites that you can act on all at the same time.  Let&amp;rsquo;s make a sprite group to hold all the sprites in our game:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;clock&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Clock&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+ &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Group&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now we can take advantage of the group by adding the following in our loop:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;# Update&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;update&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;# Draw / render&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;BLACK&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;draw&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now for every sprite that we create we just make sure we add it to the &lt;code&gt;all_sprites&lt;/code&gt; group, and it will automatically be drawn on the screen and updated each time through the loop.&lt;/p&gt;
+
+&lt;h3 id=&#34;creating-a-sprite&#34;&gt;Creating a sprite&lt;/h3&gt;
+
+&lt;p&gt;Now we&amp;rsquo;re ready to make our first sprite.  In Pygame, sprites are &lt;em&gt;objects&lt;/em&gt;.  If you haven&amp;rsquo;t worked with objects in Python before, they are a convenient way of grouping data and code into a single entity.  It may be a little confusing at first, but fortunately, Pygame sprites are a good way to practice with objects and get used to how they work.&lt;/p&gt;
+
+&lt;p&gt;We start by defining our new sprite:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;class&lt;/code&gt; tells Python we&amp;rsquo;re defining a new object, which is going to be our player sprite, and its type is &lt;code&gt;pygame.sprite.Sprite&lt;/code&gt;, which means it will be based on Pygame&amp;rsquo;s pre-defined &lt;code&gt;Sprite&lt;/code&gt; class.&lt;/p&gt;
+
+&lt;p&gt;The first bit of code we need in a &lt;code&gt;class&lt;/code&gt; definition, is the special &lt;code&gt;__init__()&lt;/code&gt; function, which defines what code will run whenever a new object of this type is created.  There are also two properties that every Pygame sprite &lt;em&gt;must&lt;/em&gt; have: an &lt;code&gt;image&lt;/code&gt; and a &lt;code&gt;rect&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Surface&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GREEN&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The first line, &lt;code&gt;pygame.sprite.Sprite.__init__(self)&lt;/code&gt; is required by Pygame - it runs the built-in &lt;code&gt;Sprite&lt;/code&gt; classes initializer.  Next, we define the &lt;code&gt;image&lt;/code&gt; property - in this case, we&amp;rsquo;re just creating a simple 50 x 50 square and filling it with the color &lt;code&gt;GREEN&lt;/code&gt;. Later we&amp;rsquo;ll learn how to make the sprite&amp;rsquo;s &lt;code&gt;image&lt;/code&gt; be something fancier, like a character or spaceship, but a solid square is good enough for now.&lt;/p&gt;
+
+&lt;p&gt;Next, we must define the sprite&amp;rsquo;s &lt;code&gt;rect&lt;/code&gt;, which is short for &amp;ldquo;rectangle&amp;rdquo;.  Rectangles are used all over the place in Pygame to keep track of an object&amp;rsquo;s coordinates.  the &lt;code&gt;get_rect()&lt;/code&gt; command just looks at the &lt;code&gt;image&lt;/code&gt; and calculates the rectangle that will enclose it.&lt;/p&gt;
+
+&lt;p&gt;We can use the &lt;code&gt;rect&lt;/code&gt; to put the sprite wherever we want it on the screen.  Let&amp;rsquo;s start with the sprite in the center:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Surface&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GREEN&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;center&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now that we&amp;rsquo;ve defined our Player sprite, we need to &amp;ldquo;spawn&amp;rdquo; (meaning create) it by making an &lt;em&gt;instance&lt;/em&gt; of the Player class.  We also need to make sure we add the sprite to the &lt;code&gt;all_sprites&lt;/code&gt; group:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Group&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;player&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, if you run your program, you&amp;rsquo;ll see the green square at the center of the screen.  Go ahead and increase the &lt;code&gt;WIDTH&lt;/code&gt; and &lt;code&gt;HEIGHT&lt;/code&gt; settings of your program so that you will have plenty of space for the sprite to move around in the next step.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/sprite_example_1.png&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;sprite-movement&#34;&gt;Sprite movement&lt;/h3&gt;
+
+&lt;p&gt;Remember, in the game loop, we have the &lt;code&gt;all_sprites.update()&lt;/code&gt;.  This means that for every sprite in the group, Pygame will look for an &lt;code&gt;update()&lt;/code&gt; function and run it.  So to get our sprite to move, we just need to define its update rules:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Surface&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GREEN&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;center&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;update&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;
+
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This means that every time through the game loop, we increase the x coordinate of the sprite by 5 pixels.  Go ahead and run it and you&amp;rsquo;ll see the sprite head off the right side of the screen:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/sprite_example_2.gif&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s fix that by making the sprite wrap around - whenever it reaches the right side of the screen, we will move it to the left side.  We can do this easily by using one of the convenient &amp;ldquo;handles&amp;rdquo; on the sprite&amp;rsquo;s &lt;code&gt;rect&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/rect_handles.png&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;So if the left edge of the &lt;code&gt;rect&lt;/code&gt; goes off the screen, we&amp;rsquo;ll set the right edge to 0:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Surface&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GREEN&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;center&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;update&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;left&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;right&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And now we can see the sprite will appear to wrap around the screen:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/sprite_example_3.gif&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;That will do it for this lesson.  Go ahead and experiment - notice that anything you put in the &lt;code&gt;update()&lt;/code&gt; method of the sprite will happen every frame.  Try making the sprite move up and down (change the y coordinate) or making it bounce off the wall (reverse the direction when the rect reaches the edge).&lt;/p&gt;
+
+&lt;p&gt;In the next tutorial, we&amp;rsquo;ll show you how to use art for your sprite - changing it from a plain square into an animated character.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-blog-2016-08-pygame-1-3-more-about-sprites-part-3-more-about-sprites-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/08/pygame_1-3_more-about-sprites/&#34;&gt;Part 3: More About Sprites &lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/python-install.html&#34;&gt;Installing Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/blog/2015/09/pygame_install/&#34;&gt;Installing Pygame&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uve1tjVIQ6c&amp;ab_channel=KidsCanCode&#34;&gt;Setting up Atom&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Pygame Lesson 1-1: Getting Started</title>
+      <link>/blog/2016/08/pygame_1-1_getting-started/</link>
+      <pubDate>Fri, 12 Aug 2016 12:04:12 PDT</pubDate>
+      
+      <guid>/blog/2016/08/pygame_1-1_getting-started/</guid>
+      <description>
+
+&lt;p&gt;This is part 1 of our tutorial series, &amp;ldquo;Game Development with Pygame&amp;rdquo;.  It is intended for beginner/intermediate programmers who are interested in game development and improving their Python coding skills.&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:&lt;/p&gt;
+
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/VO8rTszcW4s&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;h3 id=&#34;what-is-pygame&#34;&gt;What is Pygame?&lt;/h3&gt;
+
+&lt;p&gt;Pygame is a &amp;ldquo;game library&amp;rdquo; - a set of tools to help programmers making games.  Some of these things are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Graphics and animation&lt;/li&gt;
+&lt;li&gt;Sound (including music)&lt;/li&gt;
+&lt;li&gt;Control (keyboard, mouse, gamepad, etc.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;game-loop&#34;&gt;Game Loop&lt;/h3&gt;
+
+&lt;p&gt;At the heart of every game is a loop, which we call the &amp;ldquo;Game Loop&amp;rdquo;.  This loop is constantly running, over and over again, doing all the things that are needed to make the game work.  Each time the game goes through this loop is called a &lt;em&gt;frame&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Each frame, many different things may happen, but they can be organized into three different categories:&lt;/p&gt;
+
+&lt;h4 id=&#34;1-process-input-or-events&#34;&gt;1. Process Input (or Events)&lt;/h4&gt;
+
+&lt;p&gt;This means anything from outside your game that you want to pay attention to - anything that you need the game to respond to. These may be keys being pressed on the keyboard, the mouse being clicked, etc.&lt;/p&gt;
+
+&lt;h4 id=&#34;2-update-game&#34;&gt;2. Update Game&lt;/h4&gt;
+
+&lt;p&gt;This means changing anything that needs to change on this frame.  If a character is up in the air, gravity needs to pull it down.  If two objects run into each other, they need to explode.&lt;/p&gt;
+
+&lt;h4 id=&#34;3-render-or-draw&#34;&gt;3. Render (or Draw)&lt;/h4&gt;
+
+&lt;p&gt;In this step, we draw everything on the screen.  Backgrounds, characters, menus, or anything else that the player needs to see must be drawn on the screen in its correct, updated location.&lt;/p&gt;
+
+&lt;h4 id=&#34;clock&#34;&gt;Clock&lt;/h4&gt;
+
+&lt;p&gt;One other important aspect of the loop is controlling how fast the whole loop runs.  You may have heard the term &lt;em&gt;FPS&lt;/em&gt;, which stands for Frames Per Second. This means how many times per second should this loop happen.  This is important because you don&amp;rsquo;t want your game to run too fast or too slow.  You also don&amp;rsquo;t want it to run at a different speed on different computers - if your character should take 10 seconds to run across the screen, that should be true no matter what computer it&amp;rsquo;s happening on.&lt;/p&gt;
+
+&lt;h2 id=&#34;building-a-pygame-template&#34;&gt;Building a Pygame Template&lt;/h2&gt;
+
+&lt;p&gt;Now that we know what pieces we need to make the game work, we can start writing some code.  To begin with, we&amp;rsquo;re going to make a simple pygame program that does nothing but open a window and run a game loop.  This will be a great starting point for any pygame project you want to make.&lt;/p&gt;
+
+&lt;p&gt;At the top of our program, we&amp;rsquo;re going to import the libraries we need and set a few variables for our game options:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# Pygame template - skeleton for a new pygame project&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;pygame&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;random&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;360&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# width of our game window&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;480&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# height of our game window&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;FPS&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;30&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# frames per second&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Next we need to open the game window:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# initialize pygame and create window&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mixer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# for sound&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_mode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_caption&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;My Game&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;clock&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Clock&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;pygame.init()&lt;/code&gt; is the command to start up pygame and &amp;ldquo;initialize&amp;rdquo; it (which is a fancy word for start).  &lt;code&gt;screen&lt;/code&gt; will refer to our game screen, and we create it at the size we set in our configuration constants.  Finally, we create a &lt;code&gt;clock&lt;/code&gt; so that we will be able to make sure our game runs at the FPS we want.&lt;/p&gt;
+
+&lt;p&gt;Now it&amp;rsquo;s time to make the game loop:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# Game Loop&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# Process input (events)&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# Update&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# Render (draw)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Here is our game loop, which is a &lt;code&gt;while&lt;/code&gt; loop controlled by the variable &lt;code&gt;running&lt;/code&gt;.  If we ever want the game to end, we just have to set &lt;code&gt;running&lt;/code&gt; to &lt;code&gt;False&lt;/code&gt; and the loop will end.  Now we can fill in each of the sections with some basic code.&lt;/p&gt;
+
+&lt;h3 id=&#34;render-draw-section&#34;&gt;Render / Draw Section&lt;/h3&gt;
+
+&lt;p&gt;We&amp;rsquo;ll start with the &lt;em&gt;Draw&lt;/em&gt; section.  We don&amp;rsquo;t have any characters yet, but we can fill the screen with a solid color. To do this, we need to talk about how computers handle color.&lt;/p&gt;
+
+&lt;p&gt;Computer screens are made up of pixels, and these pixels have 3 parts to them: red, green, and blue.  How much each part is lit up determines what color that pixel is, like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/rgb_color_explain.png&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Each of the three primary colors can have a value between 0 (off) and 255 (100% on), so there are 256 different possibilities for each of the three primary colors.  Here  are some examples of some colors you can make:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/rgb_color_example.png&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;You can find the total number of colors a computer can display by multiplying:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;o&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;256&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;256&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;256&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;777&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;216&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now that we understand colors, let&amp;rsquo;s define a few at the top of our program:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# Colors (R, G, B)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;BLACK&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;WHITE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;RED&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;GREEN&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;BLUE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+And then we can have our draw section fill the screen.
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;# Draw / render&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;BLACK&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+However, this isn&amp;rsquo;t quite enough, because of the way computer displays work.  Changing a pixel on the screen means telling the video card to tell the monitor to change the
+actual pixel.  In computer terms, this is a very, very slow process.  So if you have a lot of things to draw on the screen, it can take a very long time to draw them all.  We can fix this in a clever way by using something called &lt;em&gt;double-buffering&lt;/em&gt;.  This sounds fancy, but it really just means this:&lt;/p&gt;
+
+&lt;p&gt;Imagine we had one of those whiteboards that is 2-sided and can flip over to show one side or the other.  The front will be the display (the screen the player sees), while the back is hidden and only the computer can &amp;ldquo;see&amp;rdquo; it.  Every frame, we do all of our drawing on the back side - every character, every bullet, every sparkly light, etc.  Then, when we&amp;rsquo;re done, we flip the board over and show the new frame.  This means that we&amp;rsquo;re only doing that slow process of talking to the display &lt;em&gt;once&lt;/em&gt; every frame, and not for every single thing on the screen.&lt;/p&gt;
+
+&lt;p&gt;All this happens automatically in pygame.  You just have to tell it to flip that whiteboard when you&amp;rsquo;ve finished drawing.  In fact, the command is even named &lt;code&gt;flip()&lt;/code&gt;:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;# Draw / render&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;BLACK&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# *after* drawing everything, flip the display&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;flip&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+Just make sure that you always do &lt;code&gt;flip()&lt;/code&gt; &lt;em&gt;last&lt;/em&gt;.  If you try to draw something after the flip, it won&amp;rsquo;t be seen!&lt;/p&gt;
+
+&lt;h3 id=&#34;input-events-section&#34;&gt;Input / Events Section&lt;/h3&gt;
+
+&lt;p&gt;We don&amp;rsquo;t have a game just yet, so we can&amp;rsquo;t really say what keys or mouse buttons or other controls we want to listen for.  However, there&amp;rsquo;s one important event that we need to set up.  If you tried running the program right now, you&amp;rsquo;d see that you have a problem: there&amp;rsquo;s no way to close the window!  Clicking on the &amp;lsquo;X&amp;rsquo; in the corner doesn&amp;rsquo;t work.  That&amp;rsquo;s because that&amp;rsquo;s actually an event, and we need to tell our program to listen for that event and have it exit the game.&lt;/p&gt;
+
+&lt;p&gt;Events can happen any time.  What if the player clicks the &amp;lsquo;jump&amp;rsquo; button while the update or draw part of the loop is happening?  You don&amp;rsquo;t want to just ignore that input - the player will be frustrated.  So what Pygame does is save up all the events that have happened since the last frame.  That way if the player is quickly mashing lots of buttons, you can make sure you know about all of them.  This will be a list, so we run a &lt;code&gt;for&lt;/code&gt; loop to look at all of them:&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+        &lt;span class=&#34;c1&#34;&gt;# check for closing window&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;QUIT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+Pygame has lots of events that it is able to look for.  &lt;code&gt;pygame.QUIT&lt;/code&gt; is the event that happens when the &amp;lsquo;X&amp;rsquo; is clicked, so we set &lt;code&gt;running&lt;/code&gt; to &lt;code&gt;False&lt;/code&gt; and the game loop will end.&lt;/p&gt;
+
+&lt;h3 id=&#34;controlling-fps&#34;&gt;Controlling FPS&lt;/h3&gt;
+
+&lt;p&gt;We don&amp;rsquo;t really have anything to put in the &amp;lsquo;Update&amp;rsquo; section yet, but we do still need to make sure we use our &lt;code&gt;FPS&lt;/code&gt; setting to control the speed.  We can do that like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# keep loop running at the right speed&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;clock&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tick&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FPS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The &lt;code&gt;tick()&lt;/code&gt; command tells pygame to figure out how long the loop took and then pause for however long it takes to make the whole loop (meaning the whole frame) to last the right amount of time. If we set &lt;code&gt;FPS&lt;/code&gt; to 30, that means we want a frame to last &lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;30&lt;/sub&gt; or 0.03 seconds.  If our loop code (updating, drawing, etc) only takes 0.01 seconds, then pygame will wait for 0.02 seconds, for example.&lt;/p&gt;
+
+&lt;h3 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h3&gt;
+
+&lt;p&gt;Finally, let&amp;rsquo;s make sure that when the game loop does end, we actually destroy the game window.  We do this by putting &lt;code&gt;pygame.quit()&lt;/code&gt; at the very end of our code.  So our final pygame template looks like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# Pygame template - skeleton for a new pygame project&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;pygame&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;random&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;360&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;480&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;FPS&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;30&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# define colors&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;WHITE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;BLACK&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;RED&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;GREEN&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;BLUE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;255&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# initialize pygame and create window&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mixer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;init&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_mode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_caption&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;My Game&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;clock&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Clock&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# Game loop&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# keep loop running at the right speed&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;clock&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tick&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FPS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# Process input (events)&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+        &lt;span class=&#34;c1&#34;&gt;# check for closing window&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;QUIT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;# Update&lt;/span&gt;
+
+    &lt;span class=&#34;c1&#34;&gt;# Draw / render&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;BLACK&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;draw&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# *after* drawing everything, flip the display&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;flip&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;quit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Congratulations!  You have a working Pygame template.  Save this file with a good name, something like &lt;code&gt;pygame template.py&lt;/code&gt; so that you can re-use this every time you start on a new Pygame project.&lt;/p&gt;
+
+&lt;p&gt;In the next tutorial, we&amp;rsquo;ll use this template as the starting point for learning how to draw objects on the screen and make them move around.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-blog-2016-08-pygame-1-2-working-with-sprites-part-2-working-with-sprites-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/08/pygame_1-2_working-with-sprites/&#34;&gt;Part 2: Working with Sprites &lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/python-install.html&#34;&gt;Installing Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/blog/2015/09/pygame_install/&#34;&gt;Installing Pygame&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uve1tjVIQ6c&amp;ab_channel=KidsCanCode&#34;&gt;Setting up Atom&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Coding is a Life Skill</title>
@@ -25,19 +542,19 @@
 
 &lt;p&gt;In the same way, learning about history or math contribute to a better understanding of the world by providing perspectives and ways of thinking that we wouldn&amp;rsquo;t otherwise know.  In particular, I&amp;rsquo;ll talk about the use of math in more detail below.&lt;/p&gt;
 
-&lt;h3 id=&#34;but-what-about-kids-who-aren-t-interested-in-becoming-programmers:54a9d675a59537331ba31cd49ae01870&#34;&gt;&amp;ldquo;But what about kids who aren&amp;rsquo;t interested in becoming programmers?&amp;rdquo;&lt;/h3&gt;
+&lt;h3 id=&#34;but-what-about-kids-who-aren-t-interested-in-becoming-programmers&#34;&gt;&amp;ldquo;But what about kids who aren&amp;rsquo;t interested in becoming programmers?&amp;rdquo;&lt;/h3&gt;
 
 &lt;p&gt;We don&amp;rsquo;t teach science and math because we expect every child to grow up and become a scientist or engineer. The goal of a general education is to produce a well-rounded individual who has a good understanding of the world.  It&amp;rsquo;s also important because it gives kids a chance to discover their aptitudes. If a child is never even exposed to a particular subject, how can they find or develop a passion for it?&lt;/p&gt;
 
 &lt;p&gt;Even kids whose talents lie in a non-technical direction can benefit from a solid understanding of how technology works.  Regardless of your future path, it&amp;rsquo;s very likely that you will be using and interacting with technology to some extent in your career and daily life.&lt;/p&gt;
 
-&lt;h3 id=&#34;coding-is-problem-solving:54a9d675a59537331ba31cd49ae01870&#34;&gt;Coding is problem solving&lt;/h3&gt;
+&lt;h3 id=&#34;coding-is-problem-solving&#34;&gt;Coding is problem solving&lt;/h3&gt;
 
 &lt;p&gt;Programming a computer is an exercise in problem solving and logic.  In order to successfully program a computer to perform a particular task, the programmer has to break the problem down into manageable, bite-sized steps and &amp;ldquo;teach&amp;rdquo; those steps to the computer.&lt;/p&gt;
 
 &lt;p&gt;Even outside of computer programming, this is a hugely valuable skill.  Being able to tackle complex problems and break them down is something that many professions can benefit from.  Think about complicated situations that you&amp;rsquo;ve had to deal with in your work or personal life.  Consider a lawyer, for example, constructing an argument based on a set of facts, or an architect designing all the many systems that go into a new building.  These are all very similar processes of logic and problem solving.&lt;/p&gt;
 
-&lt;h3 id=&#34;it-s-empowering:54a9d675a59537331ba31cd49ae01870&#34;&gt;It&amp;rsquo;s empowering&lt;/h3&gt;
+&lt;h3 id=&#34;it-s-empowering&#34;&gt;It&amp;rsquo;s empowering&lt;/h3&gt;
 
 &lt;p&gt;Predicting the future is notoriously difficult, but it&amp;rsquo;s probably a safe bet to say that today&amp;rsquo;s kids will not have &lt;em&gt;less&lt;/em&gt; technology around them when they grow up.  Those students who have developed an understanding of how technology works will be better equipped to deal with the ways that technology impacts their lives.&lt;/p&gt;
 
@@ -48,19 +565,19 @@
 &lt;!-- ### It complements many other subjects
 Programming has many practical applications to other areas of knowledge. --&gt;
 
-&lt;h3 id=&#34;it-pays-to-start-young:54a9d675a59537331ba31cd49ae01870&#34;&gt;It pays to start young&lt;/h3&gt;
+&lt;h3 id=&#34;it-pays-to-start-young&#34;&gt;It pays to start young&lt;/h3&gt;
 
 &lt;p&gt;For those students who &lt;em&gt;do&lt;/em&gt; have an aptitude and interest in computer science and/or software engineering, there is a huge benefit to being exposed to those subjects at an early age.&lt;/p&gt;
 
 &lt;p&gt;Like many skills, becoming accomplished at programming takes practice.  It can be likened to playing the piano - no matter how naturally talented the player, there is no substitute for lots and lots of practice.  Students whose first exposure to programming doesn&amp;rsquo;t happen until they reach college will be at a disadvantage to those who have already been coding for years.  In my own experience, I have interviewed recent college graduates who, while completing a computer science degree, are not sufficiently experienced in programming to be able to fulfill the requirements of an entry level coding position.  They just haven&amp;rsquo;t had enough practice.&lt;/p&gt;
 
-&lt;h3 id=&#34;it-has-a-future:54a9d675a59537331ba31cd49ae01870&#34;&gt;It has a future&lt;/h3&gt;
+&lt;h3 id=&#34;it-has-a-future&#34;&gt;It has a future&lt;/h3&gt;
 
 &lt;p&gt;Computer technology is becoming more and more deeply integrated into our world.  Mobile computing, robotics, nanotechnology and other fields are rapidly growing and all will need programmers to make them work.  Medical and other scientific research fields now use computers extensively - indeed, they can&amp;rsquo;t be done without computing anymore.&lt;/p&gt;
 
 &lt;p&gt;To illustrate this fact, as of last year, the unemployment rate in the high tech sector was around 3%, with that of programmers in specific being half that.  During the recent recession, coders were relatively immune to the downturn in employment. Tomorrow&amp;rsquo;s programmers will continue to be in demand as these and other technology fields continue to grow.&lt;/p&gt;
 
-&lt;h3 id=&#34;conclusion:54a9d675a59537331ba31cd49ae01870&#34;&gt;Conclusion&lt;/h3&gt;
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
 
 &lt;p&gt;These are just a few of the ways that early computer science education can benefit today&amp;rsquo;s students.  In short: we need kids who are prepared for the high tech future.&lt;/p&gt;
 
@@ -91,67 +608,67 @@ Programming has many practical applications to other areas of knowledge. --&gt;
 &lt;li&gt;IDLE issues&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;nested-parentheses:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;Nested parentheses&lt;/h3&gt;
+&lt;h3 id=&#34;nested-parentheses&#34;&gt;Nested parentheses&lt;/h3&gt;
 
 &lt;p&gt;One of the most common syntax errors I see among students is leaving off the ending parentheses when one statement is nested inside another. Nested parentheses happen frequently, and help with both readability and reducing code complexity.&lt;/p&gt;
 
 &lt;p&gt;For example, instead of doing this:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;angle&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;randrange(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;360&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #f8f8f2&#34;&gt;turtle&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;left(angle)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;angle&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;randrange&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;360&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;turtle&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;left&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;angle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;We can simplify by nesting the randrange() call inside the parentheses of the left() function:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;turtle&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;left(randrange(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;360&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;turtle&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;left&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;randrange&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;360&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;Often, the first time they see something like this, the question from my students will be &amp;ldquo;Why are there two parentheses at the end?&amp;rdquo;  It&amp;rsquo;s very important to emphasize that parentheses come in pairs and there should never be an odd one out.  Sometimes, I&amp;rsquo;ll encourage students to use spaces to highlight the nesting (although &lt;a href=&#34;https://www.python.org/dev/peps/pep-0008/&#34;&gt;PEP8&lt;/a&gt; fanatics will cringe):&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;turtle&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;left(&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;randrange(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;360&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;turtle&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;left&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;randrange&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;360&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h3 id=&#34;missing-colons-on-loops-and-functions:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;Missing colons on loops and functions&lt;/h3&gt;
+
+&lt;h3 id=&#34;missing-colons-on-loops-and-functions&#34;&gt;Missing colons on loops and functions&lt;/h3&gt;
 
 &lt;p&gt;One of the first constructions students learn is the for loop, which allows you to repeat a block of code multiple times:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;range(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;):&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(i)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;That colon at the end of the first line is very important, because it indicates that the indented code coming after it is the block that belongs to the loop (ie the code that is to be repeated).&lt;/p&gt;
 
 &lt;p&gt;Forgetting to type this colon has a couple of implications.  In addition to resulting in an &amp;ldquo;expected an indented block&amp;rdquo; error message, it also means that the editor (usually IDLE when working with beginners) won&amp;rsquo;t automatically indent the next line - so now the student has two problems: adding the colon and fixing the indenting.&lt;/p&gt;
 
-&lt;h3 id=&#34;indentation:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;Indentation&lt;/h3&gt;
+&lt;h3 id=&#34;indentation&#34;&gt;Indentation&lt;/h3&gt;
 
 &lt;p&gt;As shown in the previous example, indentation is important to Python.  It indicates code blocks and how they are related.  IDLE actually does a pretty good job of trying to automatically indent, but it only goes in the forward direction - if you need to unindent one level, you have to hit &amp;ldquo;Backspace.&amp;rdquo;  This leads to problems like the following, which will result in an &amp;ldquo;syntax error&amp;rdquo; message:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;guess&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;secret:&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Too high!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;guess&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;secret:&lt;/span&gt;
-        &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Too low!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color: #66d9ef&#34;&gt;else&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;:&lt;/span&gt;
-            &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;You got it!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;guess&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;secret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;Too high!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;guess&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;secret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;Too low!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;You got it!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;The correct indentation:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;guess&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;secret:&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Too high!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #66d9ef&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;guess&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;secret:&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Too low!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color: #66d9ef&#34;&gt;else&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;:&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;You got it!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;guess&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;secret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;Too high!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;guess&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;secret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;Too low!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;You got it!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;h3 id=&#34;idle-issues:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;IDLE issues&lt;/h3&gt;
+
+&lt;h3 id=&#34;idle-issues&#34;&gt;IDLE issues&lt;/h3&gt;
 
 &lt;p&gt;IDLE is the code editor and development environment that is installed automatically when Python is installed on your computer.  It&amp;rsquo;s a great tool for beginners, because it allows them to get started right away without needing to install any additional, complex software development tools.  However, it also has a number of annoying quirks that can waste huge amounts of a beginning coder&amp;rsquo;s time.&lt;/p&gt;
 
@@ -181,7 +698,7 @@ Programming has many practical applications to other areas of knowledge. --&gt;
 
 &lt;p&gt;This one is mainly a problem for me as a teacher.  There are only a limited number of font size options (with 22 being the largest).  When I&amp;rsquo;m displaying code on the projector, it can sometimes be hard to read from across the room, or I&amp;rsquo;d like to zoom in on a particular chunk of code.  In any other editor on the market, you can hit a +/- key combination to zoom the font size as big or small as you like, but in IDLE you are stuck with limited settings.&lt;/p&gt;
 
-&lt;h3 id=&#34;a-note-on-typing:e8ee787ef9bbbc99522b4b2e0dc12694&#34;&gt;A note on typing&lt;/h3&gt;
+&lt;h3 id=&#34;a-note-on-typing&#34;&gt;A note on typing&lt;/h3&gt;
 
 &lt;p&gt;All the above notwithstanding, I must point out here that the single most important factor in my experience that determines how much a student struggles with the learning to code is typing ability.  A student who is spending time and mental energy on hunting for the right keys is taking attention away from understanding the difficult concepts of the lesson.  In addition, they&amp;rsquo;re slower than other students so they start to feel pressure to keep up, which leads to a frustrating experience all around.&lt;/p&gt;
 
@@ -201,20 +718,20 @@ Programming has many practical applications to other areas of knowledge. --&gt;
 
 &lt;p&gt;Unfortunately, installing Pygame is not as easy as using it is.  Below you&amp;rsquo;ll find the best directions we&amp;rsquo;ve found for getting it working on your system.  Follow the directions below, and let us know in the comments below if you have any problems.&lt;/p&gt;
 
-&lt;h1 id=&#34;installing-pygame-for-os-x:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Installing Pygame for OS X&lt;/h1&gt;
+&lt;h1 id=&#34;installing-pygame-for-os-x&#34;&gt;Installing Pygame for OS X&lt;/h1&gt;
 
 &lt;p&gt;Note: For most of these instructions you will need to use the command line. Don&amp;rsquo;t be intimidated - programmers work on the command line all the time.  Once you get used to it, you&amp;rsquo;ll find it&amp;rsquo;s the quickest and easiest way to do lots of useful things on the computer.&lt;/p&gt;
 
 &lt;p&gt;You access the command line by running the Terminal application - click on the Spotlight icon and type &amp;ldquo;terminal&amp;rdquo; to find it.&lt;/p&gt;
 
-&lt;h3 id=&#34;step-1-install-xcode-command-line-tools:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step 1: Install XCode command line tools&lt;/h3&gt;
+&lt;h3 id=&#34;step-1-install-xcode-command-line-tools&#34;&gt;Step 1: Install XCode command line tools&lt;/h3&gt;
 
 &lt;p&gt;XCode is the tool from Apple for creating Mac and iOS applications.  It can be installed from the &lt;a href=&#34;https://itunes.apple.com/us/app/xcode/id497799835?mt=12&#34;&gt;App Store&lt;/a&gt; (it&amp;rsquo;s free).  When it&amp;rsquo;s finished, type the following at the command line:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ xcode-select --install
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;step-2-install-homebrew-http-brew-sh:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step 2: Install Homebrew (&lt;a href=&#34;http://brew.sh&#34;&gt;http://brew.sh&lt;/a&gt;)&lt;/h3&gt;
+&lt;h3 id=&#34;step-2-install-homebrew-http-brew-sh&#34;&gt;Step 2: Install Homebrew (&lt;a href=&#34;http://brew.sh&#34;&gt;http://brew.sh&lt;/a&gt;)&lt;/h3&gt;
 
 &lt;p&gt;Homebrew is a tool to easily install all kinds of software from the command line.  It saves you having to go to a bunch of different sites and download lots of individual installers.  Copy and paste this on the command line:&lt;/p&gt;
 
@@ -226,7 +743,7 @@ Programming has many practical applications to other areas of knowledge. --&gt;
 &lt;pre&gt;&lt;code&gt;$ brew install caskroom/cask/brew-cask
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;step-3-install-the-rest-of-the-software:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step 3: Install the rest of the software&lt;/h3&gt;
+&lt;h3 id=&#34;step-3-install-the-rest-of-the-software&#34;&gt;Step 3: Install the rest of the software&lt;/h3&gt;
 
 &lt;p&gt;Now we can start installing all the requirements for Pygame.  Just type the following commands one at a time and let the computer do its thing:&lt;/p&gt;
 
@@ -256,7 +773,7 @@ $ brew install mercurial
 $ pip3 install hg+http://bitbucket.org/pygame/pygame
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;step-4-see-if-it-works:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step 4: See if it works!&lt;/h3&gt;
+&lt;h3 id=&#34;step-4-see-if-it-works&#34;&gt;Step 4: See if it works!&lt;/h3&gt;
 
 &lt;p&gt;Now we can see if it works.  Run Python from the command line:&lt;/p&gt;
 
@@ -270,7 +787,7 @@ $ pip3 install hg+http://bitbucket.org/pygame/pygame
 
 &lt;p&gt;If you don&amp;rsquo;t see an error message, you&amp;rsquo;re all set!  Now head over to our &lt;a href=&#34;https://www.youtube.com/c/KidsCanCodeOrg&#34;&gt;YouTube Channel&lt;/a&gt; and start coding!&lt;/p&gt;
 
-&lt;h3 id=&#34;important:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Important&lt;/h3&gt;
+&lt;h3 id=&#34;important&#34;&gt;Important&lt;/h3&gt;
 
 &lt;p&gt;You will not be able to use Pygame from IDLE.  You will need to run your programs from the command line like this:&lt;/p&gt;
 
@@ -279,9 +796,9 @@ $ pip3 install hg+http://bitbucket.org/pygame/pygame
 
 &lt;p&gt;Some code editors will also let you run Python programs from inside the program, but we&amp;rsquo;ll talk about that in a separate post.&lt;/p&gt;
 
-&lt;h1 id=&#34;installing-pygame-for-windows:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Installing Pygame for Windows&lt;/h1&gt;
+&lt;h1 id=&#34;installing-pygame-for-windows&#34;&gt;Installing Pygame for Windows&lt;/h1&gt;
 
-&lt;h3 id=&#34;step-1-install-python:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step 1: Install Python&lt;/h3&gt;
+&lt;h3 id=&#34;step-1-install-python&#34;&gt;Step 1: Install Python&lt;/h3&gt;
 
 &lt;p&gt;If you haven&amp;rsquo;t already, go to &lt;a href=&#34;http://python.org/&#34;&gt;http://python.org/&lt;/a&gt; and download the latest Python installer.  Click on &amp;ldquo;Downloads&amp;rdquo; and choose &amp;ldquo;Download Python 3.5.0&amp;rdquo; (or whatever the latest version is).&lt;/p&gt;
 
@@ -289,7 +806,7 @@ $ pip3 install hg+http://bitbucket.org/pygame/pygame
 
 &lt;p&gt;Check the box labeled &amp;ldquo;Add Python 3.5 to PATH&amp;rdquo; and then click &amp;ldquo;Customize Installation&amp;rdquo;.  Under &amp;ldquo;Optional Features&amp;rdquo; make sure all the boxes are checked.  Under &amp;ldquo;Advanced Options&amp;rdquo; you can leave it as-is.  Then click the Install button and let the computer complete the process.&lt;/p&gt;
 
-&lt;h3 id=&#34;step-2-install-pygame-for-windows:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step 2: Install Pygame for Windows&lt;/h3&gt;
+&lt;h3 id=&#34;step-2-install-pygame-for-windows&#34;&gt;Step 2: Install Pygame for Windows&lt;/h3&gt;
 
 &lt;p&gt;Click &lt;a href=&#34;http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame&#34;&gt;here&lt;/a&gt; and download the appropriate installer for your computer.  For most people, this will be the latest 32-bit installer, for example:&lt;/p&gt;
 
@@ -306,7 +823,7 @@ $ pip3 install hg+http://bitbucket.org/pygame/pygame
 C:\Users\name\Downloads&amp;gt; pip install pygame-1.9.2a0-cp35-none-win32.whl
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;step3-see-if-it-works:ccb3a7f7587aec34b3605e4812ff9975&#34;&gt;Step3: See if it works!&lt;/h3&gt;
+&lt;h3 id=&#34;step3-see-if-it-works&#34;&gt;Step3: See if it works!&lt;/h3&gt;
 
 &lt;p&gt;Now we can see if it works.  Run Python from the command line:&lt;/p&gt;
 
@@ -340,7 +857,7 @@ C:\Users\name\Downloads&amp;gt; pip install pygame-1.9.2a0-cp35-none-win32.whl
 &lt;li&gt;It&amp;rsquo;s very widely used&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&#34;programming-languages-are-tools:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;Programming languages are tools&lt;/h2&gt;
+&lt;h2 id=&#34;programming-languages-are-tools&#34;&gt;Programming languages are tools&lt;/h2&gt;
 
 &lt;p&gt;Programming languages can be thought of as tools in a toolbox.  You wouldn&amp;rsquo;t use a hammer to cut a piece of wood, and likewise a programmer will often choose a particular language based on what type of project they&amp;rsquo;re working on, or what the other members of their team may be using.  Most programmers will learn multiple languages over the course of their careers.&lt;/p&gt;
 
@@ -348,7 +865,7 @@ C:\Users\name\Downloads&amp;gt; pip install pygame-1.9.2a0-cp35-none-win32.whl
 
 &lt;p&gt;Ultimately, learning to code is about learning how to think about problems and how to convince a computer to do what you want it to do.  You have to take a given problem or task and break it down into small manageable pieces that a computer can understand. The actual programming language is secondary, and by far the easier part of the learning process.&lt;/p&gt;
 
-&lt;h2 id=&#34;python-is-great-for-beginners:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;Python is great for beginners&lt;/h2&gt;
+&lt;h2 id=&#34;python-is-great-for-beginners&#34;&gt;Python is great for beginners&lt;/h2&gt;
 
 &lt;p&gt;Beginners need to start out by doing simple things.  Learning to code is hard enough when you&amp;rsquo;ve never been exposed to it before. The more the language can get out of your way and let you focus on the concepts, the better you&amp;rsquo;ll be able to understand them.  Some languages were just never intended to be for beginners (I&amp;rsquo;m looking at you, Java).&lt;/p&gt;
 
@@ -356,58 +873,58 @@ C:\Users\name\Downloads&amp;gt; pip install pygame-1.9.2a0-cp35-none-win32.whl
 
 &lt;p&gt;For example, here is the code to print the words &amp;ldquo;Hello, World!&amp;rdquo; to the screen in Python:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Hello, World!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;Hello, World!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;By comparison, here is what you would need to type for Java:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;HelloWorld&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color: #f8f8f2&#34;&gt;System&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Hello, World&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;HelloWorld&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;Hello, World&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;Or this, for C:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt; &lt;span style=&#34;color: #75715e&#34;&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
- &lt;span style=&#34;color: #75715e&#34;&gt;#include &amp;lt;stdlib.h&amp;gt;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span&gt;&lt;/span&gt; &lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+ &lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
 
- &lt;span style=&#34;color: #66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
- &lt;span style=&#34;color: #f8f8f2&#34;&gt;{&lt;/span&gt;
-     &lt;span style=&#34;color: #f8f8f2&#34;&gt;puts(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;Hello World!&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;);&lt;/span&gt;
-     &lt;span style=&#34;color: #66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;EXIT_SUCCESS;&lt;/span&gt;
- &lt;span style=&#34;color: #f8f8f2&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+ &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+ &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+     &lt;span class=&#34;n&#34;&gt;puts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;Hello World!&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+     &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;EXIT_SUCCESS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+ &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;Beginners are not ready for some of the more advanced concepts required to explain what each of those lines of Java or C does, so most beginner classes are forced to gloss over them with &amp;ldquo;just type it and you&amp;rsquo;ll learn why later.&amp;rdquo;  In contrast, in Python it&amp;rsquo;s easy to do easy things.  Especially when teaching children, this is a very important factor.&lt;/p&gt;
 
 &lt;p&gt;As another example, let&amp;rsquo;s look at the loop.  Loops are a very important part of programming; they tell the computer to repeat some code over and over.  Here&amp;rsquo;s how you print &amp;ldquo;hello&amp;rdquo; five times in Python:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;range(&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;):&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;print&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #e6db74&#34;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;hello&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;Versus Java:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #272822&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;Hello&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color: #66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #a6e22e&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;String&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;args&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color: #66d9ef&#34;&gt;for&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color: #ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #ae81ff&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color: #f92672&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #f8f8f2&#34;&gt;i&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;++)&lt;/span&gt;
-            &lt;span style=&#34;color: #f92672&#34;&gt;{&lt;/span&gt;
-                &lt;span style=&#34;color: #f8f8f2&#34;&gt;System&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color: #a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;“&lt;/span&gt;&lt;span style=&#34;color: #f8f8f2&#34;&gt;hello&lt;/span&gt;&lt;span style=&#34;color: #960050; background-color: #1e0010&#34;&gt;&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #f92672&#34;&gt;);&lt;/span&gt;
-            &lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #f92672&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Hello&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;[]&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++)&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+                &lt;span class=&#34;n&#34;&gt;System&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;println&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;“&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hello&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;);&lt;/span&gt;
+            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;The C-style loop syntax (initialize; test; update) is very tricky to get right at first - there&amp;rsquo;s a lot to unpack there.  And don&amp;rsquo;t even get me started on all those curly brackets.&lt;/p&gt;
 
-&lt;h2 id=&#34;but-it-s-not-only-for-beginners:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;But it&amp;rsquo;s not &lt;em&gt;only&lt;/em&gt; for beginners&lt;/h2&gt;
+&lt;h2 id=&#34;but-it-s-not-only-for-beginners&#34;&gt;But it&amp;rsquo;s not &lt;em&gt;only&lt;/em&gt; for beginners&lt;/h2&gt;
 
 &lt;p&gt;A lot of programming curriculum addresses the friendliness problem by using specialized teaching languages that simplify things for the classroom environment.  The problem with this solution is that it sets a ceiling on how far students can go; when they reach the limits of the teaching language and want to move on to &amp;ldquo;real&amp;rdquo; programming, they are forced to start over with a whole new system.&lt;/p&gt;
 
@@ -417,11 +934,11 @@ C:\Users\name\Downloads&amp;gt; pip install pygame-1.9.2a0-cp35-none-win32.whl
 
 &lt;p&gt;All of this means that there is a vast amount of available resources for Python - books, videos, web tutorials, and online courses.  The Python community is very large and welcoming to newcomers.&lt;/p&gt;
 
-&lt;h3 id=&#34;what-about-javascript:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;What about Javascript?&lt;/h3&gt;
+&lt;h3 id=&#34;what-about-javascript&#34;&gt;What about Javascript?&lt;/h3&gt;
 
 &lt;p&gt;Javascript (not to be confused with Java - the two are completely unrelated) is another popular choice for teaching kids programming.  Its advantage is its ubiquity: all you need is a web browser, so there&amp;rsquo;s nothing to install.  For that reason, many sites like Khan Academy and code.org have chosen it.  However, I find its syntax to be a little less friendly than Python, so it&amp;rsquo;s not my first choice in the classroom.  It would make a great second language for app/game development, though.&lt;/p&gt;
 
-&lt;h2 id=&#34;final-thoughts:80de2efc0a90db9a29b0f07b28f6eab6&#34;&gt;Final thoughts&lt;/h2&gt;
+&lt;h2 id=&#34;final-thoughts&#34;&gt;Final thoughts&lt;/h2&gt;
 
 &lt;p&gt;Learning to code is the important thing - which language should be a matter of practicality.&lt;/p&gt;
 

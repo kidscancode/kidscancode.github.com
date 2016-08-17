@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.14" />
+  <meta name="generator" content="Hugo 0.16" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -49,7 +49,7 @@
           
       </a>
       <p class="lead">
-       Lessons and information about teaching kids to code. 
+       Lessons and info about teaching kids to code. 
       </p>
     </div>
 
@@ -69,18 +69,23 @@
                         education
                     </a></li>
                     
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">3</span>
+                        gamedev
+                    </a></li>
+                    
                     <li><a href="/blog//tags/gamification" class="list-group-item">
                         <span class="badge">1</span>
                         gamification
                     </a></li>
                     
                     <li><a href="/blog//tags/pygame" class="list-group-item">
-                        <span class="badge">1</span>
+                        <span class="badge">4</span>
                         pygame
                     </a></li>
                     
                     <li><a href="/blog//tags/python" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">6</span>
                         python
                     </a></li>
                     
@@ -90,7 +95,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">1</span>
+                        <span class="badge">4</span>
                         tutorial
                     </a></li>
                     
@@ -104,7 +109,7 @@
         <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
         <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
     </ul>
-    <p>&copy; 2015 KidsCanCode LLC.</p>
+    <p>&copy; 2016 KidsCanCode LLC.</p>
   </div>
 </div>
 
@@ -130,20 +135,20 @@
 
 <p>Unfortunately, installing Pygame is not as easy as using it is.  Below you&rsquo;ll find the best directions we&rsquo;ve found for getting it working on your system.  Follow the directions below, and let us know in the comments below if you have any problems.</p>
 
-<h1 id="installing-pygame-for-os-x:ccb3a7f7587aec34b3605e4812ff9975">Installing Pygame for OS X</h1>
+<h1 id="installing-pygame-for-os-x">Installing Pygame for OS X</h1>
 
 <p>Note: For most of these instructions you will need to use the command line. Don&rsquo;t be intimidated - programmers work on the command line all the time.  Once you get used to it, you&rsquo;ll find it&rsquo;s the quickest and easiest way to do lots of useful things on the computer.</p>
 
 <p>You access the command line by running the Terminal application - click on the Spotlight icon and type &ldquo;terminal&rdquo; to find it.</p>
 
-<h3 id="step-1-install-xcode-command-line-tools:ccb3a7f7587aec34b3605e4812ff9975">Step 1: Install XCode command line tools</h3>
+<h3 id="step-1-install-xcode-command-line-tools">Step 1: Install XCode command line tools</h3>
 
 <p>XCode is the tool from Apple for creating Mac and iOS applications.  It can be installed from the <a href="https://itunes.apple.com/us/app/xcode/id497799835?mt=12">App Store</a> (it&rsquo;s free).  When it&rsquo;s finished, type the following at the command line:</p>
 
 <pre><code>$ xcode-select --install
 </code></pre>
 
-<h3 id="step-2-install-homebrew-http-brew-sh:ccb3a7f7587aec34b3605e4812ff9975">Step 2: Install Homebrew (<a href="http://brew.sh">http://brew.sh</a>)</h3>
+<h3 id="step-2-install-homebrew-http-brew-sh">Step 2: Install Homebrew (<a href="http://brew.sh">http://brew.sh</a>)</h3>
 
 <p>Homebrew is a tool to easily install all kinds of software from the command line.  It saves you having to go to a bunch of different sites and download lots of individual installers.  Copy and paste this on the command line:</p>
 
@@ -155,7 +160,7 @@
 <pre><code>$ brew install caskroom/cask/brew-cask
 </code></pre>
 
-<h3 id="step-3-install-the-rest-of-the-software:ccb3a7f7587aec34b3605e4812ff9975">Step 3: Install the rest of the software</h3>
+<h3 id="step-3-install-the-rest-of-the-software">Step 3: Install the rest of the software</h3>
 
 <p>Now we can start installing all the requirements for Pygame.  Just type the following commands one at a time and let the computer do its thing:</p>
 
@@ -185,7 +190,7 @@ $ brew install mercurial
 $ pip3 install hg+http://bitbucket.org/pygame/pygame
 </code></pre>
 
-<h3 id="step-4-see-if-it-works:ccb3a7f7587aec34b3605e4812ff9975">Step 4: See if it works!</h3>
+<h3 id="step-4-see-if-it-works">Step 4: See if it works!</h3>
 
 <p>Now we can see if it works.  Run Python from the command line:</p>
 
@@ -199,7 +204,7 @@ $ pip3 install hg+http://bitbucket.org/pygame/pygame
 
 <p>If you don&rsquo;t see an error message, you&rsquo;re all set!  Now head over to our <a href="https://www.youtube.com/c/KidsCanCodeOrg">YouTube Channel</a> and start coding!</p>
 
-<h3 id="important:ccb3a7f7587aec34b3605e4812ff9975">Important</h3>
+<h3 id="important">Important</h3>
 
 <p>You will not be able to use Pygame from IDLE.  You will need to run your programs from the command line like this:</p>
 
@@ -208,9 +213,9 @@ $ pip3 install hg+http://bitbucket.org/pygame/pygame
 
 <p>Some code editors will also let you run Python programs from inside the program, but we&rsquo;ll talk about that in a separate post.</p>
 
-<h1 id="installing-pygame-for-windows:ccb3a7f7587aec34b3605e4812ff9975">Installing Pygame for Windows</h1>
+<h1 id="installing-pygame-for-windows">Installing Pygame for Windows</h1>
 
-<h3 id="step-1-install-python:ccb3a7f7587aec34b3605e4812ff9975">Step 1: Install Python</h3>
+<h3 id="step-1-install-python">Step 1: Install Python</h3>
 
 <p>If you haven&rsquo;t already, go to <a href="http://python.org/">http://python.org/</a> and download the latest Python installer.  Click on &ldquo;Downloads&rdquo; and choose &ldquo;Download Python 3.5.0&rdquo; (or whatever the latest version is).</p>
 
@@ -218,7 +223,7 @@ $ pip3 install hg+http://bitbucket.org/pygame/pygame
 
 <p>Check the box labeled &ldquo;Add Python 3.5 to PATH&rdquo; and then click &ldquo;Customize Installation&rdquo;.  Under &ldquo;Optional Features&rdquo; make sure all the boxes are checked.  Under &ldquo;Advanced Options&rdquo; you can leave it as-is.  Then click the Install button and let the computer complete the process.</p>
 
-<h3 id="step-2-install-pygame-for-windows:ccb3a7f7587aec34b3605e4812ff9975">Step 2: Install Pygame for Windows</h3>
+<h3 id="step-2-install-pygame-for-windows">Step 2: Install Pygame for Windows</h3>
 
 <p>Click <a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pygame">here</a> and download the appropriate installer for your computer.  For most people, this will be the latest 32-bit installer, for example:</p>
 
@@ -235,7 +240,7 @@ $ pip3 install hg+http://bitbucket.org/pygame/pygame
 C:\Users\name\Downloads&gt; pip install pygame-1.9.2a0-cp35-none-win32.whl
 </code></pre>
 
-<h3 id="step3-see-if-it-works:ccb3a7f7587aec34b3605e4812ff9975">Step3: See if it works!</h3>
+<h3 id="step3-see-if-it-works">Step3: See if it works!</h3>
 
 <p>Now we can see if it works.  Run Python from the command line:</p>
 

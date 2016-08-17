@@ -3,8 +3,22 @@
   
   <url>
     <loc>/blog/</loc>
-    <lastmod>2015-11-01T12:04:02-07:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2016-08-15T20:14:12-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/2016/08/pygame_1-3_more-about-sprites/</loc>
+    <lastmod>2016-08-15T20:14:12-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/2016/08/pygame_1-2_working-with-sprites/</loc>
+    <lastmod>2016-08-15T13:14:12-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/2016/08/pygame_1-1_getting-started/</loc>
+    <lastmod>2016-08-12T12:04:12-07:00</lastmod>
   </url>
   
   <url>
