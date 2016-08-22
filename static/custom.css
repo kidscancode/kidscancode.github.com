@@ -255,3 +255,14 @@ body {
     .carousel-caption .btn {
       margin-top: 10px;
     }
+
+    .gap-right {
+        margin-right: 15px;
+    }
+    .gap-left {
+        margin-left: 25px;
+    }
+
+    .lead li {
+        line-height: 1.25;
+    }
