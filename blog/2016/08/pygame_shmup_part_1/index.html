@@ -1,0 +1,369 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.16" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Pygame Shmup Part 1: Player Sprite and Controls &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">5</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">6</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">8</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">6</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2016 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Pygame Shmup Part 1: Player Sprite and Controls</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Wed, Aug 17, 2016</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/python">python</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/pygame">pygame</a>
+			  
+			</h6></span>
+
+			      
+
+<p>Let&rsquo;s make our first game!  In this series of lessons we&rsquo;ll build a complete game using Python and Pygame.  It&rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nGufy7weyGY" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>If you haven&rsquo;t already, please go back and complete the first lesson on <a href="http://kidscancode.org/blog/2016/08/pygame_1-1_getting-started/">Getting Started with Pygame</a>.  We&rsquo;ll be using the <a href="https://github.com/kidscancode/gamedev/blob/master/tutorials/pygame%20template.py"><code>pygame template.py</code></a> program that we built in that lesson as the starting point for this one.</p>
+
+<p>In this series we&rsquo;ll be making a <a href ="https://en.wikipedia.org/wiki/Shoot_%27em_up">&ldquo;Shmup&rdquo; or &ldquo;Shoot &lsquo;em up&rdquo;</a> style game.  In our case, we&rsquo;ll be the pilot of a small spaceship trying to stay alive while meteors and other objects come flying at us.</p>
+
+<p>To begin, save your <code>pygame template.py</code> file with a new name.  This way you will still have the template when you need it for another new game.  I chose to save mine as <code>shmup.py</code>.</p>
+
+<p>First, let&rsquo;s modify the game settings to some good values for the game we&rsquo;re making:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">WIDTH</span> <span class="o">=</span> <span class="mi">480</span>
+<span class="n">HEIGHT</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">FPS</span> <span class="o">=</span> <span class="mi">60</span>
+</code></pre></div>
+
+
+<p>This is going to be a &ldquo;portrait mode&rdquo; game, meaning the height of the window is greater than the width.  It&rsquo;s also an action game, so we want to make sure our FPS is high enough that fast moving sprites will look like they&rsquo;re moving smoothly.  60 is a good value for this.</p>
+
+<h2 id="player-sprite">Player sprite</h2>
+
+<p>The first thing we&rsquo;ll add, is a sprite to represent the player.  Eventually, this will be a spaceship, but when you&rsquo;re first starting, it&rsquo;s simpler to ignore the graphics for a bit and just use plain rectangles for all your sprites.  Just focus on getting the sprite on the screen and moving the way you want it to, then you can replace the rectangle with your nice-looking art.</p>
+
+<p>Here is the start for our player sprite:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">GREEN</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">centerx</span> <span class="o">=</span> <span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span> <span class="o">=</span> <span class="n">HEIGHT</span> <span class="o">-</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div>
+
+
+<p>We&rsquo;ve chosen a size of 50x40 pixels for our player, and we&rsquo;re locating its <code>rect</code> at the bottom center of the screen.  We&rsquo;ve also made a <code>speedx</code> property that will keep track of how fast the player is moving in the x direction (side-to-side).
+If you&rsquo;re unsure what any of this is doing, please see the earlier lesson on <a href="http://kidscancode.org/blog/2016/08/pygame_1-2_working-with-sprites/">Working with Sprites</a>.</p>
+
+<p>For the <code>update()</code> method of our Sprite, which is the code that will happen every frame of the game, we just want to move the sprite at whatever its speed is:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span>
+</code></pre></div>
+
+
+<p>Now, we can just spawn our sprite to make sure we see it on the screen:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">all_sprites</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+<span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">()</span>
+<span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Don&rsquo;t forget that every sprite you create must be added to the <code>all_sprites</code> group so that it will be updated and drawn on the screen.</p>
+
+<h2 id="movement-controls">Movement / Controls</h2>
+
+<p>This is going to be a keyboard controlled game, so we want the player to move when the <code>Left</code> or <code>Right</code> arrow keys are pressed (you can also use <code>a</code> and <code>d</code> if you prefer).</p>
+
+<p>We have a choice when we&rsquo;re thinking about using key presses in our game, which means we are talking about <em>Events</em>:</p>
+
+<ul>
+<li>Option 1: In our event queue we could define two events (one for each key) and each one changes the player&rsquo;s speed accordingly:</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">KEYDOWN</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_LEFT</span><span class="p">:</span>
+                <span class="n">player</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">8</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_RIGHT</span><span class="p">:</span>
+                <span class="n">player</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="mi">8</span>
+</code></pre></div>
+
+
+<p>The problem with this method is that while pressing the key will make the Player move, there is no way to stop!  We would also need to add two <code>KEYUP</code> events that set the speed back to <code>0</code>.</p>
+
+<ul>
+<li>Option 2: We tell the sprite to <em>always</em> set its speed to <code>0</code>, <em>unless</em> the <code>LEFT</code> or <code>RIGHT</code> key is down.  This is will result in smoother movement, as well as being a bit simpler to code:</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">keystate</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">get_pressed</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">keystate</span><span class="p">[</span><span class="n">pygame</span><span class="o">.</span><span class="n">K_LEFT</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">8</span>
+        <span class="k">if</span> <span class="n">keystate</span><span class="p">[</span><span class="n">pygame</span><span class="o">.</span><span class="n">K_RIGHT</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="mi">8</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span>
+</code></pre></div>
+
+
+<p>This sets the <code>speedx</code> to 0 every frame, and then checks to see if a key is down.  The <code>pygame.key.get_pressed()</code> results in a dictionary of every key on the keyboard, with a value of <code>True</code> or <code>False</code> indicating whether the key is currently down or up.  If either of the keys we want are down, we set the speed accordingly.</p>
+
+<h2 id="staying-on-the-screen">Staying on the screen</h2>
+
+<p>Finally, we need to make sure that our sprite doesn&rsquo;t go off the screen.  We&rsquo;re going to add the following to the Player <code>update()</code>:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span> <span class="o">&gt;</span> <span class="n">WIDTH</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">WIDTH</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div>
+
+
+<p>Now if the <code>rect</code> ever tries to move to a position that is past the left or right edges of the screen, it will stop.  Another option would be to wrap around the screen - teleporting the sprite from one side to the other when it hits the edge - but for this game, stopping on the edges feels more appropriate.</p>
+
+<h2 id="wrapping-up">Wrapping up</h2>
+
+<p>Here is the full code for this step:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># KidsCanCode - Game Development with Pygame video series</span>
+<span class="c1"># Shmup game - part 1</span>
+<span class="c1"># Video link: https://www.youtube.com/watch?v=nGufy7weyGY</span>
+<span class="c1"># Player sprite and movement</span>
+<span class="kn">import</span> <span class="nn">pygame</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">WIDTH</span> <span class="o">=</span> <span class="mi">480</span>
+<span class="n">HEIGHT</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">FPS</span> <span class="o">=</span> <span class="mi">60</span>
+
+<span class="c1"># define colors</span>
+<span class="n">WHITE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">BLACK</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">RED</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">GREEN</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">BLUE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="n">YELLOW</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># initialize pygame and create window</span>
+<span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<span class="n">screen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">((</span><span class="n">WIDTH</span><span class="p">,</span> <span class="n">HEIGHT</span><span class="p">))</span>
+<span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s2">&quot;Shmup!&quot;</span><span class="p">)</span>
+<span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">GREEN</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">centerx</span> <span class="o">=</span> <span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span> <span class="o">=</span> <span class="n">HEIGHT</span> <span class="o">-</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">keystate</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">get_pressed</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">keystate</span><span class="p">[</span><span class="n">pygame</span><span class="o">.</span><span class="n">K_LEFT</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">8</span>
+        <span class="k">if</span> <span class="n">keystate</span><span class="p">[</span><span class="n">pygame</span><span class="o">.</span><span class="n">K_RIGHT</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="mi">8</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span> <span class="o">&gt;</span> <span class="n">WIDTH</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">WIDTH</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">all_sprites</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+<span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">()</span>
+<span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+
+<span class="c1"># Game loop</span>
+<span class="n">running</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">while</span> <span class="n">running</span><span class="p">:</span>
+    <span class="c1"># keep loop running at the right speed</span>
+    <span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">FPS</span><span class="p">)</span>
+    <span class="c1"># Process input (events)</span>
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+        <span class="c1"># check for closing window</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+            <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="c1"># Update</span>
+    <span class="n">all_sprites</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="c1"># Draw / render</span>
+    <span class="n">screen</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+    <span class="n">all_sprites</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
+    <span class="c1"># *after* drawing everything, flip the display</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
+
+<span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>In the next lesson, we&rsquo;ll add some enemy sprites for our player to dodge.</p>
+
+<h3 id="a-href-blog-2016-08-pygame-shmup-part-2-part-2-enemy-sprites-a"><a href="/blog/2016/08/pygame_shmup_part_2/">Part 2: Enemy Sprites </a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://kidscancode.org/python-install.html">Installing Python</a></li>
+<li><a href="http://kidscancode.org/blog/2015/09/pygame_install/">Installing Pygame</a></li>
+<li><a href="https://www.youtube.com/watch?v=uve1tjVIQ6c&ab_channel=KidsCanCode">Setting up Atom for Python</a></li>
+</ul>
+
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>

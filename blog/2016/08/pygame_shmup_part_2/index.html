@@ -1,0 +1,259 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.16" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Pygame Shmup Part 2: Enemy Sprites &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">5</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">6</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">8</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">6</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2016 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Pygame Shmup Part 2: Enemy Sprites</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Wed, Aug 17, 2016</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/python">python</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/pygame">pygame</a>
+			  
+			</h6></span>
+
+			      
+
+<p>This is part 2 of our &ldquo;Shmup&rdquo; project! In this lesson we&rsquo;ll add some enemy sprites for our player to dodge. In this series of lessons we&rsquo;ll build a complete game using Python and Pygame.  It&rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-5GNbL33hz0" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="enemy-sprites">Enemy Sprites</h2>
+
+<p>At this point, we don&rsquo;t need to worry about <em>what</em> our enemy sprites are, we just want to get them on the screen.  You might decide your game is about a spaceship dodging meteors or a unicorn dodging flying pizzas - as far as the code is concerned, it doesn&rsquo;t matter.</p>
+
+<p>Keeping that in mind, we&rsquo;re going to name our enemy sprite in the code something generic. It turns out there&rsquo;s a perfect word for generic objects that move around in your game (a term you may have heard before): <a href="https://en.wikipedia.org/wiki/Mob_(video_gaming)">Mob</a>.</p>
+
+<p>We&rsquo;ll start by defining the sprite properties:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Mob</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">RED</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">WIDTH</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">40</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>The key here is picking a good spot for the mobs to spawn.  We don&rsquo;t want them to just pop into existence, so we pick a y value that will be above the top (y &lt; 0) and a random value for x that is somewhere between the sides.</p>
+
+<p>Now, for the update, we can move the sprite by its speedy, but what about when the sprite goes off the bottom?  We could delete the sprite, and then spawn another one, or we could get the exact same effect by moving the sprite back to a random position above the top:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span> <span class="o">&gt;</span> <span class="n">HEIGHT</span> <span class="o">+</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">WIDTH</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">40</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h2 id="spawning-enemies">Spawning Enemies</h2>
+
+<p>We are going to want to have many enemies, so we&rsquo;re going to make a new group called <code>mobs</code> to hold them all.  This is also going to make our lives easier in later steps.  Then we spawn a number of mobs and add them to the groups:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">()</span>
+<span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">Mob</span><span class="p">()</span>
+    <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">mobs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Now you should have a steady stream of mobs coming down the screen, like this:</p>
+
+<p><img src="/blog/img/shmup_part2_1.gif" width="400"></p>
+
+<p>This is great, but it&rsquo;s a little boring to just have the mobs all moving straight down.  Let&rsquo;s add a little bit of movement in the x direction as well:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Mob</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">RED</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">WIDTH</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">40</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span>
+</span>        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span>
+<span class="hll">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span> <span class="o">&gt;</span> <span class="n">HEIGHT</span> <span class="o">+</span> <span class="mi">10</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">25</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span> <span class="o">&gt;</span> <span class="n">WIDTH</span> <span class="o">+</span> <span class="mi">20</span><span class="p">:</span>
+</span>            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">WIDTH</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">40</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Note that we needed to change the <code>if</code> statement that respawns the mob when it goes offscreen.  A mob moving diagonally will go off the side long before it goes off the bottom, so this way we are sure to reset it relatively quickly.</p>
+
+<p>Your game should now look like this:
+<img src="/blog/img/shmup_part2_2.gif" width="400"></p>
+
+<p>In the next lesson, we&rsquo;ll learn how to detect when two sprites run into each other (collide) and enable the player to shoot back at the mobs.</p>
+
+<h3 id="a-href-part-3-collisions-and-bullets-a"><a href="">Part 3: Collisions (and Bullets) </a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://kidscancode.org/python-install.html">Installing Python</a></li>
+<li><a href="http://kidscancode.org/blog/2015/09/pygame_install/">Installing Pygame</a></li>
+<li><a href="https://www.youtube.com/watch?v=uve1tjVIQ6c&ab_channel=KidsCanCode">Setting up Atom for Python</a></li>
+</ul>
+
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>
