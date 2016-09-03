@@ -159,8 +159,8 @@ pre {
 code {
   padding: .25em .1em;
   font-size: 120%;
-  color: #eff1f5;
-  /*background-color: #202020;*/
+  color: #505050;
+  /*background-color: #bdb0b0;*/
   border-radius: 3px;
 }
 pre {
@@ -180,8 +180,10 @@ pre {
 pre code {
   padding: 0;
   font-size: 125%;
+  color: #e3dbdb;
   /*color: inherit;*/
-  background-color: transparent;
+  background-color: #202020;
+  /*background-color: transparent;*/
 }
 .highlight {
   margin-bottom: 1rem;
@@ -189,6 +191,7 @@ pre code {
 }
 .highlight pre {
   margin-bottom: 0;
+  background-color: #202020;
 }
 
 /* Quotes */

@@ -1,0 +1,321 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.16" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Pygame Shmup Part 3: Collisions (and shooting!) &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">6</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">7</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">9</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">7</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2016 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Pygame Shmup Part 3: Collisions (and shooting!)</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Fri, Aug 19, 2016</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/python">python</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/pygame">pygame</a>
+			  
+			</h6></span>
+
+			      
+
+<p>This is part 3 of our &ldquo;Shmup&rdquo; project! In this lesson we&rsquo;ll add collisions between the player and the enemies, as well as adding bullets for the player to shoot.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>In this series of lessons we&rsquo;ll build a complete game using Python and Pygame.  It&rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/33g62PpFwsE" frameborder="0" allowfullscreen></iframe></p>
+
+<h1 id="collisions">Collisions</h1>
+
+<p>Collisions are a fundamental part of game development.  <em>Collision detection</em> means that you want to detect whether one object in the game world is touching another object.  <em>Collision response</em> is deciding what you want to happen when the collision occurs - does Mario pick up the coin, does Link&rsquo;s sword damage the enemy, etc.</p>
+
+<p>In our game we currently have a number of enemy sprites flying down the screen towards our player, and we&rsquo;d like to know when one of those sprites hits.  For this stage of our game, we&rsquo;ll just say that an enemy hitting the player means the game is over.</p>
+
+<h2 id="bounding-boxes">Bounding boxes</h2>
+
+<p>Remember, each sprite in Pygame has a <code>rect</code> attribute that defines its coordinates and its size.  A <code>Rect</code> object in Pygame is in the format <code>[x, y, width, height]</code>, where <code>x</code> and <code>y</code> represent the upper left corner of the rectangle.  Another word for this rectangle is <em>bounding box</em>, because it represents the bounds of the object.</p>
+
+<p>This kind of collision detection is called <strong>AABB</strong>, which stands for &ldquo;Axis Aligned Bounding Box&rdquo;, because the rectangles are aligned with the screen axes - they&rsquo;re not tilted at an angle.  AABB collision is very popular because it&rsquo;s <em>fast</em> - the computer can compare the coordinates of rectangles very quickly, which is very helpful if you have a large number of objects to compare.</p>
+
+<p>To detect a collision we need to look at the <code>rect</code> of the player and compare it with the <code>rect</code> of each of the mobs.  Now we could do this by looping through the mobs and for each one performing this comparison:</p>
+
+<p><img src="/blog/img/aabb_example.png" width="400"></p>
+
+<p>In this picture, you can see that only rectangle #3 is colliding with the large black rectangle.  #1 is overlapping in the x axis, but not the y; #2 is overlapping in y, but not in x.  In order for two rectangles to be overlapping, their <em>bounds</em> must overlap in <em>each</em> axis.  Writing this in code:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">if</span> <span class="n">mob</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span> <span class="o">&gt;</span> <span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="ow">and</span> \
+   <span class="n">mob</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span> <span class="ow">and</span> \
+   <span class="n">mob</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span> <span class="o">&gt;</span> <span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span> <span class="ow">and</span> \
+   <span class="n">mob</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span> <span class="o">&lt;</span> <span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">:</span>
+       <span class="n">collide</span> <span class="o">=</span> <span class="bp">True</span>
+</code></pre></div>
+
+
+<p>Fortunately for us, Pygame has a built-in way of doing the above, by using the <code>spritecollide()</code> function.</p>
+
+<h1 id="colliding-mobs-with-player">Colliding mobs with player</h1>
+
+<p>We&rsquo;re going to add this command to the &ldquo;update&rdquo; section of our game loop:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1">#Update</span>
+<span class="n">all_sprites</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+<span class="hll"><span class="c1">#check to see if a mob hit the player</span>
+</span><span class="hll"><span class="n">hits</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">spritecollide</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">mobs</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+</span><span class="hll"><span class="k">if</span> <span class="n">hits</span><span class="p">:</span>
+</span><span class="hll">    <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
+</span></code></pre></div>
+
+
+<p>The <code>spritecollide()</code> function takes 3 arguments: the name of the sprite you want to check, the name of a <em>group</em> you want to compare against, and a True/False parameter called <code>dokill</code>.  The <code>dokill</code> parameter lets you set whether the object should be deleted when it gets hit.  If, for example, we were trying to see if the player picked up a coin, we would want to set this to <code>True</code> so the coin would disappear.</p>
+
+<p>The result of the <code>spritecollide()</code> command is a list of the sprites that were hit (remember, it&rsquo;s possible the player collided with more than one mob at a time).  We&rsquo;re assigning that list to the variable <code>hits</code>.</p>
+
+<p>If the <code>hits</code> list is not empty, the <code>if</code> statement will be <code>True</code>, and we set <code>running</code> to <code>False</code> so the game will end.</p>
+
+<h1 id="shooting-back">Shooting back</h1>
+
+<h2 id="bullet-sprite">Bullet sprite</h2>
+
+<p>Now we&rsquo;re ready to add a new sprite: the bullet.  This will be a sprite that is spawned when we shoot, appears at the top of the player sprite, and moves upwards at some fairly high speed.  Defining a sprite should be starting to look familiar to you by now, so here&rsquo;s the complete <code>Bullet</code> class:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Bullet</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">YELLOW</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">centerx</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span>
+        <span class="c1"># kill if it moves off the top of the screen</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>In the <code>__init__()</code> method of the bullet sprite, we&rsquo;re passing <code>x</code> and <code>y</code> values, so that we can tell the sprite where to appear.  Since the player sprite can move, this will be set to where the player is at the time the player shoots.  We set <code>speedy</code> to a negative value, so that it will be going upward.</p>
+
+<p>Finally, we check to see if the bullet has gone off the top of the screen, and if so, we delete it.</p>
+
+<h2 id="keypress-event">Keypress event</h2>
+
+<p>To keep things simple at first, we&rsquo;re going to make it so that each time the player presses the spacebar, a bullet will be fired.  We need to add that to the events checking:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+    <span class="c1"># check for closing window</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+        <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="hll">    <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">KEYDOWN</span><span class="p">:</span>
+</span><span class="hll">        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_SPACE</span><span class="p">:</span>
+</span><span class="hll">            <span class="n">player</span><span class="o">.</span><span class="n">shoot</span><span class="p">()</span>
+</span></code></pre></div>
+
+
+<p>Our new code checks for a <code>KEYDOWN</code> event, and if there is one, checks to see if it was the <code>K_SPACE</code> key.  If it was, we&rsquo;re going to run the player sprite&rsquo;s <code>shoot()</code> method.</p>
+
+<h2 id="spawning-the-bullet">Spawning the bullet</h2>
+
+<p>First we need to add a new group to hold all of the bullets:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">bullets</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>Now, we can add the following method to the <code>Player</code> class:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">shoot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">bullet</span> <span class="o">=</span> <span class="n">Bullet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">centerx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">)</span>
+    <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet</span><span class="p">)</span>
+    <span class="n">bullets</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>All the <code>shoot()</code> method does is spawn a bullet, using the top center of the player as the spawn point.  Then we make sure to add the bullet to <code>all_sprites</code> (so it will be drawn and updated) and to <code>bullets</code>, which we&rsquo;re going to use for the collisions.</p>
+
+<h4 id="bullet-collisions">Bullet collisions</h4>
+
+<p>Now we need to check whether a bullet hits a mob.  The difference here is we have multiple bullets (in the <code>bullets</code> group) and multiple mobs (in the <code>mobs</code> group), so we can&rsquo;t use <code>spritecollide()</code> like before because that only compares <em>one</em> sprite against a group.  Instead, we&rsquo;re going to use <code>groupcollide()</code>:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Update</span>
+<span class="n">all_sprites</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+<span class="c1"># check to see if a bullet hit a mob</span>
+<span class="n">hits</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">groupcollide</span><span class="p">(</span><span class="n">mobs</span><span class="p">,</span> <span class="n">bullets</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">Mob</span><span class="p">()</span>
+    <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="n">mobs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>The <code>groupcollide()</code> function is similar to <code>spritecollide()</code>, except that you name two groups to compare, and what you will get back is a list of mobs that were hit.  There are two <code>dokill</code> options, one for each of the groups.</p>
+
+<p>If we just delete the mobs, we&rsquo;ll have a problem: running out of mobs!  So what we do is loop through <code>hits</code> and for each mob that we destroy, another new one will be spawned.</p>
+
+<p>Now it&rsquo;s actually starting to feel like a game:
+<img src="/blog/img/shmup_part3.gif" width="400"></p>
+
+<p>In the next lesson, we&rsquo;ll learn how to add graphics to our game instead of using those plain colored rectangles.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-3-py-full-code-for-this-part-a"><a href="https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-3.py">Full code for this part</a></h3>
+
+<h3 id="a-href-part-4-adding-graphics-a"><a href="">Part 4: Adding Graphics </a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://kidscancode.org/python-install.html">Installing Python</a></li>
+<li><a href="http://kidscancode.org/blog/2015/09/pygame_install/">Installing Pygame</a></li>
+<li><a href="https://www.youtube.com/watch?v=uve1tjVIQ6c&ab_channel=KidsCanCode">Setting up Atom for Python</a></li>
+</ul>
+
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>
