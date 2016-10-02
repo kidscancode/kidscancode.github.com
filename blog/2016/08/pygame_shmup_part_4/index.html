@@ -1,0 +1,278 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.16" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Pygame Shmup Part 4: Adding Graphics &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">7</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">8</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">10</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">8</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2016 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Pygame Shmup Part 4: Adding Graphics</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sun, Aug 21, 2016</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/python">python</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/pygame">pygame</a>
+			  
+			</h6></span>
+
+			      
+
+<p>This is part 4 of our &ldquo;Shmup&rdquo; project.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2016/08/pygame_shmup_part_1/">Part 1</a>. In this lesson we&rsquo;ll discuss how to use pre-drawn graphics in our game.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>In this series of lessons we&rsquo;ll build a complete game using Python and Pygame.  It&rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.</p>
+
+<p>You can watch a video version of this lesson here:</p>
+
+<h1 id="choosing-graphics">Choosing Graphics</h1>
+
+<p>In our <a href="http://kidscancode.org/blog/2016/08/pygame_1-3_more-about-sprites/">Intro lesson</a> about sprites, we talked about <a href="http://opengameart.org/">Opengameart.org</a>, a great source of free game art, and one of our favorite artists there, Kenney.  Kenney has made the perfect art pack for our game, the &ldquo;Space Shooter Pack&rdquo;, which you can find here:</p>
+
+<p><a href="http://opengameart.org/content/space-shooter-redux" target="_blank_"><a href="http://opengameart.org/content/space-shooter-redux">http://opengameart.org/content/space-shooter-redux</a></a></p>
+
+<p>It has lots of really great-looking images, including spaceships, lasers, asteroids, and more.</p>
+
+<p>When you download the pack, it will unzip into a bunch of different folders.  What we want is the PNG folder, which has all the individual images.  We&rsquo;re going choose three images for our three sprites, as well as a &ldquo;starfield&rdquo; image I&rsquo;ve included to use for our game background.</p>
+
+<p><a href="/blog/img/playerShip1_orange.png"><img src="/blog/img/playerShip1_orange.png" width="99"></a>
+<a href="/blog/img/meteorBrown_med1.png"><img src="/blog/img/meteorBrown_med1.png" width="50"></a>
+<a href="/blog/img/laserRed16.png"><img src="/blog/img/laserRed16.png" width="10"></a>
+<a href="/blog/img/starfield.png"><img src="/blog/img/starfield.png" width="250"></a></p>
+
+<p>These images need to be copied to a place where our game can find them.  The easiest way to do this is to make a new folder in the same location where your game code is.  We&rsquo;ve named our folder &ldquo;img&rdquo;.</p>
+
+<h2 id="loading-images">Loading images</h2>
+
+<p>As we discussed in the <a href="/blog/2016/08/pygame_1-3_more-about-sprites/">Introduction to Sprites</a> lesson, in order to make sure our code will work on any operating system, we need to use the <code>os.path</code> function to take care of figuring out the correct location and path for our files.  At the top of our program we&rsquo;ll define where our <code>img</code> folder is:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+
+<span class="n">img_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">),</span> <span class="s1">&#39;img&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h2 id="drawing-the-background">Drawing the background</h2>
+
+<p>Now, we can start by loading the background image.  We&rsquo;ll do all our asset loading before our existing game loop and initialization code:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Load all game graphics</span>
+<span class="n">background</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s1">&#39;starfield.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+<span class="n">background_rect</span> <span class="o">=</span> <span class="n">background</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>Now we can draw our background in the draw section of our game loop <em>before</em> we draw any of the sprites:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Draw / render</span>
+<span class="n">screen</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+<span class="hll"><span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">background</span><span class="p">,</span> <span class="n">background_rect</span><span class="p">)</span>
+</span><span class="n">all_sprites</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p><code>blit</code> is an old-school computer graphics term that means to draw the pixels of one image onto the pixels of another image - in this case the background onto the screen.  Now our background looks much nicer:</p>
+
+<p><img src="/blog/img/shmup_part4_1.gif" width="400"></p>
+
+<h2 id="sprite-images">Sprite images</h2>
+
+<p>Now we can load the images for our sprites:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Load all game graphics</span>
+<span class="n">background</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s1">&#39;starfield.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+<span class="n">background_rect</span> <span class="o">=</span> <span class="n">background</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+<span class="hll"><span class="n">player_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s2">&quot;playerShip1_orange.png&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+</span><span class="hll"><span class="n">meteor_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s2">&quot;meteorBrown_med1.png&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+</span><span class="hll"><span class="n">bullet_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s2">&quot;laserRed16.png&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+</span></code></pre></div>
+
+
+<p>Starting with the player - we want to replace that green rectangle, so we change the <code>self.image</code>, and don&rsquo;t forget to remove the <code>image.fill(GREEN)</code>, which we no longer need:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">player_img</span>
+</span>        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p><img src="/blog/img/shmup_part4_2.gif" width="400"></p>
+
+<p>However, now we see a couple of problems.  First, the image is a lot bigger than we&rsquo;d like it to be.  We have two options: 1) open the image in a graphics editor (Photoshop, GIMP, etc) and resize it; or 2) resize the image in our code. We&rsquo;ll choose option 2, using Pygame&rsquo;s <code>transform.scale()</code> command to make the image about half the size, which would be 50x30 pixels.</p>
+
+<p>The other problem is that our ship has a black rectangle around it because we didn&rsquo;t set the transparent color using <code>set_colorkey</code>:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">player_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">38</span><span class="p">))</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>If we follow the same procedure with our <code>Bullet</code> and <code>Mob</code> classes (although we don&rsquo;t need to scale them), we will wind up with a much nicer looking game:</p>
+
+<p><img src="/blog/img/shmup_part4_3.gif" width="400"></p>
+
+<h2 id="wrapping-up">Wrapping up</h2>
+
+<p>Now that we have our graphics in place, you may have noticed a new problem: sometimes the meteors destroy our ship even when it doesn&rsquo;t look like they are touching.  Try it yourself - how frustrating!  In the next lesson, we&rsquo;ll look at how to adjust the collisions so work correctly.</p>
+
+<hr />
+
+<h3 id="a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-4-py-full-code-for-this-part-a"><a href="https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-4.py">Full code for this part</a></h3>
+
+<h3 id="a-href-part-5-improved-collisions-a"><a href="">Part 5: Improved Collisions </a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://kidscancode.org/python-install.html">Installing Python</a></li>
+<li><a href="http://kidscancode.org/blog/2015/09/pygame_install/">Installing Pygame</a></li>
+<li><a href="https://www.youtube.com/watch?v=uve1tjVIQ6c&ab_channel=KidsCanCode">Setting up Atom for Python</a></li>
+</ul>
+
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>
