@@ -7,7 +7,111 @@
     <language>en-us</language>
     
     
-    <updated>Sun, 21 Aug 2016 16:04:12 PDT</updated>
+    <updated>Sat, 27 Aug 2016 05:22:12 PDT</updated>
+    
+    <item>
+      <title>Pygame Shmup Part 5: Improved Collisions</title>
+      <link>/blog/2016/08/pygame_shmup_part_5/</link>
+      <pubDate>Sat, 27 Aug 2016 05:22:12 PDT</pubDate>
+      
+      <guid>/blog/2016/08/pygame_shmup_part_5/</guid>
+      <description>
+
+&lt;p&gt;This is part 5 of our &amp;ldquo;Shmup&amp;rdquo; project.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2016/08/pygame_shmup_part_1/&#34;&gt;Part 1&lt;/a&gt;. In this lesson we&amp;rsquo;ll discuss how to change the way Pygame handles collisions between sprites.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
+
+&lt;p&gt;In this series of lessons we&amp;rsquo;ll build a complete game using Python and Pygame.  It&amp;rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/_y5U8tB36Vk&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;what-s-going-on-with-our-collisions&#34;&gt;What&amp;rsquo;s going on with our collisions?&lt;/h1&gt;
+
+&lt;p&gt;In the previous video we added graphics, changing our sprites from plain rectangles to nicer-looking PNG images.  However, this has introduced a problem: sometimes the game counts a collision between the player and a meteor when it doesn&amp;rsquo;t look like they hit at all.  To understand what&amp;rsquo;s going on, let&amp;rsquo;s look at a diagram:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/coll_example_aabb.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;The default type of collision in Pygame is using the &lt;code&gt;collide_rect()&lt;/code&gt; function, which uses the two sprites&amp;rsquo; &lt;code&gt;rect&lt;/code&gt; attributes to calculate whether they overlap.  This is called AABB collision and it&amp;rsquo;s very fast and reliable.  However, if the sprite images are not rectangles then you get a situation like in the picture.  The rectangles overlap, so &lt;code&gt;collide_rect()&lt;/code&gt; is &lt;code&gt;True&lt;/code&gt;, but the player will feel frustrated, because they feel like they should have successfully dodged the meteor.&lt;/p&gt;
+
+&lt;p&gt;If you find yourself in this situation, there are a few things you can try:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/coll_example_ratio.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;By using the &lt;code&gt;collide_rect_ratio()&lt;/code&gt; function instead, you can use a smaller rectangle, reducing the amount of &amp;ldquo;empty&amp;rdquo; space that could count as an overlap.  Depending on the shape of the sprite, this can work quite well.  Notice in the image above how the tips of the ship&amp;rsquo;s wings are outside the rect.  This means that in some cases the meteor will appear to go through the wing without counting as a hit.  This is actually a good situation!  At the speed things are moving in the game, the player won&amp;rsquo;t notice this directly, but will just feel like they &amp;ldquo;got away with&amp;rdquo; a really close dodge.  Instead of feeling frustrated, they will feel like they are doing really well.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/coll_example_circle.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Another option is to use a circular bounding box.  In the case of the meteor, this is a really good fit.  It doesn&amp;rsquo;t fit the ship quite as well, but again the wings being outside the collision won&amp;rsquo;t be a negative thing.&lt;/p&gt;
+
+&lt;h2 id=&#34;setting-the-sprite-s-radius&#34;&gt;Setting the sprite&amp;rsquo;s radius&lt;/h2&gt;
+
+&lt;p&gt;Based on the options above, we&amp;rsquo;re going to choose circles for our meteor vs. player collisions.  Pygame makes this easy to do - we just need to set a new attribute on each of our sprites: &lt;code&gt;self.radius&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s start with the player.  How big should be make the collision circle?  It can take a little bit of experimentation to get the right value.  Here&amp;rsquo;s how to do that, in the player sprite&amp;rsquo;s &lt;code&gt;__init()__&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;	&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;hll&#34;&gt;	&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;25&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;	&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;draw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;circle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RED&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;center&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We are drawing a red circle on top of the player image so that we can see how it looks. Let&amp;rsquo;s do the same for the meteor:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;	&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;hll&#34;&gt;	&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;width&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;	&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;draw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;circle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RED&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;center&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In this case, we are planning ahead a little bit.  We may decide to use different sized meteor images. By setting the radius to &lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;2&lt;/sub&gt; of the width of the image, we can do that without having to adjust the code later.&lt;/p&gt;
+
+&lt;p&gt;Here is what we end up with:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/shmup_part5_1.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;You can see we probably have too large a radius for the player sprite - it&amp;rsquo;s actually bigger in the y axis than the size of the ship.  To get closer to the example above, let&amp;rsquo;s set &lt;code&gt;self.radius = 20&lt;/code&gt; on the player.&lt;/p&gt;
+
+&lt;p&gt;For the meteor, we&amp;rsquo;d like a little bit of the corners to stick out, so let&amp;rsquo;s scale the circle to 85% of the size:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;	&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;width&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;85&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id=&#34;changing-the-collision-type&#34;&gt;Changing the collision type&lt;/h2&gt;
+
+&lt;p&gt;To have the game start using those circles for the collision tests, we just need to change the &lt;code&gt;spritecollide&lt;/code&gt; command to use the circle function instead of the AABB one:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;	&lt;span class=&#34;c1&#34;&gt;# check to see if a mob hit the player&lt;/span&gt;
+&lt;span class=&#34;hll&#34;&gt;    &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;spritecollide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;collide_circle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/shmup_part5_2.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Once you have tried it out and you&amp;rsquo;re happy with how the collisions are working, you can remove the red circles.  I recommend you just comment the commands out rather than deleting them, in case you ever want to use them again in the future.&lt;/p&gt;
+
+&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h2&gt;
+
+&lt;p&gt;Deciding on the right collision style can make a big difference in how your game feels.  We have a much better meteor vs. player collision now, but notice that we did not change the bullet vs. meteor collision style.  Circles would be a bad choice for the shape of the bullets, so it&amp;rsquo;s better to leave them as rectangles.&lt;/p&gt;
+
+&lt;p&gt;In the next video we&amp;rsquo;ll liven things up by learning how to add animation to our sprites.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-5-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-5.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;a-href-part-6-sprite-animation-a&#34;&gt;&lt;a href=&#34;&#34;&gt;Part 6: Sprite Animation &lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/python-install.html&#34;&gt;Installing Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/blog/2015/09/pygame_install/&#34;&gt;Installing Pygame&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uve1tjVIQ6c&amp;ab_channel=KidsCanCode&#34;&gt;Setting up Atom for Python&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Pygame Shmup Part 4: Adding Graphics</title>
@@ -23,7 +127,8 @@
 
 &lt;p&gt;In this series of lessons we&amp;rsquo;ll build a complete game using Python and Pygame.  It&amp;rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.&lt;/p&gt;
 
-&lt;p&gt;You can watch a video version of this lesson here:&lt;/p&gt;
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/mOckdKp3V38&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;choosing-graphics&#34;&gt;Choosing Graphics&lt;/h1&gt;
 
@@ -121,7 +226,7 @@
 
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-4-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-4.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
-&lt;h3 id=&#34;a-href-part-5-improved-collisions-a&#34;&gt;&lt;a href=&#34;&#34;&gt;Part 5: Improved Collisions &lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-blog-2016-08-pygame-shmup-part-5-part-5-improved-collisions-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/08/pygame_shmup_part_5/&#34;&gt;Part 5: Improved Collisions &lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
