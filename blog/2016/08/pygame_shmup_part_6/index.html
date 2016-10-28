@@ -1,0 +1,356 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.17" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Pygame Shmup Part 6: Sprite Animation &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">9</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">10</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">12</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">10</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2016 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Pygame Shmup Part 6: Sprite Animation</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sun, Aug 28, 2016</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/python">python</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/pygame">pygame</a>
+			  
+			</h6></span>
+
+			      <p>This is part 6 of our &ldquo;Shmup&rdquo; project.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2016/08/pygame_shmup_part_1/">Part 1</a>. In this lesson we&rsquo;ll make our meteors more interesting by adding a little bit of sprite animation.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>In this series of lessons we&rsquo;ll build a complete game using Python and Pygame.  It&rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.
+</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3Bk-Ny7WLzE" frameborder="0" allowfullscreen></iframe></p>
+
+<h1 id="animated-meteors">Animated meteors</h1>
+
+<p>All of our meteors look exactly the same, which is not very exciting to look at:</p>
+
+<p><img src="/blog/img/shmup_part6_1.gif" width="450"></p>
+
+<p>How can we add a little more variety and visual appeal to the meteors?  One way would be to add a bit of rotation, so that they look more like rocks tumbling through space.  Rotation is relatively easy to do - just as we used the <code>pygame.transform.scale()</code> function to change the size of our Player sprite, we can use <code>pygame.transform.rotate()</code> to perform a rotation.  However, there are a few things we need to learn along the way in order to make it work correctly.</p>
+
+<p>First, let&rsquo;s add some new properties to the <code>Mob</code> sprite:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Mob</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">meteor_img</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="o">.</span><span class="mi">85</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">WIDTH</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">150</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">rot_speed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
+</span></code></pre></div>
+
+
+<p>The first property, <code>rot</code> (short for &lsquo;rotation&rsquo;), will measure how many degrees the sprite should be rotated. It starts out at 0 and will change over time.  <code>rot_speed</code> measures how many degrees the sprite should rotate each time - bigger numbers will mean faster rotation.  We&rsquo;re picking a random value, with negative being counterclockwise and positive being clockwise.</p>
+
+<p>The last property is an important one for controlling animation speed.  We don&rsquo;t really want to change the sprite&rsquo;s image every frame, or it will appear much too fast.  Whenever you&rsquo;re animating a sprite&rsquo;s image, you have to figure out the timing - how often the image should be changed.</p>
+
+<p>We have a <code>pygame.time.Clock()</code> object, named <code>clock</code>, which is helping us control the FPS.  By calling <code>pygame.time.get_ticks()</code> we can find out how many milliseconds have elapsed since the clock was started.  This way, we can tell if enough time has gone by for us to make another change to the sprite&rsquo;s image.</p>
+
+<h3 id="rotating-the-image">Rotating the image</h3>
+
+<p>We&rsquo;re going to need a few lines of code to perform this operation, so we&rsquo;ll make a new method for it called <code>self.rotate()</code>, which we can add to the <code>update()</code> method:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>	<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="hll">		<span class="bp">self</span><span class="o">.</span><span class="n">rotate</span><span class="p">()</span>
+</span></code></pre></div>
+
+
+<p>This way we can keep our update method from getting too crowded, and you can also comment out that line if you want to turn rotation off.  Here&rsquo;s the start of our rotate method:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>	<span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">now</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
+		<span class="k">if</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">now</span>
+			<span class="c1"># do rotation here</span>
+</code></pre></div>
+
+
+<p>First, we check what time it is currently, then we subtract the time of the last update.  If more than 50 milliseconds have gone by, then we&rsquo;re going to update the image.  We put the value of <code>now</code> into <code>last_update</code> and we can perform the rotation.  Now, you might think that this is as simple as just applying the rotation to the sprite like this:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot_speed</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>However, if you try this, you will have a problem:</p>
+
+<p><img src="/blog/img/shmup_part6_2.gif" width="350"></p>
+
+<h3 id="rotation-is-destructive">Rotation is destructive!</h3>
+
+<p>This happens because images are made up of a grid of pixels.  When you try to rotate those pixels into a new position, some of them won&rsquo;t line up anymore, so some information will be lost. That&rsquo;s fine if you&rsquo;re only rotating once, but repeatedly rotating the image will result in a scrambled image.</p>
+
+<p>The solution is to use our <code>rot</code> variable to keep track of the total rotation amount (adding <code>rot_speed</code> each update) and to rotate the <em>original</em> image by that amount.  This way we&rsquo;re always starting with a clean image and rotating it only once.</p>
+
+<p>First let&rsquo;s keep a copy of the original image:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Mob</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">meteor_images</span><span class="p">)</span>
+</span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+</span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span>        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="o">.</span><span class="mi">85</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">WIDTH</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">150</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rot_speed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>Then in the <code>rotate</code> method we can update the value of <code>rot</code> and apply that rotation to the original image:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">now</span>
+<span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot_speed</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span>
+</span><span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot</span><span class="p">)</span>
+</span></code></pre></div>
+
+
+<p>Note that we used the remainder operator - <code>%</code> - to prevent <code>rot</code> from having values greater than 360.</p>
+
+<p>We&rsquo;re almost there - the images look fine - but we still have a small problem:</p>
+
+<p><img src="/blog/img/shmup_part6_3.gif" width="350"></p>
+
+<p>The meteors look like they&rsquo;re bouncing instead of rotating smoothly.</p>
+
+<h3 id="updating-the-rect">Updating the rect</h3>
+
+<p>After rotating an image, the size of the <code>rect</code> may no longer be correct.  Let&rsquo;s look at an example where we want to rotate a picture of a spaceship:</p>
+
+<p><img src="/blog/img/shmup_part6_4.gif" width="250"></p>
+
+<p>Here we can see that while we&rsquo;re rotating the image, the rect is remaining the same.  We need to calculate a new rect each time the image changes:</p>
+
+<p><img src="/blog/img/shmup_part6_5.gif" width="250"></p>
+
+<p>It&rsquo;s easy to see how the size of the rect can change quite a bit depending on how the image is rotated.  Now, to fix the &ldquo;bouncing&rdquo; effect, we need to make sure we keep the new rect centered at the same location as the old one, instead of being anchored at the top left corner:</p>
+
+<p><img src="/blog/img/shmup_part6_6.gif" width="250"></p>
+
+<p>Bringing this to back to our rotate code, we just record the location of the rect&rsquo;s center, calculate the new rect, and set its center to that saved one:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>	<span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">now</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot_speed</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span>
+            <span class="n">new_image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot</span><span class="p">)</span>
+<span class="hll">            <span class="n">old_center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span>
+</span><span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">new_image</span>
+</span><span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+</span><span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">old_center</span>
+</span></code></pre></div>
+
+
+<h2 id="random-meteor-images">Random meteor images</h2>
+
+<p>The last thing we can do to make the meteors more interesting is to randomize the images, using different sizes and looks for each meteor.</p>
+
+<p>First, we&rsquo;ll load all the meteor images and put them into a list:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">meteor_images</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">meteor_list</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;meteorBrown_big1.png&#39;</span><span class="p">,</span><span class="s1">&#39;meteorBrown_med1.png&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;meteorBrown_med1.png&#39;</span><span class="p">,</span><span class="s1">&#39;meteorBrown_med3.png&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;meteorBrown_small1.png&#39;</span><span class="p">,</span><span class="s1">&#39;meteorBrown_small2.png&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;meteorBrown_tiny1.png&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">meteor_list</span><span class="p">:</span>
+    <span class="n">meteor_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="n">img</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">())</span>
+</code></pre></div>
+
+
+<p>Then all we have to do is choose a random image when our meteor is spawned:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Mob</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">meteor_images</span><span class="p">)</span>
+</span>        <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>Much better!</p>
+
+<p><img src="/blog/img/shmup_part6_7.gif" width="350"></p>
+
+<h2 id="wrapping-up">Wrapping up</h2>
+
+<p>Animated sprites add a lot of visual appeal to a game, whether it&rsquo;s spinning rocks or a running/jumping/crouching hero.  However, the more animations you have, the more images you have to keep track of.  The trick is to keep them organized and take advantage of tools like the <code>pygame.transform</code> commands - as long as you&rsquo;re careful about their limitations.</p>
+
+<p>In the next video we&rsquo;ll start keeping score and dive into how to draw text on the screen.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-6-py-full-code-for-this-part-a"><a href="https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-6.py">Full code for this part</a></h3>
+
+<h3 id="a-href-part-7-score-and-drawing-text-a"><a href="">Part 7: Score (and Drawing Text) </a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://kidscancode.org/python-install.html">Installing Python</a></li>
+<li><a href="http://kidscancode.org/blog/2015/09/pygame_install/">Installing Pygame</a></li>
+<li><a href="https://www.youtube.com/watch?v=uve1tjVIQ6c&ab_channel=KidsCanCode">Setting up Atom for Python</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>

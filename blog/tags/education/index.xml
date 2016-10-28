@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title>Education on KCC Blog </title>
+      <title> on KCC Blog </title>
       <generator uri="https://gohugo.io">Hugo</generator>
-    <link>/blog/tags/education/</link>
+    <link>/blog/tags/education/index.xml</link>
     <language>en-us</language>
     
-    
-    <updated>Sun, 01 Nov 2015 12:04:02 -0700</updated>
+    <copyright>KidsCanCode LLC</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     <item>
       <title>Coding is a Life Skill</title>
@@ -15,15 +15,14 @@
       <pubDate>Sun, 01 Nov 2015 12:04:02 -0700</pubDate>
       
       <guid>/blog/2015/11/life_skill/</guid>
-      <description>
-
-&lt;p&gt;I have often said that I believe computer programming should be adopted as a core curriculum subject in primary school, just like science, history, or math.  I often give presentations to this effect for parents, teachers, and school administrators.  In this article, I&amp;rsquo;ll explore a few of the reasons why I believe so strongly in the power of early CS education.&lt;/p&gt;
+      <description>&lt;p&gt;I have often said that I believe computer programming should be adopted as a core curriculum subject in primary school, just like science, history, or math.  I often give presentations to this effect for parents, teachers, and school administrators.  In this article, I&amp;rsquo;ll explore a few of the reasons why I believe so strongly in the power of early CS education.&lt;/p&gt;
 
 &lt;p&gt;When considering the place of computer science in the curriculum, let&amp;rsquo;s first look at why we teach other core subjects.&lt;/p&gt;
 
 &lt;p&gt;We teach science because we want children to understand the world around them, and the scientific method is a fantastic intellectual tool for investigating the world around you. In a modern society, where scientific advancements directly affect so many aspects of our lives, it is advantageous to have a good understanding of how science works.&lt;/p&gt;
 
-&lt;p&gt;In the same way, learning about history or math contribute to a better understanding of the world by providing perspectives and ways of thinking that we wouldn&amp;rsquo;t otherwise know.  In particular, I&amp;rsquo;ll talk about the use of math in more detail below.&lt;/p&gt;
+&lt;p&gt;In the same way, learning about history or math contribute to a better understanding of the world by providing perspectives and ways of thinking that we wouldn&amp;rsquo;t otherwise know.  In particular, I&amp;rsquo;ll talk about the use of math in more detail below.
+&lt;/p&gt;
 
 &lt;h3 id=&#34;but-what-about-kids-who-aren-t-interested-in-becoming-programmers&#34;&gt;&amp;ldquo;But what about kids who aren&amp;rsquo;t interested in becoming programmers?&amp;rdquo;&lt;/h3&gt;
 
@@ -66,8 +65,7 @@ Programming has many practical applications to other areas of knowledge. --&gt;
 
 &lt;p&gt;None of these recommendations should be taken as promoting a particular &lt;em&gt;specific&lt;/em&gt; technology kids should learn (although I am a strong advocate for the &lt;a href=&#34;http://python.org/&#34;&gt;Python programming language&lt;/a&gt; and its &lt;a href=&#34;http://kidscancode.org/blog/2015/09/whypython/&#34;&gt;benefits for beginners&lt;/a&gt;).  Technology is changing all the time - today&amp;rsquo;s popular platforms will be tomorrow&amp;rsquo;s quaint memory. However, the &lt;em&gt;concepts&lt;/em&gt; of programming remain the same: problem solving, computational thinking, and logic.&lt;/p&gt;
 
-&lt;p&gt;I welcome your comments and questions below.&lt;/p&gt;
-</description>
+&lt;p&gt;I welcome your comments and questions below.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -76,13 +74,12 @@ Programming has many practical applications to other areas of knowledge. --&gt;
       <pubDate>Tue, 13 Oct 2015 19:04:12 PDT</pubDate>
       
       <guid>/blog/2015/10/struggles/</guid>
-      <description>
-
-&lt;p&gt;Over the past few years, I&amp;rsquo;ve taught hundreds of kids to code using Python in workshops, after school programs, and as part of school curriculum.  Most of the students I teach are around middle school age (11-14).  I find this age to be a great time to start learning.  The kids are very engaged and capable - and very motivated to learn, if given the chance.&lt;/p&gt;
+      <description>&lt;p&gt;Over the past few years, I&amp;rsquo;ve taught hundreds of kids to code using Python in workshops, after school programs, and as part of school curriculum.  Most of the students I teach are around middle school age (11-14).  I find this age to be a great time to start learning.  The kids are very engaged and capable - and very motivated to learn, if given the chance.&lt;/p&gt;
 
 &lt;p&gt;I prefer Python for teaching kids for a &lt;a href=&#34;http://kidscancode.org/blog/2015/09/whypython/&#34;&gt;number of reasons&lt;/a&gt;, foremost because it&amp;rsquo;s a very beginner-friendly language.  That said, however, there are still a number of very common areas where kids tend to struggle the most.&lt;/p&gt;
 
-&lt;p&gt;Below is a list of the problems I encounter most often in the classroom:&lt;/p&gt;
+&lt;p&gt;
+Below is a list of the problems I encounter most often in the classroom:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Nested parentheses&lt;/li&gt;
@@ -185,8 +182,7 @@ Programming has many practical applications to other areas of knowledge. --&gt;
 
 &lt;p&gt;All the above notwithstanding, I must point out here that the single most important factor in my experience that determines how much a student struggles with the learning to code is typing ability.  A student who is spending time and mental energy on hunting for the right keys is taking attention away from understanding the difficult concepts of the lesson.  In addition, they&amp;rsquo;re slower than other students so they start to feel pressure to keep up, which leads to a frustrating experience all around.&lt;/p&gt;
 
-&lt;p&gt;There are many great free typing practice websites to choose from. My favorite is &lt;a href=&#34;http://typing.com&#34;&gt;Typing.com&lt;/a&gt;. Encourage your kids to practice - they&amp;rsquo;ll thank you later!&lt;/p&gt;
-</description>
+&lt;p&gt;There are many great free typing practice websites to choose from. My favorite is &lt;a href=&#34;http://typing.com&#34;&gt;Typing.com&lt;/a&gt;. Encourage your kids to practice - they&amp;rsquo;ll thank you later!&lt;/p&gt;</description>
     </item>
     
     <item>
