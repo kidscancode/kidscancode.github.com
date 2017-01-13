@@ -1,0 +1,324 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.18.1" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Pygame Shmup Part 11: Player Lives &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">14</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">15</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">17</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">15</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2017 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Pygame Shmup Part 11: Player Lives</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sat, Sep 17, 2016</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/python">python</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/pygame">pygame</a>
+			  
+			</h6></span>
+
+			      <p>This is part 11 of our &ldquo;Shmup&rdquo; project.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2016/08/pygame_shmup_part_1/">Part 1</a>. In this lesson we&rsquo;ll add multiple lives to the player as well as a nice explosion when player dies.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>In this series of lessons we&rsquo;ll build a complete game using Python and Pygame.  It&rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.
+</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/G5-4nV6LxgU" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="player-explosion">Player explosion</h2>
+
+<p>We&rsquo;re going to use a different explosion animation for the player&rsquo;s death, also from the same Kenny Game Art package, called the &ldquo;Sonic Explosion&rdquo;.</p>
+
+<p><a href="https://dl.dropboxusercontent.com/u/6712968/Shmup_player_expl.zip">Click here</a> to download a zip of these images.</p>
+
+<p>We just need to load those frames like we did for the other explosions.  We&rsquo;ll just add another explosion type called <code>'player'</code> and load it in the same loop, since it has the same number of frames as the other explosion we&rsquo;re loading. Now our loading code will look like this:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">explosion_anim</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">explosion_anim</span><span class="p">[</span><span class="s1">&#39;lg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">explosion_anim</span><span class="p">[</span><span class="s1">&#39;sm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="hll"><span class="n">explosion_anim</span><span class="p">[</span><span class="s1">&#39;player&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;regularExplosion0{}.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+    <span class="n">img</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+    <span class="n">img_lg</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">75</span><span class="p">))</span>
+    <span class="n">explosion_anim</span><span class="p">[</span><span class="s1">&#39;lg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_lg</span><span class="p">)</span>
+    <span class="n">img_sm</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
+    <span class="n">explosion_anim</span><span class="p">[</span><span class="s1">&#39;sm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_sm</span><span class="p">)</span>
+<span class="hll">    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;sonicExplosion0{}.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+</span><span class="hll">    <span class="n">img</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">explosion_anim</span><span class="p">[</span><span class="s1">&#39;player&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</span></code></pre></div>
+
+
+<p>We don&rsquo;t need to change anything in our <code>Explosion</code> sprite class, so we just need to create a player explosion when the player&rsquo;s shield runs out.  We can add that in the game loop where we&rsquo;re checking for player vs. meteor collisions:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># check to see if a mob hit the player</span>
+<span class="n">hits</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">spritecollide</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">mobs</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">collide_circle</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span>
+    <span class="n">player</span><span class="o">.</span><span class="n">shield</span> <span class="o">-=</span> <span class="n">hit</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">expl</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">hit</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="s1">&#39;sm&#39;</span><span class="p">)</span>
+    <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">expl</span><span class="p">)</span>
+    <span class="n">newmob</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">shield</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="hll">        <span class="n">death_explosion</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="s1">&#39;player&#39;</span><span class="p">)</span>
+</span><span class="hll">        <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">death_explosion</span><span class="p">)</span>
+</span>		<span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
+</code></pre></div>
+
+
+<p>But if you run the program you&rsquo;ll see we now have a problem: when the player dies, we&rsquo;re setting <code>running</code> to <code>False</code> so the game ends before we have a chance to see our pretty explosion!</p>
+
+<p>To fix this, we need to not end the game until the explosion finishes.  So we&rsquo;ll delete the player, but not set <code>running</code> until the explosion disappears:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">shield</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">death_explosion</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="s1">&#39;player&#39;</span><span class="p">)</span>
+        <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">death_explosion</span><span class="p">)</span>
+<span class="hll">		<span class="n">player</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</span><span class="hll">
+</span><span class="hll"><span class="c1"># if the player died and the explosion has finished playing</span>
+</span><span class="hll"><span class="k">if</span> <span class="ow">not</span> <span class="n">player</span><span class="o">.</span><span class="n">alive</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">death_explosion</span><span class="o">.</span><span class="n">alive</span><span class="p">():</span>
+</span><span class="hll">	<span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
+</span></code></pre></div>
+
+
+<p>The <code>alive()</code> function just returns whether a particular sprite is alive.  Since we <code>kill()</code> the explosion when it finishes playing, we can now end the game when it finishes.</p>
+
+<h2 id="lives">Lives</h2>
+
+<p>Now we&rsquo;re going to give the player multiple lives.  We can track this with a variable, but we also want to be able to display it on the screen.  Rather than just show a number, it will look better if we use a smaller image of the player&rsquo;s ship to indicate how many lives are left.   First, we&rsquo;ll create that smaller image:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">player_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s2">&quot;playerShip1_orange.png&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+<span class="hll"><span class="n">player_mini_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">player_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">19</span><span class="p">))</span>
+</span><span class="hll"><span class="n">player_mini_img</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+</span></code></pre></div>
+
+
+<p>Now we&rsquo;ll add a few new parameters to the <code>Player</code> class <code>__init__()</code>: a lives counter, a flag (a variable that can be <code>True</code> or <code>False</code>) to hide/show the player, and a timer to control how long we keep the player hidden:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="bp">self</span><span class="o">.</span><span class="n">lives</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">hide_timer</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>Now, when the player dies, instead of using <code>kill()</code>, we&rsquo;re going to hide the player and subtract 1 from <code>lives</code>.  We also reset the shield for the next life:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">shield</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">death_explosion</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="s1">&#39;player&#39;</span><span class="p">)</span>
+        <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">death_explosion</span><span class="p">)</span>
+<span class="hll">        <span class="n">player</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+</span><span class="hll">        <span class="n">player</span><span class="o">.</span><span class="n">lives</span> <span class="o">-=</span> <span class="mi">1</span>
+</span><span class="hll">        <span class="n">player</span><span class="o">.</span><span class="n">shield</span> <span class="o">=</span> <span class="mi">100</span>
+</span>
+<span class="c1"># if the player died and the explosion has finished playing</span>
+<span class="hll"><span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">lives</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">death_explosion</span><span class="o">.</span><span class="n">alive</span><span class="p">():</span>
+</span>    <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
+</code></pre></div>
+
+
+<p>Next, we need to define how hiding works.  Back in class <code>Player()</code> we&rsquo;re going to add a hide method which sets the <code>hidden</code> flag to <code>True</code> and starts the timer.  We also need to make sure that while the player is hidden, it can&rsquo;t be hit by meteors.  There are few ways we could do this, but a simple one that doesn&rsquo;t require adding/removing from groups, etc. is to just move the player off the bottom of the screen temporarily:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># hide the player temporarily</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hide_timer</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">+</span> <span class="mi">200</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>And in the player&rsquo;s <code>update()</code> method, we need to unhide if enough time has passed (we&rsquo;ll use 1 second for now):</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+	<span class="c1"># unhide if hidden</span>
+	<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden</span> <span class="ow">and</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">hide_timer</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
+	    <span class="bp">self</span><span class="o">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="bp">False</span>
+	    <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">centerx</span> <span class="o">=</span> <span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span>
+	    <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span> <span class="o">=</span> <span class="n">HEIGHT</span> <span class="o">-</span> <span class="mi">10</span>
+</code></pre></div>
+
+
+<h2 id="life-counter-display">Life counter display</h2>
+
+<p>To display the lives, we will create a function similar to our <code>draw_shield_bar()</code>, which will let us place the life counter in a given location:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">draw_lives</span><span class="p">(</span><span class="n">surf</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lives</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lives</span><span class="p">):</span>
+        <span class="n">img_rect</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+        <span class="n">img_rect</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">i</span>
+        <span class="n">img_rect</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="n">surf</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">img_rect</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>We just loop a number of times equal to the number of lives, and then space each image out by 30 pixels (the <code>player_mini_img</code> is 25 pixels wide, so that will leave a small space between them).</p>
+
+<p>Then, add a call to this function in the draw section of our game loop:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">draw_lives</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">WIDTH</span> <span class="o">-</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">player</span><span class="o">.</span><span class="n">lives</span><span class="p">,</span>
+	   <span class="n">player_mini_img</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>And now we can see the final result:
+<img src="/blog/img/shmup_part11_1.gif" width="350"></p>
+
+<p>In the next video, we&rsquo;ll add some powerups to the game.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-11-py-full-code-for-this-part-a"><a href="https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-11.py">Full code for this part</a></h3>
+
+<h3 id="a-href-part-12-powerups-coming-soon-a"><a href="">Part 12: Powerups (coming soon) </a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://kidscancode.org/python-install.html">Installing Python</a></li>
+<li><a href="http://kidscancode.org/blog/2015/09/pygame_install/">Installing Pygame</a></li>
+<li><a href="https://www.youtube.com/watch?v=uve1tjVIQ6c&ab_channel=KidsCanCode">Setting up Atom for Python</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>

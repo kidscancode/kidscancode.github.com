@@ -2,8 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/blog/</loc>
-    <lastmod>2016-09-09T05:22:12-07:00</lastmod>
+    <loc>/blog/2016/09/pygame_shmup_part_11/</loc>
+    <lastmod>2016-09-17T05:22:12-07:00</lastmod>
   </url>
   
   <url>
@@ -94,6 +94,65 @@
   <url>
     <loc>/blog/2015/08/gamification1/</loc>
     <lastmod>2015-08-23T20:38:26-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/tags/education/</loc>
+    <lastmod>2015-11-01T12:04:02-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/tags/gamedev/</loc>
+    <lastmod>2016-09-17T05:22:12-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/tags/gamification/</loc>
+    <lastmod>2015-08-23T20:38:26-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/</loc>
+    <lastmod>2016-09-17T05:22:12-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/post/</loc>
+    <lastmod>2016-09-17T05:22:12-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/tags/pygame/</loc>
+    <lastmod>2016-09-17T05:22:12-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/tags/python/</loc>
+    <lastmod>2016-09-17T05:22:12-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/tags/teaching/</loc>
+    <lastmod>2015-11-01T12:04:02-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/tags/tutorial/</loc>
+    <lastmod>2016-09-17T05:22:12-07:00</lastmod>
+    <priority>0</priority>
   </url>
   
 </urlset>

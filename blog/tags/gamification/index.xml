@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-      <title> on KCC Blog </title>
+      <title>Gamification on KCC Blog </title>
       <generator uri="https://gohugo.io">Hugo</generator>
     <link>/blog/tags/gamification/index.xml</link>
     <language>en-us</language>
