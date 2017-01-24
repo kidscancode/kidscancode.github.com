@@ -1,0 +1,248 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.18.1" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Pygame Shmup Part 13: Powerups (part 2) &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">16</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">17</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">19</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">17</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2017 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Pygame Shmup Part 13: Powerups (part 2)</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sat, Oct 22, 2016</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/python">python</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/pygame">pygame</a>
+			  
+			</h6></span>
+
+			      <p>This is part 13 of our &ldquo;Shmup&rdquo; project.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2016/08/pygame_shmup_part_1/">Part 1</a>. In this lesson we&rsquo;ll add some powerups that will occasionally appear.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>In this series of lessons we&rsquo;ll build a complete game using Python and Pygame.  It&rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.
+</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/y2w-116htIQ" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="gun-powerups">Gun Powerups</h2>
+
+<p>Last time, we created a Powerup sprite that drops randomly from meteors when they are destroyed.  We finished making the <code>'shield'</code> type powerup work, and now we need to do the same with the <code>'gun'</code> type.</p>
+
+<p>There are a lot of things we could choose to have the gun powerup affect: fire rate, damage (although right now we destroy meteors with one hit), type of gun, etc.  For this lesson, we&rsquo;re going to make the player shoot more bullets, but to give us the flexibility to change it later if we want, we&rsquo;re going to define a new <code>Player</code> method and call it when we grab a <code>'gun'</code> powerup:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="k">if</span> <span class="n">hit</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;gun&#39;</span><span class="p">:</span>
+        <span class="n">player</span><span class="o">.</span><span class="n">powerup</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>To make this work, first let&rsquo;s add some new properties to the <code>Player</code> sprite: <code>power</code> to track what the &ldquo;power level&rdquo; is (each pow can raise this by one), and a <code>power_time</code> so we can drop back down after a certain amount of time goes by:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>The <code>powerup</code> method will set these properties:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">powerup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>And now we can change the <code>shoot</code> method to produce 2 bullets when <code>power</code> is greater than 1. We&rsquo;ll make them spawn at the wingtips.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">shoot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_shot</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">shoot_delay</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_shot</span> <span class="o">=</span> <span class="n">now</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">bullet</span> <span class="o">=</span> <span class="n">Bullet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">centerx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">)</span>
+            <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet</span><span class="p">)</span>
+            <span class="n">bullets</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet</span><span class="p">)</span>
+            <span class="n">shoot_sound</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">bullet1</span> <span class="o">=</span> <span class="n">Bullet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">centery</span><span class="p">)</span>
+            <span class="n">bullet2</span> <span class="o">=</span> <span class="n">Bullet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">centery</span><span class="p">)</span>
+            <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet1</span><span class="p">)</span>
+            <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet2</span><span class="p">)</span>
+            <span class="n">bullets</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet1</span><span class="p">)</span>
+            <span class="n">bullets</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet2</span><span class="p">)</span>
+            <span class="n">shoot_sound</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>And lastly, we need to check the <code>power_time</code> by adding this to the player&rsquo;s <code>update</code>:</p>
+
+<p><div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># timeout for powerups</span>
+<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">&gt;</span> <span class="n">POWERUP_TIME</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
+</code></pre></div>
+</p>
+
+<p>Don&rsquo;t forget to set <code>POWERUP_TIME</code> to 5000 (5 seconds) at the top.</p>
+
+<h3 id="pow-sounds">Pow sounds</h3>
+
+<p>To wrap up the Powerups feature, we need some nice sounds to play when we pick up the items.  I will leave that for you to add.  Use &lsquo;bfxr&rsquo; to find two sounds you like and load them like we did the other sounds, naming them something like <code>shield_sound</code> and <code>power_sound</code>.  Then, just play each sound when the corresponding pow type is collided with.  You can see the full game code below, but do try to make it work before you look.</p>
+
+<p>Next time, we&rsquo;ll finish up the game by adding a &lsquo;Game Over&rsquo; screen.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-13-py-full-code-for-this-part-a"><a href="https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-13.py">Full code for this part</a></h3>
+
+<h3 id="a-href-part-14-game-over-screen-coming-soon-a"><a href="">Part 14: Game Over Screen (coming soon) </a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://kidscancode.org/python-install.html">Installing Python</a></li>
+<li><a href="http://kidscancode.org/blog/2015/09/pygame_install/">Installing Pygame</a></li>
+<li><a href="https://www.youtube.com/watch?v=uve1tjVIQ6c&ab_channel=KidsCanCode">Setting up Atom for Python</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>
