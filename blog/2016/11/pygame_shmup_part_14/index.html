@@ -1,0 +1,274 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.18.1" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Pygame Shmup Part 14: Game Over (and wrapping up) &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">17</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">18</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2017 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Pygame Shmup Part 14: Game Over (and wrapping up)</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sat, Nov 12, 2016</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/python">python</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/pygame">pygame</a>
+			  
+			</h6></span>
+
+			      <p>This is part 14 of our &ldquo;Shmup&rdquo; project.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2016/08/pygame_shmup_part_1/">Part 1</a>. In this lesson we&rsquo;ll finish up the game by adding a &ldquo;Game Over&rdquo; screen and the ability to play again.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>In this series of lessons we&rsquo;ll build a complete game using Python and Pygame.  It&rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.
+</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Z2K2Yttvr5g" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="game-over">Game Over</h2>
+
+<p>Right now, when our player runs out of lives, the program just ends abruptly.  This isn&rsquo;t very friendly, so we&rsquo;re going to make a &ldquo;Game Over&rdquo; screen, and allow the player to play again if they wish.</p>
+
+<p>The reason the game ends is that our game loop is controlled by the <code>running</code> flag (<em>a flag is a variable that can be <code>True</code> or <code>False</code></em>) and we set <code>running</code> to <code>False</code> when the player dies.  Instead, we want to track what <em>state</em> our game is in (showing game over, or playing), we&rsquo;ll create a flag called <code>game_over</code>, and add this to the top of our game loop:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Game loop</span>
+<span class="n">game_over</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">running</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">while</span> <span class="n">running</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">game_over</span><span class="p">:</span>
+        <span class="n">show_go_screen</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>We&rsquo;ll define <code>show_go_screen()</code> in a moment, but we also need to think about something else.  When the game ends, and we go to the game over screen, if the player chooses to play again, we need to reset everything - the score, the meteors, the player&rsquo;s lives, etc.  Right now we set those things right before the game loop starts, but now we&rsquo;re going to move them to just after <code>show_go_screen()</code> so they will happen whenever the player exits that screen:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Game loop</span>
+<span class="n">game_over</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">running</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">while</span> <span class="n">running</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">game_over</span><span class="p">:</span>
+        <span class="n">show_go_screen</span><span class="p">()</span>
+<span class="hll">        <span class="n">game_over</span> <span class="o">=</span> <span class="bp">False</span>
+</span><span class="hll">        <span class="n">all_sprites</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+</span><span class="hll">        <span class="n">mobs</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+</span><span class="hll">        <span class="n">bullets</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+</span><span class="hll">        <span class="n">powerups</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+</span><span class="hll">        <span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">()</span>
+</span><span class="hll">        <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+</span><span class="hll">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+</span><span class="hll">            <span class="n">newmob</span><span class="p">()</span>
+</span><span class="hll">        <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
+</span></code></pre></div>
+
+
+<p>We also set <code>game_over</code> to <code>False</code> since we&rsquo;re starting a new game.  Then, we can change what happens when the player runs out of lives:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># if the player died and the explosion has finished playing</span>
+<span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">lives</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">death_explosion</span><span class="o">.</span><span class="n">alive</span><span class="p">():</span>
+<span class="hll">    <span class="n">game_over</span> <span class="o">=</span> <span class="bp">True</span>
+</span></code></pre></div>
+
+
+<h2 id="the-game-over-screen">The Game Over screen</h2>
+
+<p>Now we just need to define what <code>show_go_screen</code> does.  Since for this example, we&rsquo;re only doing one &ldquo;screen&rdquo;, we&rsquo;re just going to use the game&rsquo;s title, and put some nice instructions for how to play:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">show_go_screen</span><span class="p">():</span>
+    <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">background</span><span class="p">,</span> <span class="n">background_rect</span><span class="p">)</span>
+    <span class="n">draw_text</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="s2">&quot;SHMUP!&quot;</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">draw_text</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="s2">&quot;Arrow keys move, Space to fire&quot;</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span>
+              <span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">draw_text</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="s2">&quot;Press a key to begin&quot;</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
+    <span class="n">waiting</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">while</span> <span class="n">waiting</span><span class="p">:</span>
+        <span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">FPS</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+                <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">KEYUP</span><span class="p">:</span>
+                <span class="n">waiting</span> <span class="o">=</span> <span class="bp">False</span>
+</code></pre></div>
+
+
+<p>The while loop at the end is how we handle the &ldquo;Press a key to begin&rdquo; part.  It&rsquo;s kind of like a miniature game loop, but all we&rsquo;re doing is checking for events.  The only events we care about are <code>pygame.QUIT</code>, which happens when clicking the X on the window, and the event for pressing a key.  Did you notice we didn&rsquo;t use &lsquo;pygame.KEYDOWN&rsquo; there?</p>
+
+<p>The reason for using <code>KEYUP</code> instead is so that we don&rsquo;t start the game while the player is still holding down a key.  They have to tap <em>and</em> release to continue.</p>
+
+<p>This is a very simple way of doing the game over screen.  There are many other ways to handle it, but we&rsquo;ll talk about those in later tutorials.</p>
+
+<h2 id="wrapping-up">Wrapping Up</h2>
+
+<p>There we have it, your first full Pygame game!  If you&rsquo;ve stuck with it through all these steps, you&rsquo;re well on your way to becoming a game programmer.</p>
+
+<p>There are obviously many more things we could add to this, like:</p>
+
+<ul>
+<li>Increasing Difficulty</li>
+<li>More powerups</li>
+<li>Enemies (that shoot back!)</li>
+<li>High score system</li>
+<li>Boss levels</li>
+</ul>
+
+<p>You can probably think of other ideas as well.  However, for the purposes of this video, we&rsquo;re going to call this game complete.  In future lessons, we&rsquo;ll cover other techniques which you could then come back and apply to the Shmup.</p>
+
+<p>You can see what other lessons we&rsquo;ve made here:
+<a href="http://kidscancode.org/lessons/">KidsCanCode Lessons and Tutorials</a></p>
+
+<p>Thanks for reading/watching these lessons!  Your support, questions, and comments are greatly appreciated.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-14-py-full-code-for-this-part-a"><a href="https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-14.py">Full code for this part</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://kidscancode.org/python-install.html">Installing Python</a></li>
+<li><a href="http://kidscancode.org/blog/2015/09/pygame_install/">Installing Pygame</a></li>
+<li><a href="https://www.youtube.com/watch?v=uve1tjVIQ6c&ab_channel=KidsCanCode">Setting up Atom for Python</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>
