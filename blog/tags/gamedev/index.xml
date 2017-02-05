@@ -118,7 +118,7 @@
 
 &lt;p&gt;Thanks for reading/watching these lessons!  Your support, questions, and comments are greatly appreciated.&lt;/p&gt;
 
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-14-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-14.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-14-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-14.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
@@ -210,7 +210,7 @@
 
 &lt;p&gt;Next time, we&amp;rsquo;ll finish up the game by adding a &amp;lsquo;Game Over&amp;rsquo; screen.&lt;/p&gt;
 
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-13-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-13.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-13-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-13.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-11-pygame-shmup-part-14-part-14-game-over-screen-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/11/pygame_shmup_part_14/&#34;&gt;Part 14: Game Over Screen &lt;/a&gt;&lt;/h3&gt;
 
@@ -329,7 +329,7 @@
 
 &lt;p&gt;Next time, we&amp;rsquo;ll finish up the powerup code for the gun type.&lt;/p&gt;
 
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-12-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-12.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-12-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-12.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-10-pygame-shmup-part-13-part-13-powerups-part-2-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/10/pygame_shmup_part_13/&#34;&gt;Part 13: Powerups (part 2) &lt;/a&gt;&lt;/h3&gt;
 
@@ -499,7 +499,7 @@
 
 &lt;p&gt;In the next lesson, we&amp;rsquo;ll add some powerups to the game.&lt;/p&gt;
 
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-11-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-11.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-11-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-11.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-10-pygame-shmup-part-12-part-12-powerups-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/10/pygame_shmup_part_12/&#34;&gt;Part 12: Powerups &lt;/a&gt;&lt;/h3&gt;
 
@@ -661,7 +661,7 @@
 
 &lt;p&gt;In the next part, we&amp;rsquo;ll make the game last a little bit longer by adding lives to the player.&lt;/p&gt;
 
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-10-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-10.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-10-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-10.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-09-pygame-shmup-part-11-part-11-player-lives-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/09/pygame_shmup_part_11/&#34;&gt;Part 11: Player Lives &lt;/a&gt;&lt;/h3&gt;
 
@@ -795,7 +795,7 @@
 
 &lt;p&gt;Now we can see how much shield we have left as it goes down:&lt;/p&gt;
 
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-9-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-9.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-9-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-9.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-09-pygame-shmup-part-10-part-10-explosions-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/09/pygame_shmup_part_10/&#34;&gt;Part 10: Explosions &lt;/a&gt;&lt;/h3&gt;
 
@@ -945,7 +945,7 @@
 
 &lt;p&gt;In the next lesson, we&amp;rsquo;ll add some shields to the player so we don&amp;rsquo;t die so easily.&lt;/p&gt;
 
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-8-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-8.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-8-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-8.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-09-pygame-shmup-part-9-part-9-shields-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/09/pygame_shmup_part_9/&#34;&gt;Part 9: Shields &lt;/a&gt;&lt;/h3&gt;
 
@@ -1053,7 +1053,7 @@
 
 &lt;p&gt;That&amp;rsquo;s it!  In the next part we&amp;rsquo;ll spice things up by adding sound and music!&lt;/p&gt;
 
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-7-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-7.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-7-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-7.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-08-pygame-shmup-part-8-part-8-sound-and-music-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/08/pygame_shmup_part_8/&#34;&gt;Part 8: Sound and Music &lt;/a&gt;&lt;/h3&gt;
 
@@ -1255,7 +1255,7 @@
 
 &lt;p&gt;In the next part we&amp;rsquo;ll start keeping score and dive into how to draw text on the screen.&lt;/p&gt;
 
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-6-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-6.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-6-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-6.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-08-pygame-shmup-part-7-part-7-score-and-drawing-text-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/08/pygame_shmup_part_7/&#34;&gt;Part 7: Score (and Drawing Text) &lt;/a&gt;&lt;/h3&gt;
 
@@ -1357,7 +1357,7 @@
 
 &lt;p&gt;In the next part we&amp;rsquo;ll liven things up by learning how to add animation to our sprites.&lt;/p&gt;
 
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-5-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-5.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-5-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-5.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-08-pygame-shmup-part-6-part-6-sprite-animation-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/08/pygame_shmup_part_6/&#34;&gt;Part 6: Sprite Animation &lt;/a&gt;&lt;/h3&gt;
 
@@ -1480,7 +1480,7 @@
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-4-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-4.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-4-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-4.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-08-pygame-shmup-part-5-part-5-improved-collisions-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/08/pygame_shmup_part_5/&#34;&gt;Part 5: Improved Collisions &lt;/a&gt;&lt;/h3&gt;
 
@@ -1645,7 +1645,7 @@
 
 &lt;p&gt;In the next lesson, we&amp;rsquo;ll learn how to add graphics to our game instead of using those plain colored rectangles.&lt;/p&gt;
 
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-3-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-3.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-3-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-3.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-08-pygame-shmup-part-4-part-4-adding-graphics-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/08/pygame_shmup_part_4/&#34;&gt;Part 4: Adding Graphics &lt;/a&gt;&lt;/h3&gt;
 
@@ -1750,7 +1750,7 @@
 
 &lt;p&gt;In the next lesson, we&amp;rsquo;ll learn how to detect when two sprites run into each other (collide) and enable the player to shoot back at the mobs.&lt;/p&gt;
 
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-gamedev-blob-master-tutorials-shmup-shmup-2-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/gamedev/blob/master/tutorials/shmup/shmup-2.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-2-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-2.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-08-pygame-shmup-part-3-part-3-collisions-and-bullets-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/08/pygame_shmup_part_3/&#34;&gt;Part 3: Collisions (and Bullets) &lt;/a&gt;&lt;/h3&gt;
 
