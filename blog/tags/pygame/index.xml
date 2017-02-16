@@ -10,6 +10,125 @@
     <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     <item>
+      <title>Godot 101 - Part 1: Introduction to Godot</title>
+      <link>/blog/2017/02/godot_101_01/</link>
+      <pubDate>Wed, 08 Feb 2017 05:22:12 -0700</pubDate>
+      
+      <guid>/blog/2017/02/godot_101_01/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;This is part 1 of &amp;ldquo;Godot 101&amp;rdquo;, where we&amp;rsquo;ll give an overview of what a game engine is in general, and what Godot is in specific.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
+
+&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
+&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://youtu.be/gHA4M2cqWb0&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;game-engine&#34;&gt;Game Engine?&lt;/h2&gt;
+
+&lt;p&gt;A game engine is sort of an all-in-one software package for making video games.  The purpose of most game engines is to make development easier by taking care of all the low level details, leaving the developer free to focus on making the actual game.  By &amp;ldquo;low level details&amp;rdquo;, we mean things like &lt;em&gt;rendering&lt;/em&gt; (producing the graphics), animation, collisions and physics, networking, etc.  In other words, the things you &lt;em&gt;need&lt;/em&gt; to make your game, but aren&amp;rsquo;t the actual game itself.&lt;/p&gt;
+
+&lt;h2 id=&#34;why-godot&#34;&gt;Why Godot?&lt;/h2&gt;
+
+&lt;p&gt;Most of you reading this have probably heard of &lt;a href=&#34;http://unity3d0.com&#34;&gt;Unity&lt;/a&gt;, which is the 500 lb gorilla of the game industry.  Many companies, large and small, use Unity - you&amp;rsquo;ve probably played games made with Unity, whether you realized it or not.&lt;/p&gt;
+
+&lt;p&gt;Even though it&amp;rsquo;s popular, Unity has some drawbacks, especially for beginners. For example, Unity is designed for 3D and while it supports 2D, that support is not very good, and is not easy to deal with. We have often said that beginners should start with 2D games, because working in 3D adds yet another layer of complexity.  Once you have a strong handle on the 2D fundamentals, it will be much easier to make the step up to 3D.&lt;/p&gt;
+
+&lt;p&gt;Godot, on the other hand, is very good at both 2D and 3D, making it a much better learning platform.  In addition, while Unity is technically free (until you make a certain amount of money from your game), one of Godot&amp;rsquo;s big advantages is that it is 100% free.  It is open source (MIT License), which means that you will never pay anything for it, no matter how successful your game is.&lt;/p&gt;
+
+&lt;p&gt;On top of all that, Godot supports all the most popular platforms for games - PC, mobile, and even consoles!&lt;/p&gt;
+
+&lt;p&gt;Finally, Godot&amp;rsquo;s scripting language (GDScript) is very similar to Python (it was based on it).  We think &lt;a href=&#34;/blog/blog/2015/09/whypython/&#34;&gt;Python is a great choice for beginners&lt;/a&gt;, so if you&amp;rsquo;ve been studying Python, Godot will be a smooth transition for you.&lt;/p&gt;
+
+&lt;p&gt;For these reasons, we&amp;rsquo;re big fans of Godot for learning game development.&lt;/p&gt;
+
+&lt;p&gt;Now, let&amp;rsquo;s look at some concepts:&lt;/p&gt;
+
+&lt;h2 id=&#34;nodes-and-scenes&#34;&gt;Nodes and Scenes&lt;/h2&gt;
+
+&lt;p&gt;In Godot, everything is a &lt;code&gt;Node&lt;/code&gt;.  A node can represent a sprite, an animation, a sound, or just about anything else in your project.  Every node has a few things in common:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Name - each node can be referred to by name&lt;/li&gt;
+&lt;li&gt;Properties - every node has a whole set of properties that define how it looks, acts, etc.&lt;/li&gt;
+&lt;li&gt;Callback - each has a callback function that can be set to process during every frame&lt;/li&gt;
+&lt;li&gt;Extendable - with code, any node can be extended to have additional properties and functionality&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Another very important characteristic of Nodes is they can be assigned to other nodes as children, creating a &lt;em&gt;tree&lt;/em&gt; structure:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_1.png&#34; width=&#34;250&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;In a tree, every node can have one (and only one) &lt;code&gt;parent&lt;/code&gt; and any number of &lt;code&gt;children&lt;/code&gt;.  A node can inherit behavior and properties from its parent, allowing you to organize them in a logical manner.&lt;/p&gt;
+
+&lt;p&gt;A group of nodes arranged in a tree is called a &lt;code&gt;Scene&lt;/code&gt;.  In Godot, scenes can be saved/loaded, duplicated, and can even spawn other scenes.  Running a game means running a scene.  All of your work in the Godot editor will be setting up and organizing scenes.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-a-godot-project&#34;&gt;Creating a Godot project&lt;/h2&gt;
+
+&lt;p&gt;You can download Godot here: &lt;a href=&#34;http://godotengine.org/&#34;&gt;http://godotengine.org/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;When you first open Godot, you will see the &amp;ldquo;Project Manager&amp;rdquo; window:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_2.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_2.png&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;In this window you can see a list of the Godot projects you may be working on. To start a new project, click &amp;ldquo;New Project&amp;rdquo;. Every project in Godot starts with a folder, so we need to create one - just pick a location that&amp;rsquo;s convenient for you.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_3.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_3.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;Now just click &amp;ldquo;Edit&amp;rdquo; to open the project.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-simple-scene&#34;&gt;A simple scene&lt;/h2&gt;
+
+&lt;p&gt;This is the main Godot editor window you will see when you open a new project:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_4.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_4.png&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;The center of the window is your view of the game.  Using the buttons at the top marked &amp;ldquo;2D&amp;rdquo; and &amp;ldquo;3D&amp;rdquo;, you can change the mode. Let&amp;rsquo;s stick with &amp;ldquo;2D&amp;rdquo; for this one.&lt;/p&gt;
+
+&lt;p&gt;On the right side is a window labeled &amp;ldquo;Scene&amp;rdquo;:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_5.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_5.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;This is where we&amp;rsquo;ll build our &lt;code&gt;Scene&lt;/code&gt; (tree of nodes).  We can add a node by clicking the + button.  Now we can see a (long!) list of different node types to choose from.  This can be very overwhelming, but don&amp;rsquo;t worry - for most projects you may not ever use the majority of these nodes.  They are there for you if you need them.  The nodes are sorted into a hierarchy - green for UI nodes, blue for 2D nodes, and red for 3D nodes (plus some miscellaneous white and yellow ones).&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;re going to type &amp;ldquo;sprite&amp;rdquo; in the search box to narrow the list down to the node we&amp;rsquo;re looking for and click &amp;ldquo;Create&amp;rdquo;:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_6.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_6.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we have a sprite in our scene, but it&amp;rsquo;s up in the corner and it doesn&amp;rsquo;t look very impressive.  You can control your view with the mouse: middle-click-and-drag will pan your view around, and the scroll wheel will control zoom.&lt;/p&gt;
+
+&lt;p&gt;To be able to see our sprite, we need to add an image (Texture) to it.  We&amp;rsquo;re going to use the Godot icon that&amp;rsquo;s included with every new project.  Now, let&amp;rsquo;s look at the &amp;ldquo;Inspector&amp;rdquo; tab in the lower-right:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_7.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_7.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;Every time you click on a node in your scene, the Inspector will show all of that node&amp;rsquo;s properties - and there are a lot of them!  The one we care about is the first one, &amp;ldquo;Texture&amp;rdquo;, which is currently showing &amp;ldquo;&lt;null&gt;&amp;rdquo;.  To set it, just drag the Godot icon image on top of the spot where you see &amp;ldquo;&lt;null&gt;&amp;rdquo;.  Our sprite has an image!  Pick it up and drag it to the center of the screen.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_8.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_8.png&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h2&gt;
+
+&lt;p&gt;That&amp;rsquo;s our first simple scene!  To finish up, let&amp;rsquo;s save and run it.  To do that, click on the &amp;ldquo;Play the edited scene&amp;rdquo; button.  You will be asked to save your scene, and then click the button again:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_9.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_9.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s it - your first Godot scene!  In later lessons, we&amp;rsquo;ll explore more nodes, begin writing code, and more.  If you have any questions, please post them below.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;a-href-blog-2017-02-godot-101-02-godot-101-part-2-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/02/godot_101_02/&#34;&gt;Godot 101 - Part 2&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
       <title>Pygame Shmup Part 14: Game Over (and wrapping up)</title>
       <link>/blog/2016/11/pygame_shmup_part_14/</link>
       <pubDate>Sat, 12 Nov 2016 05:22:12 -0700</pubDate>
@@ -1973,135 +2092,6 @@ If you&amp;rsquo;re unsure what any of this is doing, please see the earlier les
 &lt;li&gt;&lt;a href=&#34;http://kidscancode.org/python-install.html&#34;&gt;Installing Python&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://kidscancode.org/blog/2015/09/pygame_install/&#34;&gt;Installing Pygame&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uve1tjVIQ6c&amp;ab_channel=KidsCanCode&#34;&gt;Setting up Atom for Python&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Pygame Lesson 1-3: More About Sprites</title>
-      <link>/blog/2016/08/pygame_1-3_more-about-sprites/</link>
-      <pubDate>Mon, 15 Aug 2016 20:14:12 PDT</pubDate>
-      
-      <guid>/blog/2016/08/pygame_1-3_more-about-sprites/</guid>
-      <description>&lt;p&gt;This is part 3 of our tutorial series, &amp;ldquo;Game Development with Pygame&amp;rdquo;.  It is intended for beginner/intermediate programmers who are interested in game development and improving their Python coding skills.  You should start with &lt;a href=&#34;/blog/blog/2016/08/pygame_1-1_getting-started/&#34;&gt;Part 1: Getting Started &lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;
-You can watch a video version of this lesson here:&lt;/p&gt;
-
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/fcryHcZE_sM&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
-
-&lt;h3 id=&#34;moving-to-graphical-sprites&#34;&gt;Moving to graphical sprites&lt;/h3&gt;
-
-&lt;p&gt;Colored rectangles are fine - they&amp;rsquo;re a great way to start and make sure you have the basics of your game working, but sooner or later you&amp;rsquo;re going to want to use a cool spaceship image or character for your sprite. This leads us to the first issue: where do you get your game graphics.&lt;/p&gt;
-
-&lt;h3 id=&#34;where-to-find-art&#34;&gt;Where to find art&lt;/h3&gt;
-
-&lt;p&gt;When you need art for your game, you have 3 choices:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Draw it yourself&lt;/li&gt;
-&lt;li&gt;Find an artist to draw it for you&lt;/li&gt;
-&lt;li&gt;Use pre-existing art from the Internet&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;1 and 2 are fine if you or your friends are artistically inclined, but for most programmers (yours truly included), creating nice-looking art is not in our skill set.  So that leaves the Internet, and it&amp;rsquo;s very important to remember that you shouldn&amp;rsquo;t use art that you do not have the right to use.  While it&amp;rsquo;s easy enough to search and find a picture of Mario or your favorite Pokemon, that doesn&amp;rsquo;t mean that it&amp;rsquo;s OK for you to use it in your game, especially if you plan to put it online and let other people see it.&lt;/p&gt;
-
-&lt;p&gt;Fortunately, there&amp;rsquo;s a good solution: &lt;a href=&#34;http://opengameart.org&#34;&gt;OpenGameArt.org&lt;/a&gt;.  This website is loaded with tons of art, sound, music, and more - and it&amp;rsquo;s all generously licensed by the artists for you to use in your games.  One of the best artists you can find there is named Kenney (just put his name in the search box).&lt;/p&gt;
-
-&lt;p&gt;You can also visit &lt;a href=&#34;http://kenny.nl&#34;&gt;Kenney&amp;rsquo;s website&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The reason I love to use Kenney&amp;rsquo;s art (besides the fact that it&amp;rsquo;s very high quality) is that he likes to release it in packs.  This means that you can get sets of art that will all match in style, instead of trying to mix and match images from multiple artists.&lt;/p&gt;
-
-&lt;p&gt;For this lesson, we&amp;rsquo;re going to use Kenney&amp;rsquo;s &lt;a href=&#34;http://opengameart.org/content/platformer-art-complete-pack-often-updated&#34;&gt;Platformer Art Complete Pack&lt;/a&gt;, which has lots of graphics for making a platformer-style game.  Go ahead and download it and unzip. We&amp;rsquo;re going to use the image &amp;ldquo;p1_jump.png&amp;rdquo;:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/p1_jump.png&#34;&gt; &lt;img src=&#34;/blog/blog/img/p1_jump.png&#34;&gt; &lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;You can also just click on the image above to download the player image.&lt;/p&gt;
-
-&lt;h3 id=&#34;organizing-your-game-assets&#34;&gt;Organizing your game assets&lt;/h3&gt;
-
-&lt;p&gt;First we need a folder to hold our &lt;em&gt;assets&lt;/em&gt;, which is a term game developers use to refer to things like art and sound.  I called the folder &amp;ldquo;img&amp;rdquo; for short, and I put the player image into it.&lt;/p&gt;
-
-&lt;p&gt;To use this image in our game, we need to tell Pygame to load the picture file, which means we need our program to know where the file is located.  Depending on what kind of computer you are using, this can be different, and we want to be able to run our program on any computer, so we need to load a Python library called &lt;code&gt;os&lt;/code&gt;, and then specify where our game is located:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;pygame&lt;/span&gt;
- &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;random&lt;/span&gt;
- &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;os&lt;/span&gt;
-
- &lt;span class=&#34;c1&#34;&gt;# set up asset folders&lt;/span&gt;
- &lt;span class=&#34;n&#34;&gt;game_folder&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dirname&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__file__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
- 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The special Python variable &lt;code&gt;__file__&lt;/code&gt; refers to whatever folder your game code is saved in, and the command &lt;code&gt;os.path.dirname&lt;/code&gt; figures out the &lt;em&gt;path&lt;/em&gt; to that folder.  For example, on my computer, the path to my code is this:&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;/Users/chris/Documents/gamedev/tutorials/1-3 sprite example.py&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;But I&amp;rsquo;m using a computer running OS X. If you&amp;rsquo;re using Windows, your path might look like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;C:\Users\chris\Documents\python\game.py&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;As you can see, different operating systems use different ways of describing where things are located on the computer.  By using the &lt;code&gt;os.path&lt;/code&gt; command, we can let the computer figure out what the right path is (whether to use &amp;ldquo;/&amp;rdquo; or &amp;ldquo;\&amp;rdquo; for example.)&lt;/p&gt;
-
-&lt;p&gt;Now, we can specify our &amp;ldquo;img&amp;rdquo; folder:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;pygame&lt;/span&gt;
- &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;random&lt;/span&gt;
- &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;os&lt;/span&gt;
-
- &lt;span class=&#34;c1&#34;&gt;# set up asset folders&lt;/span&gt;
- &lt;span class=&#34;n&#34;&gt;game_folder&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dirname&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__file__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
- &lt;span class=&#34;n&#34;&gt;img_folder&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;game_folder&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;img&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
- &lt;span class=&#34;n&#34;&gt;player_img&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;load&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;os&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;img_folder&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;p1_jump.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;convert&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
- 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Now we&amp;rsquo;ve loaded our image by using &lt;code&gt;pygame.image.load()&lt;/code&gt; and we&amp;rsquo;ve made sure to use &lt;code&gt;convert()&lt;/code&gt;, which will speed up Pygame&amp;rsquo;s drawing by converting the image into a format that will be faster to draw on the screen. Now we&amp;rsquo;re ready to replace the plain green square in our sprite with our fancy player image:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;player_img&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;center&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
- 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Notice we&amp;rsquo;ve deleted the &lt;code&gt;self.image.fill(GREEN)&lt;/code&gt; commmand - we don&amp;rsquo;t need it to be filled with a solid color anymore.  &lt;code&gt;get_rect()&lt;/code&gt; will still work just fine, because it looks at whatever &lt;code&gt;self.image&lt;/code&gt; is to figure out what the bounding rectangle should be.&lt;/p&gt;
-
-&lt;p&gt;Now if you run the program, you should see a nice little cartoon alien running across the screen.  But we have a problem - one we can&amp;rsquo;t see because the background is currently black.  Change the &lt;code&gt;screen.fill()&lt;/code&gt; command at the bottom to something else - I decided to use &lt;code&gt;BLUE&lt;/code&gt;.  Now you can see the issue:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/sprite_example_4.gif&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;When you have an image file on the computer, that file is always a rectangular grid of pixels. No matter what shape you&amp;rsquo;ve drawn, there&amp;rsquo;s still a border of pixels filling the &amp;ldquo;background&amp;rdquo; of your image.  What we need to do is tell Pygame to ignore the pixels in the image that we don&amp;rsquo;t care about.  In this image, those pixels happen to be black, so we can add the following:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;player_img&lt;/span&gt;
-	&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_colorkey&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;BLACK&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;center&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
- 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;&lt;code&gt;set_colorkey()&lt;/code&gt; just tells Pygame that when we draw the image we want to ignore any pixels of the specified color.  Now our image looks much better:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/sprite_example_5.gif&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;Congratulations, you have now learned the basics of working with Pygame!  Now it&amp;rsquo;s time to start making a real game.  We have created a few tutorials showing the process of creating a full game from start to finish.  They get more complex as we go, so it&amp;rsquo;s recommended that you follow them in order.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://kidscancode.org/lessons/&#34;&gt;Click here&lt;/a&gt; for the full list of tutorials.&lt;/p&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/python-install.html&#34;&gt;Installing Python&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/blog/2015/09/pygame_install/&#34;&gt;Installing Pygame&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uve1tjVIQ6c&amp;ab_channel=KidsCanCode&#34;&gt;Setting up Atom&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     

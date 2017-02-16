@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Godot on KCC Blog </title>
+      <generator uri="https://gohugo.io">Hugo</generator>
+    <link>/blog/tags/godot/index.xml</link>
+    <language>en-us</language>
+    
+    <copyright>KidsCanCode LLC</copyright>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    
+    <item>
+      <title>Godot 101 - Part 1: Introduction to Godot</title>
+      <link>/blog/2017/02/godot_101_01/</link>
+      <pubDate>Wed, 08 Feb 2017 05:22:12 -0700</pubDate>
+      
+      <guid>/blog/2017/02/godot_101_01/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;This is part 1 of &amp;ldquo;Godot 101&amp;rdquo;, where we&amp;rsquo;ll give an overview of what a game engine is in general, and what Godot is in specific.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
+
+&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
+&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://youtu.be/gHA4M2cqWb0&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;game-engine&#34;&gt;Game Engine?&lt;/h2&gt;
+
+&lt;p&gt;A game engine is sort of an all-in-one software package for making video games.  The purpose of most game engines is to make development easier by taking care of all the low level details, leaving the developer free to focus on making the actual game.  By &amp;ldquo;low level details&amp;rdquo;, we mean things like &lt;em&gt;rendering&lt;/em&gt; (producing the graphics), animation, collisions and physics, networking, etc.  In other words, the things you &lt;em&gt;need&lt;/em&gt; to make your game, but aren&amp;rsquo;t the actual game itself.&lt;/p&gt;
+
+&lt;h2 id=&#34;why-godot&#34;&gt;Why Godot?&lt;/h2&gt;
+
+&lt;p&gt;Most of you reading this have probably heard of &lt;a href=&#34;http://unity3d0.com&#34;&gt;Unity&lt;/a&gt;, which is the 500 lb gorilla of the game industry.  Many companies, large and small, use Unity - you&amp;rsquo;ve probably played games made with Unity, whether you realized it or not.&lt;/p&gt;
+
+&lt;p&gt;Even though it&amp;rsquo;s popular, Unity has some drawbacks, especially for beginners. For example, Unity is designed for 3D and while it supports 2D, that support is not very good, and is not easy to deal with. We have often said that beginners should start with 2D games, because working in 3D adds yet another layer of complexity.  Once you have a strong handle on the 2D fundamentals, it will be much easier to make the step up to 3D.&lt;/p&gt;
+
+&lt;p&gt;Godot, on the other hand, is very good at both 2D and 3D, making it a much better learning platform.  In addition, while Unity is technically free (until you make a certain amount of money from your game), one of Godot&amp;rsquo;s big advantages is that it is 100% free.  It is open source (MIT License), which means that you will never pay anything for it, no matter how successful your game is.&lt;/p&gt;
+
+&lt;p&gt;On top of all that, Godot supports all the most popular platforms for games - PC, mobile, and even consoles!&lt;/p&gt;
+
+&lt;p&gt;Finally, Godot&amp;rsquo;s scripting language (GDScript) is very similar to Python (it was based on it).  We think &lt;a href=&#34;/blog/blog/2015/09/whypython/&#34;&gt;Python is a great choice for beginners&lt;/a&gt;, so if you&amp;rsquo;ve been studying Python, Godot will be a smooth transition for you.&lt;/p&gt;
+
+&lt;p&gt;For these reasons, we&amp;rsquo;re big fans of Godot for learning game development.&lt;/p&gt;
+
+&lt;p&gt;Now, let&amp;rsquo;s look at some concepts:&lt;/p&gt;
+
+&lt;h2 id=&#34;nodes-and-scenes&#34;&gt;Nodes and Scenes&lt;/h2&gt;
+
+&lt;p&gt;In Godot, everything is a &lt;code&gt;Node&lt;/code&gt;.  A node can represent a sprite, an animation, a sound, or just about anything else in your project.  Every node has a few things in common:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Name - each node can be referred to by name&lt;/li&gt;
+&lt;li&gt;Properties - every node has a whole set of properties that define how it looks, acts, etc.&lt;/li&gt;
+&lt;li&gt;Callback - each has a callback function that can be set to process during every frame&lt;/li&gt;
+&lt;li&gt;Extendable - with code, any node can be extended to have additional properties and functionality&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Another very important characteristic of Nodes is they can be assigned to other nodes as children, creating a &lt;em&gt;tree&lt;/em&gt; structure:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_1.png&#34; width=&#34;250&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;In a tree, every node can have one (and only one) &lt;code&gt;parent&lt;/code&gt; and any number of &lt;code&gt;children&lt;/code&gt;.  A node can inherit behavior and properties from its parent, allowing you to organize them in a logical manner.&lt;/p&gt;
+
+&lt;p&gt;A group of nodes arranged in a tree is called a &lt;code&gt;Scene&lt;/code&gt;.  In Godot, scenes can be saved/loaded, duplicated, and can even spawn other scenes.  Running a game means running a scene.  All of your work in the Godot editor will be setting up and organizing scenes.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-a-godot-project&#34;&gt;Creating a Godot project&lt;/h2&gt;
+
+&lt;p&gt;You can download Godot here: &lt;a href=&#34;http://godotengine.org/&#34;&gt;http://godotengine.org/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;When you first open Godot, you will see the &amp;ldquo;Project Manager&amp;rdquo; window:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_2.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_2.png&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;In this window you can see a list of the Godot projects you may be working on. To start a new project, click &amp;ldquo;New Project&amp;rdquo;. Every project in Godot starts with a folder, so we need to create one - just pick a location that&amp;rsquo;s convenient for you.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_3.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_3.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;Now just click &amp;ldquo;Edit&amp;rdquo; to open the project.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-simple-scene&#34;&gt;A simple scene&lt;/h2&gt;
+
+&lt;p&gt;This is the main Godot editor window you will see when you open a new project:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_4.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_4.png&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;The center of the window is your view of the game.  Using the buttons at the top marked &amp;ldquo;2D&amp;rdquo; and &amp;ldquo;3D&amp;rdquo;, you can change the mode. Let&amp;rsquo;s stick with &amp;ldquo;2D&amp;rdquo; for this one.&lt;/p&gt;
+
+&lt;p&gt;On the right side is a window labeled &amp;ldquo;Scene&amp;rdquo;:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_5.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_5.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;This is where we&amp;rsquo;ll build our &lt;code&gt;Scene&lt;/code&gt; (tree of nodes).  We can add a node by clicking the + button.  Now we can see a (long!) list of different node types to choose from.  This can be very overwhelming, but don&amp;rsquo;t worry - for most projects you may not ever use the majority of these nodes.  They are there for you if you need them.  The nodes are sorted into a hierarchy - green for UI nodes, blue for 2D nodes, and red for 3D nodes (plus some miscellaneous white and yellow ones).&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;re going to type &amp;ldquo;sprite&amp;rdquo; in the search box to narrow the list down to the node we&amp;rsquo;re looking for and click &amp;ldquo;Create&amp;rdquo;:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_6.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_6.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we have a sprite in our scene, but it&amp;rsquo;s up in the corner and it doesn&amp;rsquo;t look very impressive.  You can control your view with the mouse: middle-click-and-drag will pan your view around, and the scroll wheel will control zoom.&lt;/p&gt;
+
+&lt;p&gt;To be able to see our sprite, we need to add an image (Texture) to it.  We&amp;rsquo;re going to use the Godot icon that&amp;rsquo;s included with every new project.  Now, let&amp;rsquo;s look at the &amp;ldquo;Inspector&amp;rdquo; tab in the lower-right:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_7.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_7.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;Every time you click on a node in your scene, the Inspector will show all of that node&amp;rsquo;s properties - and there are a lot of them!  The one we care about is the first one, &amp;ldquo;Texture&amp;rdquo;, which is currently showing &amp;ldquo;&lt;null&gt;&amp;rdquo;.  To set it, just drag the Godot icon image on top of the spot where you see &amp;ldquo;&lt;null&gt;&amp;rdquo;.  Our sprite has an image!  Pick it up and drag it to the center of the screen.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_8.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_8.png&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h2&gt;
+
+&lt;p&gt;That&amp;rsquo;s our first simple scene!  To finish up, let&amp;rsquo;s save and run it.  To do that, click on the &amp;ldquo;Play the edited scene&amp;rdquo; button.  You will be asked to save your scene, and then click the button again:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_9.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_9.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s it - your first Godot scene!  In later lessons, we&amp;rsquo;ll explore more nodes, begin writing code, and more.  If you have any questions, please post them below.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;a-href-blog-2017-02-godot-101-02-godot-101-part-2-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/02/godot_101_02/&#34;&gt;Godot 101 - Part 2&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
