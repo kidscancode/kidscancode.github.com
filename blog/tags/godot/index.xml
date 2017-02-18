@@ -10,6 +10,128 @@
     <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     <item>
+      <title>Godot 101 - Part 2: Scripting</title>
+      <link>/blog/2017/02/godot_101_02/</link>
+      <pubDate>Sat, 11 Feb 2017 05:22:12 -0700</pubDate>
+      
+      <guid>/blog/2017/02/godot_101_02/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;This is part 2 of &amp;ldquo;Godot 101&amp;rdquo;, where we&amp;rsquo;ll introduce Godot&amp;rsquo;s scripting language, GDScript.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2017/02/godot_101_01/&#34;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
+
+&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
+&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://youtu.be/hi2yiY-zNxQ&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;scripting&#34;&gt;Scripting&lt;/h2&gt;
+
+&lt;p&gt;In the last part, we created our &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&lt;/svg&gt; &lt;code&gt;Sprite&lt;/code&gt; node and set its texture.  However, if you look in the Inspector tab, you&amp;rsquo;ll see there are lots of properties that you can set for a &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&lt;/svg&gt; &lt;code&gt;Sprite&lt;/code&gt; node:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_02_01.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_02_01.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;For example, if you pick up the sprite and move it around, you&amp;rsquo;ll see the &lt;code&gt;Pos&lt;/code&gt; property change.  You can also click on the property and type in the coordinates you want.  To write a script that will move the sprite around, this is the property we want to control.&lt;/p&gt;
+
+&lt;p&gt;So let&amp;rsquo;s add a script.  Right-click on the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&lt;/svg&gt; &lt;code&gt;Sprite&lt;/code&gt; in the scene tab, and choose &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_script&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_script&#34;&lt;/svg&gt;&lt;code&gt;Add Script&lt;/code&gt;.  You&amp;rsquo;ll see the following window:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_02_02.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_02_02.png&#34; width=&#34;350&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We don&amp;rsquo;t need to change anything here, but I&amp;rsquo;ll just point out a couple of things.  First, the &lt;code&gt;Inherits&lt;/code&gt; box lists &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&lt;/svg&gt; &lt;code&gt;Sprite&lt;/code&gt; - if you&amp;rsquo;re familiar with Object-Oriented Programming (OOP), you&amp;rsquo;ll recognize this means our script is going to &lt;em&gt;extend&lt;/em&gt; the Sprite class.  We&amp;rsquo;ll have all the properties and functionality of a Godot Sprite, plus whatever we add ourselves.  The file will be named &amp;ldquo;Sprite.gd&amp;rdquo;, which is fine.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# class member variables go here, for example:&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# var a = 2&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# var b = &amp;quot;textvar&amp;quot;&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+	&lt;span class=&#34;c1&#34;&gt;# Called every time the node is added to the scene.&lt;/span&gt;
+	&lt;span class=&#34;c1&#34;&gt;# Initialization here&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This is the default script, and it has some helpful comments to get you started. Go ahead and delete the comments (lines starting with &lt;code&gt;#&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;If you&amp;rsquo;ve used Python, GDScript will look very familar. &lt;code&gt;func _ready()&lt;/code&gt; indicates a &lt;em&gt;function&lt;/em&gt;.  This &lt;code&gt;_ready()&lt;/code&gt; function will be called every time the node is created and added to the scene (like when we click &amp;ldquo;Play Scene&amp;rdquo;).&lt;/p&gt;
+
+&lt;p&gt;To show how this works, try adding the following line to the &lt;code&gt;_ready()&lt;/code&gt; function:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_pos&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;When you play the scene, you will see the sprite&amp;rsquo;s coordinates (the same ones in the &lt;code&gt;Pos&lt;/code&gt; property of the Inspector) appear in the &amp;ldquo;Output&amp;rdquo; tab of the Godot window. But how do we know what methods we can use on a &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&lt;/svg&gt; &lt;code&gt;Sprite&lt;/code&gt; node?  Let&amp;rsquo;s use the built-in reference documentation:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_02_03.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_02_03.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;Here we can see all the methods a &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&lt;/svg&gt; &lt;code&gt;Sprite&lt;/code&gt; node has.  But &lt;code&gt;get_pos()&lt;/code&gt; isn&amp;rsquo;t there!  That&amp;rsquo;s because if you look at the Inspector again, &lt;code&gt;Pos&lt;/code&gt; is a property of &lt;code&gt;Node2D&lt;/code&gt;, which &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&lt;/svg&gt; &lt;code&gt;Sprite&lt;/code&gt; inherits from.  Click &lt;code&gt;Node2D&lt;/code&gt; and you&amp;rsquo;ll see the &lt;code&gt;get_pos()&lt;/code&gt; method description, which tells us it returns a &lt;code&gt;Vector2&lt;/code&gt; object.&lt;/p&gt;
+
+&lt;p&gt;To move the sprite, we need to change the value of &lt;code&gt;Pos&lt;/code&gt; over time.  Just like any other game engine, Godot is running a loop at a certain speed (typically 60 frames per second), and we just want to move the sprite a little bit each frame.  Here&amp;rsquo;s our updated code:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_pos&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;set_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;set_pos&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_pos&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;First, we declare a variable called &lt;code&gt;vel&lt;/code&gt; and set it to &lt;code&gt;Vector2(1, 1)&lt;/code&gt; - we will move our sprite 1 pixel each to the left and down.&lt;/p&gt;
+
+&lt;p&gt;Next, we have to call the &lt;code&gt;set_process&lt;/code&gt; function and set it to &lt;code&gt;true&lt;/code&gt;.  This tells Godot that this object wants to do something every frame.  What it will do is whatever code we put in the &lt;code&gt;_process()&lt;/code&gt; function.  Now when we run, we&amp;rsquo;ll see this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_02_04.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_02_04.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;This is fine, but we can do better.  One of the things we need to take into account is that the game loop may not always run at exactly 60 fps.  That means that if we move the same distance every frame, our movement may not be smooth.  In other words, instead of our velocity being in units of pixels/frame we want the units to be pixels/second.  We can accomplish this using the &lt;code&gt;delta&lt;/code&gt; parameter, which measures exactly how long it&amp;rsquo;s been since the previous frame:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_pos&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;set_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;set_pos&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_pos&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h2&gt;
+
+&lt;p&gt;That&amp;rsquo;s the basics of scripting. We added a script to our &lt;code&gt;Sprite&lt;/code&gt; node to make it do something every frame.  For fun, try making the sprite rotate by adding this to the &lt;code&gt;_process&lt;/code&gt; function:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;n&#34;&gt;set_rot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;PI&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;Feel free to try changing other properties of the node and see what happens.&lt;/p&gt;
+
+&lt;p&gt;In the next lesson, we&amp;rsquo;ll finish our script by making sure the sprite stays on the screen by bouncing off the edges.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;!-- ### &lt;a href=&#34;/blog/blog/2017/02/godot_101_03/&#34;&gt;Godot 101 - Part 3&lt;/a&gt; --&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
       <title>Godot 101 - Part 1: Introduction to Godot</title>
       <link>/blog/2017/02/godot_101_01/</link>
       <pubDate>Wed, 08 Feb 2017 05:22:12 -0700</pubDate>
@@ -37,7 +159,7 @@
 
 &lt;p&gt;Even though it&amp;rsquo;s popular, Unity has some drawbacks, especially for beginners. For example, Unity is designed for 3D and while it supports 2D, that support is not very good, and is not easy to deal with. We have often said that beginners should start with 2D games, because working in 3D adds yet another layer of complexity.  Once you have a strong handle on the 2D fundamentals, it will be much easier to make the step up to 3D.&lt;/p&gt;
 
-&lt;p&gt;Godot, on the other hand, is very good at both 2D and 3D, making it a much better learning platform.  In addition, while Unity is technically free (until you make a certain amount of money from your game), one of Godot&amp;rsquo;s big advantages is that it is 100% free.  It is open source (MIT License), which means that you will never pay anything for it, no matter how successful your game is.&lt;/p&gt;
+&lt;p&gt;Godot, on the other hand, is very good at both 2D and 3D, making it a much better learning platform.  In addition, while Unity is technically free, it is commercial software, and you are required to pay for a license if your game makes a certain amount of money.  One of Godot&amp;rsquo;s big advantages is that it is 100% free.  It is open source (MIT License), which means that you will never pay anything for it, no matter what.&lt;/p&gt;
 
 &lt;p&gt;On top of all that, Godot supports all the most popular platforms for games - PC, mobile, and even consoles!&lt;/p&gt;
 
@@ -94,13 +216,13 @@
 
 &lt;p&gt;This is where we&amp;rsquo;ll build our &lt;code&gt;Scene&lt;/code&gt; (tree of nodes).  We can add a node by clicking the + button.  Now we can see a (long!) list of different node types to choose from.  This can be very overwhelming, but don&amp;rsquo;t worry - for most projects you may not ever use the majority of these nodes.  They are there for you if you need them.  The nodes are sorted into a hierarchy - green for UI nodes, blue for 2D nodes, and red for 3D nodes (plus some miscellaneous white and yellow ones).&lt;/p&gt;
 
-&lt;p&gt;We&amp;rsquo;re going to type &amp;ldquo;sprite&amp;rdquo; in the search box to narrow the list down to the node we&amp;rsquo;re looking for and click &amp;ldquo;Create&amp;rdquo;:&lt;/p&gt;
+&lt;p&gt;We&amp;rsquo;re going to type &amp;ldquo;sprite&amp;rdquo; in the search box to narrow the list down to the node we&amp;rsquo;re looking for (&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&lt;/svg&gt; &lt;code&gt;Sprite&lt;/code&gt;) and click &amp;ldquo;Create&amp;rdquo;:&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_6.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_6.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
 
 &lt;p&gt;Now we have a sprite in our scene, but it&amp;rsquo;s up in the corner and it doesn&amp;rsquo;t look very impressive.  You can control your view with the mouse: middle-click-and-drag will pan your view around, and the scroll wheel will control zoom.&lt;/p&gt;
 
-&lt;p&gt;To be able to see our sprite, we need to add an image (Texture) to it.  We&amp;rsquo;re going to use the Godot icon that&amp;rsquo;s included with every new project.  Now, let&amp;rsquo;s look at the &amp;ldquo;Inspector&amp;rdquo; tab in the lower-right:&lt;/p&gt;
+&lt;p&gt;To be able to see our sprite, we need to add a &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_texture&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_texture&#34;&lt;/svg&gt; &lt;code&gt;Texture&lt;/code&gt; to it.  We&amp;rsquo;re going to use the Godot icon that&amp;rsquo;s included with every new project.  Now, let&amp;rsquo;s look at the &amp;ldquo;Inspector&amp;rdquo; tab in the lower-right:&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_7.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_7.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
 
@@ -118,7 +240,7 @@
 
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
-&lt;!-- ### &lt;a href=&#34;/blog/blog/2017/02/godot_101_02/&#34;&gt;Godot 101 - Part 2&lt;/a&gt; --&gt;
+&lt;h3 id=&#34;a-href-blog-2017-02-godot-101-02-godot-101-part-2-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/02/godot_101_02/&#34;&gt;Godot 101 - Part 2&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 

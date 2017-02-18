@@ -1,0 +1,281 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.18.1" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 101 - Part 2: Scripting &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">19</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">2</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">20</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">20</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2017 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 101 - Part 2: Scripting</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sat, Feb 11, 2017</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/pygame">pygame</a>
+			  
+			</h6></span>
+
+			      <p><img src="/blog/img/godot_logo.png" width="450"></p>
+
+<p>This is part 2 of &ldquo;Godot 101&rdquo;, where we&rsquo;ll introduce Godot&rsquo;s scripting language, GDScript.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2017/02/godot_101_01/">Part 1</a>.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>Godot 101 is an introduction to the Godot game engine and how it works. If you&rsquo;ve never used a game engine before, or if you&rsquo;re just new to Godot, this is the place to start.  If you&rsquo;re new here, a quick note about this website: we&rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&rsquo;re an adult you&rsquo;re welcome here, too.  We don&rsquo;t believe in dumbing-down the material for kids, and game development is <em>hard</em> - so it will probably be challenging no matter what your age.
+</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://youtu.be/hi2yiY-zNxQ" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="scripting">Scripting</h2>
+
+<p>In the last part, we created our <svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"</svg> <code>Sprite</code> node and set its texture.  However, if you look in the Inspector tab, you&rsquo;ll see there are lots of properties that you can set for a <svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"</svg> <code>Sprite</code> node:</p>
+
+<p><a href="/blog/img/godot101_02_01.png"><img src="/blog/img/godot101_02_01.png" width="200"></a><sub>Click to enlarge</sub></p>
+
+<p>For example, if you pick up the sprite and move it around, you&rsquo;ll see the <code>Pos</code> property change.  You can also click on the property and type in the coordinates you want.  To write a script that will move the sprite around, this is the property we want to control.</p>
+
+<p>So let&rsquo;s add a script.  Right-click on the <svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"</svg> <code>Sprite</code> in the scene tab, and choose <svg width="18" height="18" class="icon-icon_script"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_script"</svg><code>Add Script</code>.  You&rsquo;ll see the following window:</p>
+
+<p><a href="/blog/img/godot101_02_02.png"><img src="/blog/img/godot101_02_02.png" width="350"></a></p>
+
+<p>We don&rsquo;t need to change anything here, but I&rsquo;ll just point out a couple of things.  First, the <code>Inherits</code> box lists <svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"</svg> <code>Sprite</code> - if you&rsquo;re familiar with Object-Oriented Programming (OOP), you&rsquo;ll recognize this means our script is going to <em>extend</em> the Sprite class.  We&rsquo;ll have all the properties and functionality of a Godot Sprite, plus whatever we add ourselves.  The file will be named &ldquo;Sprite.gd&rdquo;, which is fine.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Sprite</span>
+
+<span class="c1"># class member variables go here, for example:</span>
+<span class="c1"># var a = 2</span>
+<span class="c1"># var b = &quot;textvar&quot;</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+	<span class="c1"># Called every time the node is added to the scene.</span>
+	<span class="c1"># Initialization here</span>
+	<span class="k">pass</span>
+ 
+</code></pre></div>
+
+
+<p>This is the default script, and it has some helpful comments to get you started. Go ahead and delete the comments (lines starting with <code>#</code>).</p>
+
+<p>If you&rsquo;ve used Python, GDScript will look very familar. <code>func _ready()</code> indicates a <em>function</em>.  This <code>_ready()</code> function will be called every time the node is created and added to the scene (like when we click &ldquo;Play Scene&rdquo;).</p>
+
+<p>To show how this works, try adding the following line to the <code>_ready()</code> function:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">get_pos</span><span class="p">())</span>
+</code></pre></div>
+
+
+<p>When you play the scene, you will see the sprite&rsquo;s coordinates (the same ones in the <code>Pos</code> property of the Inspector) appear in the &ldquo;Output&rdquo; tab of the Godot window. But how do we know what methods we can use on a <svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"</svg> <code>Sprite</code> node?  Let&rsquo;s use the built-in reference documentation:</p>
+
+<p><a href="/blog/img/godot101_02_03.gif"><img src="/blog/img/godot101_02_03.gif" width="550"></a><sub>Click to enlarge</sub></p>
+
+<p>Here we can see all the methods a <svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"</svg> <code>Sprite</code> node has.  But <code>get_pos()</code> isn&rsquo;t there!  That&rsquo;s because if you look at the Inspector again, <code>Pos</code> is a property of <code>Node2D</code>, which <svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"</svg> <code>Sprite</code> inherits from.  Click <code>Node2D</code> and you&rsquo;ll see the <code>get_pos()</code> method description, which tells us it returns a <code>Vector2</code> object.</p>
+
+<p>To move the sprite, we need to change the value of <code>Pos</code> over time.  Just like any other game engine, Godot is running a loop at a certain speed (typically 60 frames per second), and we just want to move the sprite a little bit each frame.  Here&rsquo;s our updated code:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Sprite</span>
+
+<span class="n">var</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">get_pos</span><span class="p">())</span>
+	<span class="n">set_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+	<span class="n">set_pos</span><span class="p">(</span><span class="n">get_pos</span><span class="p">()</span> <span class="o">+</span> <span class="n">vel</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>First, we declare a variable called <code>vel</code> and set it to <code>Vector2(1, 1)</code> - we will move our sprite 1 pixel each to the left and down.</p>
+
+<p>Next, we have to call the <code>set_process</code> function and set it to <code>true</code>.  This tells Godot that this object wants to do something every frame.  What it will do is whatever code we put in the <code>_process()</code> function.  Now when we run, we&rsquo;ll see this:</p>
+
+<p><a href="/blog/img/godot101_02_04.gif"><img src="/blog/img/godot101_02_04.gif" width="550"></a><sub>Click to enlarge</sub></p>
+
+<p>This is fine, but we can do better.  One of the things we need to take into account is that the game loop may not always run at exactly 60 fps.  That means that if we move the same distance every frame, our movement may not be smooth.  In other words, instead of our velocity being in units of pixels/frame we want the units to be pixels/second.  We can accomplish this using the <code>delta</code> parameter, which measures exactly how long it&rsquo;s been since the previous frame:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Sprite</span>
+
+<span class="n">var</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">get_pos</span><span class="p">())</span>
+	<span class="n">set_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+	<span class="n">set_pos</span><span class="p">(</span><span class="n">get_pos</span><span class="p">()</span> <span class="o">+</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+</code></pre></div>
+
+
+<h2 id="wrapping-up">Wrapping up</h2>
+
+<p>That&rsquo;s the basics of scripting. We added a script to our <code>Sprite</code> node to make it do something every frame.  For fun, try making the sprite rotate by adding this to the <code>_process</code> function:
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="n">set_rot</span><span class="p">(</span><span class="n">get_rot</span><span class="p">()</span> <span class="o">+</span> <span class="n">PI</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+</code></pre></div>
+</p>
+
+<p>Feel free to try changing other properties of the node and see what happens.</p>
+
+<p>In the next lesson, we&rsquo;ll finish our script by making sure the sprite stays on the screen by bouncing off the edges.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a"><a href="https://github.com/kidscancode/godot_tutorials/tree/master/Godot101">Full code for this part</a></h3>
+
+<!-- ### <a href="/blog/2017/02/godot_101_03/">Godot 101 - Part 3</a> -->
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://godotengine.org">Download Godot Engine</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Us on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>

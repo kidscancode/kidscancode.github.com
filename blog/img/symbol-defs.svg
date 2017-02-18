@@ -1,0 +1,1363 @@
+<svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<symbol id="icon-icon_multi_mesh_instance" viewBox="0 0 32 32">
+<title>icon_multi_mesh_instance</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M6 2c-2.209 0-4 1.791-4 4 0.001 1.472 0.797 2.757 1.981 3.451l0.019 13.092c-1.202 0.703-1.997 1.987-2 3.457 0 2.21 1.791 4 4 4 1.472-0.001 2.757-0.797 3.451-1.981l2.549-0.019v-4h-2.543c-0.356-0.61-0.849-1.104-1.438-1.451l-0.019-11.721 7.172 7.172h2.828v-2.828l-7.172-7.172h11.715c0.357 0.606 0.849 1.098 1.438 1.443l0.019 2.557h4v-2.539c1.203-0.704 1.999-1.989 2-3.461 0-2.209-1.791-4-4-4-1.472 0.001-2.757 0.797-3.451 1.981l-13.092 0.019c-0.703-1.202-1.987-1.997-3.457-2zM24 16v5.172l-2-2v2.828h-2.828l2 2h-5.172v2h6v2h0.543c0.703 1.202 1.987 1.997 3.457 2l0-4h4c0-0 0-0 0-0.001 0-1.498-0.823-2.804-2.042-3.489l0.042-0.010v-0.5h-2v-6h-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M22 16v6h-6v4h6v6h4v-6h6v-4h-6v-6h-4z"></path>
+</symbol>
+<symbol id="icon-icon_multi_mesh" viewBox="0 0 32 32">
+<title>icon_multi_mesh</title>
+<path fill="#ffd684" style="fill: var(--color2, #ffd684)" d="M6 2c-2.209 0-4 1.791-4 4 0.001 1.472 0.797 2.757 1.981 3.451l0.019 13.092c-1.202 0.703-1.997 1.987-2 3.457 0 2.21 1.791 4 4 4 1.472-0.001 2.757-0.797 3.451-1.981l2.549-0.019v-4h-2.543c-0.356-0.61-0.849-1.104-1.438-1.451l-0.019-11.721 7.172 7.172h2.828v-2.828l-7.172-7.172h11.715c0.357 0.606 0.849 1.098 1.438 1.443l0.019 2.557h4v-2.539c1.203-0.704 1.999-1.989 2-3.461 0-2.209-1.791-4-4-4-1.472 0.001-2.757 0.797-3.451 1.981l-13.092 0.019c-0.703-1.202-1.987-1.997-3.457-2zM22 16v6h-6v4h6v6h4v-6h6v-4h-6v-6h-4z"></path>
+</symbol>
+<symbol id="icon-icon_navigation_2d" viewBox="0 0 32 32">
+<title>icon_navigation_2d</title>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M6 28l10-4 10 4-10-24-10 24z"></path>
+</symbol>
+<symbol id="icon-icon_navigation_mesh_instance" viewBox="0 0 32 32">
+<title>icon_navigation_mesh_instance</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M6 2c-2.209 0-4 1.791-4 4 0.001 1.472 0.797 2.757 1.981 3.451l0.019 13.092c-1.202 0.703-1.997 1.987-2 3.457 0 2.21 1.791 4 4 4 1.472-0.001 2.757-0.797 3.451-1.981l5.026-0.019 1.5-4h-6.52c-0.356-0.61-0.849-1.104-1.438-1.451l-0.019-11.721 9.395 9.395 1.543-4.113-8.109-8.109h11.715c0.356 0.61 0.849 1.104 1.438 1.451l0.019 0.553c0.007-0 0.015-0 0.023-0s0.016 0 0.025 0c1.684 0.020 3.118 1.079 3.689 2.566l0.263 0.703v-3.816c1.202-0.703 1.997-1.987 2-3.457 0-2.21-1.791-4-4-4-1.472 0.001-2.757 0.797-3.451 1.981l-13.092 0.019c-0.703-1.202-1.987-1.997-3.457-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M30 30l-6-16-6 16 6-4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M24 8h4v2h-4v-2z"></path>
+</symbol>
+<symbol id="icon-icon_navigation_mesh" viewBox="0 0 32 32">
+<title>icon_navigation_mesh</title>
+<path fill="#ffd684" style="fill: var(--color2, #ffd684)" d="M6 2c-2.209 0-4 1.791-4 4 0.001 1.472 0.797 2.757 1.981 3.451l0.019 13.092c-1.202 0.703-1.997 1.987-2 3.457 0 2.21 1.791 4 4 4 1.472-0.001 2.757-0.797 3.451-1.981l5.026-0.019 1.5-4h-6.52c-0.356-0.61-0.849-1.104-1.438-1.451l-0.019-11.721 9.395 9.395 1.543-4.113-8.109-8.109h11.715c0.356 0.61 0.849 1.104 1.438 1.451l0.019 0.553c0.007-0 0.015-0 0.023-0s0.016 0 0.025 0c1.684 0.020 3.118 1.079 3.689 2.566l0.263 0.703v-3.816c1.202-0.703 1.997-1.987 2-3.457 0-2.21-1.791-4-4-4-1.472 0.001-2.757 0.797-3.451 1.981l-13.092 0.019c-0.703-1.202-1.987-1.997-3.457-2zM24 14l-6 16 6-4 6 4-6-16z"></path>
+</symbol>
+<symbol id="icon-icon_navigation_polygon_instance" viewBox="0 0 32 32">
+<title>icon_navigation_polygon_instance</title>
+<path fill="#a5b7f2" style="fill: var(--color4, #a5b7f2)" d="M4 2c-1.105 0-2 0.895-2 2v24c0 1.105 0.895 2 2 2h9.805c0-0.004-0-0.009-0-0.013 0-0.524 0.096-1.026 0.271-1.488l0.94-2.498h-9.016v-20h17.172l-8.586 8.586c-0.362 0.362-0.586 0.862-0.586 1.414s0.224 1.052 0.586 1.414l2.652 2.652 2.828-7.539c0.615-1.605 2.143-2.723 3.932-2.723 0.018 0 0.037 0 0.055 0 0.308 0.004 0.608 0.040 0.897 0.107l4.464-4.498c0.362-0.362 0.585-0.862 0.585-1.414 0-1.104-0.895-2-1.999-2h-24z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M30 30l-6-16-6 16 6-4z"></path>
+</symbol>
+<symbol id="icon-icon_navigation_polygon" viewBox="0 0 32 32">
+<title>icon_navigation_polygon</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M4 2c-1.105 0-2 0.895-2 2v24c0 1.105 0.895 2 2 2h9.805c0-0.004-0-0.009-0-0.013 0-0.524 0.096-1.026 0.271-1.488l0.94-2.498h-9.016v-20h17.172l-8.586 8.586c-0.362 0.362-0.586 0.862-0.586 1.414s0.224 1.052 0.586 1.414l2.652 2.652 2.828-7.539c0.615-1.605 2.143-2.723 3.932-2.723 0.018 0 0.037 0 0.055 0 0.308 0.004 0.608 0.040 0.897 0.107l4.464-4.498c0.362-0.362 0.585-0.862 0.585-1.414 0-1.104-0.895-2-1.999-2h-24z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M30 30l-6-16-6 16 6-4z"></path>
+</symbol>
+<symbol id="icon-icon_navigation" viewBox="0 0 32 32">
+<title>icon_navigation</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M6 28l10-4 10 4-10-24-10 24z"></path>
+</symbol>
+<symbol id="icon-icon_nine_patch_rect" viewBox="0 0 32 32">
+<title>icon_nine_patch_rect</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h2v28h-2v-28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 28h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 2h2v28h-2v-28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 8h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 22h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M10 2v28h-2v-28h2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M24 2v28h-2v-28h2z"></path>
+</symbol>
+<symbol id="icon-icon_node_2d" viewBox="0 0 32 32">
+<title>icon_node_2d</title>
+<path fill="#a5b7f3" style="fill: var(--color8, #a5b7f3)" d="M16 4c-6.627 0-12 5.373-12 12s5.373 12 12 12c6.627 0 12-5.373 12-12s-5.373-12-12-12zM16 8c4.418 0 8 3.582 8 8s-3.582 8-8 8c-4.418 0-8-3.582-8-8s3.582-8 8-8z"></path>
+</symbol>
+<symbol id="icon-icon_node_warning" viewBox="0 0 32 32">
+<title>icon_node_warning</title>
+<path fill="#ffd684" style="fill: var(--color2, #ffd684)" d="M16.059 4.004c-0.018-0.001-0.038-0.001-0.059-0.001-0.724 0-1.358 0.385-1.709 0.961l-12.005 20.009c-0.178 0.293-0.284 0.648-0.284 1.027 0 1.104 0.895 1.999 1.999 2h24c1.104-0.001 1.999-0.896 1.999-2 0-0.379-0.106-0.734-0.289-1.036l-11.995-19.991c-0.346-0.569-0.955-0.948-1.653-0.969zM14 10h4v10h-4v-10zM14 22h4v4h-4v-4z"></path>
+</symbol>
+<symbol id="icon-icon_node" viewBox="0 0 32 32">
+<title>icon_node</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 4c-6.627 0-12 5.373-12 12s5.373 12 12 12c6.627 0 12-5.373 12-12s-5.373-12-12-12zM16 8c4.418 0 8 3.582 8 8s-3.582 8-8 8c-4.418 0-8-3.582-8-8s3.582-8 8-8z"></path>
+</symbol>
+<symbol id="icon-icon_occluder_polygon_2d" viewBox="0 0 32 32">
+<title>icon_occluder_polygon_2d</title>
+<path fill="#3552b1" style="fill: var(--color9, #3552b1)" d="M2 18l12 12h16v-16l-12-12h-16z"></path>
+<path fill="#a5b7f3" style="fill: var(--color8, #a5b7f3)" d="M2 2h16l-6 8 6 8h-16z"></path>
+</symbol>
+<symbol id="icon-icon_omni_light" viewBox="0 0 32 32">
+<title>icon_omni_light</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 2c-5.523 0-10 4.477-10 10 0.005 4.071 2.442 7.571 5.936 9.127l0.064 4.873h8v-4.84c3.56-1.582 5.998-5.086 6-9.16 0-5.523-4.477-10-10-10zM16 6c3.314 0 6 2.686 6 6s-2.686 6-6 6c-3.314 0-6-2.686-6-6s2.686-6 6-6zM14 28v2h4v-2h-4z"></path>
+</symbol>
+<symbol id="icon-icon_option_button" viewBox="0 0 32 32">
+<title>icon_option_button</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 6c-2.209 0-4 1.791-4 4v12c0 2.209 1.791 4 4 4h12v-20zM20 6v20h6c2.209 0 4-1.791 4-4v-12c0-2.209-1.791-4-4-4zM22 14h6l-3 4z"></path>
+</symbol>
+<symbol id="icon-icon_packed_scene" viewBox="0 0 32 32">
+<title>icon_packed_scene</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M2 14v12h4v4h24v-16h-28z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M1.423 8.042l0.577 3.958 4.488-0.655-1.636-3.804-3.429 0.5zM8.809 6.964l1.636 3.804 3.958-0.577-1.637-3.804-3.958 0.577zM16.725 5.809l1.637 3.804 3.958-0.577-1.637-3.804-3.958 0.577zM24.642 4.655l1.637 3.804 3.429-0.5-0.577-3.958-4.488 0.655z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M10 26c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M30 26c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+</symbol>
+<symbol id="icon-icon_panel_container" viewBox="0 0 32 32">
+<title>icon_panel_container</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4zM6 6h20v20h-20z"></path>
+</symbol>
+<symbol id="icon-icon_panel" viewBox="0 0 32 32">
+<title>icon_panel</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4z"></path>
+</symbol>
+<symbol id="icon-icon_parallax_background" viewBox="0 0 32 32">
+<title>icon_parallax_background</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M2 6c0-1.105 0.895-2 2-2v2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M30 6c0-1.105-0.895-2-2-2v2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M4 4h24v2h-24v-2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M4 26h24v2h-24v-2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M2 26c0 1.105 0.895 2 2 2v-2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M30 26c0 1.105-0.895 2-2 2v-2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M2 6h2v20h-2v-20z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M28 6h2v20h-2v-20z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M14 10l-6 6 6 6z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M18 10l6 6-6 6z"></path>
+</symbol>
+<symbol id="icon-icon_parallax_layer" viewBox="0 0 32 32">
+<title>icon_parallax_layer</title>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M14 10l-6 6 6 6z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M18 10l6 6-6 6z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4zM6 4h20c1.105 0 2 0.895 2 2v20c-0 1.105-0.895 2-2 2h-20c-1.105-0-2-0.895-2-2v-20c0-1.105 0.895-2 2-2z"></path>
+</symbol>
+<symbol id="icon-icon_particle_attractor_2d" viewBox="0 0 32 32">
+<title>icon_particle_attractor_2d</title>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M16 2c-3.314 0-6 6.268-6 14s2.686 14 6 14c3.314 0 6-6.268 6-14s-2.686-14-6-14zM16 4c2.209 0 4 5.373 4 12 0 0 0 0 0 0s0 0 0 0c0 6.627-1.791 12-4 12s-4-5.373-4-12c0 0 0-0 0-0s0 0 0-0c0-6.627 1.791-12 4-12z"></path>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M2 16c0 3.314 6.268 6 14 6s14-2.686 14-6c0-3.314-6.268-6-14-6s-14 2.686-14 6zM4 16c0-2.209 5.373-4 12-4 0 0 0 0 0 0s0 0 0 0c6.627 0 12 1.791 12 4s-5.373 4-12 4c0 0-0 0-0 0s0 0-0 0c-6.627 0-12-1.791-12-4z"></path>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M6.101 25.899c0 0 0 0 0 0 2.343 2.343 8.675-0.189 14.142-5.657s8-11.799 5.657-14.142c0 0-0-0-0-0-2.343-2.343-8.675 0.189-14.142 5.657s-8 11.799-5.657 14.142zM7.515 24.485c-1.562-1.562 0.971-6.627 5.657-11.314s9.752-7.219 11.314-5.657c0 0 0 0 0 0 1.562 1.562-0.971 6.627-5.657 11.314s-9.752 7.219-11.314 5.657c0 0-0-0-0-0z"></path>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M25.899 25.899c2.343-2.343-0.19-8.675-5.657-14.142s-11.799-8-14.142-5.657c-2.343 2.343 0.19 8.675 5.657 14.142s11.799 8 14.142 5.657zM24.485 24.485c-1.562 1.562-6.627-0.971-11.314-5.657s-7.219-9.752-5.657-11.314c1.562-1.562 6.627 0.971 11.314 5.657s7.219 9.752 5.657 11.314z"></path>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M18 16c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+</symbol>
+<symbol id="icon-icon_particles_2d" viewBox="0 0 32 32">
+<title>icon_particles_2d</title>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M14 16c0 3.314-2.686 6-6 6s-6-2.686-6-6c0-3.314 2.686-6 6-6s6 2.686 6 6z"></path>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M25 12c0 5.523-4.029 10-9 10s-9-4.477-9-10c0-5.523 4.029-10 9-10s9 4.477 9 10z"></path>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M8 22h16v-8h-16z"></path>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M30 16c0 3.314-2.686 6-6 6s-6-2.686-6-6c0-3.314 2.686-6 6-6s6 2.686 6 6z"></path>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M10 26c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M26 26c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M18 28c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+</symbol>
+<symbol id="icon-icon_particles_shader" viewBox="0 0 32 32">
+<title>icon_particles_shader</title>
+<path fill="#ff7070" style="fill: var(--color11, #ff7070)" d="M0 2h32v4h-32v-4z"></path>
+<path fill="#ffeb70" style="fill: var(--color12, #ffeb70)" d="M0 6h32v4h-32v-4z"></path>
+<path fill="#9dff70" style="fill: var(--color13, #9dff70)" d="M0 10h32v4h-32v-4z"></path>
+<path fill="#70ffb9" style="fill: var(--color14, #70ffb9)" d="M0 14h32v4h-32v-4z"></path>
+<path fill="#70deff" style="fill: var(--color15, #70deff)" d="M0 18h32v4h-32v-4z"></path>
+<path fill="#ff70ac" style="fill: var(--color16, #ff70ac)" d="M0 26h32v4h-32v-4z"></path>
+<path fill="#9f70ff" style="fill: var(--color17, #9f70ff)" d="M0 22h32v4h-32v-4z"></path>
+</symbol>
+<symbol id="icon-icon_particles" viewBox="0 0 32 32">
+<title>icon_particles</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M14 16c0 3.314-2.686 6-6 6s-6-2.686-6-6c0-3.314 2.686-6 6-6s6 2.686 6 6z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M25 12c0 5.523-4.029 10-9 10s-9-4.477-9-10c0-5.523 4.029-10 9-10s9 4.477 9 10z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M8 22h16v-8h-16z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M30 16c0 3.314-2.686 6-6 6s-6-2.686-6-6c0-3.314 2.686-6 6-6s6 2.686 6 6z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M10 26c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M26 26c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M18 28c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+</symbol>
+<symbol id="icon-icon_patch_9_frame" viewBox="0 0 32 32">
+<title>icon_patch_9_frame</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h2v28h-2v-28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 28h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 2h2v28h-2v-28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 8h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 22h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M10 2v28h-2v-28h2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M24 2v28h-2v-28h2z"></path>
+</symbol>
+<symbol id="icon-icon_patch_9_rect" viewBox="0 0 32 32">
+<title>icon_patch_9_rect</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h2v28h-2v-28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 28h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 2h2v28h-2v-28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 8h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 22h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M10 2v28h-2v-28h2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M24 2v28h-2v-28h2z"></path>
+</symbol>
+<symbol id="icon-icon_path_2d" viewBox="0 0 32 32">
+<title>icon_path_2d</title>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M10 26c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M30 6c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M24 5.998c0 4.13-0.985 5.649-2.273 6.551s-3.426 1.211-5.926 1.461c-2.5 0.25-5.363 0.441-7.824 2.164s-3.977 4.954-3.977 9.824h4c0-4.13 0.985-5.645 2.273-6.547s3.426-1.211 5.926-1.461c2.5-0.25 5.363-0.441 7.824-2.164s3.977-4.958 3.977-9.828h-4z"></path>
+</symbol>
+<symbol id="icon-icon_path_follow_2d" viewBox="0 0 32 32">
+<title>icon_path_follow_2d</title>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M10 26c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M24 5.998c0 4.13-0.985 5.649-2.273 6.551s-3.426 1.211-5.926 1.461c-2.5 0.25-5.363 0.441-7.824 2.164s-3.977 4.954-3.977 9.824h4c0-4.13 0.985-5.645 2.273-6.547s3.426-1.211 5.926-1.461c2.5-0.25 5.363-0.441 7.824-2.164s3.977-4.958 3.977-9.828h-4z"></path>
+<path fill="#a5b7f9" style="fill: var(--color18, #a5b7f9)" d="M20 8h12l-6-8z"></path>
+</symbol>
+<symbol id="icon-icon_path_follow" viewBox="0 0 32 32">
+<title>icon_path_follow</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M10 26c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M24 5.998c0 4.13-0.985 5.649-2.273 6.551s-3.426 1.211-5.926 1.461c-2.5 0.25-5.363 0.441-7.824 2.164s-3.977 4.954-3.977 9.824h4c0-4.13 0.985-5.645 2.273-6.547s3.426-1.211 5.926-1.461c2.5-0.25 5.363-0.441 7.824-2.164s3.977-4.958 3.977-9.828h-4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M20 8h12l-6-8z"></path>
+</symbol>
+<symbol id="icon-icon_pin_joint_2d" viewBox="0 0 32 32">
+<title>icon_pin_joint_2d</title>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M3.858 13.858l14.142 14.142 1.414-7.071-8.485-8.485z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M18 2.544l-1.414 1.414v2.828l-4.243 4.243 8.485 8.485 4.243-4.243h2.828l1.414-1.414-11.314-11.314z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M8.101 20.929l2.828 2.828-2.828 2.828-2.828-2.828 2.828-2.828z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M5.272 23.757l-1.414 4.243 4.243-1.414-2.828-2.828z"></path>
+</symbol>
+<symbol id="icon-icon_pin_joint" viewBox="0 0 32 32">
+<title>icon_pin_joint</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M3.858 13.858l14.142 14.142 1.414-7.071-8.485-8.485z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M18 2.544l-1.414 1.414v2.828l-4.243 4.243 8.485 8.485 4.243-4.243h2.828l1.414-1.414-11.314-11.314z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M8.101 20.929l2.828 2.828-2.828 2.828-2.828-2.828 2.828-2.828z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M5.272 23.757l-1.414 4.243 4.243-1.414-2.828-2.828z"></path>
+</symbol>
+<symbol id="icon-icon_plane_shape" viewBox="0 0 32 32">
+<title>icon_plane_shape</title>
+<path fill="#a2d2ff" style="fill: var(--color19, #a2d2ff)" d="M2 16l14 6 14-6-14-6z"></path>
+</symbol>
+<symbol id="icon-icon_popup_dialog" viewBox="0 0 32 32">
+<title>icon_popup_dialog</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v2h28v-2c0-2.209-1.791-4-4-4h-20zM24 4h2v2h-2v-2zM2 10v16c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-16h-28zM14 12h4v10h-4v-10zM14 24h4v4h-4v-4z"></path>
+</symbol>
+<symbol id="icon-icon_popup_menu" viewBox="0 0 32 32">
+<title>icon_popup_menu</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M4 12c-1.105 0-2 0.895-2 2v14c0 1.105 0.895 2 2 2h24c1.105 0 2-0.895 2-2v-14c0-1.105-0.895-2-2-2h-24zM6 16h20v4h-20v-4zM6 22h20v4h-20v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2v8h12v-8h-12zM4 4h8l-4 4-4-4z"></path>
+</symbol>
+<symbol id="icon-icon_popup_panel" viewBox="0 0 32 32">
+<title>icon_popup_panel</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M4 12c-1.105 0-2 0.895-2 2v14c0 1.105 0.895 2 2 2h24c1.105 0 2-0.895 2-2v-14c0-1.105-0.895-2-2-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2v8h12v-8h-12zM4 4h8l-4 4-4-4z"></path>
+</symbol>
+<symbol id="icon-icon_popup" viewBox="0 0 32 32">
+<title>icon_popup</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4h-20zM14 6h4v12h-4v-12zM14 22h4v4h-4v-4z"></path>
+</symbol>
+<symbol id="icon-icon_portal" viewBox="0 0 32 32">
+<title>icon_portal</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 2c-5.523 0-10 6.268-10 14s4.477 14 10 14c5.523 0 10-6.268 10-14s-4.477-14-10-14zM16 6c3.314 0 6 4.477 6 10s-2.686 10-6 10c-3.314 0-6-4.477-6-10s2.686-10 6-10z"></path>
+</symbol>
+<symbol id="icon-icon_position_2d" viewBox="0 0 32 32">
+<title>icon_position_2d</title>
+<path fill="#a5b7f4" style="fill: var(--color20, #a5b7f4)" d="M2 14h8v4h-8v-4z"></path>
+<path fill="#a5b7f4" style="fill: var(--color20, #a5b7f4)" d="M22 14h8v4h-8v-4z"></path>
+<path fill="#a5b7f4" style="fill: var(--color20, #a5b7f4)" d="M14 2h4v8h-4v-8z"></path>
+<path fill="#a5b7f4" style="fill: var(--color20, #a5b7f4)" d="M14 22h4v8h-4v-8z"></path>
+</symbol>
+<symbol id="icon-icon_position_3d" viewBox="0 0 32 32">
+<title>icon_position_3d</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M14 2v8h4v-8h-4zM2 14v4h8v-4h-8zM22 14v4h8v-4h-8zM14 22v8h4v-8h-4z"></path>
+</symbol>
+<symbol id="icon-icon_progress_bar" viewBox="0 0 32 32">
+<title>icon_progress_bar</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 6c-2.209 0-4 1.791-4 4v12c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-12c0-2.209-1.791-4-4-4zM6 10h20v12h-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M8 12h2v8h-2v-8z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M12 12h2v8h-2v-8z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M16 12h2v8h-2v-8z"></path>
+</symbol>
+<symbol id="icon-icon_proximity_group" viewBox="0 0 32 32">
+<title>icon_proximity_group</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M2 2h4v28h-4v-28z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M2 2h28v4h-28v-4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M30 30h-4v-28h4v28z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M30 30h-28v-4h28v4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M24 11c0 1.657-1.343 3-3 3s-3-1.343-3-3c0-1.657 1.343-3 3-3s3 1.343 3 3z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M14 21c0 1.657-1.343 3-3 3s-3-1.343-3-3c0-1.657 1.343-3 3-3s3 1.343 3 3z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M24 21c0 1.657-1.343 3-3 3s-3-1.343-3-3c0-1.657 1.343-3 3-3s3 1.343 3 3z"></path>
+</symbol>
+<symbol id="icon-icon_quad" viewBox="0 0 32 32">
+<title>icon_quad</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M2 2v28h28v-28h-28zM8.828 6h17.172v17.172l-17.172-17.172zM6 8.828l17.172 17.172h-17.172v-17.172z"></path>
+</symbol>
+<symbol id="icon-icon_range" viewBox="0 0 32 32">
+<title>icon_range</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 6h4v20h-4v-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 14h26v4h-26v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M26 6h4v20h-4v-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M10 10h4v12h-4v-12z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M18 10h4v12h-4v-12z"></path>
+</symbol>
+<symbol id="icon-icon_ray_cast_2d" viewBox="0 0 32 32">
+<title>icon_ray_cast_2d</title>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M14 2h4v18h-4v-18z"></path>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M8 20h16l-8 10z"></path>
+</symbol>
+<symbol id="icon-icon_ray_cast" viewBox="0 0 32 32">
+<title>icon_ray_cast</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M14 2h4v18h-4v-18z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M8 20h16l-8 10z"></path>
+</symbol>
+<symbol id="icon-icon_ray_shape" viewBox="0 0 32 32">
+<title>icon_ray_shape</title>
+<path fill="#a2d2ff" style="fill: var(--color19, #a2d2ff)" d="M16 30l-4-4v-14l4 4z"></path>
+<path fill="#2998ff" style="fill: var(--color21, #2998ff)" d="M16 23l-4-3v-8l4 4z"></path>
+<path fill="#a2d2ff" style="fill: var(--color19, #a2d2ff)" d="M16 2l-12 10 12 8z"></path>
+<path fill="#2998ff" style="fill: var(--color21, #2998ff)" d="M16 30l4-4v-14l-4 4z"></path>
+<path fill="#2998ff" style="fill: var(--color21, #2998ff)" d="M16 2l12 10-12 8z"></path>
+</symbol>
+<symbol id="icon-icon_reference_frame" viewBox="0 0 32 32">
+<title>icon_reference_frame</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h2v28h-2v-28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 28h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 2h2v28h-2v-28z"></path>
+</symbol>
+<symbol id="icon-icon_reference_rect" viewBox="0 0 32 32">
+<title>icon_reference_rect</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h2v28h-2v-28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 28h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 2h2v28h-2v-28z"></path>
+</symbol>
+<symbol id="icon-icon_reflection_probe" viewBox="0 0 32 32">
+<title>icon_reflection_probe</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M15.926 2.004c-0.301 0.011-0.581 0.086-0.832 0.212l-11.989 5.995c-0.661 0.336-1.105 1.010-1.105 1.789 0 0 0 0 0 0v12c0 0 0 0 0 0 0 0.779 0.445 1.453 1.094 1.784l12.011 6.005c0.261 0.133 0.568 0.211 0.895 0.211s0.634-0.078 0.906-0.216l11.989-5.995c0.661-0.336 1.105-1.010 1.105-1.789 0-0 0-0 0-0v-12c0-0 0-0 0-0 0-0.779-0.445-1.453-1.094-1.784l-12.011-6.005c-0.259-0.132-0.565-0.209-0.889-0.209-0.028 0-0.056 0.001-0.083 0.002zM14 7.238v17.527l-8-4v-9.527l8-4zM18 7.238l8 4v9.527l-8 4v-17.527z"></path>
+</symbol>
+<symbol id="icon-icon_remote_transform_2d" viewBox="0 0 32 32">
+<title>icon_remote_transform_2d</title>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M19.657 23.657c-2.083 2.083-5.028 2.777-7.686 2.083-1.329-0.347-2.586-1.041-3.627-2.083s-1.736-2.298-2.083-3.627c-0.694-2.658 0-5.603 2.083-7.686l5.657 5.657z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M16 18c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M26.485 5.515c-2.172-2.172-5.172-3.515-8.485-3.515s-6.314 1.343-8.485 3.515l1.414 1.414c1.81-1.81 4.31-2.929 7.071-2.929s5.261 1.119 7.071 2.929c1.81 1.81 2.929 4.31 2.929 7.071s-1.119 5.261-2.929 7.071l1.414 1.414c2.172-2.172 3.515-5.172 3.515-8.485s-1.343-6.314-3.515-8.485z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M23.657 8.343c-1.448-1.448-3.448-2.343-5.657-2.343s-4.209 0.895-5.657 2.343l1.414 1.414c1.086-1.086 2.586-1.757 4.243-1.757s3.157 0.672 4.243 1.757c1.086 1.086 1.757 2.586 1.757 4.243s-0.672 3.157-1.757 4.243l1.414 1.414c1.448-1.448 2.343-3.448 2.343-5.657s-0.895-4.209-2.343-5.657z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M20.828 11.172c-0.724-0.724-1.724-1.172-2.828-1.172s-2.105 0.448-2.828 1.172l1.414 1.414c0.362-0.362 0.862-0.586 1.414-0.586s1.052 0.224 1.414 0.586c0.362 0.362 0.586 0.862 0.586 1.414s-0.224 1.052-0.586 1.414l1.414 1.414c0.724-0.724 1.172-1.724 1.172-2.828s-0.448-2.105-1.172-2.828z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M2 30l8-10h2v10z"></path>
+</symbol>
+<symbol id="icon-icon_remote_transform" viewBox="0 0 32 32">
+<title>icon_remote_transform</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M19.657 23.657c-2.083 2.083-5.028 2.777-7.686 2.083-1.329-0.347-2.586-1.041-3.627-2.083s-1.736-2.298-2.083-3.627c-0.694-2.658 0-5.603 2.083-7.686l5.657 5.657z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 18c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M26.485 5.515c-2.172-2.172-5.172-3.515-8.485-3.515s-6.314 1.343-8.485 3.515l1.414 1.414c1.81-1.81 4.31-2.929 7.071-2.929s5.261 1.119 7.071 2.929c1.81 1.81 2.929 4.31 2.929 7.071s-1.119 5.261-2.929 7.071l1.414 1.414c2.172-2.172 3.515-5.172 3.515-8.485s-1.343-6.314-3.515-8.485z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M23.657 8.343c-1.448-1.448-3.448-2.343-5.657-2.343s-4.209 0.895-5.657 2.343l1.414 1.414c1.086-1.086 2.586-1.757 4.243-1.757s3.157 0.672 4.243 1.757c1.086 1.086 1.757 2.586 1.757 4.243s-0.672 3.157-1.757 4.243l1.414 1.414c1.448-1.448 2.343-3.448 2.343-5.657s-0.895-4.209-2.343-5.657z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M20.828 11.172c-0.724-0.724-1.724-1.172-2.828-1.172s-2.105 0.448-2.828 1.172l1.414 1.414c0.362-0.362 0.862-0.586 1.414-0.586s1.052 0.224 1.414 0.586c0.362 0.362 0.586 0.862 0.586 1.414s-0.224 1.052-0.586 1.414l1.414 1.414c0.724-0.724 1.172-1.724 1.172-2.828s-0.448-2.105-1.172-2.828z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M2 30l8-10h2v10z"></path>
+</symbol>
+<symbol id="icon-icon_rich_text_label" viewBox="0 0 32 32">
+<title>icon_rich_text_label</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h16v4h-16v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 10h4v4h-4v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M10 10h8v4h-8v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 18h16v4h-16v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 26h8v4h-8v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M14 26h4v4h-4v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M24 24h-4l6 6 6-6h-4v-16h4l-6-6-6 6h4z"></path>
+</symbol>
+<symbol id="icon-icon_rigid_body_2d" viewBox="0 0 32 32">
+<title>icon_rigid_body_2d</title>
+<path fill="#a5b7f1" style="fill: var(--color22, #a5b7f1)" d="M16 2c-7.732 0-14 6.268-14 14s6.268 14 14 14c7.732 0 14-6.268 14-14s-6.268-14-14-14zM16 4c6.627 0 12 5.373 12 12s-5.373 12-12 12c-6.627 0-12-5.373-12-12s5.373-12 12-12z"></path>
+<path fill="#a5b7f1" style="fill: var(--color22, #a5b7f1)" d="M16 2c-4.009 0.007-7.621 1.698-10.169 4.403 0.203 2.248 0.702 4.399 1.782 6.394 0.657-0.496 1.487-0.795 2.386-0.797 0.779 0.002 1.505 0.225 2.119 0.611 3.558-5.396 6.82-7.991 10.366-9.006-1.88-1.007-4.112-1.601-6.483-1.605zM2 16c0 3.311 1.15 6.354 3.072 8.75 0.584-2.003 1.411-3.908 2.471-5.602-0.941-0.737-1.54-1.872-1.543-3.148l-4-0zM14 16c-0.002 1.429-0.753 2.683-1.882 3.389 3.561 5.4 6.824 7.996 10.374 9.010 4.496-2.389 7.506-7.042 7.508-12.398l-16-0z"></path>
+<path fill="#a5b7f2" style="fill: var(--color4, #a5b7f2)" d="M14 16c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+</symbol>
+<symbol id="icon-icon_rigid_body" viewBox="0 0 32 32">
+<title>icon_rigid_body</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 2c-7.732 0-14 6.268-14 14 0 0.493 0.026 0.979 0.075 1.459 0.099 0.958 0.295 1.887 0.577 2.777 0.424 1.337 1.043 2.587 1.824 3.717 0.189 0.273 0.388 0.538 0.596 0.797-0.020-0.032-0.019-0.038-0.017-0.043 2.583 3.233 6.524 5.287 10.944 5.293 2.373-0.004 4.605-0.598 6.561-1.642-0.073 0.038-0.070 0.040-0.067 0.041 0.084-0.049 0.107-0.063 0.13-0.077 0.298-0.158 0.576-0.324 0.848-0.499 0.12-0.069 0.231-0.137 0.341-0.207 0.237-0.166 0.477-0.344 0.712-0.528 0.143-0.104 0.277-0.207 0.409-0.312 0.221-0.189 0.443-0.391 0.659-0.599 0.115-0.105 0.222-0.206 0.327-0.308 0.218-0.222 0.433-0.458 0.641-0.7 0.099-0.11 0.191-0.215 0.281-0.32 0.184-0.228 0.366-0.471 0.541-0.72 0.096-0.133 0.188-0.26 0.277-0.389 0.149-0.225 0.294-0.461 0.432-0.701 0.099-0.167 0.193-0.331 0.285-0.496 0.11-0.209 0.215-0.428 0.314-0.651 0.097-0.207 0.19-0.412 0.278-0.619 0.080-0.198 0.153-0.403 0.221-0.61 0.084-0.234 0.165-0.469 0.24-0.707 0.071-0.246 0.132-0.495 0.186-0.745 0.046-0.191 0.092-0.388 0.133-0.587 0.051-0.278 0.091-0.551 0.123-0.827 0.028-0.202 0.054-0.416 0.076-0.632 0.034-0.385 0.053-0.77 0.055-1.159-0.004-5.848-3.588-10.854-8.676-12.947-0.019 0-0.024-0.002-0.029-0.005-0.080-0.037-0.081-0.037-0.082-0.037s-0.001 0-0.002 0c-0.306-0.129-0.714-0.274-1.131-0.4-0.031-0.006-0.061-0.016-0.091-0.027-0.003-0.002-0.007-0.003-0.011-0.005-0.364-0.11-0.735-0.2-1.111-0.276-0.089-0.018-0.183-0.040-0.278-0.061-0.38-0.070-0.757-0.121-1.138-0.157-0.080-0.009-0.178-0.022-0.276-0.033-0.394-0.036-0.78-0.054-1.17-0.057zM19.902 4.668c4.747 1.668 8.091 6.108 8.098 11.331l-14 0.001c-0.002 1.429-0.753 2.683-1.882 3.389 2.673 4.063 5.186 6.539 7.776 7.947-1.16 0.416-2.498 0.659-3.892 0.664-4.23-0.001-7.946-2.188-10.083-5.492 0.447-1.204 0.978-2.328 1.624-3.36-0.941-0.737-1.54-1.873-1.543-3.148l-2-0c0.004-2.617 0.845-5.038 2.27-7.008 0.268 1.337 0.691 2.602 1.343 3.805 0.657-0.496 1.487-0.795 2.386-0.797 0.779 0.002 1.505 0.225 2.119 0.611 2.676-4.068 5.191-6.536 7.784-7.943z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M14 16c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+</symbol>
+<symbol id="icon-icon_room" viewBox="0 0 32 32">
+<title>icon_room</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M15.926 2.004c-0.301 0.011-0.581 0.086-0.832 0.212l-11.989 5.995c-0.661 0.336-1.105 1.010-1.105 1.789 0 0 0 0 0 0v12c0 0 0 0 0 0 0 0.779 0.445 1.453 1.094 1.784l12.011 6.005c0.261 0.133 0.568 0.211 0.895 0.211s0.634-0.078 0.906-0.216l11.989-5.995c0.661-0.336 1.105-1.010 1.105-1.789 0-0 0-0 0-0v-12c0-0 0-0 0-0 0-0.779-0.445-1.453-1.094-1.784l-12.011-6.005c-0.259-0.132-0.565-0.209-0.889-0.209-0.028 0-0.056 0.001-0.083 0.002zM18 7.238l8 4v7.527l-8-4v-7.527zM16 18.238l7.527 3.762-7.527 3.766-7.527-3.766 7.527-3.762z"></path>
+</symbol>
+<symbol id="icon-icon_rotate_0" viewBox="0 0 32 32">
+<title>icon_rotate_0</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M14 4h4v14h-4v-14z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 2c-7.732 0-14 6.268-14 14s6.268 14 14 14c7.732 0 14-6.268 14-14s-6.268-14-14-14zM16 6c5.523 0 10 4.477 10 10s-4.477 10-10 10c-5.523 0-10-4.477-10-10s4.477-10 10-10z"></path>
+</symbol>
+<symbol id="icon-icon_rotate_90" viewBox="0 0 32 32">
+<title>icon_rotate_90</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 4c6.627 0 12 5.373 12 12h-12z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M14 4h4v14h-4v-14z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 2c-7.732 0-14 6.268-14 14s6.268 14 14 14c7.732 0 14-6.268 14-14s-6.268-14-14-14zM16 6c5.523 0 10 4.477 10 10s-4.477 10-10 10c-5.523 0-10-4.477-10-10s4.477-10 10-10z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M28 14v4h-14v-4h14z"></path>
+</symbol>
+<symbol id="icon-icon_rotate_180" viewBox="0 0 32 32">
+<title>icon_rotate_180</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 4c6.627 0 12 5.373 12 12h-12z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M14 4h4v14h-4v-14z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 2c-7.732 0-14 6.268-14 14s6.268 14 14 14c7.732 0 14-6.268 14-14s-6.268-14-14-14zM16 6c5.523 0 10 4.477 10 10s-4.477 10-10 10c-5.523 0-10-4.477-10-10s4.477-10 10-10z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M18 28h-4v-14h4v14z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M28 16c0 6.627-5.373 12-12 12v-12z"></path>
+</symbol>
+<symbol id="icon-icon_rotate_270" viewBox="0 0 32 32">
+<title>icon_rotate_270</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 4c6.627 0 12 5.373 12 12h-12z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M14 4h4v14h-4v-14z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 2c-7.732 0-14 6.268-14 14s6.268 14 14 14c7.732 0 14-6.268 14-14s-6.268-14-14-14zM16 6c5.523 0 10 4.477 10 10s-4.477 10-10 10c-5.523 0-10-4.477-10-10s4.477-10 10-10z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M4 18v-4h14v4h-14z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 28c-6.627 0-12-5.373-12-12h12z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M28 16c0 6.627-5.373 12-12 12v-12z"></path>
+</symbol>
+<symbol id="icon-icon_sample_library" viewBox="0 0 32 32">
+<title>icon_sample_library</title>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M18 16v14h10c1.105 0 2-0.895 2-2v-10c0-1.105-0.895-2-2-2v8l-2-2-2 2v-8z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M14.043 2.002c-0.005-0-0.010-0-0.015-0-1.017 0-1.856 0.758-1.983 1.74l-1.181 9.455-1.047-2.094c-0.336-0.661-1.010-1.106-1.789-1.106-0 0-0 0-0 0h-4c-0.008-0-0.018-0-0.028-0-1.105 0-2 0.896-2 2s0.896 2 2 2c0.010 0 0.020-0 0.030-0l2.764 0 3.445 6.895c0.336 0.661 1.010 1.105 1.789 1.105 1.017 0 1.856-0.758 1.983-1.74l1.181-9.455 1.047 2.090c0.336 0.661 1.010 1.105 1.789 1.105 0 0 0 0 0 0h6c0.008 0 0.018 0 0.028 0 1.105 0 2-0.896 2-2s-0.896-2-2-2c-0.010 0-0.020 0-0.030 0l-4.76-0-3.449-6.894c-0.334-0.655-1.002-1.096-1.773-1.102z"></path>
+</symbol>
+<symbol id="icon-icon_sample_player_2d" viewBox="0 0 32 32">
+<title>icon_sample_player_2d</title>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M16 2l-8 10h-6v8h6l8 10v-28zM26 6v20h2v-20h-2zM20 12v10h2v-10h-2z"></path>
+</symbol>
+<symbol id="icon-icon_sample_player" viewBox="0 0 32 32">
+<title>icon_sample_player</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 2l-8 10h-6v8h6l8 10v-28zM26 6v20h2v-20h-2zM20 12v10h2v-10h-2z"></path>
+</symbol>
+<symbol id="icon-icon_sample" viewBox="0 0 32 32">
+<title>icon_sample</title>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M28 14h-2v4h2v-4z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M24 6h-2v20h2v-20z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M20 8h-2v16h2v-16z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M16 2h-2v28h2v-28z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M12 4h-2v24h2v-24z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M8 10h-2v12h2v-12z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M4 14h-2v4h2v-4z"></path>
+</symbol>
+<symbol id="icon-icon_script" viewBox="0 0 32 32">
+<title>icon_script</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M12 2v2c-1.105 0-2 0.895-2 2v20h-2v-4h-4v4c0.001 0.736 0.398 1.378 0.991 1.725 0.296 0.174 0.641 0.274 1.009 0.275l0 2h14c2.209 0 4-1.791 4-4v-16h6v-4c0-2.209-1.791-4-4-4h-14z"></path>
+<path fill="#b4b4b4" style="fill: var(--color25, #b4b4b4)" d="M12 2c-2.209 0-4 1.791-4 4v14h-6v6c0 2.209 1.791 4 4 4s4-1.791 4-4v-20c0-1.105 0.895-2 2-2s2 0.895 2 2v6h10v-2h-8v-4c0-2.209-1.791-4-4-4zM4 22h4v4c0 1.105-0.895 2-2 2s-2-0.895-2-2v-4z"></path>
+</symbol>
+<symbol id="icon-icon_scroll_bar" viewBox="0 0 32 32">
+<title>icon_scroll_bar</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 6c-2.209 0-4 1.791-4 4v12c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-12c0-2.209-1.791-4-4-4zM6 10h20v12h-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M8 12h8v8h-8v-8z"></path>
+</symbol>
+<symbol id="icon-icon_scroll_container" viewBox="0 0 32 32">
+<title>icon_scroll_container</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4zM6 6h20v20h-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M20 12v8l4-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M12 12v8l-4-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M12 12h8l-4-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M12 20h8l-4 4z"></path>
+</symbol>
+<symbol id="icon-icon_shader" viewBox="0 0 32 32">
+<title>icon_shader</title>
+<path fill="#ff7070" style="fill: var(--color11, #ff7070)" d="M0 2h32v4h-32v-4z"></path>
+<path fill="#ffeb70" style="fill: var(--color12, #ffeb70)" d="M0 6h32v4h-32v-4z"></path>
+<path fill="#9dff70" style="fill: var(--color13, #9dff70)" d="M0 10h32v4h-32v-4z"></path>
+<path fill="#70ffb9" style="fill: var(--color14, #70ffb9)" d="M0 14h32v4h-32v-4z"></path>
+<path fill="#70deff" style="fill: var(--color15, #70deff)" d="M0 18h32v4h-32v-4z"></path>
+<path fill="#ff70ac" style="fill: var(--color16, #ff70ac)" d="M0 26h32v4h-32v-4z"></path>
+<path fill="#9f70ff" style="fill: var(--color17, #9f70ff)" d="M0 22h32v4h-32v-4z"></path>
+</symbol>
+<symbol id="icon-icon_signal" viewBox="0 0 32 32">
+<title>icon_signal</title>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M10 14h12v4h-12v-4z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M20 24v-16l10 8-5 4z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M2 6h4v20h-4v-20z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M6 22h8v4h-8v-4z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M6 6h8v4h-8v-4z"></path>
+</symbol>
+<symbol id="icon-icon_skeleton" viewBox="0 0 32 32">
+<title>icon_skeleton</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M12 4c-4.418 0-8 3.582-8 8 0.004 3.704 2.525 6.819 5.944 7.726l0.056-1.726h2v2h2v-2h4v2h2v-2h2v1.734c3.474-0.919 5.994-4.032 6-7.734 0-4.419-3.582-8.001-8-8.001h-8zM10 10c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105-0-2-0.895-2-2s0.895-2 2-2zM22 10c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105-0-2-0.895-2-2s0.895-2 2-2zM14 14h4v2h-4v-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M8 18v8h2v-8h-2zM22 18v8h2v-8h-2zM12 24v6h8v-6h-2v2h-4v-2h-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 26c-0 1.473-0.796 2.76-1.981 3.454-0.593 0.347-1.283 0.546-2.019 0.546s-1.426-0.199-2.019-0.546c-1.185-0.694-1.981-1.981-1.981-3.454h4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M24 26c-0 1.473-0.796 2.76-1.981 3.454-0.593 0.347-1.282 0.546-2.019 0.546s-1.426-0.199-2.019-0.546c-1.185-0.694-1.981-1.981-1.981-3.454h4z"></path>
+</symbol>
+<symbol id="icon-icon_slider_joint" viewBox="0 0 32 32">
+<title>icon_slider_joint</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M30 2h-10v12h-10v4h10v12h10v-28zM16 2h-14v28h14v-8h-10v-12h10v-8z"></path>
+</symbol>
+<symbol id="icon-icon_slot" viewBox="0 0 32 32">
+<title>icon_slot</title>
+<path fill="#84ffb1" style="fill: var(--color26, #84ffb1)" d="M2 14h12v4h-12v-4z"></path>
+<path fill="#84ffb1" style="fill: var(--color26, #84ffb1)" d="M12 24v-16l10 8-5 4z"></path>
+<path fill="#84ffb1" style="fill: var(--color26, #84ffb1)" d="M30 6v20h-12v-4h8v-12h-8v-4h12z"></path>
+</symbol>
+<symbol id="icon-icon_snap" viewBox="0 0 32 32">
+<title>icon_snap</title>
+<path fill="#f3f3f3" style="fill: var(--color27, #f3f3f3)" d="M6 0v6h-6v4h6v8h-6v4h6v6h4v-18h18v-4h-6v-6h-4v6h-8v-6h-4z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M22 14c-4.418 0-8 3.582-8 8h4c0-2.209 1.791-4 4-4s4 1.791 4 4h4c0-4.418-3.582-8-8-8z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M14 22h4v4h-4v-4z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M26 22h4v4h-4v-4z"></path>
+<path fill="#fff" style="fill: var(--color28, #fff)" d="M14 26h4v4h-4v-4z"></path>
+<path fill="#fff" style="fill: var(--color28, #fff)" d="M26 26h4v4h-4v-4z"></path>
+</symbol>
+<symbol id="icon-icon_spatial_sample_player" viewBox="0 0 32 32">
+<title>icon_spatial_sample_player</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 2l-8 10h-6v8h6l8 10v-28zM26 6v20h2v-20h-2zM20 12v10h2v-10h-2z"></path>
+</symbol>
+<symbol id="icon-icon_spatial_stream_player" viewBox="0 0 32 32">
+<title>icon_spatial_stream_player</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M10 4c-1.105 0-2 0.895-2 2v16h-4c-1.105 0-2 0.895-2 2v4c0 1.105 0.895 2 2 2h6c1.105 0 2-0.895 2-2v-20h12v10h-4c-1.105 0-2 0.895-2 2v4c0 1.105 0.895 2 2 2h6c1.105 0 2-0.895 2-2v-18c0-1.105-0.895-2-2-2h-14z"></path>
+</symbol>
+<symbol id="icon-icon_spatial" viewBox="0 0 32 32">
+<title>icon_spatial</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 4c-6.627 0-12 5.373-12 12s5.373 12 12 12c6.627 0 12-5.373 12-12s-5.373-12-12-12zM16 8c4.418 0 8 3.582 8 8s-3.582 8-8 8c-4.418 0-8-3.582-8-8s3.582-8 8-8z"></path>
+</symbol>
+<symbol id="icon-icon_sphere_shape" viewBox="0 0 32 32">
+<title>icon_sphere_shape</title>
+<path fill="#68b6ff" style="fill: var(--color29, #68b6ff)" d="M30 16c0 7.732-6.268 14-14 14s-14-6.268-14-14c0-7.732 6.268-14 14-14s14 6.268 14 14z"></path>
+<path fill="#a2d2ff" style="fill: var(--color19, #a2d2ff)" d="M16 10c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+</symbol>
+<symbol id="icon-icon_spin_box" viewBox="0 0 32 32">
+<title>icon_spin_box</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 6c-2.209 0-4 1.791-4 4v12c0 2.209 1.791 4 4 4h14v-4h-14v-12h14v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M16 10h4v12h-4v-12z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M22 14h8l-4-6z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M22 18h8l-4 6z"></path>
+</symbol>
+<symbol id="icon-icon_spot_light" viewBox="0 0 32 32">
+<title>icon_spot_light</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M12 2c-1.105 0-2 0.895-2 2v7.387c-3.572 1.732-6 4.921-6 8.613h8c0 2.209 1.791 4 4 4s4-1.791 4-4h8c0-3.692-2.428-6.881-6-8.613v-7.387c0-1.105-0.895-2-2-2h-8zM9.805 21.27l-3.465 2 2 3.461 3.465-2-2-3.461zM22.195 21.27l-2 3.461 3.465 2 2-3.461-3.465-2zM14 26v4h4v-4h-4z"></path>
+</symbol>
+<symbol id="icon-icon_sprite_3d" viewBox="0 0 32 32">
+<title>icon_sprite_3d</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 2c-7.732 0-14 6.268-14 14s6.268 14 14 14c7.732 0 14-6.268 14-14s-6.268-14-14-14zM8 12c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2zM24 12c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2zM10 18h12c-0 2.209-1.194 4.139-2.972 5.18-0.889 0.521-1.924 0.819-3.028 0.819s-2.139-0.298-3.028-0.819c-1.778-1.041-2.971-2.971-2.972-5.18z"></path>
+</symbol>
+<symbol id="icon-icon_sprite" viewBox="0 0 32 32">
+<title>icon_sprite</title>
+<path fill="#a5b7f4" style="fill: var(--color20, #a5b7f4)" d="M16 2c-7.732 0-14 6.268-14 14s6.268 14 14 14c7.732 0 14-6.268 14-14s-6.268-14-14-14zM8 12c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2zM24 12c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2zM10 18h12c-0 2.209-1.194 4.139-2.972 5.18-0.889 0.521-1.924 0.819-3.028 0.819s-2.139-0.298-3.028-0.819c-1.778-1.041-2.971-2.971-2.972-5.18z"></path>
+</symbol>
+<symbol id="icon-icon_static_body_2d" viewBox="0 0 32 32">
+<title>icon_static_body_2d</title>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M6 2c-1.104 0-2.104 0.448-2.828 1.172s-1.172 1.724-1.172 2.828v20c0 1.105 0.448 2.104 1.172 2.828s1.724 1.172 2.828 1.172h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4h-20zM6 4h20c1.105 0 2 0.895 2 2v20c-0 1.105-0.895 2-2 2h-20c-1.105-0-2-0.895-2-2v-20c0-1.105 0.895-2 2-2zM6 6v4h4v-4h-4zM22 6v4h4v-4h-4zM6 22v4h4v-4h-4zM22 22v4h4v-4h-4z"></path>
+</symbol>
+<symbol id="icon-icon_static_body" viewBox="0 0 32 32">
+<title>icon_static_body</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M6 2c-1.104 0-2.104 0.448-2.828 1.172s-1.172 1.724-1.172 2.828v20c0 1.105 0.448 2.104 1.172 2.828s1.724 1.172 2.828 1.172h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4h-20zM6 4h20c1.105 0 2 0.895 2 2v20c-0 1.105-0.895 2-2 2h-20c-1.105-0-2-0.895-2-2v-20c0-1.105 0.895-2 2-2zM6 6v4h4v-4h-4zM22 6v4h4v-4h-4zM6 22v4h4v-4h-4zM22 22v4h4v-4h-4z"></path>
+</symbol>
+<symbol id="icon-icon_stream_player" viewBox="0 0 32 32">
+<title>icon_stream_player</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M10 4c-1.105 0-2 0.895-2 2v16h-4c-1.105 0-2 0.895-2 2v4c0 1.105 0.895 2 2 2h6c1.105 0 2-0.895 2-2v-20h12v10h-4c-1.105 0-2 0.895-2 2v4c0 1.105 0.895 2 2 2h6c1.105 0 2-0.895 2-2v-18c0-1.105-0.895-2-2-2h-14z"></path>
+</symbol>
+<symbol id="icon-icon_string" viewBox="0 0 32 32">
+<title>icon_string</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M10 2v4h4v20h-4v4h4c1.105 0 2-0.895 2-2 0 1.105 0.895 2 2 2h4v-4h-4v-20h4v-4h-4c-1.105 0-2 0.895-2 2 0-1.105-0.895-2-2-2h-4z"></path>
+</symbol>
+<symbol id="icon-icon_style_box_empty" viewBox="0 0 32 32">
+<title>icon_style_box_empty</title>
+<path fill="#ff7070" style="fill: var(--color11, #ff7070)" d="M0 2h32v4h-32v-4z"></path>
+<path fill="#ffeb70" style="fill: var(--color12, #ffeb70)" d="M0 6h32v4h-32v-4z"></path>
+<path fill="#9dff70" style="fill: var(--color13, #9dff70)" d="M0 10h32v4h-32v-4z"></path>
+<path fill="#70ffb9" style="fill: var(--color14, #70ffb9)" d="M0 14h32v4h-32v-4z"></path>
+<path fill="#70deff" style="fill: var(--color15, #70deff)" d="M0 18h32v4h-32v-4z"></path>
+<path fill="#ff70ac" style="fill: var(--color16, #ff70ac)" d="M0 26h32v4h-32v-4z"></path>
+<path fill="#9f70ff" style="fill: var(--color17, #9f70ff)" d="M0 22h32v4h-32v-4z"></path>
+</symbol>
+<symbol id="icon-icon_style_box_flat" viewBox="0 0 32 32">
+<title>icon_style_box_flat</title>
+<path fill="#ff7070" style="fill: var(--color11, #ff7070)" d="M0 2h32v4h-32v-4z"></path>
+<path fill="#ffeb70" style="fill: var(--color12, #ffeb70)" d="M0 6h32v4h-32v-4z"></path>
+<path fill="#9dff70" style="fill: var(--color13, #9dff70)" d="M0 10h32v4h-32v-4z"></path>
+<path fill="#70ffb9" style="fill: var(--color14, #70ffb9)" d="M0 14h32v4h-32v-4z"></path>
+<path fill="#70deff" style="fill: var(--color15, #70deff)" d="M0 18h32v4h-32v-4z"></path>
+<path fill="#ff70ac" style="fill: var(--color16, #ff70ac)" d="M0 26h32v4h-32v-4z"></path>
+<path fill="#9f70ff" style="fill: var(--color17, #9f70ff)" d="M0 22h32v4h-32v-4z"></path>
+</symbol>
+<symbol id="icon-icon_style_box_texture" viewBox="0 0 32 32">
+<title>icon_style_box_texture</title>
+<path fill="#ff7070" style="fill: var(--color11, #ff7070)" d="M0 2h32v4h-32v-4z"></path>
+<path fill="#ffeb70" style="fill: var(--color12, #ffeb70)" d="M0 6h32v4h-32v-4z"></path>
+<path fill="#9dff70" style="fill: var(--color13, #9dff70)" d="M0 10h32v4h-32v-4z"></path>
+<path fill="#70ffb9" style="fill: var(--color14, #70ffb9)" d="M0 14h32v4h-32v-4z"></path>
+<path fill="#70deff" style="fill: var(--color15, #70deff)" d="M0 18h32v4h-32v-4z"></path>
+<path fill="#ff70ac" style="fill: var(--color16, #ff70ac)" d="M0 26h32v4h-32v-4z"></path>
+<path fill="#9f70ff" style="fill: var(--color17, #9f70ff)" d="M0 22h32v4h-32v-4z"></path>
+</symbol>
+<symbol id="icon-icon_tab_container" viewBox="0 0 32 32">
+<title>icon_tab_container</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4h-20zM6 6h10v8h10v12h-20v-20zM20 6h6v4h-6v-4z"></path>
+</symbol>
+<symbol id="icon-icon_tabs" viewBox="0 0 32 32">
+<title>icon_tabs</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 8h2v18h-2v-18z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M16 6v2h-12v-2h12z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M14 8h2v6h-2v-6z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M4 10c0 0 0 0 0 0-0.828 0-1.539-0.504-1.843-1.221-0.101-0.239-0.157-0.502-0.157-0.778 0-0.552 0.224-1.052 0.586-1.414s0.862-0.586 1.414-0.586c0.276 0 0.539 0.056 0.778 0.157 0.718 0.304 1.221 1.014 1.221 1.843 0 0 0 0 0 0h-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 8h2v18h-2v-18z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 6v2h-12v-2h12z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 10c0 0 0 0 0 0 0.828 0 1.539-0.504 1.843-1.221 0.101-0.239 0.157-0.502 0.157-0.778 0-0.552-0.224-1.052-0.586-1.414s-0.862-0.586-1.414-0.586c-0.276 0-0.539 0.056-0.778 0.157-0.718 0.304-1.221 1.014-1.221 1.843 0 0 0 0 0 0h2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M30 12v2h-26v-2h26z"></path>
+</symbol>
+<symbol id="icon-icon_text_edit" viewBox="0 0 32 32">
+<title>icon_text_edit</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4h-20zM6 6h20v20h-20v-20zM8 8v8h2v-8h-2z"></path>
+</symbol>
+<symbol id="icon-icon_texture_button" viewBox="0 0 32 32">
+<title>icon_texture_button</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 6v16h28v-16h-28zM18 10h2v2h2v4h2v4h-16v-2h2v-2h2v-2h4v-2h2v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 26h28v-4h-28v4z"></path>
+<path fill="#000" style="fill: var(--color30, #000)" d="M2 26h28v-4h-28v4z"></path>
+</symbol>
+<symbol id="icon-icon_texture_frame" viewBox="0 0 32 32">
+<title>icon_texture_frame</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h2v28h-2v-28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 28h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 2h2v28h-2v-28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M18 12v2h-2v2h-4v2h-2v2h-2v2h16v-4h-2v-4h-2v-2h-2z"></path>
+</symbol>
+<symbol id="icon-icon_texture_progress" viewBox="0 0 32 32">
+<title>icon_texture_progress</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 6c-2.209 0-4 1.791-4 4v12c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-12c0-2.209-1.791-4-4-4zM6 10h20v12h-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M8 12h2v4h-2v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M12 14h2v6h-2v-6z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M16 12h2v8h-2v-8z"></path>
+</symbol>
+<symbol id="icon-icon_texture_rect" viewBox="0 0 32 32">
+<title>icon_texture_rect</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h2v28h-2v-28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 28h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 2h2v28h-2v-28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M18 12v2h-2v2h-4v2h-2v2h-2v2h16v-4h-2v-4h-2v-2h-2z"></path>
+</symbol>
+<symbol id="icon-icon_texture" viewBox="0 0 32 32">
+<title>icon_texture</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M4 2c-1.105 0-2 0.895-2 2v24c0 1.105 0.895 2 2 2h24c1.105 0 2-0.895 2-2v-24c0-1.105-0.895-2-2-2h-24zM6 6h20v16h-20v-16z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M12 14h4v2h-4v-2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M12 16h4v4h-4v-4z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M8 18h4v2h-4v-2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 16h4v4h-4v-4z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M20 16h4v4h-4v-4z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 12h6v4h-6v-4z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M18 10h2v2h-2v-2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M10 16h2v2h-2v-2z"></path>
+</symbol>
+<symbol id="icon-icon_tile_map" viewBox="0 0 32 32">
+<title>icon_tile_map</title>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M2 2h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M8 2h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M8 8h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M2 8h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M14 2h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M20 2h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M20 8h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M14 8h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M2 14h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M8 14h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M8 20h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M2 20h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M26 2h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M26 8h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M14 14h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M20 14h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M20 20h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M14 20h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M26 14h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M26 20h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M8 26h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M2 26h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M20 26h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M14 26h4v4h-4v-4z"></path>
+<path fill="#a5b7f7" style="fill: var(--color24, #a5b7f7)" d="M26 26h4v4h-4v-4z"></path>
+</symbol>
+<symbol id="icon-icon_tile_set" viewBox="0 0 32 32">
+<title>icon_tile_set</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M2 2v4h4v-4h-4zM8 2v4h4v-4h-4zM14 2v4h4v-4h-4zM20 2v4h4v-4h-4zM26 2v4h4v-4h-4zM2 8v4h4v-4h-4zM8 8v4h4v-4h-4zM14 8v4h4v-4h-4zM20 8v4h4v-4h-4zM26 8v4h4v-4h-4zM2 14v4h4v-4h-4zM8 14v4h4v-4h-4zM18 16v14h10c1.105 0 2-0.895 2-2v-10c0-1.105-0.895-2-2-2v8l-2-2-2 2v-8h-6zM2 20v4h4v-4h-4zM8 20v4h4v-4h-4zM2 26v4h4v-4h-4zM8 26v4h4v-4h-4z"></path>
+</symbol>
+<symbol id="icon-icon_timer" viewBox="0 0 32 32">
+<title>icon_timer</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 2c-7.732 0-14 6.268-14 14s6.268 14 14 14c7.732 0 14-6.268 14-14s-6.268-14-14-14zM16 6c5.523 0 10 4.477 10 10s-4.477 10-10 10c-5.523-0-10-4.477-10-10s4.477-10 10-10z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M14 10h4v8h-4v-8z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M14 14h8v4h-8v-4z"></path>
+</symbol>
+<symbol id="icon-icon_tool_button" viewBox="0 0 32 32">
+<title>icon_tool_button</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 6v16h28v-16h-28zM22 8c2.595 0.002 4.804 1.651 5.639 3.958l-5.639 0.042c-1.105 0-2 0.895-2 2s0.895 2 2 2h5.648c-0.848 2.348-3.055 3.996-5.648 4-2.594-0.004-4.801-1.652-5.636-3.958l-10.365-0.042c-1.105 0-2-0.895-2-2s0.895-2 2-2h10.348c0.848-2.349 3.057-3.998 5.652-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 26h28v-4h-28v4z"></path>
+<path fill="#000" style="fill: var(--color30, #000)" d="M2 26h28v-4h-28v4z"></path>
+</symbol>
+<symbol id="icon-icon_touch_screen_button" viewBox="0 0 32 32">
+<title>icon_touch_screen_button</title>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M12 8v14.066l-4.949-3.617c-1.040-0.761-2.39-0.911-3.301 0s-0.911 2.39 0 3.301l8.25 8.25h12c2.209 0 4-1.791 4-4v-10h-12v-8h-4z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M16 8c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M6 8h4v2h-4v-2z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M6 2h16v2h-16v-2z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M18 8h4v2h-4v-2z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M4 4h2v4h-2v-4z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M22 4h2v4h-2v-4z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M4 4c0-1.105 0.895-2 2-2s2 0.895 2 2h-2z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M24 4c0-1.105-0.895-2-2-2s-2 0.895-2 2h2z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M24 8c0 1.105-0.895 2-2 2s-2-0.895-2-2h2z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M8 8c0 1.105-0.895 2-2 2s-2-0.895-2-2h2z"></path>
+</symbol>
+<symbol id="icon-icon_tree" viewBox="0 0 32 32">
+<title>icon_tree</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-1.104 0-2.104 0.448-2.828 1.172s-1.172 1.724-1.172 2.828v20c0 1.105 0.448 2.104 1.172 2.828s1.724 1.172 2.828 1.172h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4h-20zM6 4h20c1.105 0 2 0.895 2 2v20c-0 1.105-0.895 2-2 2h-20c-1.105-0-2-0.895-2-2v-20c0-1.105 0.895-2 2-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M8 8h2v10h-2v-10z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M8 10h16v2h-16v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M10 16h14v2h-14v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M14 18h2v6h-2v-6z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M14 22h10v2h-10v-2z"></path>
+</symbol>
+<symbol id="icon-icon_v_box_container" viewBox="0 0 32 32">
+<title>icon_v_box_container</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M30 6c0-2.209-1.791-4-4-4h-20c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20zM26 6v4h-20v-4h20zM26 14v4h-20v-4h20zM26 22v4h-20v-4h20z"></path>
+</symbol>
+<symbol id="icon-icon_v_button_array" viewBox="0 0 32 32">
+<title>icon_v_button_array</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h28v12h-28v-12z"></path>
+<path fill="#98dc9f" style="fill: var(--color31, #98dc9f)" d="M2 12h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 18v12l4-4 4 4 4-4 4 4 4-4 4 4 4-4v-8h-28z"></path>
+<path fill="#98dc9f" style="fill: var(--color31, #98dc9f)" d="M2 28v2l2-2h-2zM8 28l2 2 2-2h-4zM16 28l2 2 2-2h-4zM24 28l2 2 2-2h-4z"></path>
+</symbol>
+<symbol id="icon-icon_v_scroll_bar" viewBox="0 0 32 32">
+<title>icon_v_scroll_bar</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M26 6c0-2.209-1.791-4-4-4h-12c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h12c2.209 0 4-1.791 4-4zM22 6v20h-12v-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M20 8v8h-8v-8h8z"></path>
+</symbol>
+<symbol id="icon-icon_v_separator" viewBox="0 0 32 32">
+<title>icon_v_separator</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M4 22h6v-12h-6v12zM14 30h4v-28h-4v28zM22 22h6v-12h-6v12z"></path>
+</symbol>
+<symbol id="icon-icon_v_slider" viewBox="0 0 32 32">
+<title>icon_v_slider</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M18 4c0-1.105-0.895-2-2-2s-2 0.895-2 2v6.348c0.595-0.219 1.283-0.346 1.999-0.348 0.719 0.003 1.406 0.132 2.042 0.365l-0.042-6.365zM18 21.652c-0.595 0.219-1.282 0.346-1.999 0.348-0.719-0.003-1.406-0.132-2.042-0.365l0.042 6.365c0 1.105 0.895 2 2 2s2-0.895 2-2v-6.348z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M20 16c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+</symbol>
+<symbol id="icon-icon_v_split_container" viewBox="0 0 32 32">
+<title>icon_v_split_container</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4zM6 6h20v20h-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M26 14v4h-20v-4h20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M20 18h-8l4 4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M20 14l-4-4-4 4z"></path>
+</symbol>
+<symbol id="icon-icon_vehicle_body" viewBox="0 0 32 32">
+<title>icon_vehicle_body</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M10 6c-1.105 0-2 0.895-2 2l-2 6h-4v8h2.102c0.463-2.282 2.48-4 4.898-4s4.435 1.718 4.898 4h4.203c0.463-2.282 2.48-4 4.898-4s4.435 1.718 4.898 4h2.102v-8h-8v-8h-12zM12 8h8v6h-8v-6z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M12 23c0 1.657-1.343 3-3 3s-3-1.343-3-3c0-1.657 1.343-3 3-3s3 1.343 3 3z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M26 23c0 1.657-1.343 3-3 3s-3-1.343-3-3c0-1.657 1.343-3 3-3s3 1.343 3 3z"></path>
+</symbol>
+<symbol id="icon-icon_vehicle_wheel" viewBox="0 0 32 32">
+<title>icon_vehicle_wheel</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 2c-7.732 0-14 6.268-14 14s6.268 14 14 14c7.732 0 14-6.268 14-14s-6.268-14-14-14zM16 6c5.523 0 10 4.477 10 10s-4.477 10-10 10c-5.523 0-10-4.477-10-10s4.477-10 10-10z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 8c-4.418 0-8 3.582-8 8s3.582 8 8 8c4.418 0 8-3.582 8-8s-3.582-8-8-8zM16 10c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2zM12 14c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2zM20 14c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2zM16 18c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2z"></path>
+</symbol>
+<symbol id="icon-icon_video_player" viewBox="0 0 32 32">
+<title>icon_video_player</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-1.104 0-2.104 0.448-2.828 1.172s-1.172 1.724-1.172 2.828v20c0 1.105 0.448 2.104 1.172 2.828s1.724 1.172 2.828 1.172h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4h-20zM6 4h20c1.105 0 2 0.895 2 2v20c-0 1.105-0.895 2-2 2h-20c-1.105-0-2-0.895-2-2v-20c0-1.105 0.895-2 2-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M12 22v-12l10 6z"></path>
+</symbol>
+<symbol id="icon-icon_viewport_container" viewBox="0 0 32 32">
+<title>icon_viewport_container</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4zM6 6h20v20h-20zM12 8c-1.061 0-2.078 0.422-2.828 1.172s-1.172 1.767-1.172 2.828v8c0 1.061 0.422 2.078 1.172 2.828s1.767 1.172 2.828 1.172h8c2.209 0 4-1.791 4-4v-8c0-2.209-1.791-4-4-4zM12 10h8c1.105 0 2 0.895 2 2v8c-0 1.105-0.895 2-2 2h-8c-1.105 0-2-0.895-2-2v-8c0-1.105 0.895-2 2-2z"></path>
+</symbol>
+<symbol id="icon-icon_viewport_sprite" viewBox="0 0 32 32">
+<title>icon_viewport_sprite</title>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M6 4c-1.061 0-2.078 0.422-2.828 1.172s-1.172 1.767-1.172 2.828v16c0 1.061 0.422 2.078 1.172 2.828s1.767 1.172 2.828 1.172h20c2.209 0 4-1.791 4-4v-16c0-2.209-1.791-4-4-4zM6 6h20c1.105 0 2 0.895 2 2v16c-0 1.105-0.895 2-2 2h-20c-1.105-0-2-0.895-2-2v-16c0-1.105 0.895-2 2-2z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M8 12h4v4h-4v-4z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M20 12h4v4h-4v-4z"></path>
+<path fill="#a5b7f8" style="fill: var(--color10, #a5b7f8)" d="M8 18h16v2h-16v-2z"></path>
+</symbol>
+<symbol id="icon-icon_viewport_texture" viewBox="0 0 32 32">
+<title>icon_viewport_texture</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M6 4c-1.061 0-2.078 0.422-2.828 1.172s-1.172 1.767-1.172 2.828v16c0 1.061 0.422 2.078 1.172 2.828s1.767 1.172 2.828 1.172h20c2.209 0 4-1.791 4-4v-16c0-2.209-1.791-4-4-4h-20zM6 6h20c1.105 0 2 0.895 2 2v16c-0 1.105-0.895 2-2 2h-20c-1.105-0-2-0.895-2-2v-16c0-1.105 0.895-2 2-2zM18 12v2h-2v2h-4v2h-2v2h-2v2h16v-4h-2v-4h-2v-2h-2z"></path>
+</symbol>
+<symbol id="icon-icon_viewport" viewBox="0 0 32 32">
+<title>icon_viewport</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M6 4c-1.061 0-2.078 0.422-2.828 1.172s-1.172 1.767-1.172 2.828v16c0 1.061 0.422 2.078 1.172 2.828s1.767 1.172 2.828 1.172h20c2.209 0 4-1.791 4-4v-16c0-2.209-1.791-4-4-4zM6 6h20c1.105 0 2 0.895 2 2v16c-0 1.105-0.895 2-2 2h-20c-1.105-0-2-0.895-2-2v-16c0-1.105 0.895-2 2-2z"></path>
+</symbol>
+<symbol id="icon-icon_visibility_enabler_2d" viewBox="0 0 32 32">
+<title>icon_visibility_enabler_2d</title>
+<path fill="#a5b7f9" style="fill: var(--color18, #a5b7f9)" d="M16 4c-5.113 0-11.581 3.895-13.91 11.41-0.056 0.176-0.089 0.379-0.089 0.59 0 0.196 0.028 0.386 0.081 0.565 2.245 7.857 8.918 11.435 13.918 11.435s11.673-3.578 13.922-11.449c0.049-0.166 0.078-0.356 0.078-0.553s-0.028-0.387-0.081-0.567c-2.197-7.561-8.81-11.431-13.918-11.431zM16 8c4.418 0 8 3.582 8 8s-3.582 8-8 8c-4.418 0-8-3.582-8-8s3.582-8 8-8z"></path>
+<path fill="#a5b7f9" style="fill: var(--color18, #a5b7f9)" d="M20 16c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#a5b7f9" style="fill: var(--color18, #a5b7f9)" d="M2 2v6h2v-4h4v-2h-6zM24 2v2h4v4h2v-6h-6zM2 24v6h6v-2h-4v-4h-2zM28 24v4h-4v2h6v-6h-2z"></path>
+</symbol>
+<symbol id="icon-icon_visibility_enabler" viewBox="0 0 32 32">
+<title>icon_visibility_enabler</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 4c-5.113 0-11.581 3.895-13.91 11.41-0.056 0.176-0.089 0.379-0.089 0.59 0 0.196 0.028 0.386 0.081 0.565 2.245 7.857 8.918 11.435 13.918 11.435s11.673-3.578 13.922-11.449c0.049-0.166 0.078-0.356 0.078-0.553s-0.028-0.387-0.081-0.567c-2.197-7.561-8.81-11.431-13.918-11.431zM16 8c4.418 0 8 3.582 8 8s-3.582 8-8 8c-4.418 0-8-3.582-8-8s3.582-8 8-8z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M20 16c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M2 2v6h2v-4h4v-2h-6zM24 2v2h4v4h2v-6h-6zM2 24v6h6v-2h-4v-4h-2zM28 24v4h-4v2h6v-6h-2z"></path>
+</symbol>
+<symbol id="icon-icon_visibility_notifier_2d" viewBox="0 0 32 32">
+<title>icon_visibility_notifier_2d</title>
+<path fill="#a5b7fa" style="fill: var(--color32, #a5b7fa)" d="M16 6c-5.113 0-11.581 3.895-13.91 11.41-0.056 0.176-0.089 0.379-0.089 0.59 0 0.196 0.028 0.386 0.081 0.565 2.245 7.857 8.918 11.435 13.918 11.435 2.981 0 6.543-1.304 9.422-4h-5.422v-1.082c-1.147 0.677-2.526 1.079-3.999 1.082-4.419 0-8.001-3.582-8.001-8s3.582-8 8-8c1.474 0.003 2.853 0.405 4.037 1.102l-0.037-4.384c-1.366-0.477-2.729-0.719-4-0.719zM16 14c-2.209 0-4 1.791-4 4s1.791 4 4 4c2.209 0 4-1.791 4-4s-1.791-4-4-4z"></path>
+<path fill="#a5b7fa" style="fill: var(--color32, #a5b7fa)" d="M24 2h4v12h-4v-12z"></path>
+<path fill="#a5b7fa" style="fill: var(--color32, #a5b7fa)" d="M24 22h4v-4h-4v4z"></path>
+</symbol>
+<symbol id="icon-icon_visibility_notifier" viewBox="0 0 32 32">
+<title>icon_visibility_notifier</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 6c-5.113 0-11.581 3.895-13.91 11.41-0.056 0.176-0.089 0.379-0.089 0.59 0 0.196 0.028 0.386 0.081 0.565 2.245 7.857 8.918 11.435 13.918 11.435 2.981 0 6.543-1.304 9.422-4h-5.422v-1.082c-1.147 0.677-2.526 1.079-3.999 1.082-4.419 0-8.001-3.582-8.001-8s3.582-8 8-8c1.474 0.003 2.853 0.405 4.037 1.102l-0.037-4.384c-1.366-0.477-2.729-0.719-4-0.719zM16 14c-2.209 0-4 1.791-4 4s1.791 4 4 4c2.209 0 4-1.791 4-4s-1.791-4-4-4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M24 2h4v12h-4v-12z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M24 22h4v-4h-4v4z"></path>
+</symbol>
+<symbol id="icon-icon_visible" viewBox="0 0 32 32">
+<title>icon_visible</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 4c-5.113 0-11.581 3.895-13.91 11.41-0.056 0.176-0.089 0.379-0.089 0.59 0 0.196 0.028 0.386 0.081 0.565 2.245 7.857 8.918 11.435 13.918 11.435s11.673-3.578 13.922-11.449c0.049-0.166 0.078-0.356 0.078-0.553s-0.028-0.387-0.081-0.567c-2.197-7.561-8.81-11.431-13.918-11.431zM16 8c4.418 0 8 3.582 8 8s-3.582 8-8 8c-4.418 0-8-3.582-8-8s3.582-8 8-8z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M20 16c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+</symbol>
+<symbol id="icon-icon_window_dialog" viewBox="0 0 32 32">
+<title>icon_window_dialog</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v2h28v-2c0-2.209-1.791-4-4-4h-20zM24 4h2v2h-2v-2zM2 10v16c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-16h-28z"></path>
+</symbol>
+<symbol id="icon-icon_world_2d" viewBox="0 0 32 32">
+<title>icon_world_2d</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M4 1.998c-1.105 0-2 0.895-2 2v20c0 1.105 0.895 2 2 2 4.733 0 7.949 0.926 11.449 1.926s7.284 2.074 12.551 2.074c1.105-0 2-0.895 2-2v-20c-0-1.105-0.895-2-2-2-4.733 0-7.949-0.922-11.449-1.922s-7.284-2.078-12.551-2.078zM6 6.19c3.597 0.232 6.515 0.896 9.449 1.734 2.995 0.856 6.388 1.638 10.551 1.883v16.004c-3.597-0.232-6.515-0.896-9.449-1.734-2.995-0.856-6.388-1.642-10.551-1.887v-16z"></path>
+</symbol>
+<symbol id="icon-icon_world" viewBox="0 0 32 32">
+<title>icon_world</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M22 20c0 5.523-4.477 10-10 10s-10-4.477-10-10c0-5.523 4.477-10 10-10s10 4.477 10 10z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M26 6c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+</symbol>
+<symbol id="icon-icon_y_sort" viewBox="0 0 32 32">
+<title>icon_y_sort</title>
+<path fill="#a5b7f9" style="fill: var(--color18, #a5b7f9)" d="M18 4h12v4h-12v-4z"></path>
+<path fill="#a5b7f9" style="fill: var(--color18, #a5b7f9)" d="M6 24h-4l6 6 6-6h-4v-16h4l-6-6-6 6h4z"></path>
+<path fill="#a5b7f9" style="fill: var(--color18, #a5b7f9)" d="M18 14h8v4h-8v-4z"></path>
+<path fill="#a5b7f9" style="fill: var(--color18, #a5b7f9)" d="M18 24h4v4h-4v-4z"></path>
+</symbol>
+<symbol id="icon-icon_anchor" viewBox="0 0 32 32">
+<title>icon_anchor</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M16 2c-3.314 0-6 2.686-6 6 0.002 2.595 1.651 4.804 3.958 5.639l0.042 0.361h-4v4h4v7.797c-3.729-0.782-6.654-3.557-7.64-7.137l-3.884 0.965c1.653 6.023 7.080 10.375 13.523 10.375 0 0 0.001 0 0.001 0s0.001 0 0.001 0c6.443 0 11.869-4.352 13.499-10.277l-3.852-1.137c-1.001 3.648-3.923 6.423-7.583 7.195l-0.065-7.781h4v-4h-4v-0.352c2.348-0.848 3.996-3.055 4-5.648 0-3.314-2.686-6-6-6zM16 6c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105-0-2-0.895-2-2s0.895-2 2-2z"></path>
+</symbol>
+<symbol id="icon-icon_animated_sprite_3d" viewBox="0 0 32 32">
+<title>icon_animated_sprite_3d</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M21 0c-5.125 0.006-9.428 3.517-10.644 8.264 0.781-0.135 1.697-0.259 2.641-0.264 6.078 0 11.003 4.925 11.003 11 0 0 0 0 0 0-0.005 0.947-0.128 1.863-0.357 2.737 4.84-1.308 8.35-5.612 8.357-10.736 0-0.001 0-0.001 0-0.001 0-6.075-4.925-11-11-11z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M17 4c-4.044 0.005-7.576 2.191-9.484 5.444 1.551-0.884 3.452-1.439 5.482-1.444 6.077 0 11.001 4.925 11.001 11 0 0 0 0 0 0-0.004 2.028-0.556 3.926-1.516 5.555 3.328-1.988 5.51-5.516 5.516-9.554 0-0.001 0-0.001 0-0.001 0-6.075-4.925-11-11-11z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M13 8c-6.075 0-11 4.925-11 11 0 0 0 0 0 0s0 0 0 0c0 6.075 4.925 11 11 11s11-4.925 11-11c0 0 0 0 0-0s0 0 0 0c0-6.075-4.925-11-11-11zM8 16c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105-0-2-0.895-2-2s0.895-2 2-2zM18 16c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105-0-2-0.895-2-2s0.895-2 2-2zM8 22h10c0 0 0 0 0 0.001 0 1.473-0.995 2.76-2.476 3.454-0.741 0.347-1.603 0.546-2.524 0.546s-1.783-0.199-2.524-0.546c-1.481-0.694-2.476-1.981-2.476-3.454 0-0 0-0.001 0-0.001z"></path>
+</symbol>
+<symbol id="icon-icon_animated_sprite" viewBox="0 0 32 32">
+<title>icon_animated_sprite</title>
+<path fill="#c4d0f5" style="fill: var(--color33, #c4d0f5)" d="M21 0c-5.125 0.006-9.428 3.517-10.644 8.264 0.781-0.135 1.697-0.259 2.641-0.264 6.078 0 11.003 4.925 11.003 11 0 0 0 0 0 0-0.005 0.947-0.128 1.863-0.357 2.737 4.84-1.308 8.35-5.612 8.357-10.736 0-0.001 0-0.001 0-0.001 0-6.075-4.925-11-11-11z"></path>
+<path fill="#a5b7f1" style="fill: var(--color22, #a5b7f1)" d="M17 4c-4.044 0.005-7.576 2.191-9.484 5.444 1.551-0.884 3.452-1.439 5.482-1.444 6.077 0 11.001 4.925 11.001 11 0 0 0 0 0 0-0.004 2.028-0.556 3.926-1.516 5.555 3.328-1.988 5.51-5.516 5.516-9.554 0-0.001 0-0.001 0-0.001 0-6.075-4.925-11-11-11z"></path>
+<path fill="#a5b7f0" style="fill: var(--color34, #a5b7f0)" d="M13 8c-6.075 0-11 4.925-11 11 0 0 0 0 0 0s0 0 0 0c0 6.075 4.925 11 11 11s11-4.925 11-11c0 0 0 0 0-0s0 0 0 0c0-6.075-4.925-11-11-11zM8 16c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105-0-2-0.895-2-2s0.895-2 2-2zM18 16c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105-0-2-0.895-2-2s0.895-2 2-2zM8 22h10c0 0 0 0 0 0.001 0 1.473-0.995 2.76-2.476 3.454-0.741 0.347-1.603 0.546-2.524 0.546s-1.783-0.199-2.524-0.546c-1.481-0.694-2.476-1.981-2.476-3.454 0-0 0-0.001 0-0.001z"></path>
+</symbol>
+<symbol id="icon-icon_animation_player" viewBox="0 0 32 32">
+<title>icon_animation_player</title>
+<path fill="#e1cb50" style="fill: var(--color35, #e1cb50)" d="M2 2v28h2.333v-4h3.667v4h16v-4h4v4h2v-28h-2v4h-4v-4h-16v4h-3.667v-4zM4.333 10h3.667v4h-3.667zM24 10h4v4h-4zM4.333 18h3.667v4h-3.667zM24 18h4v4h-4z"></path>
+</symbol>
+<symbol id="icon-icon_animation_tree_player" viewBox="0 0 32 32">
+<title>icon_animation_tree_player</title>
+<path fill="#e1cb50" style="fill: var(--color35, #e1cb50)" d="M2 2v28h2.332v-4h3.668v4h16v-4h4v4h2v-28h-2v4h-4v-4h-16v4h-3.668v-4h-2.332zM4.332 10h3.668v4h-3.668v-4zM16 10c1.105 0 2 0.895 2 2-0 0.41-0.124 0.792-0.337 1.109l2.458 4.899c1.050 0.066 1.877 0.932 1.879 1.992 0 1.105-0.895 2-2 2s-2-0.895-2-2c0-0.41 0.124-0.792 0.337-1.109l-2.337-4.657-2.332 4.664c0.208 0.31 0.332 0.691 0.332 1.101 0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.063 0.83-1.932 1.877-1.996l2.455-4.903c-0.208-0.31-0.332-0.691-0.332-1.101 0-1.105 0.895-2 2-2zM24 10h4v4h-4v-4zM4.332 18h3.668v4h-3.668v-4zM24 18h4v4h-4v-4z"></path>
+</symbol>
+<symbol id="icon-icon_animation" viewBox="0 0 32 32">
+<title>icon_animation</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 4c-6.627 0-12 5.373-12 12s5.373 12 12 12c3.081-0.004 5.889-1.169 8.011-3.080l-0.011 3.080h0.004c0 0.002 0 0.005 0 0.008 0 0.733 0.197 1.42 0.541 2.011 0.694 1.185 1.981 1.981 3.454 1.981 0 0 0.001 0 0.001 0h2v-4h-1c-0.552 0-1-0.448-1-1 0 0 0 0 0-0v-11c0-6.627-5.373-12-12-12zM16 6c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2zM22.883 10c0.013-0 0.029-0.001 0.045-0.001 0.737 0 1.38 0.398 1.727 0.991 0.173 0.296 0.273 0.641 0.273 1.009 0 0.736-0.397 1.378-0.989 1.726-0.297 0.174-0.643 0.274-1.012 0.274-0.736 0-1.38-0.398-1.727-0.99-0.173-0.296-0.272-0.64-0.272-1.007 0-0.737 0.398-1.381 0.992-1.728 0.283-0.166 0.61-0.265 0.96-0.275zM8.977 10.004c0.028-0.001 0.061-0.002 0.094-0.002 0.368 0 0.713 0.099 1.009 0.273 0.593 0.347 0.992 0.991 0.992 1.728 0 0.367-0.099 0.711-0.272 1.007-0.347 0.592-0.991 0.99-1.727 0.99-0.369 0-0.715-0.1-1.012-0.274-0.592-0.347-0.989-0.99-0.989-1.726 0-0.368 0.099-0.713 0.273-1.009 0.332-0.565 0.933-0.953 1.627-0.986zM9.023 18c0.015-0 0.032-0.001 0.049-0.001 0.737 0 1.38 0.398 1.727 0.991 0.173 0.296 0.272 0.64 0.272 1.007 0 0.737-0.398 1.381-0.992 1.728-0.296 0.173-0.641 0.273-1.009 0.273-0.736 0-1.378-0.397-1.726-0.989-0.173-0.296-0.273-0.641-0.273-1.009 0-0.736 0.397-1.378 0.989-1.726 0.283-0.166 0.61-0.265 0.96-0.275zM22.832 18.004c0.029-0.002 0.063-0.002 0.098-0.002 0.368 0 0.713 0.099 1.010 0.273 0.592 0.347 0.989 0.99 0.989 1.726 0 0.368-0.099 0.713-0.273 1.009-0.347 0.592-0.99 0.989-1.726 0.989-0.368 0-0.713-0.099-1.009-0.273-0.593-0.347-0.992-0.991-0.992-1.728 0-0.367 0.099-0.711 0.272-1.007 0.332-0.565 0.933-0.953 1.627-0.986zM16 22c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2z"></path>
+</symbol>
+<symbol id="icon-icon_area_2d" viewBox="0 0 32 32">
+<title>icon_area_2d</title>
+<path fill="#a5b7f1" style="fill: var(--color22, #a5b7f1)" d="M2 2v8h4v-4h4v-4h-8zM22 2v4h4v4h4v-8h-8zM8 8v16h16v-16h-16zM12 12h8v8h-8v-8zM2 22v8h8v-4h-4v-4h-4zM26 22v4h-4v4h8v-8h-4z"></path>
+</symbol>
+<symbol id="icon-icon_area" viewBox="0 0 32 32">
+<title>icon_area</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M2 2v8h4v-4h4v-4h-8zM22 2v4h4v4h4v-8h-8zM8 8v16h16v-16h-16zM12 12h8v8h-8v-8zM2 22v8h8v-4h-4v-4h-4zM26 22v4h-4v4h8v-8h-4z"></path>
+</symbol>
+<symbol id="icon-icon_atlas_texture" viewBox="0 0 32 32">
+<title>icon_atlas_texture</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M12 2l-10 4v24l10-4 8 4 10-4v-24l-10 4zM12 6l8 4v16l-8-4z"></path>
+</symbol>
+<symbol id="icon-icon_baked_light_instance" viewBox="0 0 32 32">
+<title>icon_baked_light_instance</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M4 2v4h24v-4h-24zM2 8v18c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-18h-28zM6 10h2v2h-2v-2zM12 10h2v2h-2v-2zM18 10h2v2h-2v-2zM24 10h2v2h-2v-2zM6 14h20v12h-20v-12zM12 16v2h8v-2h-8z"></path>
+</symbol>
+<symbol id="icon-icon_baked_light_sampler" viewBox="0 0 32 32">
+<title>icon_baked_light_sampler</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M4 2v4h24v-4h-24zM2 8v18c0 2.209 1.791 4 4 4h8v-4h-8v-12h24v-6h-28zM6 10h2v2h-2v-2zM12 10h2v2h-2v-2zM18 10h2v2h-2v-2zM24 10h2v2h-2v-2zM12 16v2h2v-2h-2zM20 18c-1.105 0-2 0.895-2 2v8c0 1.105 0.895 2 2 2h8c1.105 0 2-0.895 2-2v-8c0-1.105-0.895-2-2-2h-8zM26 20c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2zM22 24c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2z"></path>
+</symbol>
+<symbol id="icon-icon_baked_light" viewBox="0 0 32 32">
+<title>icon_baked_light</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M4 2v4h24v-4h-24zM2 8v18c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-18h-28zM6 10h2v2h-2v-2zM12 10h2v2h-2v-2zM18 10h2v2h-2v-2zM24 10h2v2h-2v-2zM6 14h20v12h-20v-12zM12 16v2h8v-2h-8z"></path>
+</symbol>
+<symbol id="icon-icon_bone_attachment" viewBox="0 0 32 32">
+<title>icon_bone_attachment</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M20.956 2.001c-0.023-0-0.049-0.001-0.076-0.001-1.361 0-2.593 0.551-3.485 1.442-0.893 0.893-1.446 2.126-1.446 3.489 0 1.013 0.305 1.954 0.829 2.737l-7.129 7.104c-0.765-0.512-1.707-0.817-2.72-0.817-1.361 0-2.593 0.551-3.485 1.442-0.892 0.893-1.444 2.126-1.444 3.488s0.552 2.595 1.445 3.488c0.733 0.73 1.694 1.232 2.767 1.388 0.186 1.103 0.687 2.064 1.418 2.797 0.892 0.892 2.126 1.444 3.488 1.444s2.595-0.552 3.488-1.444c0.893-0.893 1.446-2.126 1.446-3.489 0-1.013-0.305-1.954-0.829-2.737l7.133-7.104c0.765 0.512 1.707 0.817 2.72 0.817 1.359 0 2.589-0.549 3.481-1.438 0.892-0.892 1.444-2.125 1.444-3.487s-0.552-2.595-1.444-3.487c-0.732-0.732-1.694-1.235-2.767-1.392-0.186-1.103-0.687-2.065-1.418-2.798-0.876-0.874-2.079-1.421-3.411-1.441z"></path>
+</symbol>
+<symbol id="icon-icon_bone_track" viewBox="0 0 32 32">
+<title>icon_bone_track</title>
+<path fill="#ffd684" style="fill: var(--color2, #ffd684)" d="M20.956 2.001c-0.023-0-0.049-0.001-0.076-0.001-1.361 0-2.593 0.551-3.485 1.442-0.893 0.893-1.446 2.126-1.446 3.489 0 1.013 0.305 1.954 0.829 2.737l-7.129 7.104c-0.765-0.512-1.707-0.817-2.72-0.817-1.361 0-2.593 0.551-3.485 1.442-0.892 0.893-1.444 2.126-1.444 3.488s0.552 2.595 1.445 3.488c0.733 0.73 1.694 1.232 2.767 1.388 0.186 1.103 0.687 2.064 1.418 2.797 0.892 0.892 2.126 1.444 3.488 1.444s2.595-0.552 3.488-1.444c0.893-0.893 1.446-2.126 1.446-3.489 0-1.013-0.305-1.954-0.829-2.737l7.133-7.104c0.765 0.512 1.707 0.817 2.72 0.817 1.359 0 2.589-0.549 3.481-1.438 0.892-0.892 1.444-2.125 1.444-3.487s-0.552-2.595-1.444-3.487c-0.732-0.732-1.694-1.235-2.767-1.392-0.186-1.103-0.687-2.065-1.418-2.798-0.876-0.874-2.079-1.421-3.411-1.441z"></path>
+</symbol>
+<symbol id="icon-icon_bone" viewBox="0 0 32 32">
+<title>icon_bone</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M20.956 2.001c-0.023-0-0.049-0.001-0.076-0.001-1.361 0-2.593 0.551-3.485 1.442-0.893 0.893-1.446 2.126-1.446 3.489 0 1.013 0.305 1.954 0.829 2.737l-7.129 7.104c-0.765-0.512-1.707-0.817-2.72-0.817-1.361 0-2.593 0.551-3.485 1.442-0.892 0.893-1.444 2.126-1.444 3.488s0.552 2.595 1.445 3.488c0.733 0.73 1.694 1.232 2.767 1.388 0.186 1.103 0.687 2.064 1.418 2.797 0.892 0.892 2.126 1.444 3.488 1.444s2.595-0.552 3.488-1.444c0.893-0.893 1.446-2.126 1.446-3.489 0-1.013-0.305-1.954-0.829-2.737l7.133-7.104c0.765 0.512 1.707 0.817 2.72 0.817 1.359 0 2.589-0.549 3.481-1.438 0.892-0.892 1.444-2.125 1.444-3.487s-0.552-2.595-1.444-3.487c-0.732-0.732-1.694-1.235-2.767-1.392-0.186-1.103-0.687-2.065-1.418-2.798-0.876-0.874-2.079-1.421-3.411-1.441z"></path>
+</symbol>
+<symbol id="icon-icon_box_shape" viewBox="0 0 32 32">
+<title>icon_box_shape</title>
+<path fill="#2998ff" style="fill: var(--color21, #2998ff)" d="M16 2l-14 6v16l14 6 14-6v-16l-14-6z"></path>
+<path fill="#68b6ff" style="fill: var(--color29, #68b6ff)" d="M16 30l-14-6v-16l14 6z"></path>
+<path fill="#2998ff" style="fill: var(--color21, #2998ff)" d="M16 30l14-6v-16l-14 6z"></path>
+<path fill="#a2d2ff" style="fill: var(--color19, #a2d2ff)" d="M2 8l14 6 14-6-14-6z"></path>
+</symbol>
+<symbol id="icon-icon_button_group" viewBox="0 0 32 32">
+<title>icon_button_group</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M0 6h2v20h-2v-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M30 6h2v20h-2v-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M4 26c0 0 0 0 0 0 0 0.828-0.504 1.539-1.221 1.843-0.239 0.101-0.502 0.157-0.778 0.157-0.552 0-1.052-0.224-1.414-0.586s-0.586-0.862-0.586-1.414c0-0.276 0.056-0.539 0.157-0.779 0.304-0.718 1.014-1.221 1.843-1.221 0 0 0 0 0 0v2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M30 26v2h-28v-2h28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 26c0 0 0 0 0 0 0 0.828 0.504 1.539 1.221 1.843 0.239 0.101 0.502 0.157 0.778 0.157 0.552 0 1.052-0.224 1.414-0.586s0.586-0.862 0.586-1.414c0-0.276-0.056-0.539-0.157-0.779-0.304-0.718-1.014-1.221-1.843-1.221 0 0 0 0 0 0v2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M4 6c0 0 0-0 0-0 0-0.828-0.504-1.539-1.221-1.843-0.239-0.101-0.502-0.157-0.778-0.157-0.552 0-1.052 0.224-1.414 0.586s-0.586 0.862-0.586 1.414c0 0.276 0.056 0.539 0.157 0.779 0.304 0.718 1.014 1.221 1.843 1.221 0 0 0 0 0 0v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 6c0 0 0-0 0-0 0-0.828 0.504-1.539 1.221-1.843 0.239-0.101 0.502-0.157 0.778-0.157 0.552 0 1.052 0.224 1.414 0.586s0.586 0.862 0.586 1.414c0 0.276-0.056 0.539-0.157 0.779-0.304 0.718-1.014 1.221-1.843 1.221 0 0 0 0 0 0v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M30 4v2h-28v-2h28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 10h8v12h-8v-12z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M18 10h8v12h-8v-12z"></path>
+<path fill="#98dc9f" style="fill: var(--color31, #98dc9f)" d="M6 18h8v4h-8v-4z"></path>
+<path fill="#98dc9f" style="fill: var(--color31, #98dc9f)" d="M18 18h8v4h-8v-4z"></path>
+</symbol>
+<symbol id="icon-icon_button" viewBox="0 0 32 32">
+<title>icon_button</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 6v16h28v-16h-28zM8 10h6v8h-6v-8zM18 10h2v2h2v-2h2v2h-2v2h2v4h-2v-4h-2v4h-2v-8zM10 12v4h2v-4h-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 26h28v-4h-28v4z"></path>
+<path fill="#000" style="fill: var(--color30, #000)" d="M2 26h28v-4h-28v4z"></path>
+</symbol>
+<symbol id="icon-icon_camera_2d" viewBox="0 0 32 32">
+<title>icon_camera_2d</title>
+<path fill="#a5b7f1" style="fill: var(--color22, #a5b7f1)" d="M2 12h20v10h-20v-10z"></path>
+<path fill="#a5b7f1" style="fill: var(--color22, #a5b7f1)" d="M6 8h12v18h-12v-18z"></path>
+<path fill="#a5b7f1" style="fill: var(--color22, #a5b7f1)" d="M10 12c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#a5b7f1" style="fill: var(--color22, #a5b7f1)" d="M10 22c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#a5b7f1" style="fill: var(--color22, #a5b7f1)" d="M22 12c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#a5b7f1" style="fill: var(--color22, #a5b7f1)" d="M22 22c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#a5b7f1" style="fill: var(--color22, #a5b7f1)" d="M24 14v6l6 2v-10z"></path>
+</symbol>
+<symbol id="icon-icon_camera" viewBox="0 0 32 32">
+<title>icon_camera</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M2 12h20v10h-20v-10z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M6 8h12v18h-12v-18z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M10 12c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M10 22c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M22 12c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M22 22c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M24 14v6l6 2v-10z"></path>
+</symbol>
+<symbol id="icon-icon_canvas_item_material" viewBox="0 0 32 32">
+<title>icon_canvas_item_material</title>
+<path fill="#ff7070" style="fill: var(--color11, #ff7070)" d="M0 2h32v4h-32v-4z"></path>
+<path fill="#ffeb70" style="fill: var(--color12, #ffeb70)" d="M0 6h32v4h-32v-4z"></path>
+<path fill="#9dff70" style="fill: var(--color13, #9dff70)" d="M0 10h32v4h-32v-4z"></path>
+<path fill="#70ffb9" style="fill: var(--color14, #70ffb9)" d="M0 14h32v4h-32v-4z"></path>
+<path fill="#70deff" style="fill: var(--color15, #70deff)" d="M0 18h32v4h-32v-4z"></path>
+<path fill="#ff70ac" style="fill: var(--color16, #ff70ac)" d="M0 26h32v4h-32v-4z"></path>
+<path fill="#9f70ff" style="fill: var(--color17, #9f70ff)" d="M0 22h32v4h-32v-4z"></path>
+</symbol>
+<symbol id="icon-icon_canvas_item_shader_graph" viewBox="0 0 32 32">
+<title>icon_canvas_item_shader_graph</title>
+<path fill="#ff7070" style="fill: var(--color11, #ff7070)" d="M0 2h32v4h-32v-4z"></path>
+<path fill="#ffeb70" style="fill: var(--color12, #ffeb70)" d="M0 6h32v4h-32v-4z"></path>
+<path fill="#9dff70" style="fill: var(--color13, #9dff70)" d="M0 10h32v4h-32v-4z"></path>
+<path fill="#70ffb9" style="fill: var(--color14, #70ffb9)" d="M0 14h32v4h-32v-4z"></path>
+<path fill="#70deff" style="fill: var(--color15, #70deff)" d="M0 18h32v4h-32v-4z"></path>
+<path fill="#ff70ac" style="fill: var(--color16, #ff70ac)" d="M0 26h32v4h-32v-4z"></path>
+<path fill="#9f70ff" style="fill: var(--color17, #9f70ff)" d="M0 22h32v4h-32v-4z"></path>
+</symbol>
+<symbol id="icon-icon_canvas_item_shader" viewBox="0 0 32 32">
+<title>icon_canvas_item_shader</title>
+<path fill="#ff7070" style="fill: var(--color11, #ff7070)" d="M0 2h32v4h-32v-4z"></path>
+<path fill="#ffeb70" style="fill: var(--color12, #ffeb70)" d="M0 6h32v4h-32v-4z"></path>
+<path fill="#9dff70" style="fill: var(--color13, #9dff70)" d="M0 10h32v4h-32v-4z"></path>
+<path fill="#70ffb9" style="fill: var(--color14, #70ffb9)" d="M0 14h32v4h-32v-4z"></path>
+<path fill="#70deff" style="fill: var(--color15, #70deff)" d="M0 18h32v4h-32v-4z"></path>
+<path fill="#ff70ac" style="fill: var(--color16, #ff70ac)" d="M0 26h32v4h-32v-4z"></path>
+<path fill="#9f70ff" style="fill: var(--color17, #9f70ff)" d="M0 22h32v4h-32v-4z"></path>
+</symbol>
+<symbol id="icon-icon_canvas_item" viewBox="0 0 32 32">
+<title>icon_canvas_item</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M5.842 20.067c-0.527 0.6-0.841 1.459-0.841 2.477 0 3.255-6.276-0.356-0.675 5.341 1.768 1.798 5.309 1.34 7.076-0.458s1.768-4.713 0-6.511c-2.2-2.238-4.4-2.169-5.561-0.849zM10.602 16.846l4.801 4.883 13.603-13.835c1.326-1.348 1.326-3.535 0-4.883s-3.475-1.348-4.801 0z"></path>
+</symbol>
+<symbol id="icon-icon_canvas_layer" viewBox="0 0 32 32">
+<title>icon_canvas_layer</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M6 2c-2.209 0-4 1.791-4 4v12h2v-12c0-1.105 0.895-2 2-2h12v-2h-12zM26.605 2c-0.869 0-1.739 0.338-2.402 1.012l-13.602 13.836 4.801 4.883 13.602-13.836c1.326-1.348 1.326-3.534 0-4.883-0.663-0.674-1.53-1.012-2.398-1.012zM28 14v12c-0 1.105-0.895 2-2 2h-12v2h12c2.209 0 4-1.791 4-4v-12h-2zM8.23 19.156c-0.97-0.097-1.81 0.25-2.391 0.91-0.527 0.6-0.84 1.459-0.84 2.477 0 3.255-6.277-0.357-0.676 5.34 1.768 1.798 5.31 1.341 7.078-0.457s1.768-4.714 0-6.512c-1.1-1.119-2.202-1.66-3.172-1.758z"></path>
+</symbol>
+<symbol id="icon-icon_canvas_modulate" viewBox="0 0 32 32">
+<title>icon_canvas_modulate</title>
+<path fill="#a5b7f1" style="fill: var(--color22, #a5b7f1)" d="M2 2v28h28v-28zM6 6h20v20h-20z"></path>
+<path fill="#70bfff" style="fill: var(--color36, #70bfff)" d="M24 24h-10l10-10z"></path>
+<path fill="#ff7070" style="fill: var(--color11, #ff7070)" d="M8 8h10l-10 10z"></path>
+<path fill="#7aff70" style="fill: var(--color37, #7aff70)" d="M8 24v-6l10-10h6v6l-10 10z"></path>
+</symbol>
+<symbol id="icon-icon_capsule_shape_2d" viewBox="0 0 32 32">
+<title>icon_capsule_shape_2d</title>
+<path fill="#68b6ff" style="fill: var(--color29, #68b6ff)" d="M16 2c-4.418 0-8 3.582-8 8v12c0 4.418 3.582 8 8 8s8-3.582 8-8v-12c0-4.418-3.582-8-8-8zM16 6c2.209 0 4 1.791 4 4v12c-0 2.209-1.791 4-4 4s-4-1.791-4-4v-12c0-2.209 1.791-4 4-4z"></path>
+</symbol>
+<symbol id="icon-icon_capsule_shape" viewBox="0 0 32 32">
+<title>icon_capsule_shape</title>
+<path fill="#68b6ff" style="fill: var(--color29, #68b6ff)" d="M10 8h12v16h-12v-16z"></path>
+<path fill="#68b6ff" style="fill: var(--color29, #68b6ff)" d="M22 8c0 3.314-2.686 6-6 6s-6-2.686-6-6c0-3.314 2.686-6 6-6s6 2.686 6 6z"></path>
+<path fill="#68b6ff" style="fill: var(--color29, #68b6ff)" d="M22 24c0 3.314-2.686 6-6 6s-6-2.686-6-6c0-3.314 2.686-6 6-6s6 2.686 6 6z"></path>
+<path fill="#a2d2ff" style="fill: var(--color19, #a2d2ff)" d="M16 6c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+</symbol>
+<symbol id="icon-icon_center_container" viewBox="0 0 32 32">
+<title>icon_center_container</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4zM6 6h20v20h-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M12 8l4 4 4-4zM8 12v8l4-4zM24 12l-4 4 4 4zM16 20l-4 4h8z"></path>
+</symbol>
+<symbol id="icon-icon_check_box" viewBox="0 0 32 32">
+<title>icon_check_box</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 4c-2.209 0-4 1.791-4 4v18c0 2.209 1.791 4 4 4h18c2.209 0 4-1.791 4-4v-9.855l-4 4v5.855h-18v-18h13.172l4-4h-17.172z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M9.172 18l5.657 5.657 12.728-12.728-2.828-2.828-9.899 9.899-2.828-2.828-2.828 2.828z"></path>
+</symbol>
+<symbol id="icon-icon_check_button" viewBox="0 0 32 32">
+<title>icon_check_button</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M10 8c-4.418 0-8 3.582-8 8s3.582 8 8 8h12v-4h-12c-2.209 0-4-1.791-4-4s1.791-4 4-4h12v-4h-12z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M30 16c0 4.418-3.582 8-8 8s-8-3.582-8-8c0-4.418 3.582-8 8-8s8 3.582 8 8z"></path>
+</symbol>
+<symbol id="icon-icon_class_list" viewBox="0 0 32 32">
+<title>icon_class_list</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M2 4h10v2h-10v-2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M12 2h12v6h-12v-6z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M6 4h2v22h-2v-22z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M8 14h10v2h-10v-2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M18 12h12v6h-12v-6z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M8 24h10v2h-10v-2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M18 22h12v6h-12v-6z"></path>
+</symbol>
+<symbol id="icon-icon_color_picker_button" viewBox="0 0 32 32">
+<title>icon_color_picker_button</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M26.102 1.957c-0.017-0-0.037-0-0.058-0-1.105 0-2.105 0.448-2.829 1.172l-2.828 2.828-2.832-2.828-2.828 2.828 2.828 2.828-14.141 14.145-1.414 7.070 7.070-1.414 14.145-14.141 2.828 2.828 2.828-2.828-2.828-2.832 2.828-2.828c0.724-0.724 1.171-1.724 1.171-2.828s-0.448-2.104-1.171-2.828c-0.71-0.711-1.686-1.155-2.766-1.172zM18.969 10.199l2.832 2.832-14.145 14.141-2.828-2.828 14.141-14.145z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 6v12.688l9.898-9.902-2.785-2.785h-7.113zM30 18.973l-3.027 3.027h-1.859l-1.898-1.898-5.898 5.898h12.684v-7.027z"></path>
+<path fill="#000" style="fill: var(--color30, #000)" d="M21.316 22l-4 4h12.684v-4h-8.684z"></path>
+</symbol>
+<symbol id="icon-icon_color_picker" viewBox="0 0 32 32">
+<title>icon_color_picker</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M26.102 1.957c-0.017-0-0.037-0-0.058-0-1.105 0-2.105 0.448-2.829 1.172l-2.828 2.828-2.832-2.828-2.828 2.828 2.828 2.828-14.141 14.145-1.414 7.070 7.070-1.414 14.145-14.141 2.828 2.828 2.828-2.828-2.828-2.832 2.828-2.828c0.724-0.724 1.171-1.724 1.171-2.828s-0.448-2.104-1.171-2.828c-0.71-0.711-1.686-1.155-2.766-1.172zM18.969 10.199l2.832 2.832-14.145 14.141-2.828-2.828 14.141-14.145z"></path>
+</symbol>
+<symbol id="icon-icon_color_ramp" viewBox="0 0 32 32">
+<title>icon_color_ramp</title>
+<path d="M2 30h28v-28z"></path>
+</symbol>
+<symbol id="icon-icon_color_rect" viewBox="0 0 32 32">
+<title>icon_color_rect</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h2v28h-2v-28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 28h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h28v2h-28v-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 2h2v28h-2v-28z"></path>
+<path fill="#70bfff" style="fill: var(--color36, #70bfff)" d="M26 26h-12l12-12z"></path>
+<path fill="#ff7070" style="fill: var(--color11, #ff7070)" d="M6 6h12l-12 12z"></path>
+<path fill="#7aff70" style="fill: var(--color37, #7aff70)" d="M6 26v-8l12-12h8v8l-12 12z"></path>
+</symbol>
+<symbol id="icon-icon_color" viewBox="0 0 32 32">
+<title>icon_color</title>
+<path fill="#fff" style="fill: var(--color28, #fff)" d="M32 16c0 8.837-7.163 16-16 16s-16-7.163-16-16c0-8.837 7.163-16 16-16s16 7.163 16 16z"></path>
+<path fill="#f00" style="fill: var(--color38, #f00)" d="M12.377 2.477c1.087-0.303 2.335-0.477 3.623-0.477s2.537 0.174 3.722 0.5l-3.722 13.5z"></path>
+<path fill="#ff4d00" style="fill: var(--color39, #ff4d00)" d="M19.624 2.477c1.093 0.281 2.261 0.754 3.377 1.399s2.11 1.419 2.973 2.294l-9.973 9.83z"></path>
+<path fill="#f90" style="fill: var(--color40, #f90)" d="M25.9 6.101c0.806 0.79 1.581 1.783 2.225 2.899s1.118 2.284 1.428 3.473l-13.552 3.527z"></path>
+<path fill="#ffca00" style="fill: var(--color41, #ffca00)" d="M29.523 12.376c0.303 1.087 0.477 2.335 0.477 3.623s-0.174 2.537-0.5 3.722l-13.5-3.722z"></path>
+<path fill="#ff0" style="fill: var(--color42, #ff0)" d="M29.523 19.624c-0.281 1.093-0.754 2.261-1.399 3.377s-1.419 2.11-2.294 2.973l-9.83-9.973z"></path>
+<path fill="#9fff00" style="fill: var(--color43, #9fff00)" d="M25.899 25.9c-0.79 0.806-1.783 1.581-2.899 2.225s-2.284 1.118-3.473 1.428l-3.527-13.552z"></path>
+<path fill="#0f0" style="fill: var(--color44, #0f0)" d="M19.623 29.523c-1.087 0.303-2.335 0.477-3.623 0.477s-2.537-0.174-3.722-0.5l3.722-13.5z"></path>
+<path fill="#0fa" style="fill: var(--color45, #0fa)" d="M12.376 29.523c-1.093-0.281-2.261-0.754-3.377-1.399s-2.11-1.419-2.973-2.294l9.973-9.83z"></path>
+<path fill="#00f" style="fill: var(--color46, #00f)" d="M6.1 25.899c-0.806-0.79-1.581-1.783-2.225-2.899s-1.118-2.284-1.428-3.473l13.552-3.527z"></path>
+<path fill="#9000ff" style="fill: var(--color47, #9000ff)" d="M2.477 19.623c-0.303-1.087-0.477-2.335-0.477-3.623s0.174-2.537 0.5-3.722l13.5 3.722z"></path>
+<path fill="#f0e" style="fill: var(--color48, #f0e)" d="M2.477 12.377c0.281-1.093 0.754-2.261 1.399-3.377s1.419-2.11 2.294-2.973l9.83 9.973z"></path>
+<path fill="#ff009a" style="fill: var(--color49, #ff009a)" d="M6.101 6.1c0.79-0.806 1.783-1.581 2.9-2.225s2.284-1.118 3.473-1.428l3.527 13.552z"></path>
+</symbol>
+<symbol id="icon-icon_concave_polygon_shape" viewBox="0 0 32 32">
+<title>icon_concave_polygon_shape</title>
+<path fill="#2998ff" style="fill: var(--color21, #2998ff)" d="M16 2l-14 6v16l14 6 14-6v-16l-14-6z"></path>
+<path fill="#2998ff" style="fill: var(--color21, #2998ff)" d="M6 10v12l10 4 10-4v-12l-10-4z"></path>
+<path fill="#a2d2ff" style="fill: var(--color19, #a2d2ff)" d="M16 26l10-4-10-4-10 4z"></path>
+<path fill="#68b6ff" style="fill: var(--color29, #68b6ff)" d="M16 18l10 4v-12l-10-4z"></path>
+<path fill="#a2d2ff" style="fill: var(--color19, #a2d2ff)" d="M16 2l-14 6 4 2 10-4 10 4 4-2z"></path>
+<path fill="#68b6ff" style="fill: var(--color29, #68b6ff)" d="M2 8v16l14 6v-4l-10-4v-12z"></path>
+<path fill="#2998ff" style="fill: var(--color21, #2998ff)" d="M30 8l-4 2v12l-10 4v4l14-6z"></path>
+</symbol>
+<symbol id="icon-icon_confirmation_dialog" viewBox="0 0 32 32">
+<title>icon_confirmation_dialog</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v2h28v-2c0-2.209-1.791-4-4-4h-20zM24 4h2v2h-2v-2zM2 10v16c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-16h-28zM5.172 17.758l2.828 2.828 2.828-2.828 1.414 1.414-2.828 2.828 2.828 2.828-1.414 1.414-2.828-2.828-2.828 2.828-1.414-1.414 2.828-2.828-2.828-2.828 1.414-1.414zM25.898 17.758l1.414 1.414-7.070 7.070-4.242-4.242 1.414-1.414 2.828 2.828 5.656-5.656z"></path>
+</symbol>
+<symbol id="icon-icon_container" viewBox="0 0 32 32">
+<title>icon_container</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4h4v-4zM10 2v4h4v-4h-4zM18 2v4h4v-4h-4zM26 2v4h4c0-2.209-1.791-4-4-4zM2 10v4h4v-4h-4zM26 10v4h4v-4h-4zM2 18v4h4v-4h-4zM26 18v4h4v-4h-4zM2 26c0 2.209 1.791 4 4 4v-4h-4zM10 26v4h4v-4h-4zM18 26v4h4v-4h-4zM26 26v4c2.209 0 4-1.791 4-4h-4z"></path>
+</symbol>
+<symbol id="icon-icon_control" viewBox="0 0 32 32">
+<title>icon_control</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M16 4c-6.627 0-12 5.373-12 12s5.373 12 12 12c6.627 0 12-5.373 12-12s-5.373-12-12-12zM16 8c4.418 0 8 3.582 8 8s-3.582 8-8 8c-4.418 0-8-3.582-8-8s3.582-8 8-8z"></path>
+</symbol>
+<symbol id="icon-icon_convex_polygon_shape" viewBox="0 0 32 32">
+<title>icon_convex_polygon_shape</title>
+<path fill="#2998ff" style="fill: var(--color21, #2998ff)" d="M16 2l-14 6v16l14 6 14-6-14-22z"></path>
+<path fill="#68b6ff" style="fill: var(--color29, #68b6ff)" d="M16 30l-14-6v-16l14 6z"></path>
+<path fill="#2998ff" style="fill: var(--color21, #2998ff)" d="M16 2l-14 6 14 22 14-6z"></path>
+</symbol>
+<symbol id="icon-icon_cube_map" viewBox="0 0 32 32">
+<title>icon_cube_map</title>
+<path fill="#84ffb1" style="fill: var(--color26, #84ffb1)" d="M0 12h8v8h-8v-8z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M8 12h8v8h-8v-8z"></path>
+<path fill="#84ffb1" style="fill: var(--color26, #84ffb1)" d="M16 12h8v8h-8v-8z"></path>
+<path fill="#ff8484" style="fill: var(--color23, #ff8484)" d="M24 12h8v8h-8v-8z"></path>
+<path fill="#84c2ff" style="fill: var(--color50, #84c2ff)" d="M8 4h8v8h-8v-8z"></path>
+<path fill="#84c2ff" style="fill: var(--color50, #84c2ff)" d="M8 20h8v8h-8v-8z"></path>
+</symbol>
+<symbol id="icon-icon_damped_spring_joint_2d" viewBox="0 0 32 32">
+<title>icon_damped_spring_joint_2d</title>
+<path fill="#708cea" style="fill: var(--color51, #708cea)" d="M8 6v4l16 6v-4zM8 16v4l16 6v-4z"></path>
+<path fill="#a5b7f2" style="fill: var(--color4, #a5b7f2)" d="M8 6v4l16-4v-4zM8 16v4l16-4v-4zM8 26v4l16-4v-4z"></path>
+</symbol>
+<symbol id="icon-icon_directional_light" viewBox="0 0 32 32">
+<title>icon_directional_light</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 8c-4.418 0-8 3.582-8 8s3.582 8 8 8c4.418 0 8-3.582 8-8s-3.582-8-8-8zM16 21.333c-7.111 3.555-3.556 1.778 0 0z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M14 2h4v4h-4v-4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M30 14v4h-4v-4h4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M18 30h-4v-4h4v4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M2 18v-4h4v4h-4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M4.686 7.515l2.828-2.828 2.828 2.828-2.828 2.828-2.828-2.828z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M24.485 4.686l2.828 2.828-2.828 2.828-2.828-2.828 2.828-2.828z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M27.314 24.485l-2.828 2.828-2.828-2.828 2.828-2.828 2.828 2.828z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M7.515 27.314l-2.828-2.828 2.828-2.828 2.828 2.828-2.828 2.828z"></path>
+</symbol>
+<symbol id="icon-icon_event_player" viewBox="0 0 32 32">
+<title>icon_event_player</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M2 2v28h28v-28h-28zM6 6h20v20h-20v-20z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M10 6v12h4v-12h-4zM18 6v12h4v-12h-4z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M10 6h2v20h-2v-20z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M18 6h2v20h-2v-20z"></path>
+</symbol>
+<symbol id="icon-icon_file_dialog" viewBox="0 0 32 32">
+<title>icon_file_dialog</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v2h28v-2c0-2.209-1.791-4-4-4h-20zM24 4h2v2h-2v-2zM2 10v16c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-16h-28zM10 14h6v2h6v10h-12v-12z"></path>
+</symbol>
+<symbol id="icon-icon_fixed_material" viewBox="0 0 32 32">
+<title>icon_fixed_material</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 2c-7.732 0-14 6.268-14 14s6.268 14 14 14c7.732 0 14-6.268 14-14s-6.268-14-14-14zM12 6c2.209 0 4 1.791 4 4s-1.791 4-4 4c-2.209 0-4-1.791-4-4s1.791-4 4-4z"></path>
+</symbol>
+<symbol id="icon-icon_fixed_spatial_material" viewBox="0 0 32 32">
+<title>icon_fixed_spatial_material</title>
+<path fill="#ff7070" style="fill: var(--color11, #ff7070)" d="M0 2h32v4h-32v-4z"></path>
+<path fill="#ffeb70" style="fill: var(--color12, #ffeb70)" d="M0 6h32v4h-32v-4z"></path>
+<path fill="#9dff70" style="fill: var(--color13, #9dff70)" d="M0 10h32v4h-32v-4z"></path>
+<path fill="#70ffb9" style="fill: var(--color14, #70ffb9)" d="M0 14h32v4h-32v-4z"></path>
+<path fill="#70deff" style="fill: var(--color15, #70deff)" d="M0 18h32v4h-32v-4z"></path>
+<path fill="#ff70ac" style="fill: var(--color16, #ff70ac)" d="M0 26h32v4h-32v-4z"></path>
+<path fill="#9f70ff" style="fill: var(--color17, #9f70ff)" d="M0 22h32v4h-32v-4z"></path>
+</symbol>
+<symbol id="icon-icon_gizmo_directional_light" viewBox="0 0 32 32">
+<title>icon_gizmo_directional_light</title>
+<path fill="#f7f5cf" style="fill: var(--color52, #f7f5cf)" d="M22 16c0 3.314-2.686 6-6 6s-6-2.686-6-6c0-3.314 2.686-6 6-6s6 2.686 6 6z"></path>
+<path fill="#f7f5cf" style="fill: var(--color52, #f7f5cf)" d="M16 1c-1.105 0-2 0.895-2 2v3c0 0 0 0 0 0 0 1.105 0.895 2 2 2 0 0 0 0 0 0s0 0 0 0c1.105 0 2-0.895 2-2 0 0 0 0 0 0v-3c0-1.105-0.895-2-2-2z"></path>
+<path fill="#f7f5cf" style="fill: var(--color52, #f7f5cf)" d="M31 16c0-1.105-0.895-2-2-2h-3c0 0 0 0 0 0-1.105 0-2 0.895-2 2 0 0 0 0 0 0s0 0 0 0c0 1.105 0.895 2 2 2 0 0 0 0 0 0h3c1.105 0 2-0.895 2-2z"></path>
+<path fill="#f7f5cf" style="fill: var(--color52, #f7f5cf)" d="M16 31c1.105 0 2-0.895 2-2v-3c0 0 0 0 0 0 0-1.105-0.895-2-2-2 0 0 0 0 0 0s0 0 0 0c-1.105 0-2 0.895-2 2 0 0 0 0 0 0v3c0 1.105 0.895 2 2 2z"></path>
+<path fill="#f7f5cf" style="fill: var(--color52, #f7f5cf)" d="M1 16c0 1.105 0.895 2 2 2h3c0 0 0 0 0 0 1.105 0 2-0.895 2-2 0 0 0 0 0 0s0 0 0 0c0-1.105-0.895-2-2-2 0 0 0 0 0 0h-3c-1.105 0-2 0.895-2 2z"></path>
+<path fill="#f7f5cf" style="fill: var(--color52, #f7f5cf)" d="M26.607 5.393c-0.362-0.362-0.862-0.586-1.414-0.586s-1.052 0.224-1.414 0.586l-2.121 2.121c-0.362 0.362-0.586 0.862-0.586 1.414s0.224 1.052 0.586 1.414c0.362 0.362 0.862 0.586 1.414 0.586s1.052-0.224 1.414-0.586l2.121-2.121c0.362-0.362 0.586-0.862 0.586-1.414s-0.224-1.052-0.586-1.414z"></path>
+<path fill="#f7f5cf" style="fill: var(--color52, #f7f5cf)" d="M26.607 26.607c0.362-0.362 0.586-0.862 0.586-1.414s-0.224-1.052-0.586-1.414l-2.121-2.121c-0.362-0.362-0.862-0.586-1.414-0.586s-1.052 0.224-1.414 0.586c-0.362 0.362-0.586 0.862-0.586 1.414s0.224 1.052 0.586 1.414l2.121 2.121c0.362 0.362 0.862 0.586 1.414 0.586s1.052-0.224 1.414-0.586z"></path>
+<path fill="#f7f5cf" style="fill: var(--color52, #f7f5cf)" d="M5.393 26.607c0.362 0.362 0.862 0.586 1.414 0.586s1.052-0.224 1.414-0.586l2.121-2.121c0.362-0.362 0.586-0.862 0.586-1.414s-0.224-1.052-0.586-1.414c-0.362-0.362-0.862-0.586-1.414-0.586s-1.052 0.224-1.414 0.586l-2.121 2.121c-0.362 0.362-0.586 0.862-0.586 1.414s0.224 1.052 0.586 1.414z"></path>
+<path fill="#f7f5cf" style="fill: var(--color52, #f7f5cf)" d="M5.393 5.393c-0.362 0.362-0.586 0.862-0.586 1.414s0.224 1.052 0.586 1.414l2.121 2.121c0.362 0.362 0.862 0.586 1.414 0.586s1.052-0.224 1.414-0.586c0.362-0.362 0.586-0.862 0.586-1.414s-0.224-1.052-0.586-1.414l-2.121-2.121c-0.362-0.362-0.862-0.586-1.414-0.586s-1.052 0.224-1.414 0.586z"></path>
+</symbol>
+<symbol id="icon-icon_gizmo_light" viewBox="0 0 32 32">
+<title>icon_gizmo_light</title>
+<path fill="#f7f5cf" style="fill: var(--color52, #f7f5cf)" d="M16 1.5c-5.523 0-10 4.477-10 10s4.477 10 10 10c5.523 0 10-4.477 10-10s-4.477-10-10-10zM16 4.5c3.866 0 7 3.134 7 7s-3.134 7-7 7c-3.866 0-7-3.134-7-7s3.134-7 7-7z"></path>
+<path fill="#f7f5cf" style="fill: var(--color52, #f7f5cf)" d="M12 19.5v5c0 1.105 0.895 2 2 2h4c1.105 0 2-0.895 2-2v-5h-8z"></path>
+<path fill="#f7f5cf" style="fill: var(--color52, #f7f5cf)" d="M14 28.5h4v2h-4v-2z"></path>
+</symbol>
+<symbol id="icon-icon_gizmo_spatial_stream_player" viewBox="0 0 32 32">
+<title>icon_gizmo_spatial_stream_player</title>
+<path fill="#f7f5cf" style="fill: var(--color52, #f7f5cf)" d="M24.941 2.499c-0.176 0.005-0.344 0.031-0.504 0.078l-13.986 3.997c-0.845 0.247-1.451 1.014-1.451 1.923 0 0 0 0 0 0.001v12.030c-0.15-0.018-0.323-0.029-0.499-0.029-2.486 0-4.501 2.015-4.501 4.5 0 0 0 0 0 0s0 0 0 0c0 2.485 2.015 4.5 4.5 4.5 2.308-0.002 4.209-1.74 4.467-3.979l0.033-0.021v-15.491l10-2.858v9.379c-0.149-0.019-0.323-0.030-0.498-0.031-2.487 0-4.502 2.015-4.502 4.5 0 0 0 0 0 0 0 2.485 2.015 4.5 4.5 4.5 2.308-0.002 4.209-1.74 4.467-3.979l0.033-0.021v-17.001c-0.001-1.104-0.896-1.999-2-1.999-0.021 0-0.041 0-0.061 0.001z"></path>
+</symbol>
+<symbol id="icon-icon_godot" viewBox="0 0 32 32">
+<title>icon_godot</title>
+<path fill="#fff" style="fill: var(--color28, #fff)" d="M1.103 22.511l1.59-2.912 2.801-6.7 9.992-0.533 10.396 0.554 5.103 9.989-0.924 2.617-13.864 2.087-13.553-1.576z"></path>
+<path fill="#478cbf" style="fill: var(--color53, #478cbf)" d="M29.904 22.095v2.002c0 0.198-0.12 0.373-0.297 0.433l-2.976 1.019c-0.131 0.046-0.273 0.021-0.383-0.065-0.111-0.085-0.177-0.222-0.177-0.366v-2.187l-2.787 0.563v2.225c0 0.227-0.159 0.419-0.371 0.45l-4.028 0.585c-0.019 0.002-0.039 0.004-0.058 0.004-0.102 0-0.203-0.040-0.282-0.112-0.093-0.087-0.147-0.211-0.147-0.343v-2.356l-2.384 0.009-2.079-0.009v2.356c0 0.132-0.054 0.256-0.147 0.343-0.079 0.072-0.179 0.112-0.281 0.112-0.020 0-0.039-0.003-0.059-0.004l-4.028-0.585c-0.212-0.031-0.371-0.222-0.371-0.45v-2.225l-2.787-0.563v2.187c0 0.144-0.066 0.281-0.176 0.366-0.111 0.086-0.253 0.111-0.384 0.065l-2.977-1.019c-0.177-0.060-0.296-0.235-0.296-0.433v-2.002l-1.838-0.655c-0.091 0.412-0.141 0.834-0.141 1.26 0 5.232 6.951 9.271 15.542 9.3h0.022c8.591-0.029 15.542-4.068 15.542-9.3 0-0.389-0.042-0.773-0.118-1.151l-1.531 0.546z"></path>
+<path fill="#478cbf" style="fill: var(--color53, #478cbf)" d="M1.955 12.817v8.151l1.036 0.37c0.174 0.062 0.292 0.235 0.292 0.43v1.999l2.12 0.725v-2.11c0-0.137 0.057-0.264 0.155-0.35 0.099-0.087 0.227-0.122 0.354-0.098l3.644 0.738c0.202 0.040 0.349 0.228 0.349 0.445v2.203l3.171 0.459v-2.29c0-0.122 0.046-0.237 0.126-0.323 0.080-0.084 0.189-0.132 0.303-0.132h0.001l2.659 0.011 2.658-0.011c0.117 0 0.224 0.047 0.304 0.132 0.081 0.085 0.126 0.2 0.126 0.323v2.29l3.171-0.459v-2.203c0-0.218 0.146-0.405 0.348-0.445l3.645-0.738c0.125-0.025 0.255 0.010 0.354 0.098 0.098 0.086 0.156 0.213 0.156 0.35v2.11l2.12-0.725v-1.999c0-0.196 0.117-0.368 0.292-0.43l0.706-0.252v-8.269h0.019c0.688-0.932 1.325-1.913 1.936-2.96-0.811-1.464-1.805-2.773-2.867-3.985-0.985 0.526-1.942 1.122-2.846 1.755-0.452-0.476-0.962-0.867-1.462-1.274-0.492-0.419-1.046-0.725-1.572-1.083 0.157-1.236 0.234-2.452 0.265-3.722-1.356-0.723-2.802-1.203-4.264-1.548-0.584 1.040-1.118 2.167-1.583 3.269-0.552-0.098-1.106-0.134-1.661-0.141v-0.001c-0.004 0-0.007 0.001-0.011 0.001s-0.007-0.001-0.011-0.001v0.001c-0.556 0.007-1.109 0.043-1.661 0.141-0.465-1.102-0.998-2.229-1.583-3.269-1.462 0.344-2.908 0.824-4.263 1.548 0.031 1.269 0.108 2.486 0.265 3.722-0.526 0.358-1.080 0.664-1.572 1.083-0.5 0.408-1.010 0.798-1.462 1.274-0.904-0.634-1.861-1.23-2.846-1.755-1.062 1.212-2.056 2.521-2.867 3.985 0.611 1.047 1.248 2.029 1.936 2.96h0.019z"></path>
+<path fill="#fff" style="fill: var(--color28, #fff)" d="M11.956 16.729c0 1.834-1.402 3.32-3.131 3.32-1.728 0-3.13-1.486-3.13-3.32 0-1.833 1.402-3.318 3.13-3.318 1.73 0 3.131 1.485 3.131 3.318z"></path>
+<path fill="#414042" style="fill: var(--color54, #414042)" d="M11.203 16.925c0 1.217-0.93 2.203-2.078 2.203s-2.078-0.986-2.078-2.203 0.931-2.204 2.078-2.204c1.149 0 2.078 0.987 2.078 2.204z"></path>
+<path fill="#fff" style="fill: var(--color28, #fff)" d="M16.19 20.351c-0.557 0-1.008-0.435-1.008-0.971v-3.057c0-0.535 0.451-0.971 1.008-0.971s1.009 0.436 1.009 0.971v3.057c0 0.536-0.452 0.971-1.009 0.971z"></path>
+<path fill="#fff" style="fill: var(--color28, #fff)" d="M20.424 16.729c0 1.834 1.402 3.32 3.131 3.32s3.13-1.486 3.13-3.32c0-1.833-1.402-3.318-3.13-3.318s-3.131 1.485-3.131 3.318z"></path>
+<path fill="#414042" style="fill: var(--color54, #414042)" d="M21.178 16.925c0 1.217 0.93 2.203 2.077 2.203 1.149 0 2.078-0.986 2.078-2.203s-0.93-2.204-2.078-2.204c-1.147 0-2.077 0.987-2.077 2.204z"></path>
+<path fill="#000" style="fill: var(--color30, #000)" d="M8 10c-3.314 0-6 2.686-6 6s2.686 6 6 6c3.314 0 6-2.686 6-6s-2.686-6-6-6zM8 12c2.209 0 4 1.791 4 4s-1.791 4-4 4c-2.209-0-4-1.791-4-4s1.791-4 4-4z"></path>
+<path fill="#000" style="fill: var(--color30, #000)" d="M24 10c-3.314 0-6 2.686-6 6s2.686 6 6 6c3.314 0 6-2.686 6-6s-2.686-6-6-6zM24 12c2.209 0 4 1.791 4 4s-1.791 4-4 4c-2.209-0-4-1.791-4-4s1.791-4 4-4z"></path>
+<path fill="#000" style="fill: var(--color30, #000)" d="M12 14h8v2h-8v-2z"></path>
+</symbol>
+<symbol id="icon-icon_graph_cube_uniform" viewBox="0 0 32 32">
+<title>icon_graph_cube_uniform</title>
+<path fill="#eac968" style="fill: var(--color55, #eac968)" d="M4.571 0c-2.525 0-4.571 2.047-4.571 4.571v22.857c0 2.525 2.047 4.571 4.571 4.571h22.857c2.525 0 4.571-2.047 4.571-4.571v-22.857c0-2.525-2.047-4.571-4.571-4.571h-22.857zM15.938 4.571c0.020-0.001 0.044-0.001 0.067-0.001 0.265 0 0.515 0.063 0.737 0.175l9.785 4.893c0.539 0.274 0.902 0.825 0.902 1.46 0 0.001 0 0.003 0 0.004v9.794c-0 0.635-0.363 1.186-0.893 1.456l-9.804 4.902c-0.213 0.109-0.465 0.173-0.732 0.173s-0.519-0.064-0.741-0.178l-9.785-4.893c-0.539-0.274-0.902-0.825-0.902-1.46v-9.795c0-0.001 0-0.003 0-0.004 0-0.635 0.363-1.186 0.893-1.456l9.804-4.902c0.195-0.099 0.424-0.161 0.667-0.17zM16 8.031l-6.147 3.071 6.147 3.071 6.147-3.071-6.147-3.071zM7.835 13.741v6.147l6.531 3.263v-6.143l-6.531-3.268zM24.165 13.741l-6.531 3.268v6.143l6.531-3.263v-6.147z"></path>
+</symbol>
+<symbol id="icon-icon_graph_edit" viewBox="0 0 32 32">
+<title>icon_graph_edit</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4 0.001 1.472 0.797 2.757 1.981 3.451l0.019 13.092c-1.202 0.703-1.997 1.987-2 3.457 0 2.21 1.791 4 4 4s4-1.791 4-4c-0.001-1.472-0.797-2.757-1.981-3.451l-0.019-11.721 9.586 9.586 2.828-2.828-9.586-9.586h11.715c0.703 1.202 1.987 1.997 3.457 2 2.21 0 4-1.791 4-4s-1.791-4-4-4c-1.472 0.001-2.757 0.797-3.451 1.981l-13.092 0.019c-0.703-1.202-1.987-1.997-3.457-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M16.707 26.464l-0.707 3.536 3.536-0.707 7.778-7.778-2.828-2.828zM25.899 17.272l2.828 2.828 1.414-1.414-2.828-2.829z"></path>
+</symbol>
+<symbol id="icon-icon_graph_node" viewBox="0 0 32 32">
+<title>icon_graph_node</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4 0.001 1.472 0.797 2.757 1.981 3.451l0.019 13.092c-1.202 0.703-1.997 1.987-2 3.457 0 2.21 1.791 4 4 4s4-1.791 4-4c-0.001-1.472-0.797-2.757-1.981-3.451l-0.019-11.721 8.172 8.172 2.828-2.828-8.172-8.172h11.715c0.703 1.202 1.987 1.997 3.457 2 2.21 0 4-1.791 4-4s-1.791-4-4-4c-1.472 0.001-2.757 0.797-3.451 1.981l-13.092 0.019c-0.703-1.202-1.987-1.997-3.457-2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M30 25c0 2.761-2.239 5-5 5s-5-2.239-5-5c0-2.761 2.239-5 5-5s5 2.239 5 5z"></path>
+</symbol>
+<symbol id="icon-icon_grid_container" viewBox="0 0 32 32">
+<title>icon_grid_container</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4zM6 6h20v20h-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M10 6h4v20h-4v-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M18 6h4v20h-4v-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 10h20v4h-20v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 18h20v4h-20v-4z"></path>
+</symbol>
+<symbol id="icon-icon_grid_map" viewBox="0 0 32 32">
+<title>icon_grid_map</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M2 2h8v8h-8v-8z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M22 2h8v8h-8v-8z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M12 2h8v8h-8v-8z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M2 12h8v8h-8v-8z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M22 12h8v8h-8v-8z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M12 12h8v8h-8v-8z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M2 22h8v8h-8v-8z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M22 22h8v8h-8v-8z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M12 22h8v8h-8v-8z"></path>
+</symbol>
+<symbol id="icon-icon_grid" viewBox="0 0 32 32">
+<title>icon_grid</title>
+<path fill="#a5b7f4" style="fill: var(--color20, #a5b7f4)" d="M10 6h4v20h-4v-20z"></path>
+<path fill="#a5b7f4" style="fill: var(--color20, #a5b7f4)" d="M18 6h4v20h-4v-20z"></path>
+<path fill="#a5b7f4" style="fill: var(--color20, #a5b7f4)" d="M26 10v4h-20v-4h20z"></path>
+<path fill="#a5b7f4" style="fill: var(--color20, #a5b7f4)" d="M26 18v4h-20v-4h20z"></path>
+<path fill="#a5b7f4" style="fill: var(--color20, #a5b7f4)" d="M30 2v4h-28v-4h28z"></path>
+<path fill="#a5b7f4" style="fill: var(--color20, #a5b7f4)" d="M30 26v4h-28v-4h28z"></path>
+<path fill="#a5b7f4" style="fill: var(--color20, #a5b7f4)" d="M30 30h-4v-28h4v28z"></path>
+<path fill="#a5b7f4" style="fill: var(--color20, #a5b7f4)" d="M6 30h-4v-28h4v28z"></path>
+</symbol>
+<symbol id="icon-icon_groove_joint_2d" viewBox="0 0 32 32">
+<title>icon_groove_joint_2d</title>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M30 2h-10v12h-10v4h10v12h10v-28zM16 2h-14v28h14v-8h-10v-12h10v-8z"></path>
+</symbol>
+<symbol id="icon-icon_h_box_container" viewBox="0 0 32 32">
+<title>icon_h_box_container</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4zM6 6h20v20h-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M10 6h4v20h-4v-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M18 6h4v20h-4v-20z"></path>
+</symbol>
+<symbol id="icon-icon_h_button_array" viewBox="0 0 32 32">
+<title>icon_h_button_array</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M4 10h12v12h-12v-12z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M20 10v12h8l-2-4 2-4-2-4h-6z"></path>
+<path fill="#98dc9f" style="fill: var(--color31, #98dc9f)" d="M4 20h12v2h-12v-2z"></path>
+<path fill="#98dc9f" style="fill: var(--color31, #98dc9f)" d="M20 20v2h8l-1-2h-7z"></path>
+</symbol>
+<symbol id="icon-icon_h_scroll_bar" viewBox="0 0 32 32">
+<title>icon_h_scroll_bar</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 6c-2.209 0-4 1.791-4 4v12c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-12c0-2.209-1.791-4-4-4zM6 10h20v12h-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M8 12h8v8h-8v-8z"></path>
+</symbol>
+<symbol id="icon-icon_h_separator" viewBox="0 0 32 32">
+<title>icon_h_separator</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M10 4h12v6h-12v-6z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M30 18v-4h-28v4h28z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M10 22h12v6h-12v-6z"></path>
+</symbol>
+<symbol id="icon-icon_h_slider" viewBox="0 0 32 32">
+<title>icon_h_slider</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M4 14v4h6.348c-0.219-0.595-0.346-1.282-0.348-1.999 0.003-0.719 0.132-1.406 0.365-2.042l-6.365 0.042zM21.652 14c0.219 0.595 0.346 1.283 0.348 1.999-0.003 0.719-0.132 1.406-0.365 2.042l6.365-0.042v-4h-6.348z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 16c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M30 16c0 1.105-0.895 2-2 2s-2-0.895-2-2c0-1.105 0.895-2 2-2s2 0.895 2 2z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M20 16c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+</symbol>
+<symbol id="icon-icon_h_split_container" viewBox="0 0 32 32">
+<title>icon_h_split_container</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4zM6 6h20v20h-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M14 6h4v20h-4v-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M18 12v8l4-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M14 12l-4 4 4 4z"></path>
+</symbol>
+<symbol id="icon-icon_image_sky_box" viewBox="0 0 32 32">
+<title>icon_image_sky_box</title>
+<path fill="#000" style="fill: var(--color30, #000)" d="M6 2h20c2.209 0 4 1.791 4 4v20c0 2.209-1.791 4-4 4h-20c-2.209 0-4-1.791-4-4v-20c0-2.209 1.791-4 4-4z"></path>
+<path fill="#fff" style="fill: var(--color28, #fff)" d="M12 8c-1.105 0-2 0.895-2 2s0.895 2 2 2c1.105 0 2-0.895 2-2s-0.895-2-2-2zM22 10c-2.209 0-4 1.791-4 4-1.105 0-2 0.895-2 2s0.895 2 2 2h8c1.105 0 2-0.895 2-2s-0.895-2-2-2c0-2.209-1.791-4-4-4zM6 18c-1.105 0-2 0.895-2 2s0.895 2 2 2h4c-1.105 0-2 0.895-2 2s0.895 2 2 2h6c1.105 0 2-0.895 2-2s-0.895-2-2-2h-4c1.105 0 2-0.895 2-2s-0.895-2-2-2h-6z"></path>
+</symbol>
+<symbol id="icon-icon_image_texture" viewBox="0 0 32 32">
+<title>icon_image_texture</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M4 2c-1.105 0-2 0.895-2 2v24c0 1.105 0.895 2 2 2h24c1.105 0 2-0.895 2-2v-24c0-1.105-0.895-2-2-2h-24zM6 6h20v16h-20v-16z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M12 14h4v2h-4v-2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M12 16h4v4h-4v-4z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M8 18h4v2h-4v-2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 16h4v4h-4v-4z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M20 16h4v4h-4v-4z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M16 12h6v4h-6v-4z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M18 10h2v2h-2v-2z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M10 16h2v2h-2v-2z"></path>
+</symbol>
+<symbol id="icon-icon_image" viewBox="0 0 32 32">
+<title>icon_image</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M4 2c-1.105 0-2 0.895-2 2v24c0 1.105 0.895 2 2 2h24c1.105 0 2-0.895 2-2v-24c0-1.105-0.895-2-2-2h-24zM6 6h20v16h-20v-16z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M18 10l-4.402 7.336-0.199-0.336-1.797-3-3.602 6h16l-6-10z"></path>
+</symbol>
+<symbol id="icon-icon_immediate_geometry" viewBox="0 0 32 32">
+<title>icon_immediate_geometry</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M5.842 20.067c-0.527 0.6-0.841 1.459-0.841 2.477 0 3.255-6.276-0.356-0.675 5.341 1.768 1.798 5.309 1.34 7.076-0.458s1.768-4.713 0-6.511c-2.2-2.238-4.4-2.169-5.561-0.849zM10.602 16.846l4.801 4.883 13.603-13.835c1.326-1.348 1.326-3.535 0-4.883s-3.475-1.348-4.801 0z"></path>
+</symbol>
+<symbol id="icon-icon_instance_options" viewBox="0 0 32 32">
+<title>icon_instance_options</title>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M2 14v12c0 2.209 1.791 4 4 4h24v-16h-28zM10 18h12l-6 8-6-8z"></path>
+<path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M1.423 8.042l0.577 3.958 4.488-0.655-1.636-3.804-3.429 0.5zM8.809 6.964l1.636 3.804 3.958-0.577-1.637-3.804-3.958 0.577zM16.725 5.809l1.637 3.804 3.958-0.577-1.637-3.804-3.958 0.577zM24.642 4.655l1.637 3.804 3.429-0.5-0.577-3.958-4.488 0.655z"></path>
+</symbol>
+<symbol id="icon-icon_interpolated_camera" viewBox="0 0 32 32">
+<title>icon_interpolated_camera</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M2 6h20v10h-20v-10z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M6 2h12v18h-12v-18z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M10 6c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M10 16c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M22 6c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M22 16c0 2.209-1.791 4-4 4s-4-1.791-4-4c0-2.209 1.791-4 4-4s4 1.791 4 4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M24 8v6l6 2v-10z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M12 22h2v8h-2v-8z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M14 22h2v2h-2v-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M14 26h2v2h-2v-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M16 24h2v2h-2v-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M6 22h2v8h-2v-8z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M20 24h2v4h-2v-4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M22 22h2v2h-2v-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M22 28h2v2h-2v-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M24 24h2v4h-2v-4z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M14 24c0-1.105 0.895-2 2-2s2 0.895 2 2h-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M14 26c0 1.105 0.895 2 2 2s2-0.895 2-2h-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M20 28c0 1.105 0.895 2 2 2s2-0.895 2-2h-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M22 28c0 1.105 0.895 2 2 2s2-0.895 2-2h-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M20 24c0-1.105 0.895-2 2-2s2 0.895 2 2h-2z"></path>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M22 24c0-1.105 0.895-2 2-2s2 0.895 2 2h-2z"></path>
+</symbol>
+<symbol id="icon-icon_item_list" viewBox="0 0 32 32">
+<title>icon_item_list</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4zM6 6h20v20h-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M8 8h4v4h-4v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M14 8h4v4h-4v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M20 8h4v4h-4v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M8 14h4v4h-4v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M14 14h4v4h-4v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M20 14h4v4h-4v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M8 20h4v4h-4v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M14 20h4v4h-4v-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M20 20h4v4h-4v-4z"></path>
+</symbol>
+<symbol id="icon-icon_kinematic_body_2d" viewBox="0 0 32 32">
+<title>icon_kinematic_body_2d</title>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M8 8v2h2v-2h-2zM10 10v2h-2v2h-2v2h-2v6h2v-4h2v4h2v-2h10v2h2v-4h2v4h2v-6h-2v-2h-2v-2h-2v-2h-2v2h-6v-2h-2zM20 10h2v-2h-2v2zM20 22h-4v2h4v-2zM10 22v2h4v-2h-4zM10 14h2v2h-2v-2zM18 14h2v2h-2v-2z"></path>
+</symbol>
+<symbol id="icon-icon_kinematic_body" viewBox="0 0 32 32">
+<title>icon_kinematic_body</title>
+<path fill="#fc9c9c" style="fill: var(--color1, #fc9c9c)" d="M8 8v2h2v-2h-2zM10 10v2h-2v2h-2v2h-2v6h2v-4h2v4h2v-2h10v2h2v-4h2v4h2v-6h-2v-2h-2v-2h-2v-2h-2v2h-6v-2h-2zM20 10h2v-2h-2v2zM20 22h-4v2h4v-2zM10 22v2h4v-2h-4zM10 14h2v2h-2v-2zM18 14h2v2h-2v-2z"></path>
+</symbol>
+<symbol id="icon-icon_label" viewBox="0 0 32 32">
+<title>icon_label</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M12 6c-0.552 0-1.052 0.224-1.414 0.586l-8 8c-0.362 0.362-0.586 0.862-0.586 1.414s0.224 1.052 0.586 1.414l8 8c0.362 0.362 0.862 0.586 1.414 0.586h16c1.105-0 2-0.895 2-2v-16c-0-1.105-0.895-2-2-2h-16zM10 14c1.105 0 2 0.895 2 2s-0.895 2-2 2c-1.105 0-2-0.895-2-2s0.895-2 2-2z"></path>
+</symbol>
+<symbol id="icon-icon_light_2d" viewBox="0 0 32 32">
+<title>icon_light_2d</title>
+<path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M16 2c-5.523 0-10 4.477-10 10 0.005 4.071 2.442 7.571 5.936 9.127l0.064 4.873h8v-4.84c3.56-1.582 5.998-5.086 6-9.16 0-5.523-4.477-10-10-10zM16 6c3.314 0 6 2.686 6 6s-2.686 6-6 6c-3.314 0-6-2.686-6-6s2.686-6 6-6zM14 28v2h4v-2h-4z"></path>
+</symbol>
+<symbol id="icon-icon_light_occluder_2d" viewBox="0 0 32 32">
+<title>icon_light_occluder_2d</title>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M2 6h28v4h-28v-4z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M2 12h28v4h-28v-4z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M2 18h28v4h-28v-4z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M2 24h28v4h-28v-4z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M4 2h2v28h-2v-28z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M26 2h2v28h-2v-28z"></path>
+<path fill="#a5b7f6" style="fill: var(--color5, #a5b7f6)" d="M2 2h28v2h-28v-2z"></path>
+</symbol>
+<symbol id="icon-icon_line_edit" viewBox="0 0 32 32">
+<title>icon_line_edit</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 6c-2.209 0-4 1.791-4 4v12c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-12c0-2.209-1.791-4-4-4zM6 10h20v12h-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M8 12h2v8h-2v-8z"></path>
+</symbol>
+<symbol id="icon-icon_link_button" viewBox="0 0 32 32">
+<title>icon_link_button</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M12 14c0 0-0 0-0 0-1.105 0-2 0.895-2 2 0 0 0 0 0 0s0 0 0 0c0 1.105 0.895 2 2 2 0 0 0 0 0 0h8c0 0 0 0 0 0 1.105 0 2-0.895 2-2 0 0 0-0 0-0s0-0 0-0c0-1.105-0.895-2-2-2 0 0-0 0-0 0h-8z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M12 6c-3.682 0-6.899 1.99-8.635 4.953-0.868 1.481-1.365 3.206-1.365 5.047s0.497 3.566 1.365 5.047c1.736 2.963 4.953 4.953 8.635 4.953h2v-4h-2c-3.314 0-6-2.686-6-6s2.686-6 6-6h2v-4h-2zM18 6v4h2c3.314 0 6 2.686 6 6s-2.686 6-6 6h-2v4h2c3.682-0 6.899-1.99 8.635-4.953 0.868-1.481 1.365-3.206 1.365-5.047s-0.497-3.566-1.365-5.047c-1.736-2.963-4.953-4.953-8.635-4.953h-2z"></path>
+</symbol>
+<symbol id="icon-icon_margin_container" viewBox="0 0 32 32">
+<title>icon_margin_container</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4zM6 6h20v20h-20z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M8 12v8l4-4z"></path>
+</symbol>
+<symbol id="icon-icon_matrix" viewBox="0 0 32 32">
+<title>icon_matrix</title>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M2.286 2.286h2.286v27.429h-2.286v-27.429z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M2.286 2.286h6.857v2.286h-6.857v-2.286z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M2.286 27.429h6.857v2.286h-6.857v-2.286z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M22.857 27.429h6.857v2.286h-6.857v-2.286z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M22.857 2.286h6.857v2.286h-6.857v-2.286z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M27.429 2.286h2.286v27.429h-2.286v-27.429z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M6.857 6.857h4.571v4.571h-4.571v-4.571z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M13.714 6.857h4.571v4.571h-4.571v-4.571z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M20.571 6.857h4.571v4.571h-4.571v-4.571z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M6.857 13.714h4.571v4.571h-4.571v-4.571z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M13.714 13.714h4.571v4.571h-4.571v-4.571z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M20.571 13.714h4.571v4.571h-4.571v-4.571z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M6.857 20.571h4.571v4.571h-4.571v-4.571z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M13.714 20.571h4.571v4.571h-4.571v-4.571z"></path>
+<path fill="#ea686c" style="fill: var(--color56, #ea686c)" d="M20.571 20.571h4.571v4.571h-4.571v-4.571z"></path>
+</symbol>
+<symbol id="icon-icon_menu_button" viewBox="0 0 32 32">
+<title>icon_menu_button</title>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2v8h28v-8h-28zM12 4h8l-4 4-4-4z"></path>
+<path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M4 12c-1.105 0-2 0.895-2 2v14c0 1.105 0.895 2 2 2h24c1.105 0 2-0.895 2-2v-14c0-1.105-0.895-2-2-2h-24zM6 16h20v4h-20v-4zM6 22h20v4h-20v-4z"></path>
+</symbol>
+<symbol id="icon-icon_mesh_library" viewBox="0 0 32 32">
+<title>icon_mesh_library</title>
+<path fill="#ffd684" style="fill: var(--color2, #ffd684)" d="M6 2c-2.209 0-4 1.791-4 4 0.001 1.472 0.797 2.757 1.981 3.451l0.019 13.092c-1.202 0.703-1.997 1.987-2 3.457 0 2.21 1.791 4 4 4 1.472-0.001 2.757-0.797 3.451-1.981l4.549-0.019v-4h-4.543c-0.356-0.61-0.849-1.104-1.438-1.451l-0.019-11.721 6 6v-0.828c0.001-1.311 0.632-2.474 1.607-3.203l-4.779-4.797h11.715c0.356 0.61 0.849 1.104 1.438 1.451l0.019 2.549c0.736 0.003 1.424 0.204 2.015 0.553 0.556-0.35 1.247-0.552 1.985-0.553l0-2.543c1.202-0.703 1.997-1.987 2-3.457 0-2.21-1.791-4-4-4-1.472 0.001-2.757 0.797-3.451 1.981l-13.092 0.019c-0.703-1.202-1.987-1.997-3.457-2zM18 16v14h10c1.105 0 2-0.895 2-2v-10c0-1.105-0.895-2-2-2v8l-2-2-2 2v-8h-6z"></path>
+</symbol>
+<symbol id="icon-icon_mesh" viewBox="0 0 32 32">
+<title>icon_mesh</title>
+<path fill="#ffd684" style="fill: var(--color2, #ffd684)" d="M6 2c-2.209 0-4 1.791-4 4 0.001 1.472 0.797 2.757 1.981 3.451l0.019 13.092c-1.202 0.703-1.997 1.987-2 3.457 0 2.21 1.791 4 4 4 1.472-0.001 2.757-0.797 3.451-1.981l13.092-0.019c0.703 1.202 1.987 1.997 3.457 2 2.21 0 4-1.791 4-4 0-0 0-0 0-0.001 0-1.498-0.823-2.804-2.042-3.489l0.042-0.010v-13.043c1.202-0.703 1.997-1.987 2-3.457 0-2.21-1.791-4-4-4-1.472 0.001-2.757 0.797-3.451 1.981l-13.092 0.019c-0.703-1.202-1.987-1.997-3.457-2zM10.828 8h11.715c0.356 0.61 0.849 1.104 1.438 1.451l0.019 11.721-13.172-13.172zM8 10.828l13.172 13.172h-11.715c-0.356-0.61-0.849-1.104-1.438-1.451l-0.019-11.721z"></path>
+</symbol>
+</defs>
+</svg>
