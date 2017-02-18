@@ -22,8 +22,9 @@
 &lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
 
 &lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
+&lt;/p&gt;
 
-You can watch a video version of this lesson here:
+&lt;p&gt;You can watch a video version of this lesson here:
 &lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/hi2yiY-zNxQ&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;scripting&#34;&gt;Scripting&lt;/h2&gt;
