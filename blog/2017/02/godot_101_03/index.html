@@ -1,0 +1,306 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.18.1" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 101 - Part 3: Scripting (continued) &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">20</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">3</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">21</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2017 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 101 - Part 3: Scripting (continued)</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Mon, Feb 13, 2017</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			</h6></span>
+
+			      <p><img src="/blog/img/godot_logo.png" width="450"></p>
+
+<p>This is part 3 of &ldquo;Godot 101&rdquo;, where we&rsquo;ll finish scripting our bouncing animated sprite.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2017/02/godot_101_01/">Part 1</a>.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>Godot 101 is an introduction to the Godot game engine and how it works. If you&rsquo;ve never used a game engine before, or if you&rsquo;re just new to Godot, this is the place to start.  If you&rsquo;re new here, a quick note about this website: we&rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&rsquo;re an adult you&rsquo;re welcome here, too.  We don&rsquo;t believe in dumbing-down the material for kids, and game development is <em>hard</em> - so it will probably be challenging no matter what your age.
+</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wkDiwOAqfuI" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="scripting-continued">Scripting (continued)</h2>
+
+<p>In the last lesson, we created a script to move our <svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"</svg> <code>Sprite</code>, but it goes off the edge of the screen, and we want to change that.  We&rsquo;re going to do it in a simple way first, then modify it to be more robust.</p>
+
+<p>First, we need to know how big our screen is.  Screen size is set in the Project Settings (click Scene -&gt; Project Settings), but we need our script to use those values:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Sprite</span>
+
+<span class="n">var</span> <span class="n">screensize</span>
+<span class="n">var</span> <span class="n">pos</span>
+<span class="n">var</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+	<span class="n">screensize</span> <span class="o">=</span> <span class="n">get_viewport_rect</span><span class="p">()</span><span class="o">.</span><span class="n">size</span>
+	<span class="n">pos</span> <span class="o">=</span> <span class="n">screensize</span> <span class="o">/</span> <span class="mi">2</span>
+	<span class="n">set_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+	<span class="n">set_rot</span><span class="p">(</span><span class="n">get_rot</span><span class="p">()</span> <span class="o">+</span> <span class="n">PI</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+	<span class="n">pos</span> <span class="o">+=</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span>
+	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">screensize</span><span class="o">.</span><span class="n">width</span> <span class="ow">or</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">screensize</span><span class="o">.</span><span class="n">height</span> <span class="ow">or</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+	<span class="n">set_pos</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+ 
+</code></pre></div>
+
+
+<p><code>get_viewport_rect()</code> gives us the screensize (you can look it up in the help if you want to see the details - or click <a target="_blank" href="http://docs.godotengine.org/en/stable/classes/class_canvasitem.html?highlight=get_viewport_rect">here</a> to see the docs).</p>
+
+<p>Then we use a new variable, <code>pos</code>, to keep track of our position. If its <code>x</code> or <code>y</code> goes out of bounds, we reverse the velocity in that axis.  Now we stay on the screen, but we still have a problem:</p>
+
+<p><a href="/blog/img/godot101_03_01.gif"><img src="/blog/img/godot101_03_01.gif" width="550"></a><sub>Click to enlarge</sub></p>
+
+<p>The sprite doesn&rsquo;t bounce until it goes halfway off the screen.  That&rsquo;s because the <code>Pos</code> property is the center of the sprite (there&rsquo;s a checkbox marked <code>Centered</code> that will change it to the upper left).  That means we need to calculate half the width &amp; height of the sprite to have it bounce properly.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Sprite</span>
+
+<span class="n">var</span> <span class="n">screensize</span>
+<span class="n">var</span> <span class="n">extents</span>
+<span class="n">var</span> <span class="n">pos</span>
+<span class="n">var</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+	<span class="n">screensize</span> <span class="o">=</span> <span class="n">get_viewport_rect</span><span class="p">()</span><span class="o">.</span><span class="n">size</span>
+	<span class="n">extents</span> <span class="o">=</span> <span class="n">get_texture</span><span class="p">()</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span>
+	<span class="n">pos</span> <span class="o">=</span> <span class="n">screensize</span> <span class="o">/</span> <span class="mi">2</span>
+	<span class="n">set_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+	<span class="n">set_rot</span><span class="p">(</span><span class="n">get_rot</span><span class="p">()</span> <span class="o">+</span> <span class="n">PI</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+	<span class="n">pos</span> <span class="o">+=</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span>
+	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">screensize</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span><span class="p">:</span>
+		<span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">screensize</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span>
+		<span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span><span class="p">:</span>
+		<span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span>
+		<span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">screensize</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span><span class="p">:</span>
+		<span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">screensize</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span>
+		<span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span><span class="p">:</span>
+		<span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span>
+		<span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+	<span class="n">set_pos</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>We&rsquo;re handling this with a new variable called <code>extents</code> which we fill using <code>get_texture()</code> - we also divide it by 2 because we only care about half of the width/height.</p>
+
+<p>Next, we have to update our bouncing tests to add/subtract the extents to the wall positions, and now we&rsquo;re bouncing correctly.</p>
+
+<h2 id="randomizing">Randomizing</h2>
+
+<p>As a last step, we&rsquo;re going to randomize the velocity and spin using the <code>rand_range()</code> function:</p>
+
+<p><div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Sprite</span>
+
+<span class="n">var</span> <span class="n">screensize</span>
+<span class="n">var</span> <span class="n">extents</span>
+<span class="n">var</span> <span class="n">pos</span>
+<span class="n">var</span> <span class="n">vel</span>
+<span class="hll"><span class="n">var</span> <span class="n">spin</span>
+</span>
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+<span class="hll">	<span class="n">randomize</span><span class="p">()</span>
+</span>	<span class="n">screensize</span> <span class="o">=</span> <span class="n">get_viewport_rect</span><span class="p">()</span><span class="o">.</span><span class="n">size</span>
+	<span class="n">extents</span> <span class="o">=</span> <span class="n">get_texture</span><span class="p">()</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span>
+	<span class="n">pos</span> <span class="o">=</span> <span class="n">screensize</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="hll">	<span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">rand_range</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">rand_range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">PI</span><span class="p">))</span>
+</span><span class="hll">	<span class="n">spin</span> <span class="o">=</span> <span class="n">rand_range</span><span class="p">(</span><span class="o">-</span><span class="n">PI</span><span class="p">,</span> <span class="n">PI</span><span class="p">)</span>
+</span>	<span class="n">set_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+<span class="hll">	<span class="n">set_rot</span><span class="p">(</span><span class="n">get_rot</span><span class="p">()</span> <span class="o">+</span> <span class="n">spin</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+</span>	<span class="n">pos</span> <span class="o">+=</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span>
+	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">screensize</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span><span class="p">:</span>
+		<span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">screensize</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span>
+		<span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span><span class="p">:</span>
+		<span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span>
+		<span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">screensize</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span><span class="p">:</span>
+		<span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">screensize</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span>
+		<span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span><span class="p">:</span>
+		<span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span>
+		<span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+	<span class="n">set_pos</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+</code></pre></div>
+</p>
+
+<p>One important thing to keep in mind when using randomized commands:  by default, Godot will produce the same sequence of &ldquo;random&rdquo; numbers every time you run the game unless you first use <code>randomize()</code>.</p>
+
+<h2 id="wrapping-up">Wrapping up</h2>
+
+<p>That completes our bouncing sprite.  In the next lesson, we&rsquo;ll explore how to use this Sprite scene to add to a larger scene and allow us to spawn multiple sprites.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a"><a href="https://github.com/kidscancode/godot_tutorials/tree/master/Godot101">Full code for this part</a></h3>
+
+<h3 id="a-href-godot-101-part-4-a"><a href="">Godot 101 - Part 4</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://godotengine.org">Download Godot Engine</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Us on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>
