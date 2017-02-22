@@ -10,6 +10,92 @@
     <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     <item>
+      <title>Godot 101 - Part 4: Instancing Scenes</title>
+      <link>/blog/2017/02/godot_101_04/</link>
+      <pubDate>Wed, 15 Feb 2017 05:22:12 -0700</pubDate>
+      
+      <guid>/blog/2017/02/godot_101_04/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;This is part 4 of &amp;ldquo;Godot 101&amp;rdquo;, taking our bouncing sprite and showing how to quickly create multiple instances of it.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2017/02/godot_101_01/&#34;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
+
+&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
+&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/0WOqJy3lot4&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;instancing&#34;&gt;Instancing&lt;/h2&gt;
+
+&lt;p&gt;Now that we have a nice animated sprite bouncing around the screen, the natural next question is &amp;ldquo;how do I make a bunch of them?&amp;rdquo;  If we want, say, 10 sprites bouncing around, we don&amp;rsquo;t want to have to make 10 separate scenes for them.&lt;/p&gt;
+
+&lt;p&gt;Your first thought might be to duplicate the sprite node by right-clicking on it and choosing &amp;ldquo;Duplicate&amp;rdquo;:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_04_01.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_04_01.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;However, this won&amp;rsquo;t work - you get an error message:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot101_04_02.png&#34; width=&#34;300&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Each scene tree has a root node - the first node you create - and can only have &lt;em&gt;one&lt;/em&gt; root node.  We could make another sprite as a &lt;em&gt;child&lt;/em&gt; of the first one, but that wouldn&amp;rsquo;t give use what we need - a child node is attached to its parent, inheriting its position, etc.  We need to create multiple independent versions of the original sprite.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ll start by making a new scene (click on &lt;code&gt;Scene&lt;/code&gt; -&amp;gt; &amp;lsquo;New Scene&amp;rsquo;) and add a node to it.  We&amp;rsquo;re going to use the simplest node available: &lt;svg width=&#34;24&#34; height=&#34;24&#34; class=&#34;icon-icon_node&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_node&#34;&lt;/svg&gt;&lt;code&gt;Node&lt;/code&gt;.  This is a generic node, with no properties of its own.  This will be our main scene&amp;rsquo;s root node, so let&amp;rsquo;s rename it &amp;ldquo;main&amp;rdquo; by clicking on its name and then save it as &amp;ldquo;main.tscn&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Now click the &amp;ldquo;Play&amp;rdquo; button at the top and you&amp;rsquo;ll see this message:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot101_04_03.png&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;We need to define what scene will be the one that is launched when the project starts.  Click &amp;ldquo;Select&amp;rdquo; and choose our new main.tscn. Now let&amp;rsquo;s add a script to the main node.  This will be our code to instance a sprite:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Node&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;res://Sprite.tscn&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;add_child&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;That first line uses the &lt;code&gt;preload&lt;/code&gt; function to load the sprite scene into memory at compile time, so that it&amp;rsquo;s ready to use.  The &lt;code&gt;onready&lt;/code&gt; statement ensures that the object is loaded in time for the &lt;code&gt;_ready()&lt;/code&gt; call.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;A note on resource paths&lt;/em&gt;:&lt;/p&gt;
+
+&lt;p&gt;Notice how we indicated where to load the sprite scene from: &amp;ldquo;res://Sprite.tscn&amp;rdquo;  All resources in your project will be under a &amp;ldquo;res://&amp;rdquo; path (&amp;ldquo;res&amp;rdquo; is short for resource).  If we were building a complex project with a large number of files, we might choose to put all our scenes into their own folder to help keep things organized.  In this case, the resource path might look like this: &amp;ldquo;res://scenes/Sprite.tscn&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;Now hit &amp;ldquo;Play&amp;rdquo;, and you will see a sprite bouncing around the screen.  To see what&amp;rsquo;s going on, click the debugger and you can inspect the live scene tree:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_04_04.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_04_04.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;The Remote Inspector tab is very useful to see what&amp;rsquo;s going on in the game - what scene is active, what nodes are active, and what properties they all have.  For example, observe what changes is we add a loop to spawn more sprites:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;add_child&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h2&gt;
+
+&lt;p&gt;It&amp;rsquo;s that easy to create instances of scenes you&amp;rsquo;ve created.  In the future, this is how we&amp;rsquo;ll do things like spawning mobs or bullets - just by instancing them as needed and adding them to the current scene tree.  In the next lesson we&amp;rsquo;ll start looking at some other nodes and how they&amp;rsquo;re used.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;a-href-godot-101-part-5-coming-soon-a&#34;&gt;&lt;a href=&#34;&#34;&gt;Godot 101 - Part 5 (coming soon)&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
       <title>Godot 101 - Part 3: Scripting (continued)</title>
       <link>/blog/2017/02/godot_101_03/</link>
       <pubDate>Mon, 13 Feb 2017 05:22:12 -0700</pubDate>
@@ -148,7 +234,7 @@
 
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
-&lt;h3 id=&#34;a-href-godot-101-part-4-coming-soon-a&#34;&gt;&lt;a href=&#34;&#34;&gt;Godot 101 - Part 4 (coming soon)&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-blog-2017-02-godot-101-04-godot-101-part-4-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/02/godot_101_04/&#34;&gt;Godot 101 - Part 4&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
@@ -1873,171 +1959,6 @@
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-4-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-4.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-08-pygame-shmup-part-5-part-5-improved-collisions-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/08/pygame_shmup_part_5/&#34;&gt;Part 5: Improved Collisions &lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/python-install.html&#34;&gt;Installing Python&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/blog/2015/09/pygame_install/&#34;&gt;Installing Pygame&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uve1tjVIQ6c&amp;ab_channel=KidsCanCode&#34;&gt;Setting up Atom for Python&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Pygame Shmup Part 3: Collisions (and shooting!)</title>
-      <link>/blog/2016/08/pygame_shmup_part_3/</link>
-      <pubDate>Fri, 19 Aug 2016 16:04:12 PDT</pubDate>
-      
-      <guid>/blog/2016/08/pygame_shmup_part_3/</guid>
-      <description>&lt;p&gt;This is part 3 of our &amp;ldquo;Shmup&amp;rdquo; project! In this lesson we&amp;rsquo;ll add collisions between the player and the enemies, as well as adding bullets for the player to shoot.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
-
-&lt;p&gt;In this series of lessons we&amp;rsquo;ll build a complete game using Python and Pygame.  It&amp;rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.
-&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/33g62PpFwsE&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;collisions&#34;&gt;Collisions&lt;/h1&gt;
-
-&lt;p&gt;Collisions are a fundamental part of game development.  &lt;em&gt;Collision detection&lt;/em&gt; means that you want to detect whether one object in the game world is touching another object.  &lt;em&gt;Collision response&lt;/em&gt; is deciding what you want to happen when the collision occurs - does Mario pick up the coin, does Link&amp;rsquo;s sword damage the enemy, etc.&lt;/p&gt;
-
-&lt;p&gt;In our game we currently have a number of enemy sprites flying down the screen towards our player, and we&amp;rsquo;d like to know when one of those sprites hits.  For this stage of our game, we&amp;rsquo;ll just say that an enemy hitting the player means the game is over.&lt;/p&gt;
-
-&lt;h2 id=&#34;bounding-boxes&#34;&gt;Bounding boxes&lt;/h2&gt;
-
-&lt;p&gt;Remember, each sprite in Pygame has a &lt;code&gt;rect&lt;/code&gt; attribute that defines its coordinates and its size.  A &lt;code&gt;Rect&lt;/code&gt; object in Pygame is in the format &lt;code&gt;[x, y, width, height]&lt;/code&gt;, where &lt;code&gt;x&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt; represent the upper left corner of the rectangle.  Another word for this rectangle is &lt;em&gt;bounding box&lt;/em&gt;, because it represents the bounds of the object.&lt;/p&gt;
-
-&lt;p&gt;This kind of collision detection is called &lt;strong&gt;AABB&lt;/strong&gt;, which stands for &amp;ldquo;Axis Aligned Bounding Box&amp;rdquo;, because the rectangles are aligned with the screen axes - they&amp;rsquo;re not tilted at an angle.  AABB collision is very popular because it&amp;rsquo;s &lt;em&gt;fast&lt;/em&gt; - the computer can compare the coordinates of rectangles very quickly, which is very helpful if you have a large number of objects to compare.&lt;/p&gt;
-
-&lt;p&gt;To detect a collision we need to look at the &lt;code&gt;rect&lt;/code&gt; of the player and compare it with the &lt;code&gt;rect&lt;/code&gt; of each of the mobs.  Now we could do this by looping through the mobs and for each one performing this comparison:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/aabb_example.png&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;In this picture, you can see that only rectangle #3 is colliding with the large black rectangle.  #1 is overlapping in the x axis, but not the y; #2 is overlapping in y, but not in x.  In order for two rectangles to be overlapping, their &lt;em&gt;bounds&lt;/em&gt; must overlap in &lt;em&gt;each&lt;/em&gt; axis.  Writing this in code:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mob&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;right&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;left&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;and&lt;/span&gt; \
-   &lt;span class=&#34;n&#34;&gt;mob&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;left&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;right&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;and&lt;/span&gt; \
-   &lt;span class=&#34;n&#34;&gt;mob&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bottom&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;top&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;and&lt;/span&gt; \
-   &lt;span class=&#34;n&#34;&gt;mob&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;top&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bottom&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-       &lt;span class=&#34;n&#34;&gt;collide&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Fortunately for us, Pygame has a built-in way of doing the above, by using the &lt;code&gt;spritecollide()&lt;/code&gt; function.&lt;/p&gt;
-
-&lt;h1 id=&#34;colliding-mobs-with-player&#34;&gt;Colliding mobs with player&lt;/h1&gt;
-
-&lt;p&gt;We&amp;rsquo;re going to add this command to the &amp;ldquo;update&amp;rdquo; section of our game loop:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;#Update&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;update&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-
-&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#check to see if a mob hit the player&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;spritecollide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;    &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The &lt;code&gt;spritecollide()&lt;/code&gt; function takes 3 arguments: the name of the sprite you want to check, the name of a &lt;em&gt;group&lt;/em&gt; you want to compare against, and a True/False parameter called &lt;code&gt;dokill&lt;/code&gt;.  The &lt;code&gt;dokill&lt;/code&gt; parameter lets you set whether the object should be deleted when it gets hit.  If, for example, we were trying to see if the player picked up a coin, we would want to set this to &lt;code&gt;True&lt;/code&gt; so the coin would disappear.&lt;/p&gt;
-
-&lt;p&gt;The result of the &lt;code&gt;spritecollide()&lt;/code&gt; command is a list of the sprites that were hit (remember, it&amp;rsquo;s possible the player collided with more than one mob at a time).  We&amp;rsquo;re assigning that list to the variable &lt;code&gt;hits&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;If the &lt;code&gt;hits&lt;/code&gt; list is not empty, the &lt;code&gt;if&lt;/code&gt; statement will be &lt;code&gt;True&lt;/code&gt;, and we set &lt;code&gt;running&lt;/code&gt; to &lt;code&gt;False&lt;/code&gt; so the game will end.&lt;/p&gt;
-
-&lt;h1 id=&#34;shooting-back&#34;&gt;Shooting back&lt;/h1&gt;
-
-&lt;h2 id=&#34;bullet-sprite&#34;&gt;Bullet sprite&lt;/h2&gt;
-
-&lt;p&gt;Now we&amp;rsquo;re ready to add a new sprite: the bullet.  This will be a sprite that is spawned when we shoot, appears at the top of the player sprite, and moves upwards at some fairly high speed.  Defining a sprite should be starting to look familiar to you by now, so here&amp;rsquo;s the complete &lt;code&gt;Bullet&lt;/code&gt; class:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Surface&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;YELLOW&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bottom&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;centerx&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speedy&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;
-
-    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;update&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speedy&lt;/span&gt;
-        &lt;span class=&#34;c1&#34;&gt;# kill if it moves off the top of the screen&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bottom&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-            &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;kill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;In the &lt;code&gt;__init__()&lt;/code&gt; method of the bullet sprite, we&amp;rsquo;re passing &lt;code&gt;x&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt; values, so that we can tell the sprite where to appear.  Since the player sprite can move, this will be set to where the player is at the time the player shoots.  We set &lt;code&gt;speedy&lt;/code&gt; to a negative value, so that it will be going upward.&lt;/p&gt;
-
-&lt;p&gt;Finally, we check to see if the bullet has gone off the top of the screen, and if so, we delete it.&lt;/p&gt;
-
-&lt;h2 id=&#34;keypress-event&#34;&gt;Keypress event&lt;/h2&gt;
-
-&lt;p&gt;To keep things simple at first, we&amp;rsquo;re going to make it so that each time the player presses the spacebar, a bullet will be fired.  We need to add that to the events checking:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;# check for closing window&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;QUIT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;
-&lt;span class=&#34;hll&#34;&gt;    &lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;KEYDOWN&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;key&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;K_SPACE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;            &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shoot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Our new code checks for a &lt;code&gt;KEYDOWN&lt;/code&gt; event, and if there is one, checks to see if it was the &lt;code&gt;K_SPACE&lt;/code&gt; key.  If it was, we&amp;rsquo;re going to run the player sprite&amp;rsquo;s &lt;code&gt;shoot()&lt;/code&gt; method.&lt;/p&gt;
-
-&lt;h2 id=&#34;spawning-the-bullet&#34;&gt;Spawning the bullet&lt;/h2&gt;
-
-&lt;p&gt;First we need to add a new group to hold all of the bullets:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bullets&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Group&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Now, we can add the following method to the &lt;code&gt;Player&lt;/code&gt; class:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;shoot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;bullet&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;centerx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;top&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;bullets&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;All the &lt;code&gt;shoot()&lt;/code&gt; method does is spawn a bullet, using the top center of the player as the spawn point.  Then we make sure to add the bullet to &lt;code&gt;all_sprites&lt;/code&gt; (so it will be drawn and updated) and to &lt;code&gt;bullets&lt;/code&gt;, which we&amp;rsquo;re going to use for the collisions.&lt;/p&gt;
-
-&lt;h4 id=&#34;bullet-collisions&#34;&gt;Bullet collisions&lt;/h4&gt;
-
-&lt;p&gt;Now we need to check whether a bullet hits a mob.  The difference here is we have multiple bullets (in the &lt;code&gt;bullets&lt;/code&gt; group) and multiple mobs (in the &lt;code&gt;mobs&lt;/code&gt; group), so we can&amp;rsquo;t use &lt;code&gt;spritecollide()&lt;/code&gt; like before because that only compares &lt;em&gt;one&lt;/em&gt; sprite against a group.  Instead, we&amp;rsquo;re going to use &lt;code&gt;groupcollide()&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# Update&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;update&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-
-&lt;span class=&#34;c1&#34;&gt;# check to see if a bullet hit a mob&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;groupcollide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bullets&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hit&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;m&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Mob&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The &lt;code&gt;groupcollide()&lt;/code&gt; function is similar to &lt;code&gt;spritecollide()&lt;/code&gt;, except that you name two groups to compare, and what you will get back is a list of mobs that were hit.  There are two &lt;code&gt;dokill&lt;/code&gt; options, one for each of the groups.&lt;/p&gt;
-
-&lt;p&gt;If we just delete the mobs, we&amp;rsquo;ll have a problem: running out of mobs!  So what we do is loop through &lt;code&gt;hits&lt;/code&gt; and for each mob that we destroy, another new one will be spawned.&lt;/p&gt;
-
-&lt;p&gt;Now it&amp;rsquo;s actually starting to feel like a game:
-&lt;img src=&#34;/blog/blog/img/shmup_part3.gif&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;In the next lesson, we&amp;rsquo;ll learn how to add graphics to our game instead of using those plain colored rectangles.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-3-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-3.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;a-href-blog-2016-08-pygame-shmup-part-4-part-4-adding-graphics-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/08/pygame_shmup_part_4/&#34;&gt;Part 4: Adding Graphics &lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 

@@ -1,0 +1,243 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.18.1" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 101 - Part 4: Instancing Scenes &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">21</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">4</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">22</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2017 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 101 - Part 4: Instancing Scenes</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Wed, Feb 15, 2017</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			</h6></span>
+
+			      <p><img src="/blog/img/godot_logo.png" width="450"></p>
+
+<p>This is part 4 of &ldquo;Godot 101&rdquo;, taking our bouncing sprite and showing how to quickly create multiple instances of it.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2017/02/godot_101_01/">Part 1</a>.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>Godot 101 is an introduction to the Godot game engine and how it works. If you&rsquo;ve never used a game engine before, or if you&rsquo;re just new to Godot, this is the place to start.  If you&rsquo;re new here, a quick note about this website: we&rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&rsquo;re an adult you&rsquo;re welcome here, too.  We don&rsquo;t believe in dumbing-down the material for kids, and game development is <em>hard</em> - so it will probably be challenging no matter what your age.
+</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0WOqJy3lot4" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="instancing">Instancing</h2>
+
+<p>Now that we have a nice animated sprite bouncing around the screen, the natural next question is &ldquo;how do I make a bunch of them?&rdquo;  If we want, say, 10 sprites bouncing around, we don&rsquo;t want to have to make 10 separate scenes for them.</p>
+
+<p>Your first thought might be to duplicate the sprite node by right-clicking on it and choosing &ldquo;Duplicate&rdquo;:</p>
+
+<p><a href="/blog/img/godot101_04_01.png"><img src="/blog/img/godot101_04_01.png" width="200"></a><sub>Click to enlarge</sub></p>
+
+<p>However, this won&rsquo;t work - you get an error message:</p>
+
+<p><img src="/blog/img/godot101_04_02.png" width="300"></p>
+
+<p>Each scene tree has a root node - the first node you create - and can only have <em>one</em> root node.  We could make another sprite as a <em>child</em> of the first one, but that wouldn&rsquo;t give use what we need - a child node is attached to its parent, inheriting its position, etc.  We need to create multiple independent versions of the original sprite.</p>
+
+<p>We&rsquo;ll start by making a new scene (click on <code>Scene</code> -&gt; &lsquo;New Scene&rsquo;) and add a node to it.  We&rsquo;re going to use the simplest node available: <svg width="24" height="24" class="icon-icon_node"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_node"</svg><code>Node</code>.  This is a generic node, with no properties of its own.  This will be our main scene&rsquo;s root node, so let&rsquo;s rename it &ldquo;main&rdquo; by clicking on its name and then save it as &ldquo;main.tscn&rdquo;.</p>
+
+<p>Now click the &ldquo;Play&rdquo; button at the top and you&rsquo;ll see this message:</p>
+
+<p><img src="/blog/img/godot101_04_03.png" width="400"></p>
+
+<p>We need to define what scene will be the one that is launched when the project starts.  Click &ldquo;Select&rdquo; and choose our new main.tscn. Now let&rsquo;s add a script to the main node.  This will be our code to instance a sprite:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Node</span>
+
+<span class="n">onready</span> <span class="n">var</span> <span class="n">sprite</span> <span class="o">=</span> <span class="n">preload</span><span class="p">(</span><span class="s2">&quot;res://Sprite.tscn&quot;</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+    <span class="n">var</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sprite</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">add_child</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+ 
+</code></pre></div>
+
+
+<p>That first line uses the <code>preload</code> function to load the sprite scene into memory at compile time, so that it&rsquo;s ready to use.  The <code>onready</code> statement ensures that the object is loaded in time for the <code>_ready()</code> call.</p>
+
+<p><em>A note on resource paths</em>:</p>
+
+<p>Notice how we indicated where to load the sprite scene from: &ldquo;res://Sprite.tscn&rdquo;  All resources in your project will be under a &ldquo;res://&rdquo; path (&ldquo;res&rdquo; is short for resource).  If we were building a complex project with a large number of files, we might choose to put all our scenes into their own folder to help keep things organized.  In this case, the resource path might look like this: &ldquo;res://scenes/Sprite.tscn&rdquo;</p>
+
+<p>Now hit &ldquo;Play&rdquo;, and you will see a sprite bouncing around the screen.  To see what&rsquo;s going on, click the debugger and you can inspect the live scene tree:</p>
+
+<p><a href="/blog/img/godot101_04_04.gif"><img src="/blog/img/godot101_04_04.gif" width="550"></a><sub>Click to enlarge</sub></p>
+
+<p>The Remote Inspector tab is very useful to see what&rsquo;s going on in the game - what scene is active, what nodes are active, and what properties they all have.  For example, observe what changes is we add a loop to spawn more sprites:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">var</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sprite</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">add_child</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+ 
+</code></pre></div>
+
+
+<h2 id="wrapping-up">Wrapping up</h2>
+
+<p>It&rsquo;s that easy to create instances of scenes you&rsquo;ve created.  In the future, this is how we&rsquo;ll do things like spawning mobs or bullets - just by instancing them as needed and adding them to the current scene tree.  In the next lesson we&rsquo;ll start looking at some other nodes and how they&rsquo;re used.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a"><a href="https://github.com/kidscancode/godot_tutorials/tree/master/Godot101">Full code for this part</a></h3>
+
+<h3 id="a-href-godot-101-part-5-coming-soon-a"><a href="">Godot 101 - Part 5 (coming soon)</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://godotengine.org">Download Godot Engine</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Us on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>

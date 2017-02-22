@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>/blog/2017/02/godot_101_04/</loc>
+    <lastmod>2017-02-15T05:22:12-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/2017/02/godot_101_03/</loc>
     <lastmod>2017-02-13T05:22:12-07:00</lastmod>
   </url>
@@ -134,7 +139,7 @@
   
   <url>
     <loc>/blog/tags/gamedev/</loc>
-    <lastmod>2017-02-13T05:22:12-07:00</lastmod>
+    <lastmod>2017-02-15T05:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -146,19 +151,19 @@
   
   <url>
     <loc>/blog/tags/godot/</loc>
-    <lastmod>2017-02-13T05:22:12-07:00</lastmod>
+    <lastmod>2017-02-15T05:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/blog/</loc>
-    <lastmod>2017-02-13T05:22:12-07:00</lastmod>
+    <lastmod>2017-02-15T05:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/blog/post/</loc>
-    <lastmod>2017-02-13T05:22:12-07:00</lastmod>
+    <lastmod>2017-02-15T05:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -187,7 +192,7 @@
   
   <url>
     <loc>/blog/tags/tutorial/</loc>
-    <lastmod>2017-02-13T05:22:12-07:00</lastmod>
+    <lastmod>2017-02-15T05:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
