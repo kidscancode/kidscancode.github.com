@@ -9,6 +9,17 @@
 <title>icon_multi_mesh</title>
 <path fill="#ffd684" style="fill: var(--color2, #ffd684)" d="M6 2c-2.209 0-4 1.791-4 4 0.001 1.472 0.797 2.757 1.981 3.451l0.019 13.092c-1.202 0.703-1.997 1.987-2 3.457 0 2.21 1.791 4 4 4 1.472-0.001 2.757-0.797 3.451-1.981l2.549-0.019v-4h-2.543c-0.356-0.61-0.849-1.104-1.438-1.451l-0.019-11.721 7.172 7.172h2.828v-2.828l-7.172-7.172h11.715c0.357 0.606 0.849 1.098 1.438 1.443l0.019 2.557h4v-2.539c1.203-0.704 1.999-1.989 2-3.461 0-2.209-1.791-4-4-4-1.472 0.001-2.757 0.797-3.451 1.981l-13.092 0.019c-0.703-1.202-1.987-1.997-3.457-2zM22 16v6h-6v4h6v6h4v-6h6v-4h-6v-6h-4z"></path>
 </symbol>
+<symbol id="icon-icon_collision_shape_2d" viewBox="0 0 32 32">
+<title>icon_collision_shape_2d</title>
+<path fill="none" stroke="#a5b7f3" stroke-width="4" stroke-miterlimit="4" stroke-linecap="butt" stroke-linejoin="round" style="stroke: var(--color1, #a5b7f3)" d="M28 28h-24v-24h24z"></path>
+</symbol>
+<symbol id="icon-icon_hidden" viewBox="0 0 32 32">
+<title>icon_hidden</title>
+<path fill="none" stroke="#e0e0e0" stroke-width="4" stroke-miterlimit="4" stroke-linecap="butt" stroke-linejoin="round" style="stroke: var(--color1, #e0e0e0)" d="M28 16c-2 7-8 10-12 10s-10-3-12-10"></path>
+<path fill="#e0e0e0" style="fill: var(--color1, #e0e0e0)" d="M14 26h4v4h-4v-4z"></path>
+<path fill="#e0e0e0" style="fill: var(--color1, #e0e0e0)" d="M23.071 23.899l2.828-2.828 2.828 2.828-2.828 2.828-2.828-2.828z"></path>
+<path fill="#e0e0e0" style="fill: var(--color1, #e0e0e0)" d="M6.101 21.071l2.828 2.828-2.828 2.828-2.828-2.828 2.828-2.828z"></path>
+</symbol>
 <symbol id="icon-icon_navigation_2d" viewBox="0 0 32 32">
 <title>icon_navigation_2d</title>
 <path fill="#a5b7f5" style="fill: var(--color3, #a5b7f5)" d="M6 28l10-4 10 4-10-24-10 24z"></path>
@@ -87,6 +98,13 @@
 <symbol id="icon-icon_panel" viewBox="0 0 32 32">
 <title>icon_panel</title>
 <path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M6 2c-2.209 0-4 1.791-4 4v20c0 2.209 1.791 4 4 4h20c2.209 0 4-1.791 4-4v-20c0-2.209-1.791-4-4-4z"></path>
+</symbol>
+<symbol id="icon-icon_tween" viewBox="0 0 32 32">
+<title>icon_tween</title>
+<path fill="none" stroke="#e0e0e0" stroke-width="4" stroke-miterlimit="4" stroke-linecap="butt" stroke-linejoin="miter" style="stroke: var(--color1, #e0e0e0)" d="M18 28h-14v-14"></path>
+<path fill="none" stroke="#e0e0e0" stroke-width="4" stroke-miterlimit="4" stroke-linecap="butt" stroke-linejoin="miter" style="stroke: var(--color1, #e0e0e0)" d="M14 4h14v14"></path>
+<path fill="#e0e0e0" style="fill: var(--color1, #e0e0e0)" d="M12 10h10v10z"></path>
+<path fill="none" stroke="#e0e0e0" stroke-width="4" stroke-miterlimit="4" stroke-linecap="butt" stroke-linejoin="miter" style="stroke: var(--color1, #e0e0e0)" d="M4 28l14-14"></path>
 </symbol>
 <symbol id="icon-icon_parallax_background" viewBox="0 0 32 32">
 <title>icon_parallax_background</title>
@@ -283,12 +301,37 @@
 <path fill="#2998ff" style="fill: var(--color21, #2998ff)" d="M16 30l4-4v-14l-4 4z"></path>
 <path fill="#2998ff" style="fill: var(--color21, #2998ff)" d="M16 2l12 10-12 8z"></path>
 </symbol>
+<symbol id="icon-icon_ray_shape_2d" viewBox="0 0 32 32">
+<title>icon_ray_shape_2d</title>
+<path fill="none" stroke="#68b6ff" stroke-width="4" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color3, #68b6ff)" d="M16 4v24"></path>
+<path fill="none" stroke="#68b6ff" stroke-width="4" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color3, #68b6ff)" d="M10 22l6 6 6-6"></path>
+</symbol>
+<symbol id="icon-icon_rectangle_shape_2d" viewBox="0 0 32 32">
+<title>icon_rectangle_shape_2d</title>
+<path fill="none" stroke="#68b6ff" stroke-width="4" stroke-miterlimit="10" stroke-linecap="butt" stroke-linejoin="round" style="stroke: var(--color3, #68b6ff)" d="M4 8h24c0 0 0 0 0 0v16c0 0 0 0-0 0h-24c-0 0-0 0-0-0v-16c0-0 0-0 0-0z"></path>
+</symbol>
+<symbol id="icon-icon_segment_shape_2d" viewBox="0 0 32 32">
+<title>icon_segment_shape_2d</title>
+<path fill="none" stroke="#68b6ff" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" style="stroke: var(--color3, #68b6ff)" d="M4 28l24-24"></path>
+</symbol>
+<symbol id="icon-icon_circle_shape_2d" viewBox="0 0 32 32">
+<title>icon_circle_shape_2d</title>
+<path fill="none" stroke="#68b6ff" stroke-width="4" stroke-miterlimit="4" stroke-linecap="butt" stroke-linejoin="round" style="stroke: var(--color3, #68b6ff)" d="M16 4c-6.627 0-12 5.373-12 12s5.373 12 12 12c6.627 0 12-5.373 12-12s-5.373-12-12-12z"></path>
+</symbol>
 <symbol id="icon-icon_reference_frame" viewBox="0 0 32 32">
 <title>icon_reference_frame</title>
 <path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h2v28h-2v-28z"></path>
 <path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 28h28v2h-28v-2z"></path>
 <path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M2 2h28v2h-28v-2z"></path>
 <path fill="#a5efac" style="fill: var(--color7, #a5efac)" d="M28 2h2v28h-2v-28z"></path>
+</symbol>
+<symbol id="icon-icon_collision_2d" viewBox="0 0 32 32">
+<title>icon_collision_2d</title>
+<path fill="none" stroke="#a5b7f2" stroke-width="4" stroke-miterlimit="4" stroke-linecap="butt" stroke-linejoin="round" style="stroke: var(--color4, #a5b7f2)" d="M28 28h-24v-24h24l-12 12z"></path>
+</symbol>
+<symbol id="icon-icon_convex_polygon_shape_2d" viewBox="0 0 32 32">
+<title>icon_convex_polygon_shape_2d</title>
+<path fill="none" stroke="#68b6ff" stroke-width="4" stroke-miterlimit="4" stroke-linecap="butt" stroke-linejoin="round" style="stroke: var(--color3, #68b6ff)" d="M28 28h-24v-12l12-12 12 12z"></path>
 </symbol>
 <symbol id="icon-icon_reference_rect" viewBox="0 0 32 32">
 <title>icon_reference_rect</title>
@@ -1248,6 +1291,11 @@
 <title>icon_instance_options</title>
 <path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M2 14v12c0 2.209 1.791 4 4 4h24v-16h-28zM10 18h12l-6 8-6-8z"></path>
 <path fill="#e0e0e0" style="fill: var(--color6, #e0e0e0)" d="M1.423 8.042l0.577 3.958 4.488-0.655-1.636-3.804-3.429 0.5zM8.809 6.964l1.636 3.804 3.958-0.577-1.637-3.804-3.958 0.577zM16.725 5.809l1.637 3.804 3.958-0.577-1.637-3.804-3.958 0.577zM24.642 4.655l1.637 3.804 3.429-0.5-0.577-3.958-4.488 0.655z"></path>
+</symbol>
+<symbol id="icon-icon_instance" viewBox="0 0 32 32">
+<title>icon_instance</title>
+<path fill="none" stroke="#e0e0e0" stroke-width="4" stroke-miterlimit="4" stroke-linecap="round" stroke-linejoin="miter" style="stroke: var(--color1, #e0e0e0)" d="M10 22l12-12"></path>
+<path fill="#e0e0e0" style="fill: var(--color1, #e0e0e0)" d="M22 2c-4.395 0-8 3.605-8 8 0 0.71 0.125 1.386 0.301 2.043l4.789-4.789c0.726-0.77 1.751-1.254 2.91-1.254 2.233 0 4 1.767 4 4 0 1.148-0.473 2.166-1.23 2.891l-4.809 4.809c0.655 0.175 1.331 0.301 2.039 0.301 4.395 0 8-3.605 8-8s-3.605-8-8-8zM10 14c-4.395 0-8 3.605-8 8s3.605 8 8 8c4.395 0 8-3.605 8-8 0-0.708-0.125-1.384-0.301-2.039l-4.809 4.809c-0.725 0.757-1.743 1.23-2.891 1.23-2.233 0-4-1.767-4-4 0-1.159 0.484-2.184 1.254-2.91l4.789-4.789c-0.657-0.176-1.333-0.301-2.043-0.301z"></path>
 </symbol>
 <symbol id="icon-icon_interpolated_camera" viewBox="0 0 32 32">
 <title>icon_interpolated_camera</title>

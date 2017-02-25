@@ -1,0 +1,331 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.18.1" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 101 - Part 5: Player-controlled Sprite &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">22</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">5</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">23</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2017 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 101 - Part 5: Player-controlled Sprite</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sun, Feb 19, 2017</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			</h6></span>
+
+			      <p><img src="/blog/img/godot_logo.png" width="450"></p>
+
+<p>This is part 5 of &ldquo;Godot 101&rdquo;. In this installment, we&rsquo;ll learn how to use player input to move a sprite around the screen.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2017/02/godot_101_01/">Part 1</a>.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>Godot 101 is an introduction to the Godot game engine and how it works. If you&rsquo;ve never used a game engine before, or if you&rsquo;re just new to Godot, this is the place to start.  If you&rsquo;re new here, a quick note about this website: we&rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&rsquo;re an adult you&rsquo;re welcome here, too.  We don&rsquo;t believe in dumbing-down the material for kids, and game development is <em>hard</em> - so it will probably be challenging no matter what your age.
+</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FgtekgMca2E" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="player-scene">Player Scene</h2>
+
+<p><a href="/blog/img/art.zip">Click here</a> to download a zip of the art we&rsquo;re going to use for this lesson. Unpack it in your project folder.</p>
+
+<p>First let&rsquo;s create a scene for our player.  What node should we choose for our root node?  It depends on what kind of collisions and physics we need.  If you click on <code>Add Node</code> and search for &ldquo;collision&rdquo; you will see there is a <a href="http://docs.godotengine.org/en/stable/classes/class_collisionobject2d.html" target="_blank"><code>CollisionObject2D</code></a> that has a few children:</p>
+
+<ul>
+<li><a href="http://docs.godotengine.org/en/stable/classes/class_collisionobject2d.html" target="_blank"><code>CollisionObject2D</code></a>
+
+<ul>
+<li><a href="http://docs.godotengine.org/en/stable/classes/class_area2d.html"><svg width="18" height="18" class="icon-icon_area_2d" target="_blank"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_area_2d"</svg> <code>Area2D</code></a></li>
+<li><a href="http://docs.godotengine.org/en/stable/classes/class_physicsbody2d.html" target="_blank"><code>PhysicsBody2D</code></a>
+
+<ul>
+<li><a href="http://docs.godotengine.org/en/stable/classes/class_staticbody2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_static_body_2d">
+<use xlink:href="/blog/img/symbol-defs.svg#icon-icon_static_body_2d"</svg> <code>StaticBody2D</code></a></li>
+<li><a href="http://docs.godotengine.org/en/stable/classes/class_rigidbody2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_rigid_body_2d">
+<use xlink:href="/blog/img/symbol-defs.svg#icon-icon_rigid_body_2d"</svg> <code>RigidBody2D</code></a></li>
+<li><a href="http://docs.godotengine.org/en/stable/classes/class_kinematicbody2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_kinematic_body_2d">
+<use xlink:href="/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d"</svg> <code>KinematicBody2D</code></a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+<p>These nodes are all for implementing different kinds of collision and physics in your game - which one you choose depends on your goal.  A brief summary:</p>
+
+<h5 id="a-href-http-docs-godotengine-org-en-stable-classes-class-area2d-html-svg-width-18-height-18-class-icon-icon-area-2d-target-blank-use-xlink-href-blog-img-symbol-defs-svg-icon-icon-area-2d-svg-area2d-a"><a href="http://docs.godotengine.org/en/stable/classes/class_area2d.html"><svg width="18" height="18" class="icon-icon_area_2d" target="_blank"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_area_2d"</svg> <code>Area2D</code></a></h5>
+
+<p>This node is a general purpose area detection node.  It can detect when another object enters or leaves its area but doesn&rsquo;t have any physics properties.  This is great for when you simply need to know when one object overlaps another.</p>
+
+<h5 id="a-href-http-docs-godotengine-org-en-stable-classes-class-kinematicbody2d-html-target-blank-svg-width-18-height-18-class-icon-icon-kinematic-body-2d-use-xlink-href-blog-img-symbol-defs-svg-icon-icon-kinematic-body-2d-svg-kinematicbody2d-a"><a href="http://docs.godotengine.org/en/stable/classes/class_kinematicbody2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_kinematic_body_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d"</svg> <code>KinematicBody2D</code></a></h5>
+
+<p>This node is for what is sometimes called &ldquo;arcade physics&rdquo; (hence the little <em>Space Invaders</em> icon).  It is not affected by physics (gravity, etc.) but will collide with other bodies.  This is good for player controlled bodies that need collision - for example, a platform character that doesn&rsquo;t fall through the ground.</p>
+
+<h5 id="a-href-http-docs-godotengine-org-en-stable-classes-class-rigidbody2d-html-target-blank-svg-width-18-height-18-class-icon-icon-rigid-body-2d-use-xlink-href-blog-img-symbol-defs-svg-icon-icon-rigid-body-2d-svg-rigidbody2d-a"><a href="http://docs.godotengine.org/en/stable/classes/class_rigidbody2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_rigid_body_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_rigid_body_2d"</svg> <code>RigidBody2D</code></a></h5>
+
+<p>This is the node to use for full-on physics simulation.  Objects of this type will behave realistically when interacting with the environment.  You would use this, for example, if you were making an <em>Angry Birds</em> style game and wanted stacks of blocks that would tumble down when hit.</p>
+
+<h5 id="a-href-http-docs-godotengine-org-en-stable-classes-class-staticbody2d-html-svg-width-18-height-18-class-icon-icon-static-body-2d-use-xlink-href-blog-img-symbol-defs-svg-icon-icon-static-body-2d-svg-staticbody2d-a"><a href="http://docs.godotengine.org/en/stable/classes/class_staticbody2d.html"><svg width="18" height="18" class="icon-icon_static_body_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_static_body_2d"</svg> <code>StaticBody2D</code></a></h5>
+
+<p>This is a <em>static</em> physics body, meaning it is designed to represent non-moving objects like walls, trees, etc. - anything that will not be moving around.</p>
+
+<p>For this particular project, we&rsquo;re going to stick with the <a href="http://docs.godotengine.org/en/stable/classes/class_area2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_area_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_area_2d"</svg><code>Area2D</code></a> for our player.  Add one to the scene and name it &ldquo;player&rdquo;.</p>
+
+<p>By itself, collision nodes are not visible, so we need to add a <a href="http://docs.godotengine.org/en/stable/classes/class_sprite.html" target="_blank"><svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"</svg><code>Sprite</code></a> to display our character&rsquo;s image.  In the &ldquo;art/Player&rdquo; folder are the images for our character.  Drag the standing image into the node&rsquo;s <svg width="18" height="18" class="icon-icon_texture"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_texture"</svg><code>Texture</code> field:</p>
+
+<p><a href="/blog/img/godot101_05_01.gif"><img src="/blog/img/godot101_05_01.gif" width="550"></a><sub>Click to enlarge</sub></p>
+
+<p>Now let&rsquo;s scale the sprite down a little and make sure it&rsquo;s centered on the parent node by setting the following values in the Inspector:
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="n">Scale</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">Offset</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">64</span><span class="p">)</span>
+</code></pre></div>
+</p>
+
+<h3 id="collision-shapes">Collision Shapes</h3>
+
+<p>If we stopped here, we wouldn&rsquo;t actually have any collision detetion, because any <a href="http://docs.godotengine.org/en/stable/classes/class_collisionobject2d.html" target="_blank"><code>CollisionObject2D</code></a> must have a collision shape defined.  We&rsquo;re going to use a <a href="http://docs.godotengine.org/en/stable/classes/class_collisionshape2D.html" target="_blank"><svg width="18" height="18" class="icon-icon_collision_shape_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d"</svg><code>CollisionShape2D</code></a>.  Add it as a child of <svg width="18" height="18" class="icon-icon_area_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_area_2d"</svg><code>player</code> and select a <a href="http://docs.godotengine.org/en/stable/classes/class_rectangleshape2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_rectangle_shape_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_rectangle_shape_2d"</svg><code>RectangleShape2D</code></a></p>
+
+<p><a href="/blog/img/godot101_05_02.gif"><img src="/blog/img/godot101_05_02.gif" width="150"></a><sub>Click to enlarge</sub></p>
+
+<p>Now we need to adjust our collision shape to define the collision area.  <em>Important:</em> do <em>not</em> drag the scale handles.  Scaling a physics object will not work and may break things.  Use the inner handles to adjust the extents of the rectangle:</p>
+
+<p><a href="/blog/img/godot101_05_03.gif"><img src="/blog/img/godot101_05_03.gif" width="100"></a><sub>Click to enlarge</sub></p>
+
+<h3 id="input-mapping">Input Mapping</h3>
+
+<p>We are going to use the arrow keys to move our player. In Godot, all the player input functions are described under <code>Scene -&gt; Project Settings -&gt; Input Map</code>:</p>
+
+<p><a href="/blog/img/godot101_05_04.png"><img src="/blog/img/godot101_05_04.png" width="400"></a><sub>Click to enlarge</sub></p>
+
+<p>In this window, you can set up whatever input actions you want to use, and assign various controls to them - keys, mouse buttons, game pads, etc.  For this demo, we&rsquo;re going to stick with the already-defined actions for the four arrow keys: <code>&quot;ui_up&quot;</code>, <code>&quot;ui_left&quot;</code>, <code>&quot;ui_right&quot;</code>, and <code>&quot;ui_down&quot;</code>.</p>
+
+<h3 id="player-script">Player Script</h3>
+
+<p>Now, let&rsquo;s add a script to the player node:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Area2D</span>
+
+<span class="n">export</span> <span class="n">var</span> <span class="n">speed</span> <span class="o">=</span> <span class="mi">400</span>
+
+<span class="n">var</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+	<span class="n">set_fixed_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+	<span class="n">set_pos</span><span class="p">(</span><span class="n">get_pos</span><span class="p">()</span> <span class="o">+</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+ 
+</code></pre></div>
+
+
+<p>First, we&rsquo;re creating a variable to set our player&rsquo;s speed.  The <code>export</code> keyword does something special: save this script, then click on the <svg width="18" height="18" class="icon-icon_area_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_area_2d"</svg><code>player</code> node and look at the Inspector.  Now we can change the value of <code>speed</code> directly in the Inspector!</p>
+
+<p>The movement is going to be similar to how we did it in the previous lesson - we move the position by adding <code>vel * delta</code>.  But our sprite won&rsquo;t move, because we need to detect the keys:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+	<span class="n">var</span> <span class="nb">input</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+	<span class="nb">input</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_right&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_left&quot;</span><span class="p">)</span>
+	<span class="nb">input</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_down&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_up&quot;</span><span class="p">)</span>
+	<span class="n">vel</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span> <span class="o">*</span> <span class="n">speed</span>
+	<span class="n">set_pos</span><span class="p">(</span><span class="n">get_pos</span><span class="p">()</span> <span class="o">+</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+ 
+</code></pre></div>
+
+
+<p>Here, we&rsquo;re creating an <code>input</code> vector to hold the direction the player is holding - a combination of whatever keys are pressed.  <code>Input.is_action_pressed()</code> will return <code>1</code> or <code>0</code>, so we can get the total movement in each axis by subtracting the negative direction key from the positive one.</p>
+
+<p>Once we have the input vector, we must <code>normalize()</code> it so that <code>(1, 1)</code> is not faster than <code>(1, 0)</code>.</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Area2D</span>
+
+<span class="n">export</span> <span class="n">var</span> <span class="n">speed</span> <span class="o">=</span> <span class="mi">400</span>
+
+<span class="hll"><span class="n">var</span> <span class="n">screensize</span>
+</span><span class="hll"><span class="n">var</span> <span class="n">extents</span>
+</span><span class="n">var</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+        <span class="n">set_fixed_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
+<span class="hll">        <span class="n">screensize</span> <span class="o">=</span> <span class="n">get_viewport_rect</span><span class="p">()</span><span class="o">.</span><span class="n">size</span>
+</span><span class="hll">        <span class="n">extents</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&quot;sprite&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_texture</span><span class="p">()</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span> <span class="o">/</span> <span class="mi">4</span>
+</span><span class="hll">        <span class="n">set_pos</span><span class="p">(</span><span class="n">screensize</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span>
+<span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+        <span class="n">var</span> <span class="nb">input</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="nb">input</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_right&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_left&quot;</span><span class="p">)</span>
+        <span class="nb">input</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_down&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_up&quot;</span><span class="p">)</span>
+        <span class="n">vel</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span> <span class="o">*</span> <span class="n">speed</span>
+        <span class="n">var</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">get_pos</span><span class="p">()</span> <span class="o">+</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span>
+<span class="hll">        <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">screensize</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+</span><span class="hll">        <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">screensize</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+</span><span class="hll">        <span class="n">set_pos</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+</span><span class="hll"> 
+</span></code></pre></div>
+
+
+<h3 id="wrapping-around">Wrapping Around</h3>
+
+<p>Finally, we&rsquo;ve copied-and-pasted from the last lesson the <code>_ready()</code> code to grab the screen and texture sizes.  Then we&rsquo;re using those to limit the movement of the sprite to a minimum and maximum value (this is what <code>clamp()</code> does).</p>
+
+<h2 id="wrapping-up">Wrapping Up</h2>
+
+<p>That will do it for our player&rsquo;s movement.  In the next part, we&rsquo;ll put some items on the screen for our player to collect and explore how to detect collisions with an <a href="http://docs.godotengine.org/en/stable/classes/class_area2d.html"><svg width="18" height="18" class="icon-icon_area_2d" target="_blank"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_area_2d"</svg> <code>Area2D</code></a> node.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a"><a href="https://github.com/kidscancode/godot_tutorials/tree/master/Godot101">Full code for this part</a></h3>
+
+<h3 id="a-href-godot-101-part-6-coming-soon-a"><a href="">Godot 101 - Part 6 (coming soon)</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://godotengine.org">Download Godot Engine</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Us on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>
