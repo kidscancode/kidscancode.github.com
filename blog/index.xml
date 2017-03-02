@@ -7,7 +7,142 @@
     <language>en-us</language>
     
     <copyright>KidsCanCode LLC</copyright>
-    <updated>Sun, 19 Feb 2017 05:22:12 -0700</updated>
+    <updated>Thu, 23 Feb 2017 05:22:12 -0700</updated>
+    
+    <item>
+      <title>Godot 101 - Part 6: Area-based Collisions</title>
+      <link>/blog/2017/02/godot_101_06/</link>
+      <pubDate>Thu, 23 Feb 2017 05:22:12 -0700</pubDate>
+      
+      <guid>/blog/2017/02/godot_101_06/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;This is part 6 of &amp;ldquo;Godot 101&amp;rdquo;. In this installment, we&amp;rsquo;ll learn how to detect when two collision areas overlap, so we can make our player run around and pick up gems.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2017/02/godot_101_01/&#34;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
+
+&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
+&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/RZyiy9bbeNE&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;gem-scene&#34;&gt;Gem Scene&lt;/h3&gt;
+
+&lt;p&gt;First, let&amp;rsquo;s create a new scene for our gem objects.  The tree will look like this:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_area_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_area_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;gem&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; &lt;code&gt;sprite&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_collision_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;collision&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We&amp;rsquo;ll use the gem image from the art folder, and a basic &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_rectangleshape2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_rectangle_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_rectangle_shape_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;RectangleShape2D&lt;/code&gt;&lt;/a&gt; for the collision.  Resize it to cover the sprite texture, and remember: &lt;em&gt;don&amp;rsquo;t scale the collision shape!&lt;/em&gt;  Use the handles to adjust the extents of your rectangle - see the previous lesson if you need help.&lt;/p&gt;
+
+&lt;h3 id=&#34;main-scene&#34;&gt;Main Scene&lt;/h3&gt;
+
+&lt;p&gt;Now we can start building our main scene.  The root will just be a plain &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_node.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_node&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_node&#34;&gt;&lt;/svg&gt;&lt;code&gt;Node&lt;/code&gt;&lt;/a&gt; named &amp;ldquo;main&amp;rdquo;. Click the &amp;ldquo;Instance&amp;rdquo; button: &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_instance&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_instance&#34;&gt;&lt;/svg&gt; and choose the player scene.&lt;/p&gt;
+
+&lt;p&gt;We don&amp;rsquo;t want to have to add a bunch of gem instances manually, so we&amp;rsquo;re going to do it in code.  We&amp;rsquo;ll be spawning lots of gems, and we will want to keep track of how many are left, so let&amp;rsquo;s make a node to hold them all.  Add another &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_node.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_node&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_node&#34;&gt;&lt;/svg&gt;&lt;code&gt;Node&lt;/code&gt;&lt;/a&gt; as a child of &lt;code&gt;main&lt;/code&gt; and call it &lt;code&gt;gem_container&lt;/code&gt;.  Then add a script to the &lt;code&gt;main&lt;/code&gt; node with the following code:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Node&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gem&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;res://gem.tscn&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gem_container&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;gem_container&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;score&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;randomize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_viewport&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;size&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;set_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;spawn_gems&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;spawn_gems&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;num&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;num&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;g&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gem&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;gem_container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add_child&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_pos&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rand_range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;40&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;40&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+                          &lt;span class=&#34;n&#34;&gt;rand_range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;40&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;height&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;40&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt;
+
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In this script, we use &lt;code&gt;preload&lt;/code&gt; to load the gem scene into memory so we can use it to create instances.  We also assign a variable to the &lt;code&gt;gem_container&lt;/code&gt; node so we can easily refer to it.  Our &lt;code&gt;spawn_gems&lt;/code&gt; function just takes a number and creates that many gem instances, assigning them as children of &lt;code&gt;gem_container&lt;/code&gt; and setting &lt;code&gt;pos&lt;/code&gt; to a random location.  Run the scene, and you should see this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_06_01.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_06_01.png&#34; width=&#34;350&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;area-collisions-using-signals&#34;&gt;Area collisions - using signals&lt;/h3&gt;
+
+&lt;p&gt;We want to have the gem disappear (be picked up) when the player touches it.  Click on the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_area_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_area_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;gem&lt;/code&gt; node and then click &amp;ldquo;Node&amp;rdquo; in the Inspector:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_06_02.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_06_02.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This is a list of all the signals that an &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_area2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_area_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_area_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;Area2D&lt;/code&gt;&lt;/a&gt; node can produce.  The ones labeled &lt;code&gt;area_*&lt;/code&gt; are for detecting other area nodes, while the &lt;code&gt;body*&lt;/code&gt; ones are for detecting &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_physicsbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;PhysicsBody2D&lt;/code&gt;&lt;/a&gt; nodes.  The one we want to use is &lt;code&gt;area_enter&lt;/code&gt; which will return the area that entered - in our case the player.&lt;/p&gt;
+
+&lt;p&gt;Click on the &lt;code&gt;area_enter&lt;/code&gt; signal and click the &amp;ldquo;Connect&amp;rdquo; button.  You will then see the following dialog:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_06_03.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_06_03.png&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;This lets us set what node we want the signal to be sent to.  &lt;code&gt;gem&lt;/code&gt; is highlighted in red because it&amp;rsquo;s the current node.  That&amp;rsquo;s fine, and at the bottom we&amp;rsquo;ll leave the &amp;ldquo;Method in Node&amp;rdquo; name as it is.  Godot will now create that function for us.  To start, let&amp;rsquo;s fill it out like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_gem_area_enter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;area&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;area&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now when you move the player over a gem, you will see &amp;ldquo;player&amp;rdquo; printed in the output window.  However, if you run it a couple of times, you might see something like this as well:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;@gem@4
+@gem@7
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;What&amp;rsquo;s happening here?  Well, this signal is generated when &lt;em&gt;any&lt;/em&gt; area enters the gem&amp;rsquo;s area.  This includes other gems!  If we just deleted a gem when this signal happens, then two touching gems would delete each other, and we don&amp;rsquo;t want that.  So we&amp;rsquo;re going to make sure and check the name of the entering area:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_gem_area_enter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;area&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;area&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;player&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id=&#34;spawning-more-gems&#34;&gt;Spawning more gems&lt;/h3&gt;
+
+&lt;p&gt;Back in our &lt;code&gt;main&lt;/code&gt; scene, we want to detect when the player has collected all the gems, so we can spawn more.  We do that by looking at the &lt;code&gt;gem_container&lt;/code&gt; and counting its children:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;level&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gem_container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_child_count&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;level&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;spawn_gems&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;level&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We add a variable called &lt;code&gt;level&lt;/code&gt; and whenever the &lt;code&gt;gem_container&lt;/code&gt; is empty, we increment it and spawn more gems.  Collect away!&lt;/p&gt;
+
+&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h2&gt;
+
+&lt;p&gt;The next step will be to increment the player&amp;rsquo;s score when they collect a gem.  However, there&amp;rsquo;s a catch:  the code that detects collision and deletes the gem is running on the gem node, while the code that holds the score (and will display it) is on the &lt;code&gt;main&lt;/code&gt; node.  So we need a way to have an instanced node communicate with another node that is farther up the tree.  This is a common occurrence, but is often done incorrectly by beginners.  In the next lesson, we&amp;rsquo;ll look at the &lt;em&gt;wrong&lt;/em&gt; (but obvious) way to do this, and then show how to do it properly.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;a-href-godot-101-part-7-coming-soon-a&#34;&gt;&lt;a href=&#34;&#34;&gt;Godot 101 - Part 7 (coming soon)&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Godot 101 - Part 5: Player-controlled Sprite</title>
@@ -1908,108 +2043,6 @@
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-6-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-6.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-08-pygame-shmup-part-7-part-7-score-and-drawing-text-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/08/pygame_shmup_part_7/&#34;&gt;Part 7: Score (and Drawing Text) &lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/python-install.html&#34;&gt;Installing Python&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/blog/2015/09/pygame_install/&#34;&gt;Installing Pygame&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uve1tjVIQ6c&amp;ab_channel=KidsCanCode&#34;&gt;Setting up Atom for Python&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Pygame Shmup Part 5: Improved Collisions</title>
-      <link>/blog/2016/08/pygame_shmup_part_5/</link>
-      <pubDate>Sat, 27 Aug 2016 05:22:12 PDT</pubDate>
-      
-      <guid>/blog/2016/08/pygame_shmup_part_5/</guid>
-      <description>&lt;p&gt;This is part 5 of our &amp;ldquo;Shmup&amp;rdquo; project.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2016/08/pygame_shmup_part_1/&#34;&gt;Part 1&lt;/a&gt;. In this lesson we&amp;rsquo;ll discuss how to change the way Pygame handles collisions between sprites.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
-
-&lt;p&gt;In this series of lessons we&amp;rsquo;ll build a complete game using Python and Pygame.  It&amp;rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.
-&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/_y5U8tB36Vk&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;what-s-going-on-with-our-collisions&#34;&gt;What&amp;rsquo;s going on with our collisions?&lt;/h1&gt;
-
-&lt;p&gt;In the previous video we added graphics, changing our sprites from plain rectangles to nicer-looking PNG images.  However, this has introduced a problem: sometimes the game counts a collision between the player and a meteor when it doesn&amp;rsquo;t look like they hit at all.  To understand what&amp;rsquo;s going on, let&amp;rsquo;s look at a diagram:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/coll_example_aabb.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;The default type of collision in Pygame is using the &lt;code&gt;collide_rect()&lt;/code&gt; function, which uses the two sprites&amp;rsquo; &lt;code&gt;rect&lt;/code&gt; attributes to calculate whether they overlap.  This is called AABB collision and it&amp;rsquo;s very fast and reliable.  However, if the sprite images are not rectangles then you get a situation like in the picture.  The rectangles overlap, so &lt;code&gt;collide_rect()&lt;/code&gt; is &lt;code&gt;True&lt;/code&gt;, but the player will feel frustrated, because they feel like they should have successfully dodged the meteor.&lt;/p&gt;
-
-&lt;p&gt;If you find yourself in this situation, there are a few things you can try:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/coll_example_ratio.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;By using the &lt;code&gt;collide_rect_ratio()&lt;/code&gt; function instead, you can use a smaller rectangle, reducing the amount of &amp;ldquo;empty&amp;rdquo; space that could count as an overlap.  Depending on the shape of the sprite, this can work quite well.  Notice in the image above how the tips of the ship&amp;rsquo;s wings are outside the rect.  This means that in some cases the meteor will appear to go through the wing without counting as a hit.  This is actually a good situation!  At the speed things are moving in the game, the player won&amp;rsquo;t notice this directly, but will just feel like they &amp;ldquo;got away with&amp;rdquo; a really close dodge.  Instead of feeling frustrated, they will feel like they are doing really well.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/coll_example_circle.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;Another option is to use a circular bounding box.  In the case of the meteor, this is a really good fit.  It doesn&amp;rsquo;t fit the ship quite as well, but again the wings being outside the collision won&amp;rsquo;t be a negative thing.&lt;/p&gt;
-
-&lt;h2 id=&#34;setting-the-sprite-s-radius&#34;&gt;Setting the sprite&amp;rsquo;s radius&lt;/h2&gt;
-
-&lt;p&gt;Based on the options above, we&amp;rsquo;re going to choose circles for our meteor vs. player collisions.  Pygame makes this easy to do - we just need to set a new attribute on each of our sprites: &lt;code&gt;self.radius&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s start with the player.  How big should be make the collision circle?  It can take a little bit of experimentation to get the right value.  Here&amp;rsquo;s how to do that, in the player sprite&amp;rsquo;s &lt;code&gt;__init()__&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;	&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;span class=&#34;hll&#34;&gt;	&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;25&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;	&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;draw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;circle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RED&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;center&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;We are drawing a red circle on top of the player image so that we can see how it looks. Let&amp;rsquo;s do the same for the meteor:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;	&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;span class=&#34;hll&#34;&gt;	&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;width&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;	&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;draw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;circle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RED&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;center&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;In this case, we are planning ahead a little bit.  We may decide to use different sized meteor images. By setting the radius to &lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;2&lt;/sub&gt; of the width of the image, we can do that without having to adjust the code later.&lt;/p&gt;
-
-&lt;p&gt;Here is what we end up with:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/shmup_part5_1.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;You can see we probably have too large a radius for the player sprite - it&amp;rsquo;s actually bigger in the y axis than the size of the ship.  To get closer to the example above, let&amp;rsquo;s set &lt;code&gt;self.radius = 20&lt;/code&gt; on the player.&lt;/p&gt;
-
-&lt;p&gt;For the meteor, we&amp;rsquo;d like a little bit of the corners to stick out, so let&amp;rsquo;s scale the circle to 85% of the size:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;	&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;width&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;85&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2 id=&#34;changing-the-collision-type&#34;&gt;Changing the collision type&lt;/h2&gt;
-
-&lt;p&gt;To have the game start using those circles for the collision tests, we just need to change the &lt;code&gt;spritecollide&lt;/code&gt; command to use the circle function instead of the AABB one:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;	&lt;span class=&#34;c1&#34;&gt;# check to see if a mob hit the player&lt;/span&gt;
-&lt;span class=&#34;hll&#34;&gt;    &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;spritecollide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;collide_circle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/shmup_part5_2.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;Once you have tried it out and you&amp;rsquo;re happy with how the collisions are working, you can remove the red circles.  I recommend you just comment the commands out rather than deleting them, in case you ever want to use them again in the future.&lt;/p&gt;
-
-&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h2&gt;
-
-&lt;p&gt;Deciding on the right collision style can make a big difference in how your game feels.  We have a much better meteor vs. player collision now, but notice that we did not change the bullet vs. meteor collision style.  Circles would be a bad choice for the shape of the bullets, so it&amp;rsquo;s better to leave them as rectangles.&lt;/p&gt;
-
-&lt;p&gt;In the next part we&amp;rsquo;ll liven things up by learning how to add animation to our sprites.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-5-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-5.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;a-href-blog-2016-08-pygame-shmup-part-6-part-6-sprite-animation-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/08/pygame_shmup_part_6/&#34;&gt;Part 6: Sprite Animation &lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
