@@ -631,7 +631,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;First, we declare a variable called &lt;code&gt;vel&lt;/code&gt; and set it to &lt;code&gt;Vector2(1, 1)&lt;/code&gt; - we will move our sprite 1 pixel each to the left and down.&lt;/p&gt;
+&lt;p&gt;First, we declare a variable called &lt;code&gt;vel&lt;/code&gt; and set it to &lt;code&gt;Vector2(1, 1)&lt;/code&gt; - we will move our sprite 1 pixel each to the right and down.&lt;/p&gt;
 
 &lt;p&gt;Next, we have to call the &lt;code&gt;set_process&lt;/code&gt; function and set it to &lt;code&gt;true&lt;/code&gt;.  This tells Godot that this object wants to do something every frame.  What it will do is whatever code we put in the &lt;code&gt;_process()&lt;/code&gt; function.  Now when we run, we&amp;rsquo;ll see this:&lt;/p&gt;
 
