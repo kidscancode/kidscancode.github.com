@@ -1,0 +1,297 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.19" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 101 - Part 7: Using Signals &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">24</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">7</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">25</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2017 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 101 - Part 7: Using Signals</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Wed, Mar 1, 2017</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			</h6></span>
+
+			      <p><img src="/blog/img/godot_logo.png" width="450"></p>
+
+<p>This is part 7 of &ldquo;Godot 101&rdquo;. In this installment, we&rsquo;ll learn how properly communicate between nodes, using a Godot feature called a <em>signal</em>.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2017/02/godot_101_01/">Part 1</a>.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>Godot 101 is an introduction to the Godot game engine and how it works. If you&rsquo;ve never used a game engine before, or if you&rsquo;re just new to Godot, this is the place to start.  If you&rsquo;re new here, a quick note about this website: we&rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&rsquo;re an adult you&rsquo;re welcome here, too.  We don&rsquo;t believe in dumbing-down the material for kids, and game development is <em>hard</em> - so it will probably be challenging no matter what your age.
+</p>
+
+<!-- You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5WnumDQyJhg" frameborder="0" allowfullscreen></iframe> -->
+
+<h3 id="communicating-between-scenes">Communicating between scenes</h3>
+
+<p>In the last part, we caused the gems to disappear when they are touched by the player.  Now, we want something to happen when the gems are collected - specifically, we want to increase the player&rsquo;s score.  The problem we have is that <code>score</code> is a variable in the <code>main</code> scene&rsquo;s script, but the gem collection happens on the gem&rsquo;s script.  Put another way, we need a way for the gem&rsquo;s script to change a variable on <code>main</code>.  The tree looks like this:</p>
+
+<p><a href="/blog/img/godot101_07_01.png"><img src="/blog/img/godot101_07_01.png" width="250"></a><sub>Click to enlarge</sub></p>
+
+<p>Each <svg width="18" height="18" class="icon-icon_area_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_area_2d"></svg><code>gem</code> is a child of <svg width="18" height="18" class="icon-icon_node"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_node"></svg><code>gem_container</code>, which is a child of <svg width="18" height="18" class="icon-icon_node"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_node"></svg><code>main</code>.</p>
+
+<h3 id="obvious-but-wrong">Obvious, but wrong</h3>
+
+<p>Many beginners (and many beginner tutorials) will solve this problem in an obvious but incorrect manner.  They look at the tree image above and think, &ldquo;main is 2 levels above the gem, so I just need to go 2 levels up the tree.&rdquo;  The result is a solution like this to the <code>gem</code> script:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">func</span> <span class="n">_on_gem_area_enter</span><span class="p">(</span><span class="n">area</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">area</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;player&#39;</span><span class="p">:</span>
+        <span class="n">queue_free</span><span class="p">()</span>
+        <span class="n">get_node</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">gem_grabbed</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>And on <code>main.gd</code>:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">func</span> <span class="n">gem_grabbed</span><span class="p">():</span>
+    <span class="n">score</span> <span class="o">+=</span> <span class="mi">10</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>Now, this <em>will</em> work, and you will see the score being printed every time you grab a gem. However there are several problems with this approach.  First, it can ruin your ability to test a scene separately.  For example, we can run the gem scene by itself (remember how we did that with the player to test out movement?), but when we do, there is no node 2 levels above it!  If you have code that uses <code>get_node('../..')</code>, it will report an error.</p>
+
+<p>This method is also very fragile.  Because the gem scene is now written specifically to work with the main scene as it is <em>now</em>, if you ever change the structure of <code>main</code>, your gem code will be broken.</p>
+
+<h3 id="signaling-events">Signaling events</h3>
+
+<p>The correct method to solve this problem in Godot is to use <em>signals</em>.  We&rsquo;ve already used one of the built-in signals that <a href="http://docs.godotengine.org/en/stable/classes/class_area2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_area_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_area_2d"></svg><code>Area2D</code></a> provides to trigger an event.  Now, we want to define a <em>custom</em> signal that we can use when the gem is collected.  This can be done with the <code>signal</code> keyword:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Area2D</span>
+
+<span class="hll"><span class="n">signal</span> <span class="n">gem_grabbed</span>
+</span>
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="n">func</span> <span class="n">_on_gem_area_enter</span><span class="p">(</span> <span class="n">area</span> <span class="p">):</span>
+    <span class="k">if</span> <span class="n">area</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;player&quot;</span><span class="p">:</span>
+<span class="hll">        <span class="n">emit_signal</span><span class="p">(</span><span class="s2">&quot;gem_grabbed&quot;</span><span class="p">)</span>
+</span>        <span class="n">queue_free</span><span class="p">()</span>
+</code></pre></div>
+
+
+<p>Here, we&rsquo;ve created a custom signal called <code>gem_grabbed</code> and then when the player touches the gem, we use <code>emit_signal()</code> to trigger it.</p>
+
+<p>Now, in <code>main.gd</code> we just need to connect that signal to a function:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">func</span> <span class="n">spawn_gems</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+        <span class="n">var</span> <span class="n">g</span> <span class="o">=</span> <span class="n">gem</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="n">gem_container</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="hll">        <span class="n">g</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;gem_grabbed&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_on_gem_grabbed&quot;</span><span class="p">)</span>
+</span>        <span class="n">g</span><span class="o">.</span><span class="n">set_pos</span><span class="p">(</span><span class="o">...</span>
+
+<span class="hll"><span class="n">func</span> <span class="n">_on_gem_grabbed</span><span class="p">():</span>
+</span>    <span class="n">score</span> <span class="o">+=</span> <span class="mi">10</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>As each gem instance is created, we connect its <code>gem_grabbed</code> signal to a local function called <code>on_gem_grabbed()</code> (following the <code>_on_*</code> naming scheme that Godot uses by default). Any time that signal is emitted, the function will be called.</p>
+
+<p>Running the game now will result in exactly the same behavior as before, but by using Godot&rsquo;s <code>signal</code> functionality, we avoid the pitfalls of hard-coding the tree structure in our code.  If you ever find yourself typing <code>get_node('..')</code> or <code>get_tree().get_root()</code> you probably would be better off using a signal instead.</p>
+
+<h3 id="displaying-information">Displaying information</h3>
+
+<p>Finally, let&rsquo;s display the score on the game screen, rather than printing it in the console log.  To start, we&rsquo;re going to add to <svg width="18" height="18" class="icon-icon_node"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_node"></svg><code>main</code> a <a href="http://docs.godotengine.org/en/stable/classes/class_control.html" target="_blank"><svg width="18" height="18" class="icon-icon_control"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_control"></svg><code>Control</code></a> node.  This is the base node type for all Godot&rsquo;s various GUI nodes.  Name this node <code>HUD</code> (&ldquo;heads-up display&rdquo;).  The <svg width="18" height="18" class="icon-icon_control"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_control"></svg><code>HUD</code> will contain all the nodes we want to have displaying information on the screen, as an overlay on top of the rest of the game.</p>
+
+<p>We want the <code>HUD</code> to be the same size as our game window, so we will use the <code>anchor</code> properties of the node (all <a href="http://docs.godotengine.org/en/stable/classes/class_control.html" target="_blank"><svg width="18" height="18" class="icon-icon_control"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_control"></svg><code>Control</code></a> nodes have these properties) and set them like this:</p>
+
+<p><a href="/blog/img/godot101_07_02.png"><img src="/blog/img/godot101_07_02.png" width="250"></a></p>
+
+<p>These settings control where the margin of the node will be measured in relation to the parent node.  So if we set our margins like this:</p>
+
+<p><a href="/blog/img/godot101_07_03.png"><img src="/blog/img/godot101_07_03.png" width="250"></a></p>
+
+<p>The <code>HUD</code>&rsquo;s size will be exactly the same as the parent&rsquo;s, even if the parent node changes. Click the <svg width="18" height="18" class="icon-icon_lock"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_lock"><code>Lock</code></svg> button at the top to prevent accidentally clicking the node and moving it.</p>
+
+<p>Now to display the score, we will use a <a href="http://docs.godotengine.org/en/stable/classes/class_label.html" target="_blank"><svg width="18" height="18" class="icon-icon_label"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_label"></svg><code>Label</code></a> and name it <code>score_label</code>.</p>
+
+<p>This is a simple node that displays text.  You can type directly into the <code>Text</code> property and see it on the screen:</p>
+
+<p><a href="/blog/img/godot101_07_04.png"><img src="/blog/img/godot101_07_04.png" width="250"></a></p>
+
+<p>We won&rsquo;t be talking about formatting the text (fonts, styles, etc.) just yet, but if you want the text bigger, don&rsquo;t resize the node (that will set the size of the node, not the text inside), you can use the <code>Scale</code> property in the inspector.  Set it to something like <code>(2.5, 2.5)</code>.  It won&rsquo;t look great, but that&rsquo;s ok for now.</p>
+
+<p>To have the score displayed, we just need to have our script update the <code>Text</code> property whenever the score changes, so add this to <code>main.gd</code>:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="hll"><span class="n">onready</span> <span class="n">var</span> <span class="n">score_label</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&quot;HUD/score_label&quot;</span><span class="p">)</span>
+</span>
+<span class="n">func</span> <span class="n">_on_gem_grabbed</span><span class="p">():</span>
+	<span class="n">score</span> <span class="o">+=</span> <span class="mi">10</span>
+<span class="hll">	<span class="n">score_label</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">))</span>
+</span></code></pre></div>
+
+
+<p>Now we can see our score change whever we grab a gem:</p>
+
+<p><a href="/blog/img/godot101_07_05.gif"><img src="/blog/img/godot101_07_05.gif" width="350"></a><sub>Click to enlarge</sub></p>
+
+<h2 id="wrapping-up">Wrapping Up</h2>
+
+<p>Signals are a very powerful feature in Godot, and something that is important to understand well.  Resist the temptation to use <code>get_node('..')</code>, especially when using instanced scenes. It may be hard to grasp at first, but with practice you&rsquo;ll find it&rsquo;s a far more robust way of doing things.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a"><a href="https://github.com/kidscancode/godot_tutorials/tree/master/Godot101">Full code for this part</a></h3>
+
+<h3 id="a-href-godot-101-part-8-coming-soon-a"><a href="">Godot 101 - Part 8 (coming soon)</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://godotengine.org">Download Godot Engine</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Us on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>
