@@ -581,7 +581,7 @@
 
 &lt;p&gt;&lt;img src=&#34;/blog/blog/img/shmup_part10_1.png&#34; width=&#34;550&#34;&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;https://dl.dropboxusercontent.com/u/6712968/Explosions_kenney.zip&#34;&gt;Click here&lt;/a&gt; to download a zip of these images.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/Explosions_kenney.zip&#34;&gt;Click here&lt;/a&gt; to download a zip of these images.&lt;/p&gt;
 
 &lt;p&gt;First, we need to load those graphics into our game and store them in a list.  As with the player sprite, we&amp;rsquo;re going to need to resize the images and while we&amp;rsquo;re doing that, we&amp;rsquo;ll create two different sized explosions: a large one, for when a meteor is destroyed; and a small one, for when a meteor hits the player&amp;rsquo;s shield.  So we&amp;rsquo;ll have a dictionary, &lt;code&gt;explosion_anim&lt;/code&gt;, containing two lists, &lt;code&gt;lg&lt;/code&gt; and &lt;code&gt;sm&lt;/code&gt;.  Since the files are all named the same, with a number from 00-08, we can just use a loop to load them all, resize, and append them to the lists:&lt;/p&gt;
 
