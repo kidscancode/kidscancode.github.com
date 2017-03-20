@@ -10,6 +10,148 @@
     <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
     
     <item>
+      <title>Godot 101 - Part 8: Tweens and Timers</title>
+      <link>/blog/2017/03/godot_101_08/</link>
+      <pubDate>Sat, 18 Mar 2017 05:22:12 PDT</pubDate>
+      
+      <guid>/blog/2017/03/godot_101_08/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;This is part 8 of &amp;ldquo;Godot 101&amp;rdquo;. In this installment, we&amp;rsquo;ll learn about two of the simplest yet most useful nodes in Godot: the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tween.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_tween&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_tween&#34;&gt;&lt;/svg&gt;Tween&lt;/a&gt; and the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_timer.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_timer&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_timer&#34;&gt;&lt;/svg&gt;Timer&lt;/a&gt;.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2017/02/godot_101_01/&#34;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
+
+&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
+&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/ToXknbBmCr8&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;adding-visual-appeal&#34;&gt;Adding visual appeal&lt;/h3&gt;
+
+&lt;p&gt;In game design circles, it&amp;rsquo;s sometimes called &amp;ldquo;juice&amp;rdquo; - the little visual effects that make the difference between a game that&amp;rsquo;s boring and a game that feels great to play.&lt;/p&gt;
+
+&lt;p&gt;Collecting the gems is a perfect example of a place where we could add a little juice.  It&amp;rsquo;s not very visually appealing to see the gems just vanish like they do now.  Instead, we&amp;rsquo;re going to use a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tween.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_tween&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_tween&#34;&gt;&lt;/svg&gt;Tween&lt;/a&gt; to juice things up. Add a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tween.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_tween&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_tween&#34;&gt;&lt;/svg&gt;Tween&lt;/a&gt; to the &lt;code&gt;gem&lt;/code&gt; scene and name it &lt;code&gt;&#39;effect&#39;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;For a great example of how Tweens work, have a look at this page: &lt;a href=&#34;http://easings.net&#34; target=&#34;_blank&#34;&gt;Easings.net&lt;/a&gt;.  &amp;ldquo;Easing&amp;rdquo; is another word that&amp;rsquo;s sometimes used in place of &amp;ldquo;tweening&amp;rdquo;.  Essentially, a tween is a way to change some value over time (from a start value to an end value) using a particular function. Hover over the different functions on this page to see how they work.&lt;/p&gt;
+
+&lt;p&gt;When choosing a tween, you have two choices to make: 1) which function to use (examples: Sine or Bounce) and 2) which direction to apply that function (examples: In or In-Out).&lt;/p&gt;
+
+&lt;h3 id=&#34;interpolating-properties&#34;&gt;Interpolating properties&lt;/h3&gt;
+
+&lt;p&gt;&amp;ldquo;Interpolation&amp;rdquo; means calculating the value(s) between two points.  In this case, we want to alter some of the properties of the gem&amp;rsquo;s &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;sprite&lt;/code&gt; node.  Specifically, the scale.  You can find Godot&amp;rsquo;s name for a node&amp;rsquo;s properties by hovering over the property name in the Inspector:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_08_01.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_08_01.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This tells us that we will be modifying the property &lt;code&gt;transform/scale&lt;/code&gt;.  We will use the tween&amp;rsquo;s &lt;code&gt;interpolate_property()&lt;/code&gt; function to define the animation:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Area2D&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;effect&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;sprite&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;signal&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gem_grabbed&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;interpolate_property&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;transform/scale&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_scale&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;2.0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2.0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TRANS_QUAD&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;EASE_OUT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_gem_area_enter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;area&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;area&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;quot;player&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;emit_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;gem_grabbed&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;clear_shapes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_effect_tween_complete&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;object&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;key&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;interpolate_property()&lt;/code&gt; takes a number of arguments:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;target object: the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;sprite&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;target property: &lt;code&gt;transform/scale&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;starting value: the current value obtained from &lt;code&gt;get_scale()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;ending value: we want to scale up to 2x&lt;/li&gt;
+&lt;li&gt;duration (in s): 0.3s because we want a quick effect&lt;/li&gt;
+&lt;li&gt;tween function: feel free to try other ones besides &lt;code&gt;TRANS_QUAD&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;tween &amp;ldquo;ends&amp;rdquo;: you can also use other settings like &lt;code&gt;EASE_IN&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now that the effect is set up, we use &lt;code&gt;start()&lt;/code&gt; to start it when the gem is touched.  However, we don&amp;rsquo;t want the gem to still be detecting collisions during the animation time, so we use &lt;code&gt;clear_shapes()&lt;/code&gt; to remove the collision detection.  Finally, we connect the tween&amp;rsquo;s &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_signal&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_signal&#34;&gt;&lt;/svg&gt;&lt;code&gt;tween_complete&lt;/code&gt; signal to actually delete the node.  Now our animation looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_08_02.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_08_02.gif&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This is good, but we can do even better by interpolating &lt;em&gt;another&lt;/em&gt; property as well: the opacity.  Tweens get really powerful when you apply them to multiple properties at once.  Add this to the gem&amp;rsquo;s &lt;code&gt;_ready()&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;interpolate_property&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;visibility/opacity&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TRANS_QUAD&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;EASE_OUT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now at the same time we&amp;rsquo;re scaling the sprite larger, we&amp;rsquo;re changing the opacity from 1 (fully visible) to 0 (fully transparent).  Now it looks even nicer:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_08_03.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_08_03.gif&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;timers&#34;&gt;Timers&lt;/h3&gt;
+
+&lt;p&gt;Next we&amp;rsquo;re going to use the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_timer.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_timer&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_timer&#34;&gt;&lt;/svg&gt;Timer&lt;/a&gt; node to give our game a goal: collect as many gems as you can before the time runs out!&lt;/p&gt;
+
+&lt;p&gt;Create a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_timer.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_timer&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_timer&#34;&gt;&lt;/svg&gt;Timer&lt;/a&gt; node and call it &lt;code&gt;&#39;game_timer&#39;&lt;/code&gt;.  While you&amp;rsquo;re at it, add another &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_label.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_label&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_label&#34;&gt;&lt;/svg&gt;Label&lt;/a&gt; to the &lt;code&gt;HUD&lt;/code&gt; to display the countdown - call it &lt;code&gt;&#39;time_label&#39;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;A &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_timer.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_timer&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_timer&#34;&gt;&lt;/svg&gt;Timer&lt;/a&gt; node is also very simple, with only a few properties - set them as follows:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_08_04.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_08_04.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Wait Time&lt;/code&gt;: how long the timer should run, in seconds&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;One Shot&lt;/code&gt;: if this is &lt;code&gt;false&lt;/code&gt;, the timer will restart every time it reaches zero&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Autostart&lt;/code&gt;: if this is &amp;lsquo;true&amp;rsquo;, the timer will start automatically when the node enters the tree&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here is the code we need to add to &lt;code&gt;main.gd&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;time_label&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;HUD/time_label&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;game_timer&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;game_timer&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;time_label&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;game_timer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_time_left&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())))&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_game_timer_timeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;player&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Don&amp;rsquo;t forget to connect the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_signal&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_signal&#34;&gt;&lt;/svg&gt;&lt;code&gt;timeout&lt;/code&gt; signal.  Here, we&amp;rsquo;re just disabling the player when the time runs out.  You might want to also add a &amp;ldquo;Game Over&amp;rdquo; label, setting it to &lt;code&gt;hidden&lt;/code&gt; when the game starts, and then showing it at game end.&lt;/p&gt;
+
+&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h2&gt;
+
+&lt;p&gt;These two nodes are incredibly useful for many, many situations.  You should try to use tweens whenever possible - they just make everything look better.  Also, note that you can create these nodes directly in code as an alternative to adding them to the scene tree:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tween&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;add_child&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tween&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Feel free to use timers all over your projects as well. They can be used to measure durations, create regular repeating effects, and lots more.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;a-href-godot-101-part-9-coming-soon-a&#34;&gt;&lt;a href=&#34;&#34;&gt;Godot 101 - Part 9 (coming soon)&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
       <title>Godot 101 - Part 7: Using Signals</title>
       <link>/blog/2017/03/godot_101_07/</link>
       <pubDate>Wed, 01 Mar 2017 05:22:12 -0700</pubDate>
@@ -24,8 +166,8 @@
 &lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
 &lt;/p&gt;
 
-&lt;!-- You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/5WnumDQyJhg&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt; --&gt;
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/5WnumDQyJhg&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;communicating-between-scenes&#34;&gt;Communicating between scenes&lt;/h3&gt;
 
@@ -139,7 +281,7 @@
 
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
-&lt;h3 id=&#34;a-href-godot-101-part-8-coming-soon-a&#34;&gt;&lt;a href=&#34;&#34;&gt;Godot 101 - Part 8 (coming soon)&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-blog-2017-03-godot-101-08-godot-101-part-8-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/03/godot_101_08/&#34;&gt;Godot 101 - Part 8&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
