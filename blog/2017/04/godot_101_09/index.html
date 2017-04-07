@@ -1,0 +1,361 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.19" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 101 - Part 9: Arcade Physics (KinematicBody2D) &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">26</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">9</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">27</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2017 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 101 - Part 9: Arcade Physics (KinematicBody2D)</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Mon, Apr 3, 2017</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			</h6></span>
+
+			      <p><img src="/blog/img/godot_logo.png" width="450"></p>
+
+<p>This is part 9 of &ldquo;Godot 101&rdquo;. In this installment, we&rsquo;ll learn about how to do simple arcade-style physics using Godot&rsquo;s built-in physics engine.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2017/02/godot_101_01/">Part 1</a>.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>Godot 101 is an introduction to the Godot game engine and how it works. If you&rsquo;ve never used a game engine before, or if you&rsquo;re just new to Godot, this is the place to start.  If you&rsquo;re new here, a quick note about this website: we&rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&rsquo;re an adult you&rsquo;re welcome here, too.  We don&rsquo;t believe in dumbing-down the material for kids, and game development is <em>hard</em> - so it will probably be challenging no matter what your age.
+</p>
+
+<!-- You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oy9L0b5X0BY" frameborder="0" allowfullscreen></iframe> -->
+
+<h2 id="new-project-and-game-art">New Project and Game Art</h2>
+
+<p>For this lesson, we&rsquo;re going to start by creating a new Godot project and a new scene.  The art we will use can be found on <a href="http://opengameart.org/content/red-haired-run-and-jump-sprite-sheets">OpenGameArt</a>.  It contains the images for a few different character animations:</p>
+
+<table>
+<tr>
+<td><strong>Idle</strong></td>
+<td><strong>Running</strong></td>
+</tr>
+<tr>
+<td><sub><img src="/blog/img/godot101_09_01.gif" width="200"></td>
+<td><img src="/blog/img/godot101_09_02.gif" width="350"></td>
+</tr>
+</table>
+
+<p>Unpack it all into the <code>art</code> folder in your project (I made a <code>player</code> folder to put it all in).  We&rsquo;ll talk about how to use these animations for our player character soon, but first we will create the scene and make the character move.</p>
+
+<h3 id="setting-up-the-scene">Setting up the Scene</h3>
+
+<p>As we discussed earlier, there are 3 types of <a href="http://docs.godotengine.org/en/stable/classes/class_physicsbody2d.html" target="_blank"><code>PhysicsBody2D</code></a> in Godot.  The one we will use for this project is the <a href="http://docs.godotengine.org/en/stable/classes/class_kinematicbody2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_kinematic_body_2d">
+<use xlink:href="/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d"></svg> <code>KinematicBody2D</code></a>.</p>
+
+<p>This node type has basic collision physics and movement, and is perfect for arcade-style games where you don&rsquo;t need accurate, realistic physics.  Create the following scene tree and save it as <code>player.tscn</code>:</p>
+
+<ul>
+<li><svg width="18" height="18" class="icon-icon_kinematic_body_2d">
+<use xlink:href="/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d"></svg> <code>player (KinematicBody2D)</code>
+
+<ul>
+<li><svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg> <code>sprite (Sprite)</code></li>
+<li><svg width="18" height="18" class="icon-icon_collision_shape_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d"></svg> <code>collision (CollisionShape2D)</code></li>
+</ul></li>
+</ul>
+
+<p>For the <svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg> <code>sprite</code> texture, drag the first frame of the idle animation (<code>idle-frame-1.png</code>) into the <svg width="18" height="18" class="icon-icon_texture"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_texture"></svg> <code>Texture</code> field in the Inspector.</p>
+
+<p>The first thing you&rsquo;ll notice is that the character is <em>huge</em>.  This art was created at a very high resolution (which is nice - but it&rsquo;s way too big for our screen).  Scroll down to the <code>Scale</code> property and set it to <code>(0.2, 0.2)</code> for a much more reasonable size.</p>
+
+<p>Now we can create the collision shape.  There are many different ways you can set up your collisions with different shapes, but for this exercise we&rsquo;re going to choose the <svg width="18" height="18" class="icon-icon_capsule_shape_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_capsule_shape_2d"></svg> <code>CapsuleShape2D</code>, which is a common choice for platformer characters.  Drag the size handles so that it looks like this:</p>
+
+<p><a href="/blog/img/godot101_09_03.png"><img src="/blog/img/godot101_09_03.png" width="150"></a><sub>Click to enlarge</sub></p>
+
+<p>Now we&rsquo;re ready to write some code, so right-click on the <svg width="18" height="18" class="icon-icon_kinematic_body_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d"></svg> <code>player</code> node and choose <svg width="18" height="18" class="icon-icon_script"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_script"></svg> &ldquo;<code>Add Script</code>&rdquo;.</p>
+
+<h3 id="simple-physics">Simple Physics</h3>
+
+<p>Here&rsquo;s our starting point for the player script:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">KinematicBody2D</span>
+
+<span class="n">const</span> <span class="n">ACCEL</span> <span class="o">=</span> <span class="mi">1500</span>
+<span class="n">const</span> <span class="n">MAX_SPEED</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">const</span> <span class="n">FRICTION</span> <span class="o">=</span> <span class="o">-</span><span class="mi">500</span>
+
+<span class="n">var</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span>
+<span class="n">var</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+    <span class="n">set_fixed_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="k">pass</span>
+</code></pre></div>
+
+
+<p>First, we have 3 constants to adjust the player&rsquo;s behavior:</p>
+
+<ul>
+<li><code>ACCEL</code> is how fast the player accelerates when a key is pressed</li>
+<li><code>MAX_SPEED</code> is the maximum speed</li>
+<li><code>FRICTION</code> controls how quickly the player comes to a stop</li>
+</ul>
+
+<p>Next, we have two <a href="http://docs.godotengine.org/en/stable/classes/class_vector2.html" target="_blank"><code>Vector2</code></a> variables to store the player&rsquo;s movement.</p>
+
+<p>Finally, we are using the <code>fixed_process()</code> function for per-frame code. This is recommended for physics bodies because the <code>delta</code> time is fixed to <sup>1</sup>&frasl;<sub>60</sub> s (0.01667 s) and Godot&rsquo;s physics engine works best with a fixed timestep.</p>
+
+<p>Now, let&rsquo;s add the controls:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="n">acc</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_right&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_left&quot;</span><span class="p">)</span>
+    <span class="n">acc</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="n">ACCEL</span>
+    <span class="k">if</span> <span class="n">acc</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">acc</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">FRICTION</span> <span class="o">*</span> <span class="n">delta</span>
+    <span class="n">vel</span> <span class="o">+=</span> <span class="n">acc</span> <span class="o">*</span> <span class="n">delta</span>
+    <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">vel</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">MAX_SPEED</span><span class="p">,</span> <span class="n">MAX_SPEED</span><span class="p">)</span>
+    <span class="n">move</span><span class="p">(</span><span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>We start by getting the direction from the user&rsquo;s input.  Each <code>is_action_pressed()</code> results in either 0 or 1, so we will have a value of <code>1</code> if <code>&quot;ui_right&quot;</code> is pressed and <code>-1</code> if <code>&quot;ui_left&quot;</code> is pressed (these actions are mapped to the arrow keys by default). Note that if both keys are pressed, the result is <code>0</code> - they cancel out.</p>
+
+<p>We then multiply this direction value by <code>ACCEL</code> to get the correct magnitude and apply it to <code>vel</code> for the updated speed.  The <code>clamp()</code> function is used to keep the value of <code>vel.x</code> from going above or below the <code>MAX_SPEED</code> value.</p>
+
+<p>If the player is not pressing a key (<code>acc.x</code> is <code>0</code>), then we apply <code>FRICTION</code>, which will slow the player down.</p>
+
+<p>Now, if you followed the earlier tutorials, where we used an <a href="http://docs.godotengine.org/en/stable/classes/class_area2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_area_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_area_2d"></svg><code>Area2D</code></a> node, you&rsquo;ll recall we moved the object by using <code>set_pos()</code>.  This is not correct for PhysicsBodies, because Godot needs to simulate them <em>moving</em>, not teleporting to a new position.  Always use <code>move()</code> to move a PhysicsBody or you may find things not working the way you expect.</p>
+
+<p>Press &ldquo;Play&rdquo; and try moving around.</p>
+
+<h3 id="platforms-somewhere-to-fall">Platforms: Somewhere to Fall</h3>
+
+<p>The next logical thing to add would be gravity, but then our player would just fall off the screen, so let&rsquo;s add a platform to land on.  Create a new scene - this time we&rsquo;re going to use <a href="http://docs.godotengine.org/en/stable/classes/class_staticbody2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_static_body_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_static_body_2d"></svg><code>StaticBody2D</code></a> for the root node.  Set up the tree like this:</p>
+
+<ul>
+<li><svg width="18" height="18" class="icon-icon_static_body_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_static_body_2d"></svg> <code>platform</code>
+
+<ul>
+<li><svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg> <code>sprite</code></li>
+<li><svg width="18" height="18" class="icon-icon_collision_shape_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d"></svg> <code>collision</code></li>
+</ul></li>
+</ul>
+
+<p>We&rsquo;re using <a href="http://docs.godotengine.org/en/stable/classes/class_staticbody2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_static_body_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_static_body_2d"></svg><code>StaticBody2D</code></a> because it is a PhysicsBody that is optimized for static objects - things that don&rsquo;t move, but just need to collide with other bodies.</p>
+
+<p>For the sprite, we&rsquo;re going to use this simple colored square texture:</p>
+
+<p><a href="/blog/img/green_square.png"><img src="/blog/img/green_square.png" width="32"></a><sub>Save this in your &lsquo;art&rsquo; folder</sub></p>
+
+<p>Set this image as the sprite&rsquo;s texture, and then we&rsquo;ll use the <code>Scale</code> property to size the platform.  Set it to <code>(20, 1)</code> and then add a <svg width="18" height="18" class="icon-icon_rectangle_shape_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_rectangle_shape_2d"></svg><code>RectangleShape2D</code> to the <code>collision</code> node and size it to cover the sprite.</p>
+
+<h3 id="adding-gravity">Adding Gravity</h3>
+
+<p>Now let&rsquo;s put it all together.  Create a new scene with a <svg width="18" height="18" class="icon-icon_node"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_node"></svg> <code>main</code> node and click the <svg width="18" height="18" class="icon-icon_instance"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_instance"></svg> <code>Instance</code> button to add an instance of <code>player</code> and <code>platform</code>.  Arrange them in the scene like so:</p>
+
+<p><a href="/blog/img/godot101_09_04.png"><img src="/blog/img/godot101_09_04.png" width="400"></a><sub>Click to enlarge</sub></p>
+
+<p>Next, add the following to <code>player.gd</code> and press <code>Play</code>:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">const</span> <span class="n">GRAVITY</span> <span class="o">=</span> <span class="mi">2000</span>
+
+<span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="n">acc</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">GRAVITY</span>
+</code></pre></div>
+
+
+<p>You should see the player fall (due to <code>GRAVITY</code> accelerating downward) and stop when it hits the platform.  But now you will find a new problem: the player can no longer move!</p>
+
+<h3 id="collision-response">Collision Response</h3>
+
+<p>The reason for this has to do with how our movement works, and what we do (or don&rsquo;t do) when a collision occurs.  Here is our normal movement situation, when there are no obstacles:
+<img src="/blog/img/godot101_09_05.png" width="400"></p>
+
+<p>Two forces are acting on the player (gravity, and the movement input) so the result is a diagonal vector.  However, if there is an obstacle in the path, we have this:
+<img src="/blog/img/godot101_09_06.png" width="400"></p>
+
+<p>When Godot detects a collision with another <code>PhysicsBody2D</code>, it immediately stops the movement.  Note that there is still a remaining portion of the movement vector that is unused.  In fact, this situation happens also when the player is standing on the platform:
+<img src="/blog/img/godot101_09_07.png" width="400"></p>
+
+<p>Because the desired movement vector results in a collision, the movement is <em>immediately</em> stopped, even though you may be pressing the arrow keys.</p>
+
+<p>Here is how this problem is solved:
+<img src="/blog/img/godot101_09_08.png" width="400"></p>
+
+<p>We start by finding the <em>collision normal</em>.  A <em>normal</em> is a vector of length <code>1</code> that is perpendicular to a surface.  It essentially tells us which way the surface is oriented.  In the case of our horizontal platform, the normal vector is <code>(0, -1)</code>.  We can then use that normal to <em>slide</em> the movement vector along the surface.</p>
+
+<p>Add the following code to  <code>fixed_process()</code>:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">var</span> <span class="n">motion</span> <span class="o">=</span> <span class="n">move</span><span class="p">(</span><span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">is_colliding</span><span class="p">():</span>
+    <span class="n">var</span> <span class="n">n</span> <span class="o">=</span> <span class="n">get_collision_normal</span><span class="p">()</span>
+    <span class="n">motion</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">slide</span><span class="p">(</span><span class="n">motion</span><span class="p">)</span>
+    <span class="n">vel</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">slide</span><span class="p">(</span><span class="n">vel</span><span class="p">)</span>
+    <span class="n">move</span><span class="p">(</span><span class="n">motion</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>First the <code>move()</code> function we used before has a return value of the remaining movement vector, which we&rsquo;re calling <code>motion</code>.  Next we use <code>is_colliding()</code> to check if a collision has happened.  If so, we find the collision normal and <code>slide</code> the <code>motion</code> and <code>vel</code> vectors along it.</p>
+
+<h2 id="wrapping-up">Wrapping Up</h2>
+
+<p>Those are the basics of using the <a href="http://docs.godotengine.org/en/stable/classes/class_kinematicbody2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_kinematic_body_2d">
+<use xlink:href="/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d"></svg> <code>KinematicBody2D</code></a> node.  In the next installment, we&rsquo;ll add jumping as well as add animation to the player.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a"><a href="https://github.com/kidscancode/godot_tutorials/tree/master/Godot101">Full code for this part</a></h3>
+
+<h3 id="a-href-godot-101-part-10-coming-soon-a"><a href="">Godot 101 - Part 10 (coming soon)</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://godotengine.org">Download Godot Engine</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Us on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+			
+		</div>
+
+  </body>
+</html>

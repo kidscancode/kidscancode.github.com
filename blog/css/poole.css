@@ -58,6 +58,11 @@ html {
   }
 }*/
 
+svg {
+    display: inline-block;
+    vertical-align: middle;
+}
+
 body {
   color: #515151;
   background-color: #fff;

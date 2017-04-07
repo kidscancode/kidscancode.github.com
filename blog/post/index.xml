@@ -7,7 +7,211 @@
     <language>en-us</language>
     
     <copyright>KidsCanCode LLC</copyright>
-    <updated>Sat, 18 Mar 2017 05:22:12 PDT</updated>
+    <updated>Mon, 03 Apr 2017 05:22:12 PDT</updated>
+    
+    <item>
+      <title>Godot 101 - Part 9: Arcade Physics (KinematicBody2D)</title>
+      <link>/blog/2017/04/godot_101_09/</link>
+      <pubDate>Mon, 03 Apr 2017 05:22:12 PDT</pubDate>
+      
+      <guid>/blog/2017/04/godot_101_09/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;This is part 9 of &amp;ldquo;Godot 101&amp;rdquo;. In this installment, we&amp;rsquo;ll learn about how to do simple arcade-style physics using Godot&amp;rsquo;s built-in physics engine.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2017/02/godot_101_01/&#34;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
+
+&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
+&lt;/p&gt;
+
+&lt;!-- You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/oy9L0b5X0BY&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt; --&gt;
+
+&lt;h2 id=&#34;new-project-and-game-art&#34;&gt;New Project and Game Art&lt;/h2&gt;
+
+&lt;p&gt;For this lesson, we&amp;rsquo;re going to start by creating a new Godot project and a new scene.  The art we will use can be found on &lt;a href=&#34;http://opengameart.org/content/red-haired-run-and-jump-sprite-sheets&#34;&gt;OpenGameArt&lt;/a&gt;.  It contains the images for a few different character animations:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Idle&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;Running&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;sub&gt;&lt;img src=&#34;/blog/blog/img/godot101_09_01.gif&#34; width=&#34;200&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;/blog/blog/img/godot101_09_02.gif&#34; width=&#34;350&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Unpack it all into the &lt;code&gt;art&lt;/code&gt; folder in your project (I made a &lt;code&gt;player&lt;/code&gt; folder to put it all in).  We&amp;rsquo;ll talk about how to use these animations for our player character soon, but first we will create the scene and make the character move.&lt;/p&gt;
+
+&lt;h3 id=&#34;setting-up-the-scene&#34;&gt;Setting up the Scene&lt;/h3&gt;
+
+&lt;p&gt;As we discussed earlier, there are 3 types of &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_physicsbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;PhysicsBody2D&lt;/code&gt;&lt;/a&gt; in Godot.  The one we will use for this project is the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_kinematicbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_kinematic_body_2d&#34;&gt;
+&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;KinematicBody2D&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This node type has basic collision physics and movement, and is perfect for arcade-style games where you don&amp;rsquo;t need accurate, realistic physics.  Create the following scene tree and save it as &lt;code&gt;player.tscn&lt;/code&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_kinematic_body_2d&#34;&gt;
+&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;player (KinematicBody2D)&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; &lt;code&gt;sprite (Sprite)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_collision_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;collision (CollisionShape2D)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; &lt;code&gt;sprite&lt;/code&gt; texture, drag the first frame of the idle animation (&lt;code&gt;idle-frame-1.png&lt;/code&gt;) into the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_texture&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_texture&#34;&gt;&lt;/svg&gt; &lt;code&gt;Texture&lt;/code&gt; field in the Inspector.&lt;/p&gt;
+
+&lt;p&gt;The first thing you&amp;rsquo;ll notice is that the character is &lt;em&gt;huge&lt;/em&gt;.  This art was created at a very high resolution (which is nice - but it&amp;rsquo;s way too big for our screen).  Scroll down to the &lt;code&gt;Scale&lt;/code&gt; property and set it to &lt;code&gt;(0.2, 0.2)&lt;/code&gt; for a much more reasonable size.&lt;/p&gt;
+
+&lt;p&gt;Now we can create the collision shape.  There are many different ways you can set up your collisions with different shapes, but for this exercise we&amp;rsquo;re going to choose the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_capsule_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_capsule_shape_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;CapsuleShape2D&lt;/code&gt;, which is a common choice for platformer characters.  Drag the size handles so that it looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_09_03.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_09_03.png&#34; width=&#34;150&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we&amp;rsquo;re ready to write some code, so right-click on the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_kinematic_body_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;player&lt;/code&gt; node and choose &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_script&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_script&#34;&gt;&lt;/svg&gt; &amp;ldquo;&lt;code&gt;Add Script&lt;/code&gt;&amp;rdquo;.&lt;/p&gt;
+
+&lt;h3 id=&#34;simple-physics&#34;&gt;Simple Physics&lt;/h3&gt;
+
+&lt;p&gt;Here&amp;rsquo;s our starting point for the player script:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;KinematicBody2D&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ACCEL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1500&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MAX_SPEED&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;500&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;FRICTION&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;500&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;set_fixed_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_fixed_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;First, we have 3 constants to adjust the player&amp;rsquo;s behavior:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ACCEL&lt;/code&gt; is how fast the player accelerates when a key is pressed&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MAX_SPEED&lt;/code&gt; is the maximum speed&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;FRICTION&lt;/code&gt; controls how quickly the player comes to a stop&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Next, we have two &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_vector2.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;Vector2&lt;/code&gt;&lt;/a&gt; variables to store the player&amp;rsquo;s movement.&lt;/p&gt;
+
+&lt;p&gt;Finally, we are using the &lt;code&gt;fixed_process()&lt;/code&gt; function for per-frame code. This is recommended for physics bodies because the &lt;code&gt;delta&lt;/code&gt; time is fixed to &lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;60&lt;/sub&gt; s (0.01667 s) and Godot&amp;rsquo;s physics engine works best with a fixed timestep.&lt;/p&gt;
+
+&lt;p&gt;Now, let&amp;rsquo;s add the controls:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_fixed_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;ui_right&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;ui_left&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ACCEL&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;FRICTION&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;clamp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MAX_SPEED&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MAX_SPEED&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We start by getting the direction from the user&amp;rsquo;s input.  Each &lt;code&gt;is_action_pressed()&lt;/code&gt; results in either 0 or 1, so we will have a value of &lt;code&gt;1&lt;/code&gt; if &lt;code&gt;&amp;quot;ui_right&amp;quot;&lt;/code&gt; is pressed and &lt;code&gt;-1&lt;/code&gt; if &lt;code&gt;&amp;quot;ui_left&amp;quot;&lt;/code&gt; is pressed (these actions are mapped to the arrow keys by default). Note that if both keys are pressed, the result is &lt;code&gt;0&lt;/code&gt; - they cancel out.&lt;/p&gt;
+
+&lt;p&gt;We then multiply this direction value by &lt;code&gt;ACCEL&lt;/code&gt; to get the correct magnitude and apply it to &lt;code&gt;vel&lt;/code&gt; for the updated speed.  The &lt;code&gt;clamp()&lt;/code&gt; function is used to keep the value of &lt;code&gt;vel.x&lt;/code&gt; from going above or below the &lt;code&gt;MAX_SPEED&lt;/code&gt; value.&lt;/p&gt;
+
+&lt;p&gt;If the player is not pressing a key (&lt;code&gt;acc.x&lt;/code&gt; is &lt;code&gt;0&lt;/code&gt;), then we apply &lt;code&gt;FRICTION&lt;/code&gt;, which will slow the player down.&lt;/p&gt;
+
+&lt;p&gt;Now, if you followed the earlier tutorials, where we used an &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_area2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_area_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_area_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;Area2D&lt;/code&gt;&lt;/a&gt; node, you&amp;rsquo;ll recall we moved the object by using &lt;code&gt;set_pos()&lt;/code&gt;.  This is not correct for PhysicsBodies, because Godot needs to simulate them &lt;em&gt;moving&lt;/em&gt;, not teleporting to a new position.  Always use &lt;code&gt;move()&lt;/code&gt; to move a PhysicsBody or you may find things not working the way you expect.&lt;/p&gt;
+
+&lt;p&gt;Press &amp;ldquo;Play&amp;rdquo; and try moving around.&lt;/p&gt;
+
+&lt;h3 id=&#34;platforms-somewhere-to-fall&#34;&gt;Platforms: Somewhere to Fall&lt;/h3&gt;
+
+&lt;p&gt;The next logical thing to add would be gravity, but then our player would just fall off the screen, so let&amp;rsquo;s add a platform to land on.  Create a new scene - this time we&amp;rsquo;re going to use &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_staticbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_static_body_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_static_body_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;StaticBody2D&lt;/code&gt;&lt;/a&gt; for the root node.  Set up the tree like this:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_static_body_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_static_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;platform&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; &lt;code&gt;sprite&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_collision_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;collision&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We&amp;rsquo;re using &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_staticbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_static_body_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_static_body_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;StaticBody2D&lt;/code&gt;&lt;/a&gt; because it is a PhysicsBody that is optimized for static objects - things that don&amp;rsquo;t move, but just need to collide with other bodies.&lt;/p&gt;
+
+&lt;p&gt;For the sprite, we&amp;rsquo;re going to use this simple colored square texture:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/green_square.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/green_square.png&#34; width=&#34;32&#34;&gt;&lt;/a&gt;&lt;sub&gt;Save this in your &amp;lsquo;art&amp;rsquo; folder&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;Set this image as the sprite&amp;rsquo;s texture, and then we&amp;rsquo;ll use the &lt;code&gt;Scale&lt;/code&gt; property to size the platform.  Set it to &lt;code&gt;(20, 1)&lt;/code&gt; and then add a &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_rectangle_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_rectangle_shape_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;RectangleShape2D&lt;/code&gt; to the &lt;code&gt;collision&lt;/code&gt; node and size it to cover the sprite.&lt;/p&gt;
+
+&lt;h3 id=&#34;adding-gravity&#34;&gt;Adding Gravity&lt;/h3&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s put it all together.  Create a new scene with a &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_node&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_node&#34;&gt;&lt;/svg&gt; &lt;code&gt;main&lt;/code&gt; node and click the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_instance&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_instance&#34;&gt;&lt;/svg&gt; &lt;code&gt;Instance&lt;/code&gt; button to add an instance of &lt;code&gt;player&lt;/code&gt; and &lt;code&gt;platform&lt;/code&gt;.  Arrange them in the scene like so:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_09_04.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_09_04.png&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, add the following to &lt;code&gt;player.gd&lt;/code&gt; and press &lt;code&gt;Play&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GRAVITY&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2000&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_fixed_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GRAVITY&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You should see the player fall (due to &lt;code&gt;GRAVITY&lt;/code&gt; accelerating downward) and stop when it hits the platform.  But now you will find a new problem: the player can no longer move!&lt;/p&gt;
+
+&lt;h3 id=&#34;collision-response&#34;&gt;Collision Response&lt;/h3&gt;
+
+&lt;p&gt;The reason for this has to do with how our movement works, and what we do (or don&amp;rsquo;t do) when a collision occurs.  Here is our normal movement situation, when there are no obstacles:
+&lt;img src=&#34;/blog/blog/img/godot101_09_05.png&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Two forces are acting on the player (gravity, and the movement input) so the result is a diagonal vector.  However, if there is an obstacle in the path, we have this:
+&lt;img src=&#34;/blog/blog/img/godot101_09_06.png&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;When Godot detects a collision with another &lt;code&gt;PhysicsBody2D&lt;/code&gt;, it immediately stops the movement.  Note that there is still a remaining portion of the movement vector that is unused.  In fact, this situation happens also when the player is standing on the platform:
+&lt;img src=&#34;/blog/blog/img/godot101_09_07.png&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Because the desired movement vector results in a collision, the movement is &lt;em&gt;immediately&lt;/em&gt; stopped, even though you may be pressing the arrow keys.&lt;/p&gt;
+
+&lt;p&gt;Here is how this problem is solved:
+&lt;img src=&#34;/blog/blog/img/godot101_09_08.png&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;We start by finding the &lt;em&gt;collision normal&lt;/em&gt;.  A &lt;em&gt;normal&lt;/em&gt; is a vector of length &lt;code&gt;1&lt;/code&gt; that is perpendicular to a surface.  It essentially tells us which way the surface is oriented.  In the case of our horizontal platform, the normal vector is &lt;code&gt;(0, -1)&lt;/code&gt;.  We can then use that normal to &lt;em&gt;slide&lt;/em&gt; the movement vector along the surface.&lt;/p&gt;
+
+&lt;p&gt;Add the following code to  &lt;code&gt;fixed_process()&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_collision_normal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;slide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;slide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;First the &lt;code&gt;move()&lt;/code&gt; function we used before has a return value of the remaining movement vector, which we&amp;rsquo;re calling &lt;code&gt;motion&lt;/code&gt;.  Next we use &lt;code&gt;is_colliding()&lt;/code&gt; to check if a collision has happened.  If so, we find the collision normal and &lt;code&gt;slide&lt;/code&gt; the &lt;code&gt;motion&lt;/code&gt; and &lt;code&gt;vel&lt;/code&gt; vectors along it.&lt;/p&gt;
+
+&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h2&gt;
+
+&lt;p&gt;Those are the basics of using the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_kinematicbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_kinematic_body_2d&#34;&gt;
+&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;KinematicBody2D&lt;/code&gt;&lt;/a&gt; node.  In the next installment, we&amp;rsquo;ll add jumping as well as add animation to the player.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;a-href-godot-101-part-10-coming-soon-a&#34;&gt;&lt;a href=&#34;&#34;&gt;Godot 101 - Part 10 (coming soon)&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Godot 101 - Part 8: Tweens and Timers</title>
@@ -141,7 +345,7 @@
 
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
-&lt;h3 id=&#34;a-href-godot-101-part-9-coming-soon-a&#34;&gt;&lt;a href=&#34;&#34;&gt;Godot 101 - Part 9 (coming soon)&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-blog-2017-04-godot-101-09-godot-101-part-9-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/04/godot_101_09/&#34;&gt;Godot 101 - Part 9&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
@@ -341,7 +545,7 @@
 &lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;randomize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_viewport&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;size&lt;/span&gt;
-	&lt;span class=&#34;n&#34;&gt;set_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;set_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;spawn_gems&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 
 &lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;spawn_gems&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;num&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
@@ -1865,156 +2069,6 @@
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-9-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-9.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-09-pygame-shmup-part-10-part-10-explosions-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/09/pygame_shmup_part_10/&#34;&gt;Part 10: Explosions &lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/python-install.html&#34;&gt;Installing Python&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/blog/2015/09/pygame_install/&#34;&gt;Installing Pygame&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uve1tjVIQ6c&amp;ab_channel=KidsCanCode&#34;&gt;Setting up Atom for Python&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Pygame Shmup Part 8: Sound and Music</title>
-      <link>/blog/2016/08/pygame_shmup_part_8/</link>
-      <pubDate>Wed, 31 Aug 2016 05:22:12 PDT</pubDate>
-      
-      <guid>/blog/2016/08/pygame_shmup_part_8/</guid>
-      <description>&lt;p&gt;This is part 8 of our &amp;ldquo;Shmup&amp;rdquo; project.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2016/08/pygame_shmup_part_1/&#34;&gt;Part 1&lt;/a&gt;. In this lesson we&amp;rsquo;ll add sound effects and music to the game.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
-
-&lt;p&gt;In this series of lessons we&amp;rsquo;ll build a complete game using Python and Pygame.  It&amp;rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.
-&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/abm1VwFxv9o&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;the-power-of-sound&#34;&gt;The power of sound&lt;/h2&gt;
-
-&lt;p&gt;Good audio (sound and music) is the single most effective way to add &amp;ldquo;juice&amp;rdquo; to a game.  Juice is an informal game design word for the things that make a game fun and engaging. It&amp;rsquo;s sometimes also called &amp;ldquo;game feel.&amp;rdquo;&lt;/p&gt;
-
-&lt;p&gt;Just as with graphics, finding the right sounds for your game can be challenging.  &lt;a href=&#34;http://opengameart.org/&#34;&gt;OpenGameArt&lt;/a&gt; is a great place for finding audio assets, and it can be a lot of fun to search through the site looking for sounds, but we&amp;rsquo;re going to look at another way to create our game&amp;rsquo;s sound effects.&lt;/p&gt;
-
-&lt;h2 id=&#34;making-custom-sounds&#34;&gt;Making custom sounds&lt;/h2&gt;
-
-&lt;p&gt;We&amp;rsquo;re going to use a really great tool called &lt;a href=&#34;http://bfxr.net/&#34; target=&#34;_blank_&#34;&gt;Bfxr&lt;/a&gt; to generate the sounds we need for our Shmup game.  Bfxr looks like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/shmup_part8_1.png&#34; width=&#34;550&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;Don&amp;rsquo;t be intimidated by all those sliders and the audio jargon names.  The buttons on the left side will randomly generate a sound of that type.  Try clicking the &amp;ldquo;Shoot&amp;rdquo; button a few times.  The sounds that are generated will be saved in the list below the buttons.&lt;/p&gt;
-
-&lt;p&gt;For the Shmup game, we will need a &amp;ldquo;shoot&amp;rdquo; sound and an &amp;ldquo;explosion&amp;rdquo; sound.  When you&amp;rsquo;ve found a sound you want, click on the &amp;ldquo;Export Wav&amp;rdquo; button (&lt;em&gt;NOT&lt;/em&gt; the &amp;ldquo;Save to Disk&amp;rdquo; button).&lt;/p&gt;
-
-&lt;p&gt;Next, we&amp;rsquo;ll create a &amp;ldquo;snd&amp;rdquo; folder (like we did for images) and put the WAV files in there.  Here are the sounds I chose:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;/blog/blog/img/expl3.wav&#34;&gt;expl3.wav&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;/blog/blog/img/expl6.wav&#34;&gt;expl6.wav&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;/blog/blog/img/pew.wav&#34;&gt;pew.wav&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Note that there are two explosion sounds.  This way, we can choose randomly between them and have a little variety in our meteor explosions.&lt;/p&gt;
-
-&lt;p&gt;Last, but not least, we need some music.  Feel free to browse OpenGameArt, or you can use this one:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://opengameart.org/content/frozen-jam-seamless-loop&#34; target=&#34;_blank_&#34;&gt;Frozen Jam by tgfcoder&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Notice that on the page above, the artist has specified &amp;ldquo;Attribution Instructions&amp;rdquo;. These are the requirements that the artist has chosen to license the music to you.  In brief, it means we have to give credit to the artist.  We&amp;rsquo;ll copy &amp;amp; paste that statement in the top of our program.&lt;/p&gt;
-
-&lt;h2 id=&#34;adding-sound-to-the-game&#34;&gt;Adding sound to the game&lt;/h2&gt;
-
-&lt;p&gt;We&amp;rsquo;re ready to add the sounds into the game.  First, we need to specify where our sound folder is:
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Frozen Jam by tgfcoder &amp;lt;https://twitter.com/tgfcoder&amp;gt; licensed under CC-BY-3&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Art from Kenney.nl&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;pygame&lt;/span&gt;
-&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;random&lt;/span&gt;
-&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;os&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;img_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dirname&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__file__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;img&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;n&#34;&gt;snd_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dirname&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__file__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;snd&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Next, we need to load the sound files.  We will do that in the same location where we&amp;rsquo;re loading the graphics.  Let&amp;rsquo;s do the shooting sound first:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Load all game sounds&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;n&#34;&gt;shoot_sound&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mixer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sound&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;snd_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;pew.wav&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Now we have the sound loaded and assigned to the variable &lt;code&gt;shoot_sound&lt;/code&gt; so that we can refer to it.  We want the sound to play whenever the player shoots, so let&amp;rsquo;s add that to the &lt;code&gt;shoot()&lt;/code&gt; method:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;shoot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;bullet&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;centerx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;top&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;bullets&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;hll&#34;&gt;        &lt;span class=&#34;n&#34;&gt;shoot_sound&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;That&amp;rsquo;s all there is to it.  It feels much nicer to shoot now!&lt;/p&gt;
-
-&lt;p&gt;Next, let&amp;rsquo;s add the explosion sounds.  We&amp;rsquo;ll load both of them and put them in a list:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# Load all game sounds&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;shoot_sound&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mixer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sound&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;snd_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;pew.wav&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
-&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;n&#34;&gt;expl_sounds&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;snd&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;expl3.wav&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;expl6.wav&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]:&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;    &lt;span class=&#34;n&#34;&gt;expl_sounds&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;append&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mixer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sound&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;snd_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;snd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;To make the explosions play, we&amp;rsquo;ll randomly select one of them whenever we destroy a meteor:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;# check to see if a bullet hit a mob&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;groupcollide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bullets&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hit&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;score&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hit&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt;
-&lt;span class=&#34;hll&#34;&gt;        &lt;span class=&#34;n&#34;&gt;random&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;choice&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;expl_sounds&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;        &lt;span class=&#34;n&#34;&gt;m&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Mob&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2 id=&#34;music&#34;&gt;Music&lt;/h2&gt;
-
-&lt;p&gt;The last thing to do is add some background music, which will bring a lot of personality and emotion to a game.  Music works a little bit differently from sound, because you want it constantly streaming in the background.&lt;/p&gt;
-
-&lt;p&gt;First, load the music:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;expl_sounds&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;snd&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;expl3.wav&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;expl6.wav&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]:&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;expl_sounds&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;append&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mixer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sound&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;snd_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;snd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt;
-&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mixer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;music&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;load&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;join&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;snd_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;tgfcoder-FrozenJam-SeamlessLoop.ogg&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mixer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;music&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_volume&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;0.4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;This music file happens to be rather loud, and we don&amp;rsquo;t want it to overpower the other sounds, so we&amp;rsquo;ve also set the volume to 40% of maximum.&lt;/p&gt;
-
-&lt;p&gt;To play music, you just have to choose where in the code the song should start, which in our case is right before the game loop starts:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;score&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
-&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mixer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;music&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;loops&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# Game loop&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The &lt;code&gt;loops&lt;/code&gt; parameter is how you specify the number of times you want the song to repeat. By setting &lt;code&gt;loops&lt;/code&gt; to &lt;code&gt;-1&lt;/code&gt; we have it repeat infinitely.&lt;/p&gt;
-
-&lt;p&gt;Try it out - doesn&amp;rsquo;t the game feel so much better now?  We haven&amp;rsquo;t changed any of the gameplay, but the music and sound effects make for a much richer experience.  Experiment with different sounds and see how it affects the game feel.&lt;/p&gt;
-
-&lt;p&gt;In the next lesson, we&amp;rsquo;ll add some shields to the player so we don&amp;rsquo;t die so easily.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-8-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-8.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;a-href-blog-2016-09-pygame-shmup-part-9-part-9-shields-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/09/pygame_shmup_part_9/&#34;&gt;Part 9: Shields &lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
