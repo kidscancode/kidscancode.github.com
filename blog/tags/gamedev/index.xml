@@ -24,8 +24,8 @@
 &lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
 &lt;/p&gt;
 
-&lt;!-- You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/oy9L0b5X0BY&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt; --&gt;
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/oy9L0b5X0BY&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;new-project-and-game-art&#34;&gt;New Project and Game Art&lt;/h2&gt;
 
@@ -1633,7 +1633,7 @@
 
 &lt;p&gt;We&amp;rsquo;re going to use a different explosion animation for the player&amp;rsquo;s death, also from the same Kenny Game Art package, called the &amp;ldquo;Sonic Explosion&amp;rdquo;.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;https://dl.dropboxusercontent.com/u/6712968/Shmup_player_expl.zip&#34;&gt;Click here&lt;/a&gt; to download a zip of these images.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://kidscancode.org/blog/img/Shmup_player_expl.zip&#34;&gt;Click here&lt;/a&gt; to download a zip of these images.&lt;/p&gt;
 
 &lt;p&gt;We just need to load those frames like we did for the other explosions.  We&amp;rsquo;ll just add another explosion type called &lt;code&gt;&#39;player&#39;&lt;/code&gt; and load it in the same loop, since it has the same number of frames as the other explosion we&amp;rsquo;re loading. Now our loading code will look like this:&lt;/p&gt;
 

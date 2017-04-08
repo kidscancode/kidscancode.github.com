@@ -362,7 +362,7 @@
 
 &lt;p&gt;We&amp;rsquo;re going to use a different explosion animation for the player&amp;rsquo;s death, also from the same Kenny Game Art package, called the &amp;ldquo;Sonic Explosion&amp;rdquo;.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;https://dl.dropboxusercontent.com/u/6712968/Shmup_player_expl.zip&#34;&gt;Click here&lt;/a&gt; to download a zip of these images.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://kidscancode.org/blog/img/Shmup_player_expl.zip&#34;&gt;Click here&lt;/a&gt; to download a zip of these images.&lt;/p&gt;
 
 &lt;p&gt;We just need to load those frames like we did for the other explosions.  We&amp;rsquo;ll just add another explosion type called &lt;code&gt;&#39;player&#39;&lt;/code&gt; and load it in the same loop, since it has the same number of frames as the other explosion we&amp;rsquo;re loading. Now our loading code will look like this:&lt;/p&gt;
 
