@@ -7,7 +7,130 @@
     <language>en-us</language>
     
     <copyright>KidsCanCode LLC</copyright>
-    <updated>Mon, 03 Apr 2017 05:22:12 PDT</updated>
+    <updated>Thu, 06 Apr 2017 05:22:12 PDT</updated>
+    
+    <item>
+      <title>Godot 101 - Part 10: RayCasts (and Jumping)</title>
+      <link>/blog/2017/04/godot_101_10/</link>
+      <pubDate>Thu, 06 Apr 2017 05:22:12 PDT</pubDate>
+      
+      <guid>/blog/2017/04/godot_101_10/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;This is part 10 of &amp;ldquo;Godot 101&amp;rdquo;. In this installment, we&amp;rsquo;ll learn about how to detect when a character is on the ground, so we can jump, by using the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_raycast2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_ray_cast_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_ray_cast_2d&#34;&gt;&lt;/svg&gt;RayCast2D&lt;/a&gt; node.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2017/02/godot_101_01/&#34;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
+
+&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
+&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/iaaBYHyvliI&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;getting-jumpy&#34;&gt;Getting Jumpy&lt;/h2&gt;
+
+&lt;p&gt;Jumping is an important part of any platform game, but there are some things to consider when it comes to implementation.  At first glance, it&amp;rsquo;s very simple:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;JUMP_SPEED&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_fixed_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# ...&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;ui_up&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;JUMP_SPEED&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The problem here is that tapping the key will jump, but holding it down sends the player flying up off the screen.  As long as the key is down, we continue to move upward.&lt;/p&gt;
+
+&lt;p&gt;Instead, we want to only allow a jump if the player is standing on the ground.&lt;/p&gt;
+
+&lt;p&gt;One approach to this would be to create a variable called &amp;ldquo;can_jump&amp;rdquo; and toggle it between &lt;code&gt;true/false&lt;/code&gt;: when you land, it&amp;rsquo;s &lt;code&gt;true&lt;/code&gt;, and when you jump, it&amp;rsquo;s &lt;code&gt;false&lt;/code&gt;.  This is a very common strategy and works just fine.&lt;/p&gt;
+
+&lt;p&gt;However, we&amp;rsquo;re going to use a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_raycast2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_ray_cast_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_ray_cast_2d&#34;&gt;&lt;/svg&gt;RayCast2D&lt;/a&gt; to detect the ground beneath the player&amp;rsquo;s feet.&lt;/p&gt;
+
+&lt;h3 id=&#34;casting-rays&#34;&gt;Casting Rays&lt;/h3&gt;
+
+&lt;p&gt;Add one of these nodes to the player scene and name it &amp;ldquo;&lt;code&gt;ground_ray&lt;/code&gt;&amp;rdquo;.  You will see a blue arrow pointing downward from the center of the player. Let&amp;rsquo;s adjust its location by changing &lt;code&gt;Pos&lt;/code&gt; to &lt;code&gt;(0, 50)&lt;/code&gt; and its length by changing &lt;code&gt;Cast To&lt;/code&gt; to &lt;code&gt;(0, 20)&lt;/code&gt;.  You should see this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_10_01.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_10_01.png&#34; width=&#34;150&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;Now to use this in the code, add this to &lt;code&gt;player.gd&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ground_ray&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;ground_ray&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;JUMP_SPEED&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_fixed_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;c1&#34;&gt;# ...&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;ui_up&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;and&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ground_ray&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;JUMP_SPEED&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now we only jump when standing on the ground, but what happens if we hold the key?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot101_10_02.gif&#34; width=&#34;150&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Ideally, the player should jump one time when the jump key is pressed, then not again until it&amp;rsquo;s pressed again.  To do this, we can change the way we check for the key:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;set_process_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;ui_up&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;and&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ground_ray&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;JUMP_SPEED&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Enabling input processing means that whenever an input event occurs, the &lt;code&gt;_input()&lt;/code&gt; function will be called.  We then use that event to trigger the jump, instead of doing it every frame in &lt;code&gt;_fixed_process()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;one-way-collisions&#34;&gt;One-way Collisions&lt;/h3&gt;
+
+&lt;p&gt;Head over to the main scene and duplicate the platform instance so that you have two platforms arranged like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_10_03.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_10_03.png&#34; width=&#34;350&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;If you run, everything works fine, and you can jump to the upper platform.  But what about when you&amp;rsquo;re standing under it?  In some games, you&amp;rsquo;d like to allow the player to jump up through the platform and land on the top.  Godot has you covered.&lt;/p&gt;
+
+&lt;p&gt;In the platform scene, find the following section in the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_static_body_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_static_body_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;platform&lt;/code&gt; node:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_10_04.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_10_04.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;One Way Collisior&lt;/code&gt; section lets us set the object to only detect collisions in one direction.  Set &lt;code&gt;Direction&lt;/code&gt; to &lt;code&gt;(0, 1)&lt;/code&gt; (collide with things moving downward) and &lt;code&gt;Max Depth&lt;/code&gt; to &lt;code&gt;16&lt;/code&gt; (this is how far into the platform an object is allowed to penetrate before the one way collision takes effect).  Now you should have this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot101_10_05.gif&#34; width=&#34;150&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;varying-the-jump&#34;&gt;Varying the Jump&lt;/h3&gt;
+
+&lt;p&gt;Many games allow the player to vary the height of the jump depending on how long they hold down the jump key or how quickly they release it.  We can do that easily using the &lt;code&gt;_input()&lt;/code&gt; function:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MIN_JUMP&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;500&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_released&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;quot;ui_up&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;clamp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MIN_JUMP&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, if the player releases the jump key, we check the velocity.  If it&amp;rsquo;s less than -500 (going up &lt;em&gt;faster&lt;/em&gt;) then we clamp it to -500, cutting the jump short.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot101_10_06.gif&#34; width=&#34;150&#34;&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h2&gt;
+
+&lt;p&gt;In the next installment, we&amp;rsquo;ll add animations to the player.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;a-href-godot-101-part-11-coming-soon-a&#34;&gt;&lt;a href=&#34;&#34;&gt;Godot 101 - Part 11 (coming soon)&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Godot 101 - Part 9: Arcade Physics (KinematicBody2D)</title>
@@ -199,11 +322,11 @@
 &lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h2&gt;
 
 &lt;p&gt;Those are the basics of using the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_kinematicbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_kinematic_body_2d&#34;&gt;
-&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;KinematicBody2D&lt;/code&gt;&lt;/a&gt; node.  In the next installment, we&amp;rsquo;ll add jumping as well as add animation to the player.&lt;/p&gt;
+&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;KinematicBody2D&lt;/code&gt;&lt;/a&gt; node.  In the next installment, we&amp;rsquo;ll add jumping to the player.&lt;/p&gt;
 
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
-&lt;h3 id=&#34;a-href-godot-101-part-10-coming-soon-a&#34;&gt;&lt;a href=&#34;&#34;&gt;Godot 101 - Part 10 (coming soon)&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;a-href-blog-2017-04-godot-101-10-godot-101-part-10-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/04/godot_101_10/&#34;&gt;Godot 101 - Part 10&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
@@ -1935,140 +2058,6 @@
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-10-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-10.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2016-09-pygame-shmup-part-11-part-11-player-lives-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/09/pygame_shmup_part_11/&#34;&gt;Part 11: Player Lives &lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/python-install.html&#34;&gt;Installing Python&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/blog/2015/09/pygame_install/&#34;&gt;Installing Pygame&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uve1tjVIQ6c&amp;ab_channel=KidsCanCode&#34;&gt;Setting up Atom for Python&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Pygame Shmup Part 9: Shields</title>
-      <link>/blog/2016/09/pygame_shmup_part_9/</link>
-      <pubDate>Fri, 02 Sep 2016 05:22:12 PDT</pubDate>
-      
-      <guid>/blog/2016/09/pygame_shmup_part_9/</guid>
-      <description>&lt;p&gt;This is part 9 of our &amp;ldquo;Shmup&amp;rdquo; project.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2016/08/pygame_shmup_part_1/&#34;&gt;Part 1&lt;/a&gt;. In this lesson we&amp;rsquo;ll add a shield to the player as well as a bar to display the shield&amp;rsquo;s level.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
-
-&lt;p&gt;In this series of lessons we&amp;rsquo;ll build a complete game using Python and Pygame.  It&amp;rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.
-&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/vvgWfNLgK9c&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;adding-shields&#34;&gt;Adding shields&lt;/h2&gt;
-
-&lt;p&gt;Right now, our player is destroyed by a single meteor hit.  This is not very much fun, so we&amp;rsquo;re going to add a property to our player, &lt;code&gt;shield&lt;/code&gt;, which will just be number from &lt;code&gt;0 - 100&lt;/code&gt;.&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;__init__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speedx&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
-&lt;span class=&#34;hll&#34;&gt;        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shield&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Now, each time the player is hit by a meteor, we can subtract a bit from the shield.  When the shield reaches 0, the player is destroyed. To make things a little more interesting, we can make large meteors do more damage than tiny ones by using the meteor&amp;rsquo;s &lt;code&gt;radius&lt;/code&gt; property.&lt;/p&gt;
-
-&lt;p&gt;In the next video, we&amp;rsquo;ll add some shields to the player so we don&amp;rsquo;t die so easily.&lt;/p&gt;
-
-&lt;h3 id=&#34;damaging-the-player&#34;&gt;Damaging the player&lt;/h3&gt;
-
-&lt;p&gt;Currently, our mob-versus-player collision code is very simple:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;# check to see if a mob hit the player&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;spritecollide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;collide_circle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;We need to make a few changes:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;c1&#34;&gt;# check to see if a mob hit the player&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;spritecollide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;collide_circle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hit&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shield&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hit&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shield&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;We change the &lt;code&gt;False&lt;/code&gt; to &lt;code&gt;True&lt;/code&gt; in the &lt;code&gt;spritecollide&lt;/code&gt; because we want the meteor to be deleted when it hits.  If we don&amp;rsquo;t do this, then the meteor would continue to exist, and when it moves, there would be another collision the next frame, and so on.  Also, it&amp;rsquo;s possible that we could hit more than one meteor at the same time, so &lt;code&gt;hits&lt;/code&gt; can have more than one item in it.  We loop through &lt;code&gt;hits&lt;/code&gt; and deduct some shield for each hit, based on its radius.  Finally, if the player&amp;rsquo;s shield reaches 0, the game will be over.&lt;/p&gt;
-
-&lt;p&gt;One thing you may have noticed is that since we are deleting any mob that hits the player, we are reducing the total number of mobs in the game.  We&amp;rsquo;d like that to remain constant, so we need to spawn a new mob whenever we remove one.  We spawned the original mobs like this:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;m&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Mob&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;We would need to do the same thing to spawn a new mob, and that&amp;rsquo;s repeating code, which is a bad thing.  Instead, we&amp;rsquo;ll move the mob creation code to a function, which we can use whenever we need it:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;newmob&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;m&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Mob&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;m&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Now we can just use that function at the beginning of the game, when we shoot a mob, and when we need to replace the mob that hit the player:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;newmob&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-
-&lt;span class=&#34;c1&#34;&gt;# check to see if a bullet hit a mob&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;groupcollide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bullets&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hit&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;score&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;50&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hit&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;random&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;choice&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;expl_sounds&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;newmob&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-
-&lt;span class=&#34;c1&#34;&gt;# check to see if a mob hit the player&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;spritecollide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;collide_circle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hit&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shield&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hit&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;newmob&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shield&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h3 id=&#34;shield-bar&#34;&gt;Shield bar&lt;/h3&gt;
-
-&lt;p&gt;We have a value for shield, and it&amp;rsquo;s working, but it&amp;rsquo;s not very useful unless the player can see the value.  We need to create a display, but rather than just show the number, we&amp;rsquo;re going to make a bar that will show how full/empty the shield is:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;draw_shield_bar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;surf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pct&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pct&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;pct&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;BAR_LENGTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;BAR_HEIGHT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;fill&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pct&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;BAR_LENGTH&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;outline_rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;BAR_LENGTH&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;BAR_HEIGHT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;fill_rect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fill&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;BAR_HEIGHT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;draw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;surf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GREEN&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fill_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;draw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;surf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;WHITE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;outline_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;This function will work similarly to the &lt;code&gt;draw_text&lt;/code&gt; function we defined earlier.  It will draw a bar of size &lt;code&gt;BAR_LENGTH&lt;/code&gt; by &lt;code&gt;BAR_HEIGHT&lt;/code&gt;, located at &lt;code&gt;(x, y)&lt;/code&gt; and filled by &lt;code&gt;pct&lt;/code&gt; amount.  We will draw two rectangles: the first will be a white outline and the second will be the green filled portion.  We add a call to this function in the draw section of the game loop:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;draw_text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;score&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;hll&#34;&gt;&lt;span class=&#34;n&#34;&gt;draw_shield_bar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shield&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;Now we can see how much shield we have left as it goes down:&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-9-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-9.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;a-href-blog-2016-09-pygame-shmup-part-10-part-10-explosions-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/09/pygame_shmup_part_10/&#34;&gt;Part 10: Explosions &lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
