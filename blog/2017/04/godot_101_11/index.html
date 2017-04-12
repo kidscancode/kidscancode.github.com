@@ -1,0 +1,286 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.20" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 101 - Part 11: Animated Sprites &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">28</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">11</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">29</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2017 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 101 - Part 11: Animated Sprites</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sun, Apr 9, 2017</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			</h6></span>
+
+			      <p><img src="/blog/img/godot_logo.png" width="450"></p>
+
+<p>This is part 11 of &ldquo;Godot 101&rdquo;. In this installment, we&rsquo;ll add animation to the player character.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2017/02/godot_101_01/">Part 1</a>.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>Godot 101 is an introduction to the Godot game engine and how it works. If you&rsquo;ve never used a game engine before, or if you&rsquo;re just new to Godot, this is the place to start.  If you&rsquo;re new here, a quick note about this website: we&rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&rsquo;re an adult you&rsquo;re welcome here, too.  We don&rsquo;t believe in dumbing-down the material for kids, and game development is <em>hard</em> - so it will probably be challenging no matter what your age.
+</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rbWL8zFMWZc" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="animated-sprites">Animated Sprites</h2>
+
+<p>In the art folder are animations for idle, running and jumping, and we&rsquo;d like to use those animations on the player sprite.  However, a <a href="http://docs.godotengine.org/en/stable/classes/class_sprite.html" target="_blank"><svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg><code>Sprite</code></a> node can only use one texture at a time. Instead, we&rsquo;ll use an <a href="http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html" target="_blank"><svg width="18" height="18" class="icon-icon_animated_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_animated_sprite"></svg><code>AnimatedSprite</code></a>.</p>
+
+<p>Instead of creating a new node, we can convert the current one.  In the <code>player</code> scene, right-click on the <svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg> <code>sprite</code> node and choose <code>Change Type</code>.</p>
+
+<p>The texture disappears and now we have a warning:</p>
+
+<p><a href="/blog/img/godot101_11_01.png"><img src="/blog/img/godot101_11_01.png" width="450"></a></p>
+
+<p>An <a href="http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html" target="_blank"><svg width="18" height="18" class="icon-icon_animated_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_animated_sprite"></svg><code>AnimatedSprite</code></a> must have a <code>SpriteFrames</code> resource defined. This resource will contain all the properties of the animation (frames, rate, etc).  In the Inspector, click the down arrow next to <code>Frames</code> and choose <code>New SpriteFrames</code>.</p>
+
+<p><a href="/blog/img/godot101_11_02.png"><img src="/blog/img/godot101_11_02.png" width="250"></a></p>
+
+<p>Next, click the right arrow <code>&gt;</code> and a new panel will open:</p>
+
+<p><a href="/blog/img/godot101_11_03.png"><img src="/blog/img/godot101_11_03.png" width="500"></a><sub>Click to enlarge</sub></p>
+
+<p>On the left, you can define multiple animations.  On the right will be the individual frames, arranged in order.  You can also specify whether the animation should loop, and at what speed it should run.</p>
+
+<p>Change the <code>default</code> animation name to <code>idle</code>, and drag the two frames of the idle animation from the <code>FileSystem</code> tab into the <code>Animation Frames</code> box. Make sure <code>Loop</code> is set to <code>On</code> .Now click back on the <svg width="18" height="18" class="icon-icon_animated_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_animated_sprite"></svg> <code>sprite</code> node and check the box next to the <code>Playing</code> property.  Our sprite is now animated!</p>
+
+<p><a href="/blog/img/godot101_11_04.gif"><img src="/blog/img/godot101_11_04.gif" width="150"></a></p>
+
+<p>The default speed is a little fast, so feel free to adjust the <code>Speed</code> parameter; <code>3</code> works pretty well.</p>
+
+<p>Next, to add the running animation, just click the new button and name the new animation <code>running</code>.  Drag the 6 running animation frames into <code>Animation Frames</code>. <code>8</code> works well for the <code>Speed</code> here.</p>
+
+<h3 id="choosing-animations">Choosing Animations</h3>
+
+<p>Now in the <code>player.gd</code> we can specify which animation to play, and which direction to face (using the <code>Flip H</code> property).</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">onready</span> <span class="n">var</span> <span class="n">sprite</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&quot;sprite&quot;</span><span class="p">)</span>
+
+<span class="n">var</span> <span class="n">anim</span> <span class="o">=</span> <span class="s2">&quot;idle&quot;</span>
+
+<span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="c1"># set animation</span>
+    <span class="k">if</span> <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">anim</span> <span class="o">=</span> <span class="s2">&quot;idle&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">anim</span> <span class="o">=</span> <span class="s2">&quot;running&quot;</span>
+    <span class="k">if</span> <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">sprite</span><span class="o">.</span><span class="n">set_flip_h</span><span class="p">(</span><span class="n">false</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">sprite</span><span class="o">.</span><span class="n">set_flip_h</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
+    <span class="n">sprite</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">anim</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>First we choose which animation based on the player&rsquo;s <code>vel.x</code> and use the direction to select whether to flip the image.  However, when you run this you will notice that when the player stops moving, it doesn&rsquo;t switch back to the <code>idle</code> animation.  This is because while friction is reducing the vel.x, it&rsquo;s a floating point number and never actually reaching 0. We can fix that by setting the speed to 0 if it falls below a certain value.  Add the following to <code>fixed_process()</code> after the movement code:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">vel</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div>
+
+
+<h3 id="platform-images">Platform Images</h3>
+
+<p>Let&rsquo;s change the appearance of the platforms as well. Instead of the plain green square, we can use this nice grass block image:</p>
+
+<p><img src="/blog/img/grass_main_64x64.png" width="64"></p>
+
+<p>Drag it from the art folder onto the <svg width="18" height="18" class="icon-icon_texture"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_texture"></svg> <code>Texture</code> property.  Oh no! This doesn&rsquo;t look good:</p>
+
+<p><img src="/blog/img/godot101_11_05.png" width="450"></p>
+
+<p>We can&rsquo;t scale this block, so change the <code>Scale</code> property back to <code>(1, 1)</code>.  Now we can see the 64x64 block, but we&rsquo;d like to be able to make the platforms as wide as we like.  Here&rsquo;s how we do that:</p>
+
+<p>First, click the <code>&gt;</code> next to <svg width="18" height="18" class="icon-icon_texture"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_texture"></svg> <code>Texture</code> and in <code>Flags</code> make sure <code>Mipmaps</code> and <code>Repeat</code> are checked.</p>
+
+<p>Next, check the box labeled <code>Region</code>.  The grass block will disappear, but that&rsquo;s OK, we still need to fill in the <code>Region Rect</code>, which is right now set to <code>(0, 0, 0, 0)</code>.  This will be how we choose the size of our platform.  Set the height (<code>h</code>) to <code>64</code> and the width (<code>w</code>) to <code>64*10</code> (did you know you can type math expressions in property fields?).</p>
+
+<p>Finally, choose the <svg width="18" height="18" class="icon-icon_collision_shape_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d"></svg> <code>collision</code> node and adjust the size to match the new image.</p>
+
+<p><a href="/blog/img/godot101_11_06.gif"><img src="/blog/img/godot101_11_06.gif" width="250"></a></p>
+
+<h3 id="background-image">Background Image</h3>
+
+<p>Finally, let&rsquo;s add a background image.  Go to the <code>main</code> scene and add a <a href="http://docs.godotengine.org/en/stable/classes/class_sprite.html" target="_blank"><svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg><code>Sprite</code></a>. Make sure it&rsquo;s at the top of the tree (right under <svg width="18" height="18" class="icon-icon_node"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_node"></svg><code>main</code>), so it will be behind the other objects.  Name this node <code>background</code> and drag the background image into the <svg width="18" height="18" class="icon-icon_texture"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_texture"></svg> <code>Texture</code>.</p>
+
+<p><a href="/blog/img/background.png"><img src="/blog/img/background.png" width="500"></a><sub>Click to enlarge</sub></p>
+
+<p>This image is quite large, so set the scale to <code>(0.5, 0.5)</code> (or whatever you like).</p>
+
+<h2 id="wrapping-up">Wrapping Up</h2>
+
+<p><a href="http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html" target="_blank"><svg width="18" height="18" class="icon-icon_animated_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_animated_sprite"></svg><code>AnimatedSprite</code></a> nodes are a great way to add animation to your character (there are other ways, which we&rsquo;ll get to later).</p>
+
+<h3 id="a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a"><a href="https://github.com/kidscancode/godot_tutorials/tree/master/Godot101">Full code for this part</a></h3>
+
+<h3 id="a-href-godot-101-part-12-coming-soon-a"><a href="">Godot 101 - Part 12 (coming soon)</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://godotengine.org">Download Godot Engine</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Us on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-39851424-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

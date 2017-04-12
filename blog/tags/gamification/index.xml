@@ -3,11 +3,11 @@
   <channel>
       <title>Gamification on KCC Blog </title>
       <generator uri="https://gohugo.io">Hugo</generator>
-    <link>/blog/tags/gamification/index.xml</link>
+    <link>/blog/tags/gamification/</link>
     <language>en-us</language>
     
     <copyright>KidsCanCode LLC</copyright>
-    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    <updated>Sun, 23 Aug 2015 20:38:26 PDT</updated>
     
     <item>
       <title>Gamification and Education</title>

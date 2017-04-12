@@ -3,11 +3,11 @@
   <channel>
       <title>Pygame on KCC Blog </title>
       <generator uri="https://gohugo.io">Hugo</generator>
-    <link>/blog/tags/pygame/index.xml</link>
+    <link>/blog/tags/pygame/</link>
     <language>en-us</language>
     
     <copyright>KidsCanCode LLC</copyright>
-    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    <updated>Sat, 12 Nov 2016 05:22:12 -0700</updated>
     
     <item>
       <title>Pygame Shmup Part 14: Game Over (and wrapping up)</title>

@@ -3,11 +3,11 @@
   <channel>
       <title>Education on KCC Blog </title>
       <generator uri="https://gohugo.io">Hugo</generator>
-    <link>/blog/tags/education/index.xml</link>
+    <link>/blog/tags/education/</link>
     <language>en-us</language>
     
     <copyright>KidsCanCode LLC</copyright>
-    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    <updated>Sun, 01 Nov 2015 12:04:02 -0700</updated>
     
     <item>
       <title>Coding is a Life Skill</title>
