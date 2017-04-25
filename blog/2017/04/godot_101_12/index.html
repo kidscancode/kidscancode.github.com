@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-  <title> Godot 101 - Part 4: Instancing Scenes &middot; KCC Blog </title>
+  <title> Godot 101 - Part 12: Camera and Scrolling Background &middot; KCC Blog </title>
 
   
   <link rel="stylesheet" href="/blog/css/poole.css">
@@ -121,9 +121,9 @@
 
 		<div class="content container">
 			<div class="post">
-			 	<h1>Godot 101 - Part 4: Instancing Scenes</h1>
+			 	<h1>Godot 101 - Part 12: Camera and Scrolling Background</h1>
 			  <span class="post-author">by Chris Bradfield</span>
-			  <span class="post-date">Wed, Feb 15, 2017</span>
+			  <span class="post-date">Sat, Apr 15, 2017</span>
 			  <span id="tags"> <h6>Tags:
 			  
 			    <a href="/blog/tags/godot">godot</a>
@@ -136,7 +136,7 @@
 
 			      <p><img src="/blog/img/godot_logo.png" width="450"></p>
 
-<p>This is part 4 of &ldquo;Godot 101&rdquo;, taking our bouncing sprite and showing how to quickly create multiple instances of it.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2017/02/godot_101_01/">Part 1</a>.</p>
+<p>This is part 12 of &ldquo;Godot 101&rdquo;. In this installment, we add a camera to follow the player, and make a scrolling background.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2017/02/godot_101_01/">Part 1</a>.</p>
 
 <h3 id="about-this-series">About this series</h3>
 
@@ -144,67 +144,60 @@
 </p>
 
 <p>You can watch a video version of this lesson here:
-<iframe width="560" height="315" src="https://www.youtube.com/embed/0WOqJy3lot4" frameborder="0" allowfullscreen></iframe></p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/quVFPh1eotE" frameborder="0" allowfullscreen></iframe></p>
 
-<h2 id="instancing">Instancing</h2>
+<h2 id="a-bigger-world">A Bigger World</h2>
 
-<p>Now that we have a nice animated sprite bouncing around the screen, the natural next question is &ldquo;how do I make a bunch of them?&rdquo;  If we want, say, 10 sprites bouncing around, we don&rsquo;t want to have to make 10 separate scenes for them.</p>
+<p>Start by going to your <code>main</code> scene and duplicating the platform instance 2 more times.  Take the new instances and arrange them to the right like this:</p>
 
-<p>Your first thought might be to duplicate the sprite node by right-clicking on it and choosing &ldquo;Duplicate&rdquo;:</p>
+<p><a href="/blog/img/godot101_12_01.png"><img src="/blog/img/godot101_12_01.png" width="450"></a></p>
 
-<p><a href="/blog/img/godot101_04_01.png"><img src="/blog/img/godot101_04_01.png" width="200"></a><sub>Click to enlarge</sub></p>
+<p>Now we have a much bigger &ldquo;level&rdquo; to run around in, but we can&rsquo;t get to the new platforms because they&rsquo;re off the screen. We need a &ldquo;camera&rdquo; that will track the player wherever he goes.  This is easily done in Godot using the <a href="http://docs.godotengine.org/en/stable/classes/class_camera2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_camera_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_camera_2d"></svg><code>Camera2D</code></a> node.</p>
 
-<p>However, this won&rsquo;t work - you get an error message:</p>
+<p>Switch to your <code>player</code> scene and add a <a href="http://docs.godotengine.org/en/stable/classes/class_camera2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_camera_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_camera_2d"></svg><code>Camera2D</code></a> - I named mine <code>camera</code>.</p>
 
-<p><img src="/blog/img/godot101_04_02.png" width="300"></p>
+<p>Here is what you&rsquo;ll see in the Inspector:
+<a href="/blog/img/godot101_12_02.png"><img src="/blog/img/godot101_12_02.png" width="200"></a></p>
 
-<p>Each scene tree has a root node - the first node you create - and can only have <em>one</em> root node.  We could make another sprite as a <em>child</em> of the first one, but that wouldn&rsquo;t give use what we need - a child node is attached to its parent, inheriting its position, etc.  We need to create multiple independent versions of the original sprite.</p>
+<p>In order for the camera to work, you must current the <code>Current</code> property. It is possible to have multiple cameras in a scene, but only one can be <code>Current</code>, and that is the one the game window will track.  That&rsquo;s it!  Hit play and now you have a camera locked to the player:</p>
 
-<p>We&rsquo;ll start by making a new scene (click on <code>Scene</code> -&gt; &lsquo;New Scene&rsquo;) and add a node to it.  We&rsquo;re going to use the simplest node available: <svg width="24" height="24" class="icon-icon_node"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_node"></svg><code>Node</code>.  This is a generic node, with no properties of its own.  This will be our main scene&rsquo;s root node, so let&rsquo;s rename it &ldquo;main&rdquo; by clicking on its name and then save it as &ldquo;main.tscn&rdquo;.</p>
+<p><a href="/blog/img/godot101_12_03.gif"><img src="/blog/img/godot101_12_03.gif" width="450"></a></p>
 
-<p>Now click the &ldquo;Play&rdquo; button at the top and you&rsquo;ll see this message:</p>
+<p>Feel free to experiment with the other camera settings in the Inspector.  <code>Smoothing</code> controls how the camera &ldquo;catches up&rdquo; to the player when it moves, and the <code>Drag Margin</code> settings will let you adjust how close to the edge of the window the player can get before the camera moves.</p>
 
-<p><img src="/blog/img/godot101_04_03.png" width="400"></p>
+<h3 id="repeating-the-background">Repeating the Background</h3>
 
-<p>We need to define what scene will be the one that is launched when the project starts.  Click &ldquo;Select&rdquo; and choose our new main.tscn. Now let&rsquo;s add a script to the main node.  This will be our code to instance a sprite:</p>
+<p>Now we need to fix the issue of the background only covering part of the world.  What we want is for the background image to repeat itself as we scroll to the right.  So let&rsquo;s adjust our background texture so Godot knows it can be tiled:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Node</span>
+<p><a href="/blog/img/godot101_12_04.gif"><img src="/blog/img/godot101_12_04.gif" width="200"></a></p>
 
-<span class="n">onready</span> <span class="n">var</span> <span class="n">sprite</span> <span class="o">=</span> <span class="n">preload</span><span class="p">(</span><span class="s2">&quot;res://Sprite.tscn&quot;</span><span class="p">)</span>
+<p>When you check the &lsquo;Region&rsquo; property, the background disappears!  Don&rsquo;t worry, we need to fill in the <code>Region Rect</code> property as well.  Set the width and height (<code>w</code> and <code>h</code>) to <code>(3072*4, 1536)</code> and now you will see a long repeating texture.</p>
 
-<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
-    <span class="n">var</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sprite</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
-    <span class="n">add_child</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
- 
-</code></pre></div>
+<h2 id="parallax-scrolling">Parallax Scrolling</h2>
 
+<p>Finally, let&rsquo;s add a really cool effect: parallax scrolling.  This means we want to have our background scroll at a different speed from the foreground.  Specifically, if we have it move <em>slower</em>, it will give the impression that it is much farther away.  As you might expect, Godot has a node (actually, 2 nodes) for that.</p>
 
-<p>That first line uses the <code>preload</code> function to load the sprite scene into memory at compile time, so that it&rsquo;s ready to use.  The <code>onready</code> statement ensures that the object is loaded in time for the <code>_ready()</code> call.</p>
+<p>Switch to the <code>main</code> scene and add a <a href="http://docs.godotengine.org/en/stable/classes/class_parallaxbackground.html" target="_blank"><svg width="18" height="18" class="icon-icon_parallax_background"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_parallax_background"></svg><code>ParallaxBackground</code></a> node.  Drag it to the top of the tree.</p>
 
-<p><em>A note on resource paths</em>:</p>
+<p>This node controls parallax scrolling, but you might want to have more than one layer of scrolling background.  For this reason, the <a href="http://docs.godotengine.org/en/stable/classes/class_parallaxbackground.html" target="_blank"><svg width="18" height="18" class="icon-icon_parallax_background"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_parallax_background"></svg><code>ParallaxBackground</code></a> node needs to contain one or more <a href="http://docs.godotengine.org/en/stable/classes/class_parallaxlayer.html" target="_blank"><svg width="18" height="18" class="icon-icon_parallax_layer"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_parallax_layer"></svg><code>ParallaxLayer</code></a> nodes.  Add one to the tree, and make the <svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg> <code>background</code> its child.  Your scene tree should now look like this:</p>
 
-<p>Notice how we indicated where to load the sprite scene from: &ldquo;res://Sprite.tscn&rdquo;  All resources in your project will be under a &ldquo;res://&rdquo; path (&ldquo;res&rdquo; is short for resource).  If we were building a complex project with a large number of files, we might choose to put all our scenes into their own folder to help keep things organized.  In this case, the resource path might look like this: &ldquo;res://scenes/Sprite.tscn&rdquo;</p>
+<p><a href="/blog/img/godot101_12_05.png"><img src="/blog/img/godot101_12_05.png" width="200"></a></p>
 
-<p>Now hit &ldquo;Play&rdquo;, and you will see a sprite bouncing around the screen.  To see what&rsquo;s going on, click the debugger and you can inspect the live scene tree:</p>
+<p>The properties of the <svg width="18" height="18" class="icon-icon_parallax_layer"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_parallax_layer"></svg><code>ParallaxLayer</code> are straightforward:</p>
 
-<p><a href="/blog/img/godot101_04_04.gif"><img src="/blog/img/godot101_04_04.gif" width="550"></a><sub>Click to enlarge</sub></p>
+<p><a href="/blog/img/godot101_12_06.png"><img src="/blog/img/godot101_12_06.png" width="200"></a></p>
 
-<p>The Remote Inspector tab is very useful to see what&rsquo;s going on in the game - what scene is active, what nodes are active, and what properties they all have.  For example, observe what changes is we add a loop to spawn more sprites:</p>
+<p><code>motion/scale</code> is what we want to change to adjust the movement speed of the background.  Change it to <code>(0.5, 0.5)</code> and hit &lsquo;Play&rsquo;:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="n">var</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sprite</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
-    <span class="n">add_child</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
- 
-</code></pre></div>
-
+<p><a href="/blog/img/godot101_12_07.gif"><img src="/blog/img/godot101_12_07.gif" width="450"></a></p>
 
 <h2 id="wrapping-up">Wrapping up</h2>
 
-<p>It&rsquo;s that easy to create instances of scenes you&rsquo;ve created.  In the future, this is how we&rsquo;ll do things like spawning mobs or bullets - just by instancing them as needed and adding them to the current scene tree.  In the next lesson we&rsquo;ll start looking at some other nodes and how they&rsquo;re used.</p>
+<p>The <a href="http://docs.godotengine.org/en/stable/classes/class_camera2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_camera_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_camera_2d"></svg><code>Camera2D</code></a> node in Godot is incredibly easy to use.  In combination with parallax scrolling, it&rsquo;s possible to get a very rich visual effect with very little effort.</p>
 
 <h3 id="a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a"><a href="https://github.com/kidscancode/godot_tutorials/tree/master/Godot101">Full code for this part</a></h3>
 
-<h3 id="a-href-blog-2017-02-godot-101-05-godot-101-part-5-a"><a href="/blog/2017/02/godot_101_05/">Godot 101 - Part 5</a></h3>
+<h3 id="a-href-godot-101-part-13-coming-soon-a"><a href="">Godot 101 - Part 13 (coming soon)</a></h3>
 
 <h3 id="helpful-links">Helpful Links:</h3>
 
