@@ -294,7 +294,7 @@
 
 &lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_10_04.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_10_04.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
 
-&lt;p&gt;The &lt;code&gt;One Way Collisior&lt;/code&gt; section lets us set the object to only detect collisions in one direction.  Set &lt;code&gt;Direction&lt;/code&gt; to &lt;code&gt;(0, 1)&lt;/code&gt; (collide with things moving downward) and &lt;code&gt;Max Depth&lt;/code&gt; to &lt;code&gt;16&lt;/code&gt; (this is how far into the platform an object is allowed to penetrate before the one way collision takes effect).  Now you should have this:&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;One Way Collision&lt;/code&gt; section lets us set the object to only detect collisions in one direction.  Set &lt;code&gt;Direction&lt;/code&gt; to &lt;code&gt;(0, 1)&lt;/code&gt; (collide with things moving downward) and &lt;code&gt;Max Depth&lt;/code&gt; to &lt;code&gt;16&lt;/code&gt; (this is how far into the platform an object is allowed to penetrate before the one way collision takes effect).  Now you should have this:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot101_10_05.gif&#34; width=&#34;150&#34;&gt;&lt;/p&gt;
 
