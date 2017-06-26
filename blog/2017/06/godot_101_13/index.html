@@ -1,0 +1,315 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.20.7" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 101 - Part 13: KinematicBody2D Collisions Done Right &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">3</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">30</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">13</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">4</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">31</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2017 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 101 - Part 13: KinematicBody2D Collisions Done Right</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sat, Jun 24, 2017</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			</h6></span>
+
+			      <p><img src="/blog/img/godot_logo.png" width="450"></p>
+
+<p>This is part 13 of &ldquo;Godot 101&rdquo;. In this installment, we take a deeper look at how to handle KinematicBody2D collisions in a simple and accurate way, and how to avoid a few common mistakes.  If you haven&rsquo;t already read through the previous parts, please start with <a href="http://kidscancode.org/blog/2017/02/godot_101_01/">Part 1</a>.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>Godot 101 is an introduction to the Godot game engine and how it works. If you&rsquo;ve never used a game engine before, or if you&rsquo;re just new to Godot, this is the place to start.  If you&rsquo;re new here, a quick note about this website: we&rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&rsquo;re an adult you&rsquo;re welcome here, too.  We don&rsquo;t believe in dumbing-down the material for kids, and game development is <em>hard</em> - so it will probably be challenging no matter what your age.
+</p>
+
+<!-- You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tkMSAme-BnY" frameborder="0" allowfullscreen></iframe> -->
+
+<h2 id="doing-collisions-right">Doing Collisions Right</h2>
+
+<p>We have seen before how the <a href="http://docs.godotengine.org/en/stable/classes/class_kinematic_body_2D.html" target="_blank"><svg width="18" height="18" class="icon-icon_kinematic_body_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d"></svg><code>KinematicBody2D</code></a>
+node is perfect for implementing characters and other moving bodies that don&rsquo;t need the full simulation of physics, but just need movement and collision detection.  And while collision detection is very simple in Godot (the physics bodies just take care of it), we also need to understand how to make the bodies <em>respond</em> to collisions.</p>
+
+<p>The basic structure of a <a href="http://docs.godotengine.org/en/stable/classes/class_kinematic_body_2D.html" target="_blank"><svg width="18" height="18" class="icon-icon_kinematic_body_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d"></svg><code>KinematicBody2D</code></a> scene is this:</p>
+
+<ul>
+<li><svg width="18" height="18" class="icon-icon_kinematic_body_2d">
+<use xlink:href="/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d"></svg> <code>KinematicBody2D</code>
+
+<ul>
+<li><svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg> <code>Sprite</code></li>
+<li><svg width="18" height="18" class="icon-icon_collision_shape_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d"></svg> <code>CollisionShape2D</code></li>
+</ul></li>
+</ul>
+
+<p>For the example in this demonstration, we&rsquo;ll use a round image for the sprite, and a circular collision shape:</p>
+
+<p><a href="/blog/img/ball.png"><img src="/blog/img/ball.png" width="100"></a></p>
+
+<p>When using a <code>KinematicBody2D</code>, you must use the <code>move()</code> method to change its position.  This method takes a <a href="http://docs.godotengine.org/en/stable/classes/class_vector2.html" target="_blank"><code>Vector2</code></a> as its argument, which represents the distance &amp; direction you wish to move the body.  The method returns another <code>Vector2</code> representing the motion remaining after a collision.  We then have two choices of how to respond to this collision.</p>
+
+<p>Let&rsquo;s look at this process in more detail:</p>
+
+<p><a href="/blog/img/godot101_13_01.png"><img src="/blog/img/godot101_13_01.png" width="400"></a><sub>Click to enlarge</sub></p>
+
+<p>Here we see the gray vector representing the desired movement, which we will pass to the move method.  However, the green obstacle is in the way, so the move will stop when the collision occurs.</p>
+
+<p><a href="/blog/img/godot101_13_02.png"><img src="/blog/img/godot101_13_02.png" width="400"></a><sub>Click to enlarge</sub></p>
+
+<p>The red vector is the returned value of the <code>move()</code> method: representing the amount of the movement that was unable to be completed.  Now we have a choice: to <em>slide</em> the body along the obstacle (as if it were sticky) or to <em>reflect</em> it off (i.e. bounce).  In either case, we need to know the obstacle&rsquo;s <code>normal</code>.</p>
+
+<p><a href="/blog/img/godot101_13_03.png"><img src="/blog/img/godot101_13_03.png" width="400"></a><sub>Click to enlarge</sub></p>
+
+<p>A <code>normal</code> vector is a unit-length vector pointing perpendicularly away from a surface.  This vector tells us what direction the surface is facing (for example which edge of a shape was hit).  Using this vector we can calculate the response.</p>
+
+<p><a href="/blog/img/godot101_13_04.png"><img src="/blog/img/godot101_13_04.png" width="400"></a><sub>Click to enlarge</sub></p>
+
+<p>If we wish the body to slide along the object&rsquo;s surface, we use <code>n.slide()</code> and if we want it to bounce, we use <code>n.reflect()</code>.  Note that the length of the resulting vector when using <code>slide()</code> is only the <em>component</em> of the remaining motion in the desired direction.</p>
+
+<h3 id="seeing-it-in-action">Seeing it in action</h3>
+
+<p>Here is an example using the <code>reflect()</code> option:</p>
+
+<p><a href="/blog/img/godot101_13_05.gif"><img src="/blog/img/godot101_13_05.gif" width="400"></a><sub>Click to enlarge</sub></p>
+
+<p>Note that not only flat surfaces have normals. Curved surfaces have a different normal at each point, resulting in a proper looking bounce off a round object:</p>
+
+<p><a href="/blog/img/godot101_13_06.gif"><img src="/blog/img/godot101_13_06.gif" width="400"></a><sub>Click to enlarge</sub></p>
+
+<p>On the other hand, if we switch to slide mode, the result looks like this:</p>
+
+<p><a href="/blog/img/godot101_13_07.gif"><img src="/blog/img/godot101_13_07.gif" width="400"></a><sub>Click to enlarge</sub></p>
+
+<p>Note how the velocity vectors are much shorter, especially if the collision angle is steep.</p>
+
+<h3 id="the-code">The code</h3>
+
+<p>Here is the code for the ball object, including both kinds of collision response:</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">KinematicBody2D</span>
+
+<span class="n">var</span> <span class="n">speed</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">var</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span> <span class="c1"># pixels/sec</span>
+
+<span class="c1"># set this to &lt; 1.0 to demonstrate loss of energy</span>
+<span class="n">var</span> <span class="n">bounce_coefficent</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="c1"># this toggles reflect or slide mode</span>
+<span class="n">var</span> <span class="n">reflect</span> <span class="o">=</span> <span class="n">true</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+	<span class="n">randomize</span><span class="p">()</span>
+	<span class="c1"># set start velocity towards mouse position</span>
+	<span class="n">vel</span> <span class="o">=</span> <span class="p">(</span><span class="n">get_global_mouse_pos</span><span class="p">()</span><span class="o">-</span><span class="n">get_pos</span><span class="p">())</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span><span class="o">*</span><span class="n">speed</span>
+	<span class="n">set_fixed_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+	<span class="c1"># move the body</span>
+	<span class="n">var</span> <span class="n">motion</span> <span class="o">=</span> <span class="n">move</span><span class="p">(</span><span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">is_colliding</span><span class="p">():</span>
+		<span class="c1"># find the normal</span>
+		<span class="n">var</span> <span class="n">n</span> <span class="o">=</span> <span class="n">get_collision_normal</span><span class="p">()</span>
+		<span class="k">if</span> <span class="n">reflect</span><span class="p">:</span>
+			<span class="c1"># reflect the motion *and* the velocity</span>
+			<span class="n">motion</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">reflect</span><span class="p">(</span><span class="n">motion</span><span class="p">)</span>
+			<span class="n">vel</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">reflect</span><span class="p">(</span><span class="n">vel</span><span class="p">)</span> <span class="o">*</span> <span class="n">bounce_coefficent</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="c1"># or slide them</span>
+			<span class="n">motion</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">slide</span><span class="p">(</span><span class="n">motion</span><span class="p">)</span>
+			<span class="n">vel</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">slide</span><span class="p">(</span><span class="n">vel</span><span class="p">)</span>
+		<span class="c1"># remember to also move by the resulting motion</span>
+		<span class="n">move</span><span class="p">(</span><span class="n">motion</span><span class="p">)</span>
+</code></pre></div>
+
+
+<p>This should be self-explanatory.  Note that we reflect/slide both the remaining motion vector (so that the movement is continued) <em>and</em> the velocity vector (so that it is now moving in the proper direction).</p>
+
+<h2 id="important-read-this">IMPORTANT: Read this!</h2>
+
+<p>Are your collisions doing this?</p>
+
+<p><a href="/blog/img/godot101_13_08.gif"><img src="/blog/img/godot101_13_08.gif" width="400"></a><sub>Click to enlarge</sub></p>
+
+<p>One of the most common mistakes we see among beginners when using physics bodies is incorrectly scaling the nodes.  For example, when creating the circular collision shape for the ball, you must use the <em>inner</em> size handle to set the shape&rsquo;s size.  Never use the outer rectangle, or you will cause the node to be scaled.</p>
+
+<p>If you have &ldquo;glitchy&rdquo; collisions, this is most likely the cause.</p>
+
+<p><strong>NEVER SCALE A PHYSICS BODY OR COLLISION SHAPE!</strong></p>
+
+<p>Always make sure that the <code>KinematicBody2D</code> <em>and</em> the <code>CollisionShape2D</code> have their <code>scale</code> property set to <code>(1, 1)</code>.  Always.</p>
+
+<h2 id="wrapping-up">Wrapping up</h2>
+
+<p>Good collision response is easy if you follow a few simple rules, and take advantage of Godot&rsquo;s built-in functions. If you&rsquo;d like to experiment with the code used for the examples here, you can download the full project, or click the link below for the source code.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-godot-tutorials-releases-download-godot101-godot101-part-13-zip-collision-example-project-a"><a href="https://github.com/kidscancode/godot_tutorials/releases/download/godot101/Godot101_Part_13.zip">Collision example project</a></h3>
+
+<h3 id="a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-code-for-this-part-a"><a href="https://github.com/kidscancode/godot_tutorials/tree/master/Godot101">Code for this part</a></h3>
+
+<h3 id="a-href-godot-101-part-14-coming-soon-a"><a href="">Godot 101 - Part 14 (coming soon)</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://godotengine.org">Download Godot Engine</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Us on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-39851424-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
