@@ -1577,7 +1577,7 @@
 
 &lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_7.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_7.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
 
-&lt;p&gt;Every time you click on a node in your scene, the Inspector will show all of that node&amp;rsquo;s properties - and there are a lot of them!  The one we care about is the first one, &amp;ldquo;Texture&amp;rdquo;, which is currently showing &amp;ldquo;&lt;null&gt;&amp;rdquo;.  To set it, just drag the Godot icon image on top of the spot where you see &amp;ldquo;&lt;null&gt;&amp;rdquo;.  Our sprite has an image!  Pick it up and drag it to the center of the screen.&lt;/p&gt;
+&lt;p&gt;Every time you click on a node in your scene, the Inspector will show all of that node&amp;rsquo;s properties - and there are a lot of them!  The one we care about is the first one, &amp;ldquo;Texture&amp;rdquo;, which is currently showing &lt;code&gt;&amp;lt;null&amp;gt;&lt;/code&gt;.  To set it, just drag the Godot icon image on top of the spot where you see &lt;code&gt;&amp;lt;null&amp;gt;&lt;/code&gt;.  Our sprite has an image!  Pick it up and drag it to the center of the screen.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_8.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_8.png&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
 
