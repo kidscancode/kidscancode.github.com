@@ -21,7 +21,7 @@
     <item>
       <title>Gamedev</title>
       <link>/blog/tags/gamedev/</link>
-      <pubDate>Sat, 24 Jun 2017 05:22:12 PDT</pubDate>
+      <pubDate>Sun, 06 Aug 2017 15:22:12 PDT</pubDate>
       
       <guid>/blog/tags/gamedev/</guid>
       <description></description>
@@ -39,7 +39,7 @@
     <item>
       <title>Godot</title>
       <link>/blog/tags/godot/</link>
-      <pubDate>Sat, 24 Jun 2017 05:22:12 PDT</pubDate>
+      <pubDate>Sun, 06 Aug 2017 15:22:12 PDT</pubDate>
       
       <guid>/blog/tags/godot/</guid>
       <description></description>
@@ -64,6 +64,15 @@
     </item>
     
     <item>
+      <title>Shaders</title>
+      <link>/blog/tags/shaders/</link>
+      <pubDate>Sun, 06 Aug 2017 15:22:12 PDT</pubDate>
+      
+      <guid>/blog/tags/shaders/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Teaching</title>
       <link>/blog/tags/teaching/</link>
       <pubDate>Sun, 01 Nov 2015 12:04:02 -0700</pubDate>
@@ -75,7 +84,7 @@
     <item>
       <title>Tutorial</title>
       <link>/blog/tags/tutorial/</link>
-      <pubDate>Sat, 24 Jun 2017 05:22:12 PDT</pubDate>
+      <pubDate>Sun, 06 Aug 2017 15:22:12 PDT</pubDate>
       
       <guid>/blog/tags/tutorial/</guid>
       <description></description>

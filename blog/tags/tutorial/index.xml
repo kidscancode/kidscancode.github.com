@@ -7,7 +7,141 @@
     <language>en-us</language>
     
     <copyright>KidsCanCode LLC</copyright>
-    <updated>Sat, 24 Jun 2017 05:22:12 PDT</updated>
+    <updated>Sun, 06 Aug 2017 15:22:12 PDT</updated>
+    
+    <item>
+      <title>Godot - Animating Tiles Using Shaders</title>
+      <link>/blog/2017/08/godot_tilemap_shaders/</link>
+      <pubDate>Sun, 06 Aug 2017 15:22:12 PDT</pubDate>
+      
+      <guid>/blog/2017/08/godot_tilemap_shaders/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/j2gJgFzg-yU&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;animated-tiles&#34;&gt;Animated Tiles&lt;/h2&gt;
+
+&lt;p&gt;Our goal for this project is to create an animated tile that we can use in a Godot &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tilemap.html&#34; target=&#34;_blank&#34;&gt;TileMap&lt;/a&gt; like this example:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/anim_tile1.gif&#34; width=&#34;250&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;It is possible to do this using an &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animationplayer.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animation_player&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_animation_player&#34;&gt;&lt;/svg&gt;AnimationPlayer&lt;/a&gt; node (see &lt;a href=&#34; https://youtu.be/jYTGvlCQd0E&#34; target=&#34;_blank&#34;&gt;this video&lt;/a&gt; for details).  However, for this lesson, we are instead going to implement the tile animation using a &lt;a href=&#34;http://docs.godotengine.org/en/2.1/learning/features/shading/shading_language.html&#34; target=&#34;_blank&#34;&gt;Shader&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-shaders&#34;&gt;About Shaders&lt;/h3&gt;
+
+&lt;p&gt;If you&amp;rsquo;ve never encountered &lt;a href=&#34;https://en.wikipedia.org/wiki/Shader&#34; target=&#34;_blank&#34;&gt;shaders&lt;/a&gt; before, they can be very intimidating.  This is not intended to be a comprehensive introduction to the subject, so here are a few links to get you started:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://docs.godotengine.org/en/2.1/learning/features/shading/shading_language.html&#34;&gt;Godot shader reference&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://thebookofshaders.com/&#34;&gt;The Book of Shaders&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://notes.underscorediscovery.com/shaders-a-primer/&#34;&gt;Primer: Shaders&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;creating-a-new-shader&#34;&gt;Creating a new shader&lt;/h3&gt;
+
+&lt;p&gt;We will start with a regular TileSet, which is just a collection of &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; Sprite&lt;/a&gt; nodes. You can use your own art, or download the &lt;a href=&#34;/blog/blog/img/anim_water.zip&#34;&gt;example water pack&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Add a new &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; Sprite&lt;/a&gt; and name it &lt;code&gt;water shader&lt;/code&gt;.  You can use any texture you like, as the image will be replaced when our shader is working.&lt;/p&gt;
+
+&lt;p&gt;Add a shader to the sprite by adding a new &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_canvasitemmaterial.html&#34; target=&#34;_blank&#34;&gt;CanvasItemMaterial&lt;/a&gt; followed by a new &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_canvasitemshader.html&#34; target=&#34;_blank&#34;&gt;CanvasItemShader&lt;/a&gt; like so:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/create_shader.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/create_shader.gif&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;When you have done this, you will see a new pane open, with three tabs labeled &lt;code&gt;Vertex&lt;/code&gt;, &lt;code&gt;Fragment&lt;/code&gt;, and &lt;code&gt;Lighting&lt;/code&gt;.  We will be creating a &amp;ldquo;fragment&amp;rdquo; (aka pixel) shader, so make sure the correct tab is selected.&lt;/p&gt;
+
+&lt;h3 id=&#34;shader-code&#34;&gt;Shader code&lt;/h3&gt;
+
+&lt;p&gt;Shader code uses syntax similar to C.  We will start by defining our textures (the frames for the animation).  There are 3 animations in the pack, each with 5 frames.  We will focus on one to start with:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-glsl&#34; data-lang=&#34;glsl&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The &lt;code&gt;uniform&lt;/code&gt; keyword will expose the variable so that it can be set in the Inspector (similar to &lt;code&gt;export&lt;/code&gt; in GDScript).  If you look at the &lt;code&gt;CanvasItemMaterial&lt;/code&gt; now, you will see the 5 texture variables:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/shader_ex01.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/shader_ex01.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;Drag the 5 textures into the 5 slots in the Inspector.  Let&amp;rsquo;s test to see if it works:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-glsl&#34; data-lang=&#34;glsl&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;COLOR&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This just sets each pixel of the sprite to use the corresponding pixel of &lt;code&gt;frame1&lt;/code&gt;.  Change it to &lt;code&gt;frame2&lt;/code&gt; and observe the difference.&lt;/p&gt;
+
+&lt;h3 id=&#34;incorporating-time&#34;&gt;Incorporating time&lt;/h3&gt;
+
+&lt;p&gt;Now we need that process to change with respect to time.  In Godot, the &lt;code&gt;TIME&lt;/code&gt; variable will contain the current time (in seconds).  This value will steadily increase, but we are only interested in the fractional part, so we will use that:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-glsl&#34; data-lang=&#34;glsl&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;float&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fract&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TIME&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;color&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;col&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;col&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;COLOR&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;col&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;We check if the time is less than 0.5 and then use the texture pixel as before. Now you should see texture #1 for half a second, and nothing for the other half.  The only remaining thing is to break the second in to 5 parts and set the texture based on which fraction we are in.  We will also add a &lt;code&gt;speed&lt;/code&gt; uniform to allow easy adjustment of the animation speed.  Here is the final shader code in full:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-glsl&#34; data-lang=&#34;glsl&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;float&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1.0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;color&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;col&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;float&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fract&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TIME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;col&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;col&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+	&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+		&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.6&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+			&lt;span class=&#34;n&#34;&gt;col&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+		&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+			&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+				&lt;span class=&#34;n&#34;&gt;col&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+			&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+				&lt;span class=&#34;n&#34;&gt;col&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+			&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+		&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+	&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;COLOR&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;col&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id=&#34;creating-the-tileset&#34;&gt;Creating the tileset&lt;/h3&gt;
+
+&lt;p&gt;Now it just remains to save the sprites as a TileSet (&lt;code&gt;Scene -&amp;gt; Convert To.. -&amp;gt; TileSet..&lt;/code&gt;) and load it in your &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tilemap.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_tile_map&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_tile_map&#34;&gt;&lt;/svg&gt; TileMap&lt;/a&gt;.  You can use the tile like any other, but when placed it will animate.&lt;/p&gt;
+
+&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h2&gt;
+
+&lt;p&gt;Shaders are powerful, and this only scratches the surface of what you can do with them.  To learn more, see the links below to resources where you can learn more about how to create your own shader effects.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-releases-download-godot101-godot101-part-13-zip-project-files-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/releases/download/godot101/Godot101_Part_13.zip&#34;&gt;Project Files&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Godot 101 - Part 13: KinematicBody2D Collisions Done Right</title>
@@ -1859,100 +1993,6 @@ node is perfect for implementing characters and other moving bodies that don&amp
 &lt;p&gt;Thanks for reading/watching these lessons!  Your support, questions, and comments are greatly appreciated.&lt;/p&gt;
 
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-14-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-14.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/python-install.html&#34;&gt;Installing Python&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/blog/2015/09/pygame_install/&#34;&gt;Installing Pygame&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uve1tjVIQ6c&amp;ab_channel=KidsCanCode&#34;&gt;Setting up Atom for Python&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Pygame Shmup Part 13: Powerups (part 2)</title>
-      <link>/blog/2016/10/pygame_shmup_part_13/</link>
-      <pubDate>Sat, 22 Oct 2016 05:22:12 PDT</pubDate>
-      
-      <guid>/blog/2016/10/pygame_shmup_part_13/</guid>
-      <description>&lt;p&gt;This is part 13 of our &amp;ldquo;Shmup&amp;rdquo; project.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2016/08/pygame_shmup_part_1/&#34;&gt;Part 1&lt;/a&gt;. In this lesson we&amp;rsquo;ll add some powerups that will occasionally appear.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
-
-&lt;p&gt;In this series of lessons we&amp;rsquo;ll build a complete game using Python and Pygame.  It&amp;rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.
-&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/y2w-116htIQ&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;gun-powerups&#34;&gt;Gun Powerups&lt;/h2&gt;
-
-&lt;p&gt;Last time, we created a Powerup sprite that drops randomly from meteors when they are destroyed.  We finished making the &lt;code&gt;&#39;shield&#39;&lt;/code&gt; type powerup work, and now we need to do the same with the &lt;code&gt;&#39;gun&#39;&lt;/code&gt; type.&lt;/p&gt;
-
-&lt;p&gt;There are a lot of things we could choose to have the gun powerup affect: fire rate, damage (although right now we destroy meteors with one hit), type of gun, etc.  For this lesson, we&amp;rsquo;re going to make the player shoot more bullets, but to give us the flexibility to change it later if we want, we&amp;rsquo;re going to define a new &lt;code&gt;Player&lt;/code&gt; method and call it when we grab a &lt;code&gt;&#39;gun&#39;&lt;/code&gt; powerup:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hit&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;gun&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;powerup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;To make this work, first let&amp;rsquo;s add some new properties to the &lt;code&gt;Player&lt;/code&gt; sprite: &lt;code&gt;power&lt;/code&gt; to track what the &amp;ldquo;power level&amp;rdquo; is (each pow can raise this by one), and a &lt;code&gt;power_time&lt;/code&gt; so we can drop back down after a certain amount of time goes by:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;power&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
-    &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;power_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_ticks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;The &lt;code&gt;powerup&lt;/code&gt; method will set these properties:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;powerup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;power&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
-    &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;power_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_ticks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;And now we can change the &lt;code&gt;shoot&lt;/code&gt; method to produce 2 bullets when &lt;code&gt;power&lt;/code&gt; is greater than 1. We&amp;rsquo;ll make them spawn at the wingtips.&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;shoot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;now&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_ticks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;now&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;last_shot&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shoot_delay&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;last_shot&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;now&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;power&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;bullet&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;centerx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;top&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;bullets&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;shoot_sound&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;power&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;bullet1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;left&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;centery&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;bullet2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;right&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;centery&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bullet1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bullet2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;bullets&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bullet1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;bullets&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bullet2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;shoot_sound&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;And lastly, we need to check the &lt;code&gt;power_time&lt;/code&gt; by adding this to the player&amp;rsquo;s &lt;code&gt;update&lt;/code&gt;:&lt;/p&gt;
-
-&lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;# timeout for powerups&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;power&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;and&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_ticks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;power_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;POWERUP_TIME&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-    &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;power&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
-    &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;power_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_ticks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
-
-&lt;p&gt;Don&amp;rsquo;t forget to set &lt;code&gt;POWERUP_TIME&lt;/code&gt; to 5000 (5 seconds) at the top.&lt;/p&gt;
-
-&lt;h3 id=&#34;pow-sounds&#34;&gt;Pow sounds&lt;/h3&gt;
-
-&lt;p&gt;To wrap up the Powerups feature, we need some nice sounds to play when we pick up the items.  I will leave that for you to add.  Use &amp;lsquo;bfxr&amp;rsquo; to find two sounds you like and load them like we did the other sounds, naming them something like &lt;code&gt;shield_sound&lt;/code&gt; and &lt;code&gt;power_sound&lt;/code&gt;.  Then, just play each sound when the corresponding pow type is collided with.  You can see the full game code below, but do try to make it work before you look.&lt;/p&gt;
-
-&lt;p&gt;Next time, we&amp;rsquo;ll finish up the game by adding a &amp;lsquo;Game Over&amp;rsquo; screen.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-13-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-13.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;a-href-blog-2016-11-pygame-shmup-part-14-part-14-game-over-screen-a&#34;&gt;&lt;a href=&#34;/blog/blog/2016/11/pygame_shmup_part_14/&#34;&gt;Part 14: Game Over Screen &lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 

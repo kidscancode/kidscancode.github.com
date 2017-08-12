@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/blog/2017/08/godot_tilemap_shaders/</loc>
+    <lastmod>2017-08-06T15:22:12-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/2017/06/godot_101_13/</loc>
     <lastmod>2017-06-24T05:22:12-07:00</lastmod>
   </url>
@@ -190,7 +195,7 @@
   
   <url>
     <loc>/blog/tags/gamedev/</loc>
-    <lastmod>2017-06-24T05:22:12-07:00</lastmod>
+    <lastmod>2017-08-06T15:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -202,19 +207,19 @@
   
   <url>
     <loc>/blog/tags/godot/</loc>
-    <lastmod>2017-06-24T05:22:12-07:00</lastmod>
+    <lastmod>2017-08-06T15:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/blog/</loc>
-    <lastmod>2017-06-24T05:22:12-07:00</lastmod>
+    <lastmod>2017-08-06T15:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/blog/post/</loc>
-    <lastmod>2017-06-24T05:22:12-07:00</lastmod>
+    <lastmod>2017-08-06T15:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -227,6 +232,12 @@
   <url>
     <loc>/blog/tags/python/</loc>
     <lastmod>2016-11-12T05:22:12-07:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/blog/tags/shaders/</loc>
+    <lastmod>2017-08-06T15:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -244,7 +255,7 @@
   
   <url>
     <loc>/blog/tags/tutorial/</loc>
-    <lastmod>2017-06-24T05:22:12-07:00</lastmod>
+    <lastmod>2017-08-06T15:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
