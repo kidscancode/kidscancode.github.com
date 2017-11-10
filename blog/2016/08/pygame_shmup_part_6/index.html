@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -161,7 +161,7 @@
 
 <p>First, let&rsquo;s add some new properties to the <code>Mob</code> sprite:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Mob</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Mob</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">meteor_img</span>
@@ -173,10 +173,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">rot_speed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-</span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
-</span></code></pre></div>
-
+<span class="hl">        <span class="bp">self</span><span class="o">.</span><span class="n">rot_speed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</span><span class="hl">        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span></span></code></pre></div>
 
 <p>The first property, <code>rot</code> (short for &lsquo;rotation&rsquo;), will measure how many degrees the sprite should be rotated. It starts out at 0 and will change over time.  <code>rot_speed</code> measures how many degrees the sprite should rotate each time - bigger numbers will mean faster rotation.  We&rsquo;re picking a random value, with negative being counterclockwise and positive being clockwise.</p>
 
@@ -188,26 +186,20 @@
 
 <p>We&rsquo;re going to need a few lines of code to perform this operation, so we&rsquo;ll make a new method for it called <code>self.rotate()</code>, which we can add to the <code>update()</code> method:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>	<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="hll">		<span class="bp">self</span><span class="o">.</span><span class="n">rotate</span><span class="p">()</span>
-</span></code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">	<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="hl">		<span class="bp">self</span><span class="o">.</span><span class="n">rotate</span><span class="p">()</span></span></code></pre></div>
 
 <p>This way we can keep our update method from getting too crowded, and you can also comment out that line if you want to turn rotation off.  Here&rsquo;s the start of our rotate method:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>	<span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">	<span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="n">now</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
 		<span class="k">if</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">now</span>
-			<span class="c1"># do rotation here</span>
-</code></pre></div>
-
+			<span class="c1"># do rotation here</span></code></pre></div>
 
 <p>First, we check what time it is currently, then we subtract the time of the last update.  If more than 50 milliseconds have gone by, then we&rsquo;re going to update the image.  We put the value of <code>now</code> into <code>last_update</code> and we can perform the rotation.  Now, you might think that this is as simple as just applying the rotation to the sprite like this:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot_speed</span><span class="p">)</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot_speed</span><span class="p">)</span></code></pre></div>
 
 <p>However, if you try this, you will have a problem:</p>
 
@@ -221,12 +213,12 @@
 
 <p>First let&rsquo;s keep a copy of the original image:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Mob</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Mob</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">meteor_images</span><span class="p">)</span>
-</span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
-</span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="hl">        <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">meteor_images</span><span class="p">)</span>
+</span><span class="hl">        <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
+</span><span class="hl">        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="o">.</span><span class="mi">85</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">WIDTH</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
@@ -235,20 +227,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">speedx</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rot_speed</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
-</code></pre></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span></code></pre></div>
 
 <p>Then in the <code>rotate</code> method we can update the value of <code>rot</code> and apply that rotation to the original image:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">now</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">now</span>
-<span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot_speed</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span>
-</span><span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot</span><span class="p">)</span>
-</span></code></pre></div>
-
+<span class="hl">            <span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot_speed</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span>
+</span><span class="hl">            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot</span><span class="p">)</span></span></code></pre></div>
 
 <p>Note that we used the remainder operator - <code>%</code> - to prevent <code>rot</code> from having values greater than 360.</p>
 
@@ -274,18 +262,16 @@
 
 <p>Bringing this to back to our rotate code, we just record the location of the rect&rsquo;s center, calculate the new rect, and set its center to that saved one:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>	<span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">	<span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">now</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">last_update</span> <span class="o">=</span> <span class="n">now</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rot</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot_speed</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span>
             <span class="n">new_image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rot</span><span class="p">)</span>
-<span class="hll">            <span class="n">old_center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span>
-</span><span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">new_image</span>
-</span><span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
-</span><span class="hll">            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">old_center</span>
-</span></code></pre></div>
-
+<span class="hl">            <span class="n">old_center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span>
+</span><span class="hl">            <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">new_image</span>
+</span><span class="hl">            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+</span><span class="hl">            <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">old_center</span></span></code></pre></div>
 
 <h2 id="random-meteor-images">Random meteor images</h2>
 
@@ -293,26 +279,22 @@
 
 <p>First, we&rsquo;ll load all the meteor images and put them into a list:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">meteor_images</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">meteor_list</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;meteorBrown_big1.png&#39;</span><span class="p">,</span><span class="s1">&#39;meteorBrown_med1.png&#39;</span><span class="p">,</span>
-              <span class="s1">&#39;meteorBrown_med1.png&#39;</span><span class="p">,</span><span class="s1">&#39;meteorBrown_med3.png&#39;</span><span class="p">,</span>
-              <span class="s1">&#39;meteorBrown_small1.png&#39;</span><span class="p">,</span><span class="s1">&#39;meteorBrown_small2.png&#39;</span><span class="p">,</span>
-              <span class="s1">&#39;meteorBrown_tiny1.png&#39;</span><span class="p">]</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">meteor_images</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">meteor_list</span> <span class="o">=</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;meteorBrown_big1.png&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;meteorBrown_med1.png&#39;</span><span class="p">,</span>
+              <span class="sa"></span><span class="s1">&#39;meteorBrown_med1.png&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;meteorBrown_med3.png&#39;</span><span class="p">,</span>
+              <span class="sa"></span><span class="s1">&#39;meteorBrown_small1.png&#39;</span><span class="p">,</span><span class="sa"></span><span class="s1">&#39;meteorBrown_small2.png&#39;</span><span class="p">,</span>
+              <span class="sa"></span><span class="s1">&#39;meteorBrown_tiny1.png&#39;</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">meteor_list</span><span class="p">:</span>
-    <span class="n">meteor_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="n">img</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">())</span>
-</code></pre></div>
-
+    <span class="n">meteor_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="n">img</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">())</span></code></pre></div>
 
 <p>Then all we have to do is choose a random image when our meteor is spawned:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Mob</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Mob</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">meteor_images</span><span class="p">)</span>
+<span class="hl">        <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">meteor_images</span><span class="p">)</span>
 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-</code></pre></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_orig</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></code></pre></div>
 
 <p>Much better!</p>
 

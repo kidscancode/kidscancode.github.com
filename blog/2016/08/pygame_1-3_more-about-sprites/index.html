@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -182,15 +182,13 @@ You can watch a video version of this lesson here:</p>
 
 <p>To use this image in our game, we need to tell Pygame to load the picture file, which means we need our program to know where the file is located.  Depending on what kind of computer you are using, this can be different, and we want to be able to run our program on any computer, so we need to load a Python library called <code>os</code>, and then specify where our game is located:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span> <span class="kn">import</span> <span class="nn">pygame</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"> <span class="kn">import</span> <span class="nn">pygame</span>
  <span class="kn">import</span> <span class="nn">random</span>
  <span class="kn">import</span> <span class="nn">os</span>
 
  <span class="c1"># set up asset folders</span>
  <span class="n">game_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>The special Python variable <code>__file__</code> refers to whatever folder your game code is saved in, and the command <code>os.path.dirname</code> figures out the <em>path</em> to that folder.  For example, on my computer, the path to my code is this:</p>
 
@@ -204,29 +202,25 @@ You can watch a video version of this lesson here:</p>
 
 <p>Now, we can specify our &ldquo;img&rdquo; folder:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span> <span class="kn">import</span> <span class="nn">pygame</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"> <span class="kn">import</span> <span class="nn">pygame</span>
  <span class="kn">import</span> <span class="nn">random</span>
  <span class="kn">import</span> <span class="nn">os</span>
 
  <span class="c1"># set up asset folders</span>
  <span class="n">game_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
- <span class="n">img_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">game_folder</span><span class="p">,</span> <span class="s1">&#39;img&#39;</span><span class="p">)</span>
- <span class="n">player_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_folder</span><span class="p">,</span> <span class="s1">&#39;p1_jump.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
- 
-</code></pre></div>
-
+ <span class="n">img_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">game_folder</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;img&#39;</span><span class="p">)</span>
+ <span class="n">player_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_folder</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;p1_jump.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+ </code></pre></div>
 
 <p>Now we&rsquo;ve loaded our image by using <code>pygame.image.load()</code> and we&rsquo;ve made sure to use <code>convert()</code>, which will speed up Pygame&rsquo;s drawing by converting the image into a format that will be faster to draw on the screen. Now we&rsquo;re ready to replace the plain green square in our sprite with our fancy player image:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">player_img</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>Notice we&rsquo;ve deleted the <code>self.image.fill(GREEN)</code> commmand - we don&rsquo;t need it to be filled with a solid color anymore.  <code>get_rect()</code> will still work just fine, because it looks at whatever <code>self.image</code> is to figure out what the bounding rectangle should be.</p>
 
@@ -236,16 +230,14 @@ You can watch a video version of this lesson here:</p>
 
 <p>When you have an image file on the computer, that file is always a rectangular grid of pixels. No matter what shape you&rsquo;ve drawn, there&rsquo;s still a border of pixels filling the &ldquo;background&rdquo; of your image.  What we need to do is tell Pygame to ignore the pixels in the image that we don&rsquo;t care about.  In this image, those pixels happen to be black, so we can add the following:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">player_img</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p><code>set_colorkey()</code> just tells Pygame that when we draw the image we want to ignore any pixels of the specified color.  Now our image looks much better:</p>
 

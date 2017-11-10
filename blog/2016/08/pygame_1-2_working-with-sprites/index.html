@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -156,23 +156,19 @@ You can watch a video version of this lesson here:</p>
 
 <p>A sprite group is just a collection of sprites that you can act on all at the same time.  Let&rsquo;s make a sprite group to hold all the sprites in our game:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span> <span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"> <span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
  <span class="n">all_sprites</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>Now we can take advantage of the group by adding the following in our loop:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="c1"># Update</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="c1"># Update</span>
     <span class="n">all_sprites</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
     <span class="c1"># Draw / render</span>
     <span class="n">screen</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
     <span class="n">all_sprites</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>Now for every sprite that we create we just make sure we add it to the <code>all_sprites</code> group, and it will automatically be drawn on the screen and updated each time through the loop.</p>
 
@@ -182,24 +178,20 @@ You can watch a video version of this lesson here:</p>
 
 <p>We start by defining our new sprite:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
- 
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+ </code></pre></div>
 
 <p><code>class</code> tells Python we&rsquo;re defining a new object, which is going to be our player sprite, and its type is <code>pygame.sprite.Sprite</code>, which means it will be based on Pygame&rsquo;s pre-defined <code>Sprite</code> class.</p>
 
 <p>The first bit of code we need in a <code>class</code> definition, is the special <code>__init__()</code> function, which defines what code will run whenever a new object of this type is created.  There are also two properties that every Pygame sprite <em>must</em> have: an <code>image</code> and a <code>rect</code>:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">GREEN</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>The first line, <code>pygame.sprite.Sprite.__init__(self)</code> is required by Pygame - it runs the built-in <code>Sprite</code> classes initializer.  Next, we define the <code>image</code> property - in this case, we&rsquo;re just creating a simple 50 x 50 square and filling it with the color <code>GREEN</code>. Later we&rsquo;ll learn how to make the sprite&rsquo;s <code>image</code> be something fancier, like a character or spaceship, but a solid square is good enough for now.</p>
 
@@ -207,25 +199,21 @@ You can watch a video version of this lesson here:</p>
 
 <p>We can use the <code>rect</code> to put the sprite wherever we want it on the screen.  Let&rsquo;s start with the sprite in the center:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">GREEN</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>Now that we&rsquo;ve defined our Player sprite, we need to &ldquo;spawn&rdquo; (meaning create) it by making an <em>instance</em> of the Player class.  We also need to make sure we add the sprite to the <code>all_sprites</code> group:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">all_sprites</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">all_sprites</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
 <span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">()</span>
 <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>Now, if you run your program, you&rsquo;ll see the green square at the center of the screen.  Go ahead and increase the <code>WIDTH</code> and <code>HEIGHT</code> settings of your program so that you will have plenty of space for the sprite to move around in the next step.</p>
 
@@ -235,7 +223,7 @@ You can watch a video version of this lesson here:</p>
 
 <p>Remember, in the game loop, we have the <code>all_sprites.update()</code>.  This means that for every sprite in the group, Pygame will look for an <code>update()</code> function and run it.  So to get our sprite to move, we just need to define its update rules:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
@@ -246,9 +234,7 @@ You can watch a video version of this lesson here:</p>
     <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mi">5</span>
 
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>This means that every time through the game loop, we increase the x coordinate of the sprite by 5 pixels.  Go ahead and run it and you&rsquo;ll see the sprite head off the right side of the screen:</p>
 
@@ -260,7 +246,7 @@ You can watch a video version of this lesson here:</p>
 
 <p>So if the left edge of the <code>rect</code> goes off the screen, we&rsquo;ll set the right edge to 0:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
@@ -272,9 +258,7 @@ You can watch a video version of this lesson here:</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mi">5</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="o">&gt;</span> <span class="n">WIDTH</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="mi">0</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>And now we can see the sprite will appear to wrap around the screen:</p>
 

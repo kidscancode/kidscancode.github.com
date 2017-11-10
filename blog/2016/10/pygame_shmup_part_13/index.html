@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -157,29 +157,23 @@
 
 <p>There are a lot of things we could choose to have the gun powerup affect: fire rate, damage (although right now we destroy meteors with one hit), type of gun, etc.  For this lesson, we&rsquo;re going to make the player shoot more bullets, but to give us the flexibility to change it later if we want, we&rsquo;re going to define a new <code>Player</code> method and call it when we grab a <code>'gun'</code> powerup:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="k">if</span> <span class="n">hit</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;gun&#39;</span><span class="p">:</span>
-        <span class="n">player</span><span class="o">.</span><span class="n">powerup</span><span class="p">()</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="k">if</span> <span class="n">hit</span><span class="o">.</span><span class="nb">type</span> <span class="o">==</span> <span class="sa"></span><span class="s1">&#39;gun&#39;</span><span class="p">:</span>
+        <span class="n">player</span><span class="o">.</span><span class="n">powerup</span><span class="p">()</span></code></pre></div>
 
 <p>To make this work, first let&rsquo;s add some new properties to the <code>Player</code> sprite: <code>power</code> to track what the &ldquo;power level&rdquo; is (each pow can raise this by one), and a <code>power_time</code> so we can drop back down after a certain amount of time goes by:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span></code></pre></div>
 
 <p>The <code>powerup</code> method will set these properties:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">powerup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">powerup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
-</code></pre></div>
-
+    <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span></code></pre></div>
 
 <p>And now we can change the <code>shoot</code> method to produce 2 bullets when <code>power</code> is greater than 1. We&rsquo;ll make them spawn at the wingtips.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">shoot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">shoot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">now</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_shot</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">shoot_delay</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_shot</span> <span class="o">=</span> <span class="n">now</span>
@@ -195,18 +189,14 @@
             <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet2</span><span class="p">)</span>
             <span class="n">bullets</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet1</span><span class="p">)</span>
             <span class="n">bullets</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet2</span><span class="p">)</span>
-            <span class="n">shoot_sound</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
-</code></pre></div>
-
+            <span class="n">shoot_sound</span><span class="o">.</span><span class="n">play</span><span class="p">()</span></code></pre></div>
 
 <p>And lastly, we need to check the <code>power_time</code> by adding this to the player&rsquo;s <code>update</code>:</p>
 
-<p><div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># timeout for powerups</span>
+<p><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># timeout for powerups</span>
 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">&gt;</span> <span class="n">POWERUP_TIME</span><span class="p">:</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">-=</span> <span class="mi">1</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
-</code></pre></div>
-</p>
+    <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span></code></pre></div></p>
 
 <p>Don&rsquo;t forget to set <code>POWERUP_TIME</code> to 5000 (5 seconds) at the top.</p>
 

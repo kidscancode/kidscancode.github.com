@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -169,13 +169,11 @@
 
 <p>In this picture, you can see that only rectangle #3 is colliding with the large black rectangle.  #1 is overlapping in the x axis, but not the y; #2 is overlapping in y, but not in x.  In order for two rectangles to be overlapping, their <em>bounds</em> must overlap in <em>each</em> axis.  Writing this in code:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">if</span> <span class="n">mob</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span> <span class="o">&gt;</span> <span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="ow">and</span> \
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">if</span> <span class="n">mob</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span> <span class="o">&gt;</span> <span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="ow">and</span> \
    <span class="n">mob</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span> <span class="ow">and</span> \
    <span class="n">mob</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span> <span class="o">&gt;</span> <span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span> <span class="ow">and</span> \
    <span class="n">mob</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span> <span class="o">&lt;</span> <span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span><span class="p">:</span>
-       <span class="n">collide</span> <span class="o">=</span> <span class="bp">True</span>
-</code></pre></div>
-
+       <span class="n">collide</span> <span class="o">=</span> <span class="bp">True</span></code></pre></div>
 
 <p>Fortunately for us, Pygame has a built-in way of doing the above, by using the <code>spritecollide()</code> function.</p>
 
@@ -183,15 +181,13 @@
 
 <p>We&rsquo;re going to add this command to the &ldquo;update&rdquo; section of our game loop:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1">#Update</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#Update</span>
 <span class="n">all_sprites</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
-<span class="hll"><span class="c1">#check to see if a mob hit the player</span>
-</span><span class="hll"><span class="n">hits</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">spritecollide</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">mobs</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
-</span><span class="hll"><span class="k">if</span> <span class="n">hits</span><span class="p">:</span>
-</span><span class="hll">    <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
-</span></code></pre></div>
-
+<span class="hl"><span class="c1">#check to see if a mob hit the player</span>
+</span><span class="hl"><span class="n">hits</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">spritecollide</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">mobs</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+</span><span class="hl"><span class="k">if</span> <span class="n">hits</span><span class="p">:</span>
+</span><span class="hl">    <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span></span></code></pre></div>
 
 <p>The <code>spritecollide()</code> function takes 3 arguments: the name of the sprite you want to check, the name of a <em>group</em> you want to compare against, and a True/False parameter called <code>dokill</code>.  The <code>dokill</code> parameter lets you set whether the object should be deleted when it gets hit.  If, for example, we were trying to see if the player picked up a coin, we would want to set this to <code>True</code> so the coin would disappear.</p>
 
@@ -205,7 +201,7 @@
 
 <p>Now we&rsquo;re ready to add a new sprite: the bullet.  This will be a sprite that is spawned when we shoot, appears at the top of the player sprite, and moves upwards at some fairly high speed.  Defining a sprite should be starting to look familiar to you by now, so here&rsquo;s the complete <code>Bullet</code> class:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Bullet</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Bullet</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
@@ -219,9 +215,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span>
         <span class="c1"># kill if it moves off the top of the screen</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">bottom</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
-</code></pre></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span></code></pre></div>
 
 <p>In the <code>__init__()</code> method of the bullet sprite, we&rsquo;re passing <code>x</code> and <code>y</code> values, so that we can tell the sprite where to appear.  Since the player sprite can move, this will be set to where the player is at the time the player shoots.  We set <code>speedy</code> to a negative value, so that it will be going upward.</p>
 
@@ -231,15 +225,13 @@
 
 <p>To keep things simple at first, we&rsquo;re going to make it so that each time the player presses the spacebar, a bullet will be fired.  We need to add that to the events checking:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
     <span class="c1"># check for closing window</span>
-    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="nb">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
         <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="hll">    <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">KEYDOWN</span><span class="p">:</span>
-</span><span class="hll">        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_SPACE</span><span class="p">:</span>
-</span><span class="hll">            <span class="n">player</span><span class="o">.</span><span class="n">shoot</span><span class="p">()</span>
-</span></code></pre></div>
-
+<span class="hl">    <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="nb">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">KEYDOWN</span><span class="p">:</span>
+</span><span class="hl">        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_SPACE</span><span class="p">:</span>
+</span><span class="hl">            <span class="n">player</span><span class="o">.</span><span class="n">shoot</span><span class="p">()</span></span></code></pre></div>
 
 <p>Our new code checks for a <code>KEYDOWN</code> event, and if there is one, checks to see if it was the <code>K_SPACE</code> key.  If it was, we&rsquo;re going to run the player sprite&rsquo;s <code>shoot()</code> method.</p>
 
@@ -247,18 +239,14 @@
 
 <p>First we need to add a new group to hold all of the bullets:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">bullets</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">bullets</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span></code></pre></div>
 
 <p>Now, we can add the following method to the <code>Player</code> class:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">shoot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">shoot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">bullet</span> <span class="o">=</span> <span class="n">Bullet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">centerx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span><span class="p">)</span>
     <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet</span><span class="p">)</span>
-    <span class="n">bullets</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet</span><span class="p">)</span>
-</code></pre></div>
-
+    <span class="n">bullets</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bullet</span><span class="p">)</span></code></pre></div>
 
 <p>All the <code>shoot()</code> method does is spawn a bullet, using the top center of the player as the spawn point.  Then we make sure to add the bullet to <code>all_sprites</code> (so it will be drawn and updated) and to <code>bullets</code>, which we&rsquo;re going to use for the collisions.</p>
 
@@ -266,7 +254,7 @@
 
 <p>Now we need to check whether a bullet hits a mob.  The difference here is we have multiple bullets (in the <code>bullets</code> group) and multiple mobs (in the <code>mobs</code> group), so we can&rsquo;t use <code>spritecollide()</code> like before because that only compares <em>one</em> sprite against a group.  Instead, we&rsquo;re going to use <code>groupcollide()</code>:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Update</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Update</span>
 <span class="n">all_sprites</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
 <span class="c1"># check to see if a bullet hit a mob</span>
@@ -274,9 +262,7 @@
 <span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">Mob</span><span class="p">()</span>
     <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-    <span class="n">mobs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-</code></pre></div>
-
+    <span class="n">mobs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">m</span><span class="p">)</span></code></pre></div>
 
 <p>The <code>groupcollide()</code> function is similar to <code>spritecollide()</code>, except that you name two groups to compare, and what you will get back is a list of mobs that were hit.  There are two <code>dokill</code> options, one for each of the groups.</p>
 

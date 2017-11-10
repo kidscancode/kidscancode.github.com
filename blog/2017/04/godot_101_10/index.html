@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -155,14 +155,12 @@
 
 <p>Jumping is an important part of any platform game, but there are some things to consider when it comes to implementation.  At first glance, it&rsquo;s very simple:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">JUMP_SPEED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">JUMP_SPEED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
 
 <span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
     <span class="c1"># ...</span>
-    <span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_up&quot;</span><span class="p">):</span>
-        <span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">JUMP_SPEED</span>
-</code></pre></div>
-
+    <span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_up&#34;</span><span class="p">):</span>
+        <span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">JUMP_SPEED</span></code></pre></div>
 
 <p>The problem here is that tapping the key will jump, but holding it down sends the player flying up off the screen.  As long as the key is down, we continue to move upward.</p>
 
@@ -180,16 +178,14 @@
 
 <p>Now to use this in the code, add this to <code>player.gd</code>:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">onready</span> <span class="n">var</span> <span class="n">ground_ray</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&quot;ground_ray&quot;</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">onready</span> <span class="n">var</span> <span class="n">ground_ray</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ground_ray&#34;</span><span class="p">)</span>
 
 <span class="n">JUMP_SPEED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
 
 <span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
     <span class="c1"># ...</span>
-    <span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_up&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ground_ray</span><span class="o">.</span><span class="n">is_colliding</span><span class="p">():</span>
-        <span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">JUMP_SPEED</span>
-</code></pre></div>
-
+    <span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_up&#34;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ground_ray</span><span class="o">.</span><span class="n">is_colliding</span><span class="p">():</span>
+        <span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">JUMP_SPEED</span></code></pre></div>
 
 <p>Now we only jump when standing on the ground, but what happens if we hold the key?</p>
 
@@ -197,14 +193,12 @@
 
 <p>Ideally, the player should jump one time when the jump key is pressed, then not again until it&rsquo;s pressed again.  To do this, we can change the way we check for the key:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
     <span class="n">set_process_input</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
 
 <span class="n">func</span> <span class="n">_input</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_up&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ground_ray</span><span class="o">.</span><span class="n">is_colliding</span><span class="p">():</span>
-        <span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">JUMP_SPEED</span>
-</code></pre></div>
-
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_up&#34;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ground_ray</span><span class="o">.</span><span class="n">is_colliding</span><span class="p">():</span>
+        <span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">JUMP_SPEED</span></code></pre></div>
 
 <p>Enabling input processing means that whenever an input event occurs, the <code>_input()</code> function will be called.  We then use that event to trigger the jump, instead of doing it every frame in <code>_fixed_process()</code>.</p>
 
@@ -228,13 +222,11 @@
 
 <p>Many games allow the player to vary the height of the jump depending on how long they hold down the jump key or how quickly they release it.  We can do that easily using the <code>_input()</code> function:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">MIN_JUMP</span> <span class="o">=</span> <span class="o">-</span><span class="mi">500</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">MIN_JUMP</span> <span class="o">=</span> <span class="o">-</span><span class="mi">500</span>
 
 <span class="n">func</span> <span class="n">_input</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_released</span><span class="p">(</span><span class="s2">&quot;ui_up&quot;</span><span class="p">):</span>
-        <span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">vel</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">MIN_JUMP</span><span class="p">,</span> <span class="n">vel</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-</code></pre></div>
-
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_released</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_up&#34;</span><span class="p">):</span>
+        <span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">vel</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">MIN_JUMP</span><span class="p">,</span> <span class="n">vel</span><span class="o">.</span><span class="n">y</span><span class="p">)</span></code></pre></div>
 
 <p>Now, if the player releases the jump key, we check the velocity.  If it&rsquo;s less than -500 (going up <em>faster</em>) then we clamp it to -500, cutting the jump short.</p>
 

@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -200,10 +200,8 @@
 <p><a href="/blog/img/godot101_05_01.gif"><img src="/blog/img/godot101_05_01.gif" width="550"></a><sub>Click to enlarge</sub></p>
 
 <p>Now let&rsquo;s scale the sprite down a little and make sure it&rsquo;s centered on the parent node by setting the following values in the Inspector:
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="n">Scale</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
-    <span class="n">Offset</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">64</span><span class="p">)</span>
-</code></pre></div>
-</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="n">Scale</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">Offset</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">64</span><span class="p">)</span></code></pre></div></p>
 
 <h3 id="collision-shapes">Collision Shapes</h3>
 
@@ -227,7 +225,7 @@
 
 <p>Now, let&rsquo;s add a script to the player node:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Area2D</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Area2D</span>
 
 <span class="n">export</span> <span class="n">var</span> <span class="n">speed</span> <span class="o">=</span> <span class="mi">400</span>
 
@@ -238,54 +236,48 @@
 
 <span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
 	<span class="n">set_pos</span><span class="p">(</span><span class="n">get_pos</span><span class="p">()</span> <span class="o">+</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>First, we&rsquo;re creating a variable to set our player&rsquo;s speed.  The <code>export</code> keyword does something special: save this script, then click on the <svg width="18" height="18" class="icon-icon_area_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_area_2d"></svg><code>player</code> node and look at the Inspector.  Now we can change the value of <code>speed</code> directly in the Inspector!</p>
 
 <p>The movement is going to be similar to how we did it in the previous lesson - we move the position by adding <code>vel * delta</code>.  But our sprite won&rsquo;t move, because we need to detect the keys:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
 	<span class="n">var</span> <span class="nb">input</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-	<span class="nb">input</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_right&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_left&quot;</span><span class="p">)</span>
-	<span class="nb">input</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_down&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_up&quot;</span><span class="p">)</span>
+	<span class="nb">input</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_right&#34;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_left&#34;</span><span class="p">)</span>
+	<span class="nb">input</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_down&#34;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_up&#34;</span><span class="p">)</span>
 	<span class="n">vel</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span> <span class="o">*</span> <span class="n">speed</span>
 	<span class="n">set_pos</span><span class="p">(</span><span class="n">get_pos</span><span class="p">()</span> <span class="o">+</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>Here, we&rsquo;re creating an <code>input</code> vector to hold the direction the player is holding - a combination of whatever keys are pressed.  <code>Input.is_action_pressed()</code> will return <code>1</code> or <code>0</code>, so we can get the total movement in each axis by subtracting the negative direction key from the positive one.</p>
 
 <p>Once we have the input vector, we must <code>normalize()</code> it so that <code>(1, 1)</code> is not faster than <code>(1, 0)</code>.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Area2D</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Area2D</span>
 
 <span class="n">export</span> <span class="n">var</span> <span class="n">speed</span> <span class="o">=</span> <span class="mi">400</span>
 
-<span class="hll"><span class="n">var</span> <span class="n">screensize</span>
-</span><span class="hll"><span class="n">var</span> <span class="n">extents</span>
+<span class="hl"><span class="n">var</span> <span class="n">screensize</span>
+</span><span class="hl"><span class="n">var</span> <span class="n">extents</span>
 </span><span class="n">var</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span>
 
 <span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
         <span class="n">set_fixed_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
-<span class="hll">        <span class="n">screensize</span> <span class="o">=</span> <span class="n">get_viewport_rect</span><span class="p">()</span><span class="o">.</span><span class="n">size</span>
-</span><span class="hll">        <span class="n">extents</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&quot;collision&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span><span class="o">.</span><span class="n">get_extents</span><span class="p">()</span>
-</span><span class="hll">        <span class="n">set_pos</span><span class="p">(</span><span class="n">screensize</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="hl">        <span class="n">screensize</span> <span class="o">=</span> <span class="n">get_viewport_rect</span><span class="p">()</span><span class="o">.</span><span class="n">size</span>
+</span><span class="hl">        <span class="n">extents</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;collision&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span><span class="o">.</span><span class="n">get_extents</span><span class="p">()</span>
+</span><span class="hl">        <span class="n">set_pos</span><span class="p">(</span><span class="n">screensize</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
 </span>
 <span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
         <span class="n">var</span> <span class="nb">input</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="nb">input</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_right&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_left&quot;</span><span class="p">)</span>
-        <span class="nb">input</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_down&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_up&quot;</span><span class="p">)</span>
+        <span class="nb">input</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_right&#34;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_left&#34;</span><span class="p">)</span>
+        <span class="nb">input</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_down&#34;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_up&#34;</span><span class="p">)</span>
         <span class="n">vel</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span> <span class="o">*</span> <span class="n">speed</span>
         <span class="n">var</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">get_pos</span><span class="p">()</span> <span class="o">+</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span>
-<span class="hll">        <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">screensize</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
-</span><span class="hll">        <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">screensize</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
-</span><span class="hll">        <span class="n">set_pos</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
-</span><span class="hll"> 
-</span></code></pre></div>
-
+<span class="hl">        <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">screensize</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+</span><span class="hl">        <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">screensize</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+</span><span class="hl">        <span class="n">set_pos</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+</span><span class="hl"> </span></code></pre></div>
 
 <h3 id="wrapping-around">Wrapping Around</h3>
 

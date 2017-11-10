@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -157,65 +157,57 @@
 
 <p>The reason the game ends is that our game loop is controlled by the <code>running</code> flag (<em>a flag is a variable that can be <code>True</code> or <code>False</code></em>) and we set <code>running</code> to <code>False</code> when the player dies.  Instead, we want to track what <em>state</em> our game is in (showing game over, or playing), we&rsquo;ll create a flag called <code>game_over</code>, and add this to the top of our game loop:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Game loop</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Game loop</span>
 <span class="n">game_over</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">running</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="k">while</span> <span class="n">running</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">game_over</span><span class="p">:</span>
-        <span class="n">show_go_screen</span><span class="p">()</span>
-</code></pre></div>
-
+        <span class="n">show_go_screen</span><span class="p">()</span></code></pre></div>
 
 <p>We&rsquo;ll define <code>show_go_screen()</code> in a moment, but we also need to think about something else.  When the game ends, and we go to the game over screen, if the player chooses to play again, we need to reset everything - the score, the meteors, the player&rsquo;s lives, etc.  Right now we set those things right before the game loop starts, but now we&rsquo;re going to move them to just after <code>show_go_screen()</code> so they will happen whenever the player exits that screen:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Game loop</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Game loop</span>
 <span class="n">game_over</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">running</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="k">while</span> <span class="n">running</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">game_over</span><span class="p">:</span>
         <span class="n">show_go_screen</span><span class="p">()</span>
-<span class="hll">        <span class="n">game_over</span> <span class="o">=</span> <span class="bp">False</span>
-</span><span class="hll">        <span class="n">all_sprites</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
-</span><span class="hll">        <span class="n">mobs</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
-</span><span class="hll">        <span class="n">bullets</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
-</span><span class="hll">        <span class="n">powerups</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
-</span><span class="hll">        <span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">()</span>
-</span><span class="hll">        <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
-</span><span class="hll">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
-</span><span class="hll">            <span class="n">newmob</span><span class="p">()</span>
-</span><span class="hll">        <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
-</span></code></pre></div>
-
+<span class="hl">        <span class="n">game_over</span> <span class="o">=</span> <span class="bp">False</span>
+</span><span class="hl">        <span class="n">all_sprites</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+</span><span class="hl">        <span class="n">mobs</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+</span><span class="hl">        <span class="n">bullets</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+</span><span class="hl">        <span class="n">powerups</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+</span><span class="hl">        <span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">()</span>
+</span><span class="hl">        <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+</span><span class="hl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+</span><span class="hl">            <span class="n">newmob</span><span class="p">()</span>
+</span><span class="hl">        <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span></span></code></pre></div>
 
 <p>We also set <code>game_over</code> to <code>False</code> since we&rsquo;re starting a new game.  Then, we can change what happens when the player runs out of lives:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># if the player died and the explosion has finished playing</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># if the player died and the explosion has finished playing</span>
 <span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">lives</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">death_explosion</span><span class="o">.</span><span class="n">alive</span><span class="p">():</span>
-<span class="hll">    <span class="n">game_over</span> <span class="o">=</span> <span class="bp">True</span>
-</span></code></pre></div>
-
+<span class="hl">    <span class="n">game_over</span> <span class="o">=</span> <span class="bp">True</span></span></code></pre></div>
 
 <h2 id="the-game-over-screen">The Game Over screen</h2>
 
 <p>Now we just need to define what <code>show_go_screen</code> does.  Since for this example, we&rsquo;re only doing one &ldquo;screen&rdquo;, we&rsquo;re just going to use the game&rsquo;s title, and put some nice instructions for how to play:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">def</span> <span class="nf">show_go_screen</span><span class="p">():</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">show_go_screen</span><span class="p">():</span>
     <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">background</span><span class="p">,</span> <span class="n">background_rect</span><span class="p">)</span>
-    <span class="n">draw_text</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="s2">&quot;SHMUP!&quot;</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
-    <span class="n">draw_text</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="s2">&quot;Arrow keys move, Space to fire&quot;</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span>
+    <span class="n">draw_text</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;SHMUP!&#34;</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">draw_text</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;Arrow keys move, Space to fire&#34;</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span>
               <span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">draw_text</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="s2">&quot;Press a key to begin&quot;</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">draw_text</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;Press a key to begin&#34;</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="n">WIDTH</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
     <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
     <span class="n">waiting</span> <span class="o">=</span> <span class="bp">True</span>
     <span class="k">while</span> <span class="n">waiting</span><span class="p">:</span>
         <span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">FPS</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="nb">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
                 <span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">KEYUP</span><span class="p">:</span>
-                <span class="n">waiting</span> <span class="o">=</span> <span class="bp">False</span>
-</code></pre></div>
-
+            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="nb">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">KEYUP</span><span class="p">:</span>
+                <span class="n">waiting</span> <span class="o">=</span> <span class="bp">False</span></code></pre></div>
 
 <p>The while loop at the end is how we handle the &ldquo;Press a key to begin&rdquo; part.  It&rsquo;s kind of like a miniature game loop, but all we&rsquo;re doing is checking for events.  The only events we care about are <code>pygame.QUIT</code>, which happens when clicking the X on the window, and the event for pressing a key.  Did you notice we didn&rsquo;t use &lsquo;pygame.KEYDOWN&rsquo; there?</p>
 

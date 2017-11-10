@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -159,31 +159,23 @@ Below is a list of the problems I encounter most often in the classroom:</p>
 
 <p>For example, instead of doing this:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">angle</span> <span class="o">=</span> <span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span>
-<span class="n">turtle</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">angle</span> <span class="o">=</span> <span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span>
+<span class="n">turtle</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span></code></pre></div>
 
 <p>We can simplify by nesting the randrange() call inside the parentheses of the left() function:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">turtle</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">))</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">turtle</span><span class="o">.</span><span class="n">left</span><span class="p">(</span><span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">))</span></code></pre></div>
 
 <p>Often, the first time they see something like this, the question from my students will be &ldquo;Why are there two parentheses at the end?&rdquo;  It&rsquo;s very important to emphasize that parentheses come in pairs and there should never be an odd one out.  Sometimes, I&rsquo;ll encourage students to use spaces to highlight the nesting (although <a href="https://www.python.org/dev/peps/pep-0008/">PEP8</a> fanatics will cringe):</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">turtle</span><span class="o">.</span><span class="n">left</span><span class="p">(</span> <span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span> <span class="p">)</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">turtle</span><span class="o">.</span><span class="n">left</span><span class="p">(</span> <span class="n">randrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span> <span class="p">)</span></code></pre></div>
 
 <h3 id="missing-colons-on-loops-and-functions">Missing colons on loops and functions</h3>
 
 <p>One of the first constructions students learn is the for loop, which allows you to repeat a block of code multiple times:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></code></pre></div>
 
 <p>That colon at the end of the first line is very important, because it indicates that the indented code coming after it is the block that belongs to the loop (ie the code that is to be repeated).</p>
 
@@ -193,25 +185,21 @@ Below is a list of the problems I encounter most often in the classroom:</p>
 
 <p>As shown in the previous example, indentation is important to Python.  It indicates code blocks and how they are related.  IDLE actually does a pretty good job of trying to automatically indent, but it only goes in the forward direction - if you need to unindent one level, you have to hit &ldquo;Backspace.&rdquo;  This leads to problems like the following, which will result in an &ldquo;syntax error&rdquo; message:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">if</span> <span class="n">guess</span> <span class="o">&gt;</span> <span class="n">secret</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Too high!&quot;</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">if</span> <span class="n">guess</span> <span class="o">&gt;</span> <span class="n">secret</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;Too high!&#34;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">guess</span> <span class="o">&lt;</span> <span class="n">secret</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Too low!&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;Too low!&#34;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;You got it!&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+            <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;You got it!&#34;</span><span class="p">)</span></code></pre></div>
 
 <p>The correct indentation:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">if</span> <span class="n">guess</span> <span class="o">&gt;</span> <span class="n">secret</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Too high!&quot;</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">if</span> <span class="n">guess</span> <span class="o">&gt;</span> <span class="n">secret</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;Too high!&#34;</span><span class="p">)</span>
 <span class="k">elif</span> <span class="n">guess</span> <span class="o">&lt;</span> <span class="n">secret</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Too low!&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;Too low!&#34;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;You got it!&quot;</span><span class="p">)</span>
-</code></pre></div>
-
+    <span class="k">print</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;You got it!&#34;</span><span class="p">)</span></code></pre></div>
 
 <h3 id="idle-issues">IDLE issues</h3>
 

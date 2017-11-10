@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -199,7 +199,7 @@
 
 <p>Here&rsquo;s our starting point for the player script:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">KinematicBody2D</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">KinematicBody2D</span>
 
 <span class="n">const</span> <span class="n">ACCEL</span> <span class="o">=</span> <span class="mi">1500</span>
 <span class="n">const</span> <span class="n">MAX_SPEED</span> <span class="o">=</span> <span class="mi">500</span>
@@ -212,9 +212,7 @@
     <span class="n">set_fixed_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
 
 <span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
-    <span class="k">pass</span>
-</code></pre></div>
-
+    <span class="k">pass</span></code></pre></div>
 
 <p>First, we have 3 constants to adjust the player&rsquo;s behavior:</p>
 
@@ -230,16 +228,14 @@
 
 <p>Now, let&rsquo;s add the controls:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
-    <span class="n">acc</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_right&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&quot;ui_left&quot;</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="n">acc</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_right&#34;</span><span class="p">)</span> <span class="o">-</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_left&#34;</span><span class="p">)</span>
     <span class="n">acc</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="n">ACCEL</span>
     <span class="k">if</span> <span class="n">acc</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">acc</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">FRICTION</span> <span class="o">*</span> <span class="n">delta</span>
     <span class="n">vel</span> <span class="o">+=</span> <span class="n">acc</span> <span class="o">*</span> <span class="n">delta</span>
     <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">vel</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">MAX_SPEED</span><span class="p">,</span> <span class="n">MAX_SPEED</span><span class="p">)</span>
-    <span class="n">move</span><span class="p">(</span><span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
-</code></pre></div>
-
+    <span class="n">move</span><span class="p">(</span><span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span></code></pre></div>
 
 <p>We start by getting the direction from the user&rsquo;s input.  Each <code>is_action_pressed()</code> results in either 0 or 1, so we will have a value of <code>1</code> if <code>&quot;ui_right&quot;</code> is pressed and <code>-1</code> if <code>&quot;ui_left&quot;</code> is pressed (these actions are mapped to the arrow keys by default). Note that if both keys are pressed, the result is <code>0</code> - they cancel out.</p>
 
@@ -280,12 +276,10 @@
 
 <p>Next, add the following to <code>player.gd</code> and press <code>Play</code>:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">const</span> <span class="n">GRAVITY</span> <span class="o">=</span> <span class="mi">2000</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">const</span> <span class="n">GRAVITY</span> <span class="o">=</span> <span class="mi">2000</span>
 
 <span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
-    <span class="n">acc</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">GRAVITY</span>
-</code></pre></div>
-
+    <span class="n">acc</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">GRAVITY</span></code></pre></div>
 
 <p>You should see the player fall (due to <code>GRAVITY</code> accelerating downward) and stop when it hits the platform.  But now you will find a new problem: the player can no longer move!</p>
 
@@ -309,14 +303,12 @@
 
 <p>Add the following code to  <code>fixed_process()</code>:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">var</span> <span class="n">motion</span> <span class="o">=</span> <span class="n">move</span><span class="p">(</span><span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">var</span> <span class="n">motion</span> <span class="o">=</span> <span class="n">move</span><span class="p">(</span><span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">is_colliding</span><span class="p">():</span>
     <span class="n">var</span> <span class="n">n</span> <span class="o">=</span> <span class="n">get_collision_normal</span><span class="p">()</span>
     <span class="n">motion</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">slide</span><span class="p">(</span><span class="n">motion</span><span class="p">)</span>
     <span class="n">vel</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">slide</span><span class="p">(</span><span class="n">vel</span><span class="p">)</span>
-    <span class="n">move</span><span class="p">(</span><span class="n">motion</span><span class="p">)</span>
-</code></pre></div>
-
+    <span class="n">move</span><span class="p">(</span><span class="n">motion</span><span class="p">)</span></code></pre></div>
 
 <p>First the <code>move()</code> function we used before has a return value of the remaining movement vector, which we&rsquo;re calling <code>motion</code>.  Next we use <code>is_colliding()</code> to check if a collision has happened.  If so, we find the collision normal and <code>slide</code> the <code>motion</code> and <code>vel</code> vectors along it.</p>
 

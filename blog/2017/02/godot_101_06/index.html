@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -172,10 +172,10 @@
 
 <p>We don&rsquo;t want to have to add a bunch of gem instances manually, so we&rsquo;re going to do it in code.  We&rsquo;ll be spawning lots of gems, and we will want to keep track of how many are left, so let&rsquo;s make a node to hold them all.  Add another <a href="http://docs.godotengine.org/en/stable/classes/class_node.html" target="_blank"><svg width="18" height="18" class="icon-icon_node"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_node"></svg><code>Node</code></a> as a child of <code>main</code> and call it <code>gem_container</code>.  Then add a script to the <code>main</code> node with the following code:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Node</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Node</span>
 
-<span class="n">onready</span> <span class="n">var</span> <span class="n">gem</span> <span class="o">=</span> <span class="n">preload</span><span class="p">(</span><span class="s2">&quot;res://gem.tscn&quot;</span><span class="p">)</span>
-<span class="n">onready</span> <span class="n">var</span> <span class="n">gem_container</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&quot;gem_container&quot;</span><span class="p">)</span>
+<span class="n">onready</span> <span class="n">var</span> <span class="n">gem</span> <span class="o">=</span> <span class="n">preload</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;res://gem.tscn&#34;</span><span class="p">)</span>
+<span class="n">onready</span> <span class="n">var</span> <span class="n">gem_container</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;gem_container&#34;</span><span class="p">)</span>
 
 <span class="n">var</span> <span class="n">screensize</span>
 <span class="n">var</span> <span class="n">score</span> <span class="o">=</span> <span class="mi">0</span>
@@ -193,9 +193,7 @@
         <span class="n">g</span><span class="o">.</span><span class="n">set_pos</span><span class="p">(</span><span class="n">Vector2</span><span class="p">(</span><span class="n">rand_range</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="n">screensize</span><span class="o">.</span><span class="n">width</span><span class="o">-</span><span class="mi">40</span><span class="p">),</span>
                           <span class="n">rand_range</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="n">screensize</span><span class="o">.</span><span class="n">height</span><span class="o">-</span><span class="mi">40</span><span class="p">)))</span>
 
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>In this script, we use <code>preload</code> to load the gem scene into memory so we can use it to create instances.  We also assign a variable to the <code>gem_container</code> node so we can easily refer to it.  Our <code>spawn_gems</code> function just takes a number and creates that many gem instances, assigning them as children of <code>gem_container</code> and setting <code>pos</code> to a random location.  Run the scene, and you should see this:</p>
 
@@ -215,11 +213,9 @@
 
 <p>This lets us set what node we want the signal to be sent to.  <code>gem</code> is highlighted in red because it&rsquo;s the current node.  That&rsquo;s fine, and at the bottom we&rsquo;ll leave the &ldquo;Method in Node&rdquo; name as it is.  Godot will now create that function for us.  To start, let&rsquo;s fill it out like this:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">func</span> <span class="n">_on_gem_area_enter</span><span class="p">(</span><span class="n">area</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">_on_gem_area_enter</span><span class="p">(</span><span class="n">area</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="n">area</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>Now when you move the player over a gem, you will see &ldquo;player&rdquo; printed in the output window.  However, if you run it a couple of times, you might see something like this as well:</p>
 
@@ -229,26 +225,22 @@
 
 <p>What&rsquo;s happening here?  Well, this signal is generated when <em>any</em> area enters the gem&rsquo;s area.  This includes other gems!  If we just deleted a gem when this signal happens, then two touching gems would delete each other, and we don&rsquo;t want that.  So we&rsquo;re going to make sure and check the name of the entering area:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">func</span> <span class="n">_on_gem_area_enter</span><span class="p">(</span><span class="n">area</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">area</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;player&#39;</span><span class="p">:</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">_on_gem_area_enter</span><span class="p">(</span><span class="n">area</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">area</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="sa"></span><span class="s1">&#39;player&#39;</span><span class="p">:</span>
         <span class="n">queue_free</span><span class="p">()</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <h3 id="spawning-more-gems">Spawning more gems</h3>
 
 <p>Back in our <code>main</code> scene, we want to detect when the player has collected all the gems, so we can spawn more.  We do that by looking at the <code>gem_container</code> and counting its children:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">var</span> <span class="n">level</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">var</span> <span class="n">level</span> <span class="o">=</span> <span class="mi">1</span>
 
 <span class="n">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">gem_container</span><span class="o">.</span><span class="n">get_child_count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">spawn_gems</span><span class="p">(</span><span class="n">level</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>We add a variable called <code>level</code> and whenever the <code>gem_container</code> is empty, we increment it and spawn more gems.  Collect away!</p>
 

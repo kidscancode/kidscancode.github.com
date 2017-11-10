@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -173,16 +173,14 @@
 
 <p>We need to define what scene will be the one that is launched when the project starts.  Click &ldquo;Select&rdquo; and choose our new main.tscn. Now let&rsquo;s add a script to the main node.  This will be our code to instance a sprite:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Node</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Node</span>
 
-<span class="n">onready</span> <span class="n">var</span> <span class="n">sprite</span> <span class="o">=</span> <span class="n">preload</span><span class="p">(</span><span class="s2">&quot;res://Sprite.tscn&quot;</span><span class="p">)</span>
+<span class="n">onready</span> <span class="n">var</span> <span class="n">sprite</span> <span class="o">=</span> <span class="n">preload</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;res://Sprite.tscn&#34;</span><span class="p">)</span>
 
 <span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
     <span class="n">var</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sprite</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
     <span class="n">add_child</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>That first line uses the <code>preload</code> function to load the sprite scene into memory at compile time, so that it&rsquo;s ready to use.  The <code>onready</code> statement ensures that the object is loaded in time for the <code>_ready()</code> call.</p>
 
@@ -196,12 +194,10 @@
 
 <p>The Remote Inspector tab is very useful to see what&rsquo;s going on in the game - what scene is active, what nodes are active, and what properties they all have.  For example, observe what changes is we add a loop to spawn more sprites:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="n">var</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sprite</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
     <span class="n">add_child</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <h2 id="wrapping-up">Wrapping up</h2>
 

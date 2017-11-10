@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -187,38 +187,32 @@
 
 <p>At the top of our program, we&rsquo;re going to import the libraries we need and set a few variables for our game options:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Pygame template - skeleton for a new pygame project</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Pygame template - skeleton for a new pygame project</span>
 <span class="kn">import</span> <span class="nn">pygame</span>
 <span class="kn">import</span> <span class="nn">random</span>
 
 <span class="n">WIDTH</span> <span class="o">=</span> <span class="mi">360</span>  <span class="c1"># width of our game window</span>
 <span class="n">HEIGHT</span> <span class="o">=</span> <span class="mi">480</span> <span class="c1"># height of our game window</span>
-<span class="n">FPS</span> <span class="o">=</span> <span class="mi">30</span> <span class="c1"># frames per second</span>
-</code></pre></div>
-
+<span class="n">FPS</span> <span class="o">=</span> <span class="mi">30</span> <span class="c1"># frames per second</span></code></pre></div>
 
 <p>Next we need to open the game window:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># initialize pygame and create window</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># initialize pygame and create window</span>
 <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
 <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>  <span class="c1"># for sound</span>
 <span class="n">screen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">((</span><span class="n">WIDTH</span><span class="p">,</span> <span class="n">HEIGHT</span><span class="p">))</span>
-<span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s2">&quot;My Game&quot;</span><span class="p">)</span>
-<span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
-</code></pre></div>
-
+<span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;My Game&#34;</span><span class="p">)</span>
+<span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span></code></pre></div>
 
 <p><code>pygame.init()</code> is the command to start up pygame and &ldquo;initialize&rdquo; it (which is a fancy word for start).  <code>screen</code> will refer to our game screen, and we create it at the size we set in our configuration constants.  Finally, we create a <code>clock</code> so that we will be able to make sure our game runs at the FPS we want.</p>
 
 <p>Now it&rsquo;s time to make the game loop:
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Game Loop</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Game Loop</span>
 <span class="n">running</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="k">while</span> <span class="n">running</span><span class="p">:</span>
     <span class="c1"># Process input (events)</span>
     <span class="c1"># Update</span>
-    <span class="c1"># Render (draw)</span>
-</code></pre></div>
-</p>
+    <span class="c1"># Render (draw)</span></code></pre></div></p>
 
 <p>Here is our game loop, which is a <code>while</code> loop controlled by the variable <code>running</code>.  If we ever want the game to end, we just have to set <code>running</code> to <code>False</code> and the loop will end.  Now we can fill in each of the sections with some basic code.</p>
 
@@ -236,36 +230,28 @@
 
 <p>You can find the total number of colors a computer can display by multiplying:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="o">&gt;&gt;&gt;</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span><span class="mi">777</span><span class="p">,</span><span class="mi">216</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="o">&gt;&gt;&gt;</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span><span class="mi">777</span><span class="p">,</span><span class="mi">216</span></code></pre></div>
 
 <p>Now that we understand colors, let&rsquo;s define a few at the top of our program:
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Colors (R, G, B)</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Colors (R, G, B)</span>
 <span class="n">BLACK</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="n">WHITE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
 <span class="n">RED</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="n">GREEN</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">BLUE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
-</code></pre></div>
-
+<span class="n">BLUE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span></code></pre></div>
 And then we can have our draw section fill the screen.
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="c1"># Draw / render</span>
-    <span class="n">screen</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="c1"># Draw / render</span>
+    <span class="n">screen</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span></code></pre></div>
 However, this isn&rsquo;t quite enough, because of the way computer displays work.  Changing a pixel on the screen means telling the video card to tell the monitor to change the
 actual pixel.  In computer terms, this is a very, very slow process.  So if you have a lot of things to draw on the screen, it can take a very long time to draw them all.  We can fix this in a clever way by using something called <em>double-buffering</em>.  This sounds fancy, but it really just means this:</p>
 
 <p>Imagine we had one of those whiteboards that is 2-sided and can flip over to show one side or the other.  The front will be the display (the screen the player sees), while the back is hidden and only the computer can &ldquo;see&rdquo; it.  Every frame, we do all of our drawing on the back side - every character, every bullet, every sparkly light, etc.  Then, when we&rsquo;re done, we flip the board over and show the new frame.  This means that we&rsquo;re only doing that slow process of talking to the display <em>once</em> every frame, and not for every single thing on the screen.</p>
 
 <p>All this happens automatically in pygame.  You just have to tell it to flip that whiteboard when you&rsquo;ve finished drawing.  In fact, the command is even named <code>flip()</code>:
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="c1"># Draw / render</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="c1"># Draw / render</span>
     <span class="n">screen</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
     <span class="c1"># *after* drawing everything, flip the display</span>
-    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
-</code></pre></div>
-
+    <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span></code></pre></div>
 Just make sure that you always do <code>flip()</code> <em>last</em>.  If you try to draw something after the flip, it won&rsquo;t be seen!</p>
 
 <h3 id="input-events-section">Input / Events Section</h3>
@@ -274,23 +260,19 @@ Just make sure that you always do <code>flip()</code> <em>last</em>.  If you try
 
 <p>Events can happen any time.  What if the player clicks the &lsquo;jump&rsquo; button while the update or draw part of the loop is happening?  You don&rsquo;t want to just ignore that input - the player will be frustrated.  So what Pygame does is save up all the events that have happened since the last frame.  That way if the player is quickly mashing lots of buttons, you can make sure you know about all of them.  This will be a list, so we run a <code>for</code> loop to look at all of them:</p>
 
-<p><div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+<p><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
         <span class="c1"># check for closing window</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
-            <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
-</code></pre></div>
-
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="nb">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+            <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span></code></pre></div>
 Pygame has lots of events that it is able to look for.  <code>pygame.QUIT</code> is the event that happens when the &lsquo;X&rsquo; is clicked, so we set <code>running</code> to <code>False</code> and the game loop will end.</p>
 
 <h3 id="controlling-fps">Controlling FPS</h3>
 
 <p>We don&rsquo;t really have anything to put in the &lsquo;Update&rsquo; section yet, but we do still need to make sure we use our <code>FPS</code> setting to control the speed.  We can do that like this:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">while</span> <span class="n">running</span><span class="p">:</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">while</span> <span class="n">running</span><span class="p">:</span>
     <span class="c1"># keep loop running at the right speed</span>
-    <span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">FPS</span><span class="p">)</span>
-</code></pre></div>
-
+    <span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">FPS</span><span class="p">)</span></code></pre></div>
 
 <p>The <code>tick()</code> command tells pygame to figure out how long the loop took and then pause for however long it takes to make the whole loop (meaning the whole frame) to last the right amount of time. If we set <code>FPS</code> to 30, that means we want a frame to last <sup>1</sup>&frasl;<sub>30</sub> or 0.03 seconds.  If our loop code (updating, drawing, etc) only takes 0.01 seconds, then pygame will wait for 0.02 seconds, for example.</p>
 
@@ -298,7 +280,7 @@ Pygame has lots of events that it is able to look for.  <code>pygame.QUIT</code>
 
 <p>Finally, let&rsquo;s make sure that when the game loop does end, we actually destroy the game window.  We do this by putting <code>pygame.quit()</code> at the very end of our code.  So our final pygame template looks like this:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Pygame template - skeleton for a new pygame project</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Pygame template - skeleton for a new pygame project</span>
 <span class="kn">import</span> <span class="nn">pygame</span>
 <span class="kn">import</span> <span class="nn">random</span>
 
@@ -317,7 +299,7 @@ Pygame has lots of events that it is able to look for.  <code>pygame.QUIT</code>
 <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
 <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
 <span class="n">screen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">((</span><span class="n">WIDTH</span><span class="p">,</span> <span class="n">HEIGHT</span><span class="p">))</span>
-<span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="s2">&quot;My Game&quot;</span><span class="p">)</span>
+<span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;My Game&#34;</span><span class="p">)</span>
 <span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
 
 <span class="c1"># Game loop</span>
@@ -328,7 +310,7 @@ Pygame has lots of events that it is able to look for.  <code>pygame.QUIT</code>
     <span class="c1"># Process input (events)</span>
     <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
         <span class="c1"># check for closing window</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="nb">type</span> <span class="o">==</span> <span class="n">pygame</span><span class="o">.</span><span class="n">QUIT</span><span class="p">:</span>
             <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
 
     <span class="c1"># Update</span>
@@ -339,9 +321,7 @@ Pygame has lots of events that it is able to look for.  <code>pygame.QUIT</code>
     <span class="c1"># *after* drawing everything, flip the display</span>
     <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
 
-<span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
-</code></pre></div>
-
+<span class="n">pygame</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span></code></pre></div>
 
 <p>Congratulations!  You have a working Pygame template.  Save this file with a good name, something like <code>pygame template.py</code> so that you can re-use this every time you start on a new Pygame project.</p>
 

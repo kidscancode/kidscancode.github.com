@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -157,7 +157,7 @@
 
 <p>First, we need to know how big our screen is.  Screen size is set in the Project Settings (click Scene -&gt; Project Settings), but we need our script to use those values:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Sprite</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Sprite</span>
 
 <span class="n">var</span> <span class="n">screensize</span>
 <span class="n">var</span> <span class="n">pos</span>
@@ -176,9 +176,7 @@
 	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">screensize</span><span class="o">.</span><span class="n">height</span> <span class="ow">or</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
 		<span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
 	<span class="n">set_pos</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p><code>get_viewport_rect()</code> gives us the screensize (you can look it up in the help if you want to see the details - or click <a target="_blank" href="http://docs.godotengine.org/en/stable/classes/class_canvasitem.html?highlight=get_viewport_rect">here</a> to see the docs).</p>
 
@@ -188,7 +186,7 @@
 
 <p>The sprite doesn&rsquo;t bounce until it goes halfway off the screen.  That&rsquo;s because the <code>Pos</code> property is the center of the sprite (there&rsquo;s a checkbox marked <code>Centered</code> that will change it to the upper left).  That means we need to calculate half the width &amp; height of the sprite to have it bounce properly.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Sprite</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Sprite</span>
 
 <span class="n">var</span> <span class="n">screensize</span>
 <span class="n">var</span> <span class="n">extents</span>
@@ -216,9 +214,7 @@
 	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span><span class="p">:</span>
 		<span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span>
 		<span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-	<span class="n">set_pos</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
-</code></pre></div>
-
+	<span class="n">set_pos</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span></code></pre></div>
 
 <p>We&rsquo;re handling this with a new variable called <code>extents</code> which we fill using <code>get_texture()</code> - we also divide it by 2 because we only care about half of the width/height.</p>
 
@@ -228,25 +224,25 @@
 
 <p>As a last step, we&rsquo;re going to randomize the velocity and spin using the <code>rand_range()</code> function:</p>
 
-<p><div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Sprite</span>
+<p><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Sprite</span>
 
 <span class="n">var</span> <span class="n">screensize</span>
 <span class="n">var</span> <span class="n">extents</span>
 <span class="n">var</span> <span class="n">pos</span>
 <span class="n">var</span> <span class="n">vel</span>
-<span class="hll"><span class="n">var</span> <span class="n">spin</span>
+<span class="hl"><span class="n">var</span> <span class="n">spin</span>
 </span>
 <span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
-<span class="hll">	<span class="n">randomize</span><span class="p">()</span>
+<span class="hl">	<span class="n">randomize</span><span class="p">()</span>
 </span>	<span class="n">screensize</span> <span class="o">=</span> <span class="n">get_viewport_rect</span><span class="p">()</span><span class="o">.</span><span class="n">size</span>
 	<span class="n">extents</span> <span class="o">=</span> <span class="n">get_texture</span><span class="p">()</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span>
 	<span class="n">pos</span> <span class="o">=</span> <span class="n">screensize</span> <span class="o">/</span> <span class="mi">2</span>
-<span class="hll">	<span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">rand_range</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">rand_range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">PI</span><span class="p">))</span>
-</span><span class="hll">	<span class="n">spin</span> <span class="o">=</span> <span class="n">rand_range</span><span class="p">(</span><span class="o">-</span><span class="n">PI</span><span class="p">,</span> <span class="n">PI</span><span class="p">)</span>
+<span class="hl">	<span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">rand_range</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">rand_range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">PI</span><span class="p">))</span>
+</span><span class="hl">	<span class="n">spin</span> <span class="o">=</span> <span class="n">rand_range</span><span class="p">(</span><span class="o">-</span><span class="n">PI</span><span class="p">,</span> <span class="n">PI</span><span class="p">)</span>
 </span>	<span class="n">set_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
 
 <span class="n">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
-<span class="hll">	<span class="n">set_rot</span><span class="p">(</span><span class="n">get_rot</span><span class="p">()</span> <span class="o">+</span> <span class="n">spin</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+<span class="hl">	<span class="n">set_rot</span><span class="p">(</span><span class="n">get_rot</span><span class="p">()</span> <span class="o">+</span> <span class="n">spin</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
 </span>	<span class="n">pos</span> <span class="o">+=</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span>
 	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">screensize</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span><span class="p">:</span>
 		<span class="n">pos</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">screensize</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">extents</span><span class="o">.</span><span class="n">width</span>
@@ -260,9 +256,7 @@
 	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span><span class="p">:</span>
 		<span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span>
 		<span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-	<span class="n">set_pos</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
-</code></pre></div>
-</p>
+	<span class="n">set_pos</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span></code></pre></div></p>
 
 <p>One important thing to keep in mind when using randomized commands:  by default, Godot will produce the same sequence of &ldquo;random&rdquo; numbers every time you run the game unless you first use <code>randomize()</code>.</p>
 

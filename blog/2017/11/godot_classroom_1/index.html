@@ -1,0 +1,316 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.30.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot Engine in the Classroom: Getting Started &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">32</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">15</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">32</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2017 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot Engine in the Classroom: Getting Started</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Fri, Nov 10, 2017</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/education">education</a>
+			  
+			    <a href="/blog/tags/teaching">teaching</a>
+			  
+			</h6></span>
+
+			      <p>I began using Godot Engine with a group of students. This is a small group of
+my most advanced middle schoolers (ages 11-12), with 1+ years of Python
+experience. I do an &ldquo;advanced topics&rdquo; class with them every Thursday after school.
+They have never used a game engine before.</p>
+
+<p>Here&rsquo;s how it went.</p>
+
+<p></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Part of the reason for doing this was to get some real-world experience taking
+students through the <a href="http://docs.godotengine.org/en/latest/learning/step_by_step/your_first_game.html">
+&ldquo;Dodge the Creeps&rdquo;</a> tutorial I wrote for the Godot 3.0
+documentation. This is designed to be a user&rsquo;s first experience making a project
+in Godot, and I wanted to see first-hand where any pain points might be.</p>
+
+<p>This means we are using the Godot 3.0 alpha. It&rsquo;s very stable at this point,
+so I feel fairly confident that students won&rsquo;t run into any showstopping bugs
+along the way. Fortunately, these kids are happy to be guinea pigs.</p>
+
+<h2 id="first-steps">First steps</h2>
+
+<p>We started with an introduction to the engine UI and an overview of the concept
+of scenes and nodes - the fundamental building blocks of Godot. Since they are
+very familiar with Python&rsquo;s object model, they were able to relate the ideas of
+a Godot node and a Python object.</p>
+
+<p>Most of the students have at heard of Unity, so there was some discussion of what
+a game engine is, closed- versus open-source, and why a developer might choose
+one option over another.</p>
+
+<p>Two of the students either didn&rsquo;t hear or were too excited, and didn&rsquo;t click
+&ldquo;Create folder&rdquo; when making the new project. That means the project was created
+in their home folder. Fortunately, that wasn&rsquo;t too tough to correct, but I&rsquo;m
+going to suggest a feature that warns when creating a new project in an non-empty
+folder.</p>
+
+<p>As always with students, file management (moving the art assets into the project
+folder) was more painful and frustrating than any of the coding ever is.</p>
+
+<p>Some first reactions:</p>
+
+<ul>
+<li>&ldquo;Whoa, this looks complicated!&rdquo;</li>
+<li>&ldquo;Cool! It&rsquo;s all black!&rdquo;</li>
+</ul>
+
+<h2 id="creating-the-player">Creating the player</h2>
+
+<p>The first part of the tutorial is setting up the <code>Player</code> scene. This is an
+<a href="http://docs.godotengine.org/en/stable/classes/class_area2d.html"><svg width="18" height="18" class="icon-icon_area_2d" target="_blank"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_area_2d"></svg> <code>Area2D</code></a> with
+<a href="http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html" target="_blank"><svg width="18" height="18" class="icon-icon_animatedsprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg><code>AnimatedSprite</code></a>
+and <a href="http://docs.godotengine.org/en/stable/classes/class_collisionshape2D.html" target="_blank"><svg width="18" height="18" class="icon-icon_collision_shape_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d"></svg><code>CollisionShape2D</code></a>
+children.</p>
+
+<p>Adding the children led to a couple instances of this:
+<img src="/blog/img/add_child_error.png" width="250"></p>
+
+<p>Students must be reminded to click on the desired parent node <em>before</em> clicking
+on &ldquo;Add Node&rdquo;.</p>
+
+<p>Adding the frames to the <a href="http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html" target="_blank"><svg width="18" height="18" class="icon-icon_animatedsprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg><code>AnimatedSprite</code></a>
+went smoothly, but it was when adding the collision shape that some problems
+started to appear.</p>
+
+<p><img src="/blog/img/collision_offset_problem.png" width="250"></p>
+
+<p>It is far too easy and unnoticeable to wind up with the children offset and/or
+scaled relative to the parent. Nearly every student had trouble with this in one
+way or another. When looking at the collision shape, it is much too tempting and
+easy to grab the rectangular handles and move/stretch it. When scaling the
+capsule shape, if you don&rsquo;t click exactly on the size handle, you wind up moving
+the shape instead.</p>
+
+<p>I think that it must be emphasized <em>before</em> adding a child that you probably
+want to click the &ldquo;lock children&rdquo; button (which has a very mystifying icon, by
+the way).</p>
+
+<p><img src="/blog/img/lock_children.png" width="450"></p>
+
+<h2 id="scripting">Scripting</h2>
+
+<p>Once the player scene was created, it was time to add a script for movement. This
+part went very smoothly. I spent a couple of minutes talking about the minor
+differences between GDScript and Python (using <code>var</code> to declare variables, and
+<code>func</code> instead of <code>def</code> mainly), and we were off.</p>
+
+<p>The kids really liked the IDE. At the beginner level in my Python class, I don&rsquo;t
+like to have them use autocompletion, so this was a big plus for them. One
+student declared that she&rsquo;s never going to type a whole function name again! They
+also liked the real-time error checking.</p>
+
+<p>Nothing in the code itself was a problem for them. Checking for key inputs,
+normalizing velocity, and clamping to the screen were all familiar concepts. It
+was a big help that I spend a lot of time in my Python class getting them used
+to working with vectors, so I didn&rsquo;t need to explain any of that.</p>
+
+<h2 id="wrapping-up-week-1">Wrapping up Week 1</h2>
+
+<p>At this point we were out of time, so adding the enemies and the UI will have
+to wait for next week&rsquo;s class. They really didn&rsquo;t want to stop, which I expected,
+and they&rsquo;re all excited for next week. I asked them what they thought so far and
+they were all happy with the Godot experience.</p>
+
+<p>Long term, my goal with these students is to work through a couple of projects
+together and then turn them loose to develop their own games. Two of the girls
+really like working together and I expect they&rsquo;ll want to collaborate on a game,
+so we may even touch on some source control and project management topics.</p>
+
+<h2 id="pain-points-for-me">Pain points for me</h2>
+
+<ul>
+<li>Dark UI</li>
+</ul>
+
+<p>Dark UIs are great, I love them. But in the classroom, it means I did have
+to turn the lights off in order for it to be at all visible using the projector.</p>
+
+<ul>
+<li>Resolution</li>
+</ul>
+
+<p>The Godot editor really likes to have a lot of screen space. My projector has a
+native resolution of 1280x800, and that makes things pretty tight, especially
+in the code editor. Adding a keyboard shortcut to toggle &ldquo;Distraction Free Mode&rdquo;
+was a must.</p>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="http://godotengine.org">Download Godot Engine</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Us on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-39851424-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

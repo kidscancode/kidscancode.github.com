@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -165,19 +165,17 @@
 
 <p>We don&rsquo;t need to change anything here, but I&rsquo;ll just point out a couple of things.  First, the <code>Inherits</code> box lists <svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg> <code>Sprite</code> - if you&rsquo;re familiar with Object-Oriented Programming (OOP), you&rsquo;ll recognize this means our script is going to <em>extend</em> the Sprite class.  We&rsquo;ll have all the properties and functionality of a Godot Sprite, plus whatever we add ourselves.  The file will be named &ldquo;Sprite.gd&rdquo;, which is fine.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Sprite</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Sprite</span>
 
 <span class="c1"># class member variables go here, for example:</span>
 <span class="c1"># var a = 2</span>
-<span class="c1"># var b = &quot;textvar&quot;</span>
+<span class="c1"># var b = &#34;textvar&#34;</span>
 
 <span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
 	<span class="c1"># Called every time the node is added to the scene.</span>
 	<span class="c1"># Initialization here</span>
 	<span class="k">pass</span>
- 
-</code></pre></div>
-
+ </code></pre></div>
 
 <p>This is the default script, and it has some helpful comments to get you started. Go ahead and delete the comments (lines starting with <code>#</code>).</p>
 
@@ -185,10 +183,8 @@
 
 <p>To show how this works, try adding the following line to the <code>_ready()</code> function:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
-	<span class="k">print</span><span class="p">(</span><span class="n">get_pos</span><span class="p">())</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">get_pos</span><span class="p">())</span></code></pre></div>
 
 <p>When you play the scene, you will see the sprite&rsquo;s coordinates (the same ones in the <code>Pos</code> property of the Inspector) appear in the &ldquo;Output&rdquo; tab of the Godot window. But how do we know what methods we can use on a <svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg> <code>Sprite</code> node?  Let&rsquo;s use the built-in reference documentation:</p>
 
@@ -198,7 +194,7 @@
 
 <p>To move the sprite, we need to change the value of <code>Pos</code> over time.  Just like any other game engine, Godot is running a loop at a certain speed (typically 60 frames per second), and we just want to move the sprite a little bit each frame.  Here&rsquo;s our updated code:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Sprite</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Sprite</span>
 
 <span class="n">var</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
@@ -207,9 +203,7 @@
 	<span class="n">set_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
 
 <span class="n">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
-	<span class="n">set_pos</span><span class="p">(</span><span class="n">get_pos</span><span class="p">()</span> <span class="o">+</span> <span class="n">vel</span><span class="p">)</span>
-</code></pre></div>
-
+	<span class="n">set_pos</span><span class="p">(</span><span class="n">get_pos</span><span class="p">()</span> <span class="o">+</span> <span class="n">vel</span><span class="p">)</span></code></pre></div>
 
 <p>First, we declare a variable called <code>vel</code> and set it to <code>Vector2(1, 1)</code> - we will move our sprite 1 pixel each to the right and down.</p>
 
@@ -219,7 +213,7 @@
 
 <p>This is fine, but we can do better.  One of the things we need to take into account is that the game loop may not always run at exactly 60 fps.  That means that if we move the same distance every frame, our movement may not be smooth.  In other words, instead of our velocity being in units of pixels/frame we want the units to be pixels/second.  We can accomplish this using the <code>delta</code> parameter, which measures exactly how long it&rsquo;s been since the previous frame:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">Sprite</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Sprite</span>
 
 <span class="n">var</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
 
@@ -228,16 +222,12 @@
 	<span class="n">set_process</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
 
 <span class="n">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
-	<span class="n">set_pos</span><span class="p">(</span><span class="n">get_pos</span><span class="p">()</span> <span class="o">+</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
-</code></pre></div>
-
+	<span class="n">set_pos</span><span class="p">(</span><span class="n">get_pos</span><span class="p">()</span> <span class="o">+</span> <span class="n">vel</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span></code></pre></div>
 
 <h2 id="wrapping-up">Wrapping up</h2>
 
 <p>That&rsquo;s the basics of scripting. We added a script to our <code>Sprite</code> node to make it do something every frame.  For fun, try making the sprite rotate by adding this to the <code>_process</code> function:
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="n">set_rot</span><span class="p">(</span><span class="n">get_rot</span><span class="p">()</span> <span class="o">+</span> <span class="n">PI</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
-</code></pre></div>
-</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="n">set_rot</span><span class="p">(</span><span class="n">get_rot</span><span class="p">()</span> <span class="o">+</span> <span class="n">PI</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span></code></pre></div></p>
 
 <p>Feel free to try changing other properties of the node and see what happens.</p>
 

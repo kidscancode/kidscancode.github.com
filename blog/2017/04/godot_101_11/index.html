@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -183,30 +183,26 @@
 
 <p>Now in the <code>player.gd</code> we can specify which animation to play, and which direction to face (using the <code>Flip H</code> property).</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">onready</span> <span class="n">var</span> <span class="n">sprite</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&quot;sprite&quot;</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">onready</span> <span class="n">var</span> <span class="n">sprite</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;sprite&#34;</span><span class="p">)</span>
 
-<span class="n">var</span> <span class="n">anim</span> <span class="o">=</span> <span class="s2">&quot;idle&quot;</span>
+<span class="n">var</span> <span class="n">anim</span> <span class="o">=</span> <span class="sa"></span><span class="s2">&#34;idle&#34;</span>
 
 <span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
     <span class="c1"># set animation</span>
     <span class="k">if</span> <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">anim</span> <span class="o">=</span> <span class="s2">&quot;idle&quot;</span>
+        <span class="n">anim</span> <span class="o">=</span> <span class="sa"></span><span class="s2">&#34;idle&#34;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">anim</span> <span class="o">=</span> <span class="s2">&quot;running&quot;</span>
+        <span class="n">anim</span> <span class="o">=</span> <span class="sa"></span><span class="s2">&#34;running&#34;</span>
     <span class="k">if</span> <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">sprite</span><span class="o">.</span><span class="n">set_flip_h</span><span class="p">(</span><span class="n">false</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">sprite</span><span class="o">.</span><span class="n">set_flip_h</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
-    <span class="n">sprite</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">anim</span><span class="p">)</span>
-</code></pre></div>
-
+    <span class="n">sprite</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">anim</span><span class="p">)</span></code></pre></div>
 
 <p>First we choose which animation based on the player&rsquo;s <code>vel.x</code> and use the direction to select whether to flip the image.  However, when you run this you will notice that when the player stops moving, it doesn&rsquo;t switch back to the <code>idle</code> animation.  This is because while friction is reducing the vel.x, it&rsquo;s a floating point number and never actually reaching 0. We can fix that by setting the speed to 0 if it falls below a certain value.  Add the following to <code>fixed_process()</code> after the movement code:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">vel</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
-        <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">vel</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span></code></pre></div>
 
 <h3 id="platform-images">Platform Images</h3>
 

@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -175,19 +175,15 @@
 
 <p>Let&rsquo;s start with the player.  How big should be make the collision circle?  It can take a little bit of experimentation to get the right value.  Here&rsquo;s how to do that, in the player sprite&rsquo;s <code>__init()__</code>:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>	<span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
-<span class="hll">	<span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="mi">25</span>
-</span><span class="hll">	<span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="n">RED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
-</span></code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">	<span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+<span class="hl">	<span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="mi">25</span>
+</span><span class="hl">	<span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="n">RED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span></span></code></pre></div>
 
 <p>We are drawing a red circle on top of the player image so that we can see how it looks. Let&rsquo;s do the same for the meteor:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>	<span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
-<span class="hll">	<span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class="hll">	<span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="n">RED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
-</span></code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">	<span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
+<span class="hl">	<span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class="hl">	<span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="n">RED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span></span></code></pre></div>
 
 <p>In this case, we are planning ahead a little bit.  We may decide to use different sized meteor images. By setting the radius to <sup>1</sup>&frasl;<sub>2</sub> of the width of the image, we can do that without having to adjust the code later.</p>
 
@@ -199,20 +195,16 @@
 
 <p>For the meteor, we&rsquo;d like a little bit of the corners to stick out, so let&rsquo;s scale the circle to 85% of the size:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>	<span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="o">.</span><span class="mi">85</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">	<span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="o">.</span><span class="mi">85</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span></code></pre></div>
 
 <h2 id="changing-the-collision-type">Changing the collision type</h2>
 
 <p>To have the game start using those circles for the collision tests, we just need to change the <code>spritecollide</code> command to use the circle function instead of the AABB one:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span>	<span class="c1"># check to see if a mob hit the player</span>
-<span class="hll">    <span class="n">hits</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">spritecollide</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">mobs</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">collide_circle</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">	<span class="c1"># check to see if a mob hit the player</span>
+<span class="hl">    <span class="n">hits</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">spritecollide</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">mobs</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">collide_circle</span><span class="p">)</span>
 </span>    <span class="k">if</span> <span class="n">hits</span><span class="p">:</span>
-        <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
-</code></pre></div>
-
+        <span class="n">running</span> <span class="o">=</span> <span class="bp">False</span></code></pre></div>
 
 <p><img src="/blog/img/shmup_part5_2.png" width="450"></p>
 

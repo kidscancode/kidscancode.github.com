@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -212,7 +212,7 @@ node is perfect for implementing characters and other moving bodies that don&rsq
 
 <p>Here is the code for the ball object, including both kinds of collision response:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">extends</span> <span class="n">KinematicBody2D</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">KinematicBody2D</span>
 
 <span class="n">var</span> <span class="n">speed</span> <span class="o">=</span> <span class="mi">200</span>
 <span class="n">var</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span> <span class="c1"># pixels/sec</span>
@@ -243,9 +243,7 @@ node is perfect for implementing characters and other moving bodies that don&rsq
 			<span class="n">motion</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">slide</span><span class="p">(</span><span class="n">motion</span><span class="p">)</span>
 			<span class="n">vel</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">slide</span><span class="p">(</span><span class="n">vel</span><span class="p">)</span>
 		<span class="c1"># remember to also move by the resulting motion</span>
-		<span class="n">move</span><span class="p">(</span><span class="n">motion</span><span class="p">)</span>
-</code></pre></div>
-
+		<span class="n">move</span><span class="p">(</span><span class="n">motion</span><span class="p">)</span></code></pre></div>
 
 <p>This should be self-explanatory.  Note that we reflect/slide both the remaining motion vector (so that the movement is continued) <em>and</em> the velocity vector (so that it is now moving in the proper direction).</p>
 

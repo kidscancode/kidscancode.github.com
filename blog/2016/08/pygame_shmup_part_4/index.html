@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -172,30 +172,24 @@
 
 <p>As we discussed in the <a href="/blog/2016/08/pygame_1-3_more-about-sprites/">Introduction to Sprites</a> lesson, in order to make sure our code will work on any operating system, we need to use the <code>os.path</code> function to take care of figuring out the correct location and path for our files.  At the top of our program we&rsquo;ll define where our <code>img</code> folder is:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
 
-<span class="n">img_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;img&#39;</span><span class="p">)</span>
-</code></pre></div>
-
+<span class="n">img_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="sa"></span><span class="s1">&#39;img&#39;</span><span class="p">)</span></code></pre></div>
 
 <h2 id="drawing-the-background">Drawing the background</h2>
 
 <p>Now, we can start by loading the background image.  We&rsquo;ll do all our asset loading before our existing game loop and initialization code:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Load all game graphics</span>
-<span class="n">background</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s1">&#39;starfield.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
-<span class="n">background_rect</span> <span class="o">=</span> <span class="n">background</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Load all game graphics</span>
+<span class="n">background</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;starfield.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+<span class="n">background_rect</span> <span class="o">=</span> <span class="n">background</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span></code></pre></div>
 
 <p>Now we can draw our background in the draw section of our game loop <em>before</em> we draw any of the sprites:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Draw / render</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Draw / render</span>
 <span class="n">screen</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
-<span class="hll"><span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">background</span><span class="p">,</span> <span class="n">background_rect</span><span class="p">)</span>
-</span><span class="n">all_sprites</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
-</code></pre></div>
-
+<span class="hl"><span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">background</span><span class="p">,</span> <span class="n">background_rect</span><span class="p">)</span>
+</span><span class="n">all_sprites</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span></code></pre></div>
 
 <p><code>blit</code> is an old-school computer graphics term that means to draw the pixels of one image onto the pixels of another image - in this case the background onto the screen.  Now our background looks much nicer:</p>
 
@@ -205,24 +199,20 @@
 
 <p>Now we can load the images for our sprites:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># Load all game graphics</span>
-<span class="n">background</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s1">&#39;starfield.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Load all game graphics</span>
+<span class="n">background</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;starfield.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
 <span class="n">background_rect</span> <span class="o">=</span> <span class="n">background</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
-<span class="hll"><span class="n">player_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s2">&quot;playerShip1_orange.png&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
-</span><span class="hll"><span class="n">meteor_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s2">&quot;meteorBrown_med1.png&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
-</span><span class="hll"><span class="n">bullet_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s2">&quot;laserRed16.png&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
-</span></code></pre></div>
-
+<span class="hl"><span class="n">player_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;playerShip1_orange.png&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+</span><span class="hl"><span class="n">meteor_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;meteorBrown_med1.png&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+</span><span class="hl"><span class="n">bullet_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;laserRed16.png&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span></span></code></pre></div>
 
 <p>Starting with the player - we want to replace that green rectangle, so we change the <code>self.image</code>, and don&rsquo;t forget to remove the <code>image.fill(GREEN)</code>, which we no longer need:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">player_img</span>
-</span>        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
-</code></pre></div>
-
+<span class="hl">        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">player_img</span>
+</span>        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span></code></pre></div>
 
 <p><img src="/blog/img/shmup_part4_2.gif" width="400"></p>
 
@@ -230,10 +220,8 @@
 
 <p>The other problem is that our ship has a black rectangle around it because we didn&rsquo;t set the transparent color using <code>set_colorkey</code>:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">player_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">38</span><span class="p">))</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">player_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">38</span><span class="p">))</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span></code></pre></div>
 
 <p>If we follow the same procedure with our <code>Bullet</code> and <code>Mob</code> classes (although we don&rsquo;t need to scale them), we will wind up with a much nicer looking game:</p>
 

@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -164,31 +164,27 @@
 
 <p>To begin, we need to define yet another Sprite, this time to represent our powerup object. To make things simple, we can just copy the <code>Bullet()</code> class we already made and just make a few changes, since the behavior will be similar: start at a location (the location of a meteor that was just destroyed) and move downward, then kill the sprite if it goes off the bottom of the screen.  For its image, we&rsquo;re going to randomly choose between <code>'gun'</code> and <code>'shield'</code>, which will be our two kinds of powerup.</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="hll"><span class="k">class</span> <span class="nc">Pow</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="hl"><span class="k">class</span> <span class="nc">Pow</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
 </span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center</span><span class="p">):</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;shield&#39;</span><span class="p">,</span> <span class="s1">&#39;gun&#39;</span><span class="p">])</span>
-</span><span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">powerup_images</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+<span class="hl">        <span class="bp">self</span><span class="o">.</span><span class="nb">type</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="sa"></span><span class="s1">&#39;shield&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;gun&#39;</span><span class="p">])</span>
+</span><span class="hl">        <span class="bp">self</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">powerup_images</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="nb">type</span><span class="p">]</span>
 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">get_rect</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">center</span>
-<span class="hll">        <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="hl">        <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span> <span class="o">=</span> <span class="mi">2</span>
 </span>
     <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speedy</span>
         <span class="c1"># kill if it moves off the bottom of the screen</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">top</span> <span class="o">&gt;</span> <span class="n">HEIGHT</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
-</code></pre></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span></code></pre></div>
 
 <p>We&rsquo;ll need to load the images in our asset loading section, using a dictionary to hold the images with the powerup type as the key:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">powerup_images</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">powerup_images</span><span class="p">[</span><span class="s1">&#39;shield&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s1">&#39;shield_gold.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
-<span class="n">powerup_images</span><span class="p">[</span><span class="s1">&#39;gun&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s1">&#39;bolt_gold.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">powerup_images</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">powerup_images</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;shield&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;shield_gold.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+<span class="n">powerup_images</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;gun&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;bolt_gold.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span></code></pre></div>
 
 <p>Here are the images we&rsquo;re using (click to download):</p>
 
@@ -198,26 +194,22 @@
 <h3 id="spawning">Spawning</h3>
 
 <p>To spawn them, we&rsquo;ll need a group to hold them (for collisions):
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="n">powerups</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
-</code></pre></div>
-</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">powerups</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span></code></pre></div></p>
 
 <p>Then, when a bullet destroys a mob, we want a (small) random chance that a powerup will drop:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># check to see if a bullet hit a mob</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># check to see if a bullet hit a mob</span>
 <span class="n">hits</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">groupcollide</span><span class="p">(</span><span class="n">mobs</span><span class="p">,</span> <span class="n">bullets</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span>
     <span class="n">score</span> <span class="o">+=</span> <span class="mi">50</span> <span class="o">-</span> <span class="n">hit</span><span class="o">.</span><span class="n">radius</span>
     <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">expl_sounds</span><span class="p">)</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
-    <span class="n">expl</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">hit</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="s1">&#39;lg&#39;</span><span class="p">)</span>
+    <span class="n">expl</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">hit</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;lg&#39;</span><span class="p">)</span>
     <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">expl</span><span class="p">)</span>
-<span class="hll">    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.9</span><span class="p">:</span>
-</span><span class="hll">        <span class="nb">pow</span> <span class="o">=</span> <span class="n">Pow</span><span class="p">(</span><span class="n">hit</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
-</span><span class="hll">        <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">pow</span><span class="p">)</span>
-</span><span class="hll">        <span class="n">powerups</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">pow</span><span class="p">)</span>
-</span>    <span class="n">newmob</span><span class="p">()</span>
-</code></pre></div>
-
+<span class="hl">    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.9</span><span class="p">:</span>
+</span><span class="hl">        <span class="nb">pow</span> <span class="o">=</span> <span class="n">Pow</span><span class="p">(</span><span class="n">hit</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
+</span><span class="hl">        <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">pow</span><span class="p">)</span>
+</span><span class="hl">        <span class="n">powerups</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">pow</span><span class="p">)</span>
+</span>    <span class="n">newmob</span><span class="p">()</span></code></pre></div>
 
 <p>Here, <code>random.random()</code> picks a random decimal number between 0 and 1, so only spawning if the number is greater than 0.9 means we have a 10% chance of a powerup dropping from a destroyed meteor.</p>
 
@@ -225,17 +217,15 @@
 
 <p>Now, we need yet another collision check, this time between the player and the powerups group.  Add it right after the others:</p>
 
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span></span><span class="c1"># check to see if player hit a powerup</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># check to see if player hit a powerup</span>
 <span class="n">hits</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">spritecollide</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">powerups</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">hit</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;shield&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">hit</span><span class="o">.</span><span class="nb">type</span> <span class="o">==</span> <span class="sa"></span><span class="s1">&#39;shield&#39;</span><span class="p">:</span>
         <span class="n">player</span><span class="o">.</span><span class="n">shield</span> <span class="o">+=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">shield</span> <span class="o">&gt;=</span> <span class="mi">100</span><span class="p">:</span>
             <span class="n">player</span><span class="o">.</span><span class="n">shield</span> <span class="o">=</span> <span class="mi">100</span>
-    <span class="k">if</span> <span class="n">hit</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;gun&#39;</span><span class="p">:</span>
-        <span class="k">pass</span>
-</code></pre></div>
-
+    <span class="k">if</span> <span class="n">hit</span><span class="o">.</span><span class="nb">type</span> <span class="o">==</span> <span class="sa"></span><span class="s1">&#39;gun&#39;</span><span class="p">:</span>
+        <span class="k">pass</span></code></pre></div>
 
 <p>First, we&rsquo;re handling the shield powerup, which will give the player a random amount of shield back.  The <code>'gun'</code> powerup is a <em>little</em> bit more involved, so we&rsquo;ll take care of that in the next part.</p>
 

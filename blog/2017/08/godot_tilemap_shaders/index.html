@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.26" />
+  <meta name="generator" content="Hugo 0.30.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -65,12 +65,12 @@
                     
                     
                     <li><a href="/blog//tags/education" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         education
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">14</span>
+                        <span class="badge">15</span>
                         godot
                     </a></li>
                     
@@ -100,7 +100,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/teaching" class="list-group-item">
-                        <span class="badge">4</span>
+                        <span class="badge">5</span>
                         teaching
                     </a></li>
                     
@@ -182,13 +182,11 @@
 
 <p>Shader code uses syntax similar to C.  We will start by defining our textures (the frames for the animation).  There are 3 animations in the pack, each with 5 frames.  We will focus on one to start with:</p>
 
-<div class="highlight"><pre><code class="language-glsl" data-lang="glsl"><span></span><span class="k">uniform</span> <span class="n">texture</span> <span class="n">frame1</span><span class="p">;</span>
+<div class="highlight"><pre class="chroma"><code class="language-glsl" data-lang="glsl"><span class="k">uniform</span> <span class="n">texture</span> <span class="n">frame1</span><span class="p">;</span>
 <span class="k">uniform</span> <span class="n">texture</span> <span class="n">frame2</span><span class="p">;</span>
 <span class="k">uniform</span> <span class="n">texture</span> <span class="n">frame3</span><span class="p">;</span>
 <span class="k">uniform</span> <span class="n">texture</span> <span class="n">frame4</span><span class="p">;</span>
-<span class="k">uniform</span> <span class="n">texture</span> <span class="n">frame5</span><span class="p">;</span>
-</code></pre></div>
-
+<span class="k">uniform</span> <span class="n">texture</span> <span class="n">frame5</span><span class="p">;</span></code></pre></div>
 
 <p>The <code>uniform</code> keyword will expose the variable so that it can be set in the Inspector (similar to <code>export</code> in GDScript).  If you look at the <code>CanvasItemMaterial</code> now, you will see the 5 texture variables:</p>
 
@@ -196,9 +194,7 @@
 
 <p>Drag the 5 textures into the 5 slots in the Inspector.  Let&rsquo;s test to see if it works:</p>
 
-<div class="highlight"><pre><code class="language-glsl" data-lang="glsl"><span></span><span class="n">COLOR</span> <span class="o">=</span> <span class="n">tex</span><span class="p">(</span><span class="n">frame1</span><span class="p">,</span> <span class="n">UV</span><span class="p">);</span>
-</code></pre></div>
-
+<div class="highlight"><pre class="chroma"><code class="language-glsl" data-lang="glsl"><span class="n">COLOR</span> <span class="o">=</span> <span class="n">tex</span><span class="p">(</span><span class="n">frame1</span><span class="p">,</span> <span class="n">UV</span><span class="p">);</span></code></pre></div>
 
 <p>This just sets each pixel of the sprite to use the corresponding pixel of <code>frame1</code>.  Change it to <code>frame2</code> and observe the difference.</p>
 
@@ -206,20 +202,18 @@
 
 <p>Now we need that process to change with respect to time.  In Godot, the <code>TIME</code> variable will contain the current time (in seconds).  This value will steadily increase, but we are only interested in the fractional part, so we will use that:</p>
 
-<div class="highlight"><pre><code class="language-glsl" data-lang="glsl"><span></span><span class="k">float</span> <span class="n">time</span> <span class="o">=</span> <span class="n">fract</span><span class="p">(</span><span class="n">TIME</span><span class="p">);</span>
+<div class="highlight"><pre class="chroma"><code class="language-glsl" data-lang="glsl"><span class="k">float</span> <span class="n">time</span> <span class="o">=</span> <span class="n">fract</span><span class="p">(</span><span class="n">TIME</span><span class="p">);</span>
 <span class="n">color</span> <span class="n">col</span><span class="p">;</span>
 
 <span class="k">if</span> <span class="p">(</span><span class="n">time</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span> <span class="p">{</span>
 	<span class="n">col</span> <span class="o">=</span> <span class="n">tex</span><span class="p">(</span><span class="n">frame1</span><span class="p">,</span> <span class="n">UV</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="n">COLOR</span> <span class="o">=</span> <span class="n">col</span><span class="p">;</span>
-</code></pre></div>
-
+<span class="n">COLOR</span> <span class="o">=</span> <span class="n">col</span><span class="p">;</span></code></pre></div>
 
 <p>We check if the time is less than 0.5 and then use the texture pixel as before. Now you should see texture #1 for half a second, and nothing for the other half.  The only remaining thing is to break the second in to 5 parts and set the texture based on which fraction we are in.  We will also add a <code>speed</code> uniform to allow easy adjustment of the animation speed.  Here is the final shader code in full:</p>
 
-<div class="highlight"><pre><code class="language-glsl" data-lang="glsl"><span></span><span class="k">uniform</span> <span class="n">texture</span> <span class="n">frame1</span><span class="p">;</span>
+<div class="highlight"><pre class="chroma"><code class="language-glsl" data-lang="glsl"><span class="k">uniform</span> <span class="n">texture</span> <span class="n">frame1</span><span class="p">;</span>
 <span class="k">uniform</span> <span class="n">texture</span> <span class="n">frame2</span><span class="p">;</span>
 <span class="k">uniform</span> <span class="n">texture</span> <span class="n">frame3</span><span class="p">;</span>
 <span class="k">uniform</span> <span class="n">texture</span> <span class="n">frame4</span><span class="p">;</span>
@@ -247,9 +241,7 @@
 	<span class="p">}</span>
 <span class="p">}</span>
 
-<span class="n">COLOR</span> <span class="o">=</span> <span class="n">col</span><span class="p">;</span>
-</code></pre></div>
-
+<span class="n">COLOR</span> <span class="o">=</span> <span class="n">col</span><span class="p">;</span></code></pre></div>
 
 <h3 id="creating-the-tileset">Creating the tileset</h3>
 
