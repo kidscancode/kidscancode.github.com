@@ -7,7 +7,337 @@
     <language>en-us</language>
     
     <copyright>KidsCanCode LLC</copyright>
-    <updated>Sun, 06 Aug 2017 15:22:12 PDT</updated>
+    <updated>Fri, 29 Dec 2017 08:12:12 -0700</updated>
+    
+    <item>
+      <title>Godot 3.0: Rigid Bodies</title>
+      <link>/blog/2017/12/godot3_kyn_rigidbody1/</link>
+      <pubDate>Fri, 29 Dec 2017 08:12:12 -0700</pubDate>
+      
+      <guid>/blog/2017/12/godot3_kyn_rigidbody1/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;At the time of this writing, Godot 3.0 is nearing release, and many new users are
+trying it out. Recently I&amp;rsquo;ve seen a lot of confusion around physics and physics
+bodies, especially rigid bodies, which are Godot&amp;rsquo;s &amp;ldquo;true&amp;rdquo; physics nodes.&lt;/p&gt;
+
+&lt;p&gt;In this tutorial, I&amp;rsquo;ll explain when (and when not) to use rigid bodies, how they
+work, and demonstrate a few handy tricks to bend them to your will. The
+examples will use RigidBody2D, but the lessons apply equally to 3D.&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/xsAyx2r1bQU&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_rigidbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_rigid_body_2d&#34;&gt;
+&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_rigid_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;RigidBody2D&lt;/code&gt;&lt;/a&gt;
+is the physics body in Godot that provides simulated physics. This means that you
+don&amp;rsquo;t control a RigidBody2D directly. Instead you apply forces to it (gravity, impulses,
+etc.) and Godot&amp;rsquo;s built-in physics engine calculates the resulting movement, including
+collisions, bouncing, rotating, etc.&lt;/p&gt;
+
+&lt;p&gt;You can modify a RigidBody2D&amp;rsquo;s behavior via properties such as &amp;ldquo;Mass&amp;rdquo;, &amp;ldquo;Friction&amp;rdquo;,
+or &amp;ldquo;Bounce&amp;rdquo;, which can be set in the Inspector:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/rigidbody_properties.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/rigidbody_properties.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The body&amp;rsquo;s behavior is also affected by the world, via the &lt;em&gt;Project Settings -&amp;gt; Physics&lt;/em&gt;
+properties, or by entering an &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_area2d.html&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_area_2d&#34; target=&#34;_blank&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_area_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;Area2D&lt;/code&gt;&lt;/a&gt; that is overriding the global physics properties.&lt;/p&gt;
+
+&lt;h2 id=&#34;using-rigidbody2d&#34;&gt;Using RigidBody2D&lt;/h2&gt;
+
+&lt;p&gt;One of the benefits of using a rigid body is that a lot of behavior can be gotten &amp;ldquo;for
+free&amp;rdquo; without writing any code. For example, let&amp;rsquo;s look at making a rudimentary
+&amp;ldquo;Angry Birds&amp;rdquo;-style game with falling blocks. You only need to create RigidBody2Ds
+for the blocks and projectile, and set their properties. Stacking, falling, and bouncing
+will automatically be handled by the physics engine.&lt;/p&gt;
+
+&lt;h3 id=&#34;stacking-blocks&#34;&gt;Stacking blocks&lt;/h3&gt;
+
+&lt;p&gt;Start by making a RigidBody2D for the block and adding &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;Sprite&lt;/code&gt;&lt;/a&gt; and
+&lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_collisionshape2D.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_collision_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;CollisionShape2D&lt;/code&gt;&lt;/a&gt;
+children:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/rigidbody_block_scene.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/rigidbody_block_scene.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a texture to the Sprite and a rectangular collision shape. &lt;strong&gt;IMPORTANT&lt;/strong&gt;: Do &lt;em&gt;not&lt;/em&gt;
+change the &lt;em&gt;Scale&lt;/em&gt; of the collision shape! In general this is a bad idea, and will
+result in unexpected collision behavior. Always use the shape&amp;rsquo;s inner size handles and
+not the outer &lt;code&gt;Node2D&lt;/code&gt;-derived scale handles.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; For the textures in this example, I&amp;rsquo;m using the &lt;a href=&#34;http://kenney.nl/assets/physics-assets&#34;&gt;Physics Asset&lt;/a&gt; pack from Kenney.nl. It contains a
+wide variety of blocks in different shapes and materials.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Press &amp;ldquo;Play&amp;rdquo; and you&amp;rsquo;ll see the block fall slowly downward. This is due to the
+default global gravity. You can find this setting in &amp;ldquo;Project Settings&amp;rdquo; under
+&lt;em&gt;Physics -&amp;gt; 2d&lt;/em&gt;. You can also try changing the Block&amp;rsquo;s &lt;code&gt;Gravity Scale&lt;/code&gt; property in the
+Inspector. I&amp;rsquo;m using a value of &lt;code&gt;3&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now create a Main scene (I usually use a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_node.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_node&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_node&#34;&gt;&lt;/svg&gt;Node&lt;/a&gt;) for the root).
+Add a few &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_staticbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_staticbody2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_static_body_2d&#34;&gt;&lt;/svg&gt;StaticBody2D&lt;/a&gt;
+nodes with rectangular collision shapes to serve as your &amp;ldquo;ground&amp;rdquo; and walls.&lt;/p&gt;
+
+&lt;p&gt;Instance a Block, and then duplicate it (&lt;code&gt;Ctrl-D&lt;/code&gt; on Windows and &lt;code&gt;Cmd-D&lt;/code&gt; on MacOS)
+so you can make a nice stack. Something like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/rigidbody_scene1.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/rigidbody_scene1.png&#34; width=&#34;350&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;projectile&#34;&gt;Projectile&lt;/h3&gt;
+
+&lt;p&gt;Create another scene with the same node setup as your Block, but name this one &amp;ldquo;Ball&amp;rdquo;. Use one of
+the round textures and a circular collision shape. Instance this in your Main
+scene and place it somewhere to the side of the stack of blocks.&lt;/p&gt;
+
+&lt;p&gt;To cause a rigid body to move, it must have some velocity. You can give the body
+an initial velocity using the &lt;code&gt;Linear -&amp;gt; Velocity&lt;/code&gt; property. Try setting this
+to &lt;code&gt;(500, 0)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/rigidbody_vel.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/rigidbody_vel.gif&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;You can also tinker with the ball&amp;rsquo;s &lt;code&gt;Friction&lt;/code&gt; and &lt;code&gt;Bounce&lt;/code&gt; properties. Both of
+these properties can range from zero to one. I like a bounce of around &lt;code&gt;0.5&lt;/code&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;IMPORTANT:&lt;/strong&gt; &lt;em&gt;NEVER&lt;/em&gt; scale a physics body! If you try, a warning will appear,
+and when the scene runs, the physics engine will automatically set the scale back
+to &lt;code&gt;(1, 1)&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;forces&#34;&gt;Forces&lt;/h3&gt;
+
+&lt;p&gt;Reset the linear velocity to &lt;code&gt;(0, 0)&lt;/code&gt;. Now what if you want to be able to toss
+the ball? You should never set a rigid body&amp;rsquo;s velocity or position manually -
+remember, these are simulating &amp;ldquo;real-world&amp;rdquo; style physics. In the real world,
+objects can&amp;rsquo;t instantly jump from place to place or from a standstill to a high
+speed. If you try and do so, the physics engine will resist it, and unexpected
+movement can occur. Instead, we must apply forces which create an acceleration in a certain
+direction (also known as Newton&amp;rsquo;s Second Law). Godot physics objects work in
+the same way.&lt;/p&gt;
+
+&lt;p&gt;To add force to a rigid body, you have two functions to choose from:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;add_force()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Adds a continuous force to the body. Imagine a rocket&amp;rsquo;s thrust, steadily
+pushing it faster and faster. Note that this &lt;em&gt;adds&lt;/em&gt; to any already existing
+forces. The force continues to be applied until removed.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;apply_impulse()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Adds an instantaneous &amp;ldquo;kick&amp;rdquo; to the body. Imagine hitting a baseball with a bat.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ll use &lt;code&gt;apply_impulse()&lt;/code&gt; to kick the ball when we click, drag, and release
+the mouse button.&lt;/p&gt;
+
+&lt;p&gt;Open &amp;ldquo;Project Settings&amp;rdquo; and in the &amp;ldquo;Input Map&amp;rdquo; tab, add a new action called &amp;ldquo;click&amp;rdquo;.
+Connect it to the left mouse button.&lt;/p&gt;
+
+&lt;p&gt;Next, add a script to the Ball, and add the following code:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RigidBody2D&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;dragging&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;drag_start&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;click&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;and&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dragging&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;dragging&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;drag_start&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_global_mouse_position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_released&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;click&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;and&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dragging&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;dragging&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;
+		&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;drag_end&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_global_mouse_position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+		&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;dir&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;drag_start&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;drag_end&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;apply_impulse&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This script toggles &lt;code&gt;dragging&lt;/code&gt; on when the mouse button is pressed and records
+the location of the click. When the button is released, we find the vector from
+the click point to the release point and use that to apply the impulse (multiplying
+by &lt;code&gt;5&lt;/code&gt; to scale it up). &lt;code&gt;apply_impulse()&lt;/code&gt; also takes an &lt;code&gt;offset&lt;/code&gt; as its first
+parameter. This lets you &amp;ldquo;hit&amp;rdquo; the body off center, if you wish. For instance,
+try setting it to &lt;code&gt;Vector2(25, 0)&lt;/code&gt; and you&amp;rsquo;ll add some spin to the ball when
+it&amp;rsquo;s launched.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/rigidbody_impulse.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/rigidbody_impulse.gif&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;controlling-rigid-bodies&#34;&gt;Controlling Rigid Bodies&lt;/h2&gt;
+
+&lt;p&gt;There are cases where you need more direct control of a rigid body. For example,
+imagine you&amp;rsquo;re trying to make a version of the classic game &amp;ldquo;Asteroids&amp;rdquo;. The
+player&amp;rsquo;s spaceship needs to rotate using the left/right arrow keys, and to move
+forward when the up arrow is pressed.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the image I&amp;rsquo;m using for my ship:
+&lt;a href=&#34;/blog/blog/img/ship_red.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/ship_red.png&#34; width=&#34;124&#34;&gt;&lt;/a&gt;
+I recommend you also go to &lt;a href=&#34;http://opengameart.org/&#34;&gt;OpenGameArt&lt;/a&gt; and search for
+a nice space background (but this is totally optional).&lt;/p&gt;
+
+&lt;p&gt;Create a new scene for the ship as we did above with the following node structure:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;RigidBody2D&lt;/code&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Sprite&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CollisionShape2D&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; In Godot 3.0, &lt;code&gt;0&lt;/code&gt; degrees points to the left (along the &lt;strong&gt;x&lt;/strong&gt; axis).
+This means you need to add a &lt;code&gt;Rotation&lt;/code&gt; of &lt;code&gt;90&lt;/code&gt; to the &lt;code&gt;Sprite&lt;/code&gt; so it will
+match the body&amp;rsquo;s direction.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;By default, the physics settings provide some &lt;em&gt;damping&lt;/em&gt;, which reduces a body&amp;rsquo;s
+velocity and spin. In space, there&amp;rsquo;s no friction, so there shouldn&amp;rsquo;t be any
+damping at all. However, for the &amp;ldquo;Asteroids&amp;rdquo; feel, we want the ship to stop rotating
+when we let go of the keys, so set the ship&amp;rsquo;s &lt;code&gt;Angular -&amp;gt; Damp&lt;/code&gt; to &lt;code&gt;5&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RigidBody2D&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;engine_thrust&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;spin_thrust&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;thrust&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;rotation_dir&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;screensize&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_viewport&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;().&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_visible_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;().&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;size&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;get_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;ui_up&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;thrust&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;engine_thrust&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;thrust&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;rotation_dir&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;ui_right&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;rotation_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;ui_left&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;rotation_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+		
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;get_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_physics_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;set_applied_force&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;thrust&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotated&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotation&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;set_applied_torque&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotation_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;spin_thrust&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Let&amp;rsquo;s walk through what this script is doing. The two variables, &lt;code&gt;engine_thrust&lt;/code&gt;
+and &lt;code&gt;spin_thrust&lt;/code&gt; control how fast the ship can accelerate and turn. In the
+Inspector, set them to &lt;code&gt;500&lt;/code&gt; and &lt;code&gt;25000&lt;/code&gt; respectively (the units of torque make
+for large numbers). &lt;code&gt;thrust&lt;/code&gt; will represent the ship&amp;rsquo;s engine state: &lt;code&gt;(0, 0)&lt;/code&gt;
+when coasting, or a vector with the length of &lt;code&gt;engine_thrust&lt;/code&gt; when powered on.
+&lt;code&gt;rotation_dir&lt;/code&gt; will represent what direction the ship is turning. The &lt;code&gt;screensize&lt;/code&gt;
+variable will capture the size of the screen, which we&amp;rsquo;ll be using later.&lt;/p&gt;
+
+&lt;p&gt;Next, the &lt;code&gt;input()&lt;/code&gt; function captures the keystates and sets the ship&amp;rsquo;s &lt;code&gt;thrust&lt;/code&gt;
+on or off, and the rotation direction (&lt;code&gt;rotation_dir&lt;/code&gt;) positive or negative. This
+function is called every frame in &lt;code&gt;_process()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Finally, physics-related functions should be called in &lt;code&gt;_physics_process()&lt;/code&gt;. Here
+we use &lt;code&gt;set_applied_force()&lt;/code&gt; to apply the &lt;code&gt;thrust&lt;/code&gt; in whatever &lt;code&gt;direction&lt;/code&gt; the
+ship is facing. Then we use &lt;code&gt;set_applied_torque()&lt;/code&gt; to cause the ship to rotate.&lt;/p&gt;
+
+&lt;p&gt;Play the scene - you should be able to fly around freely.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/rigidbody_ship1.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/rigidbody_ship1.gif&#34; width=&#34;350&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;the-position-problem&#34;&gt;The Position Problem&lt;/h2&gt;
+
+&lt;p&gt;Another feature of &amp;ldquo;Asteroids&amp;rdquo; is that the screen &amp;ldquo;wraps around&amp;rdquo;. If the player
+goes off one side, it teleports to the other side. But we already talked above
+about how you can&amp;rsquo;t change a rigid body&amp;rsquo;s position without breaking the physics
+engine. This presents a huge problem when working with rigid bodies.&lt;/p&gt;
+
+&lt;p&gt;A common mistake is to try adding something like this to &lt;code&gt;_physics_process()&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_physics_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;set_applied_force&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;thrust&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotated&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotation&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;set_applied_torque&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotation_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;spin_thrust&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This fails spectacularly, trapping the player on the edge of the screen (with
+occasional glitches). So why doesn&amp;rsquo;t this work? The docs say &lt;code&gt;_physics_process()&lt;/code&gt;
+is for physics-related stuff, right?&lt;/p&gt;
+
+&lt;p&gt;Not exactly. &lt;code&gt;_physics_process()&lt;/code&gt; is &lt;em&gt;synced&lt;/em&gt; to the physics timestep, but that
+doesn&amp;rsquo;t make it OK to use for just anything. Hope is not lost, however, the answer
+is in the docs.&lt;/p&gt;
+
+&lt;p&gt;To quote the &lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_rigidbody2d.html#description&#34;&gt;RigidBody2D docs&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;You should not change a RigidBody2D’s position or linear_velocity every frame or even very often. If you need to directly affect the body’s state, use &lt;code&gt;_integrate_forces&lt;/code&gt;, which allows you to directly access the physics state.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;And the &lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_rigidbody2d.html#class-rigidbody2d-integrate-forces&#34;&gt;description for _integrate_forces&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Allows you to read and &lt;strong&gt;safely modify&lt;/strong&gt; the simulation state for the object. Use this instead of &lt;code&gt;_physics_process&lt;/code&gt; if you need to directly change the body’s position or other physics properties.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So there&amp;rsquo;s our answer. Instead of using &lt;code&gt;_physics_process()&lt;/code&gt; we need to use &lt;code&gt;_integrate_forces()&lt;/code&gt;,
+which gives us access to the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_physics2ddirectbodystate.html&#34; target=&#34;_blank&#34;&gt;Physics2DDirectBodyState&lt;/a&gt;. I highly recommend you take a look at the
+linked document, there is a lot of really useful data provided in the physics state object.
+For our purposes, the key piece of information is the body&amp;rsquo;s &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_transform2d.html&#34; target=&#34;_blank&#34;&gt;Transform2D&lt;/a&gt;.
+(Explaining transforms is beyond the scope of this document - see &lt;a href=&#34;http://docs.godotengine.org/en/latest/learning/features/math/matrices_and_transforms.html&#34;&gt;Matrices and transforms&lt;/a&gt;
+for more information.)&lt;/p&gt;
+
+&lt;p&gt;The body&amp;rsquo;s position is contained in the transform&amp;rsquo;s &lt;code&gt;origin&lt;/code&gt;. Change &lt;code&gt;_physics_process()&lt;/code&gt;
+to &lt;code&gt;_integrate_forces()&lt;/code&gt; and add the following code:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_integrate_forces&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;set_applied_force&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;thrust&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotated&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotation&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;set_applied_torque&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotation_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;spin_thrust&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+	&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;xform&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_transform&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xform&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;xform&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xform&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;xform&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xform&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;xform&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xform&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;xform&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screensize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_transform&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;xform&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We grab the current transform, change it as necessary, and set it back as the new
+transform. The physics engine stays happy, and everything works as expected:
+&lt;a href=&#34;/blog/blog/img/rigidbody_ship2.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/rigidbody_ship2.gif&#34; width=&#34;350&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;When used properly, rigid bodies are a powerful tool in your Godot toolkit. Many
+users get in trouble, however, when they use them for the wrong purposes, or
+fail to understand exactly how they work.&lt;/p&gt;
+
+&lt;p&gt;I hope you found this (fairly long) lesson useful. As Godot 3.0 nears release,
+I&amp;rsquo;ll be putting out more &amp;ldquo;Know Your Nodes&amp;rdquo; and other 3.0-related content. Good
+luck, and happy game making!&lt;/p&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://godotengine.org/article/dev-snapshot-godot-3-0-beta-2&#34;&gt;Download Godot 3.0 Beta 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Godot - Animating Tiles Using Shaders</title>
@@ -1796,118 +2126,6 @@ node is perfect for implementing characters and other moving bodies that don&amp
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Pygame Shmup Part 14: Game Over (and wrapping up)</title>
-      <link>/blog/2016/11/pygame_shmup_part_14/</link>
-      <pubDate>Sat, 12 Nov 2016 05:22:12 -0700</pubDate>
-      
-      <guid>/blog/2016/11/pygame_shmup_part_14/</guid>
-      <description>&lt;p&gt;This is part 14 of our &amp;ldquo;Shmup&amp;rdquo; project.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2016/08/pygame_shmup_part_1/&#34;&gt;Part 1&lt;/a&gt;. In this lesson we&amp;rsquo;ll finish up the game by adding a &amp;ldquo;Game Over&amp;rdquo; screen and the ability to play again.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
-
-&lt;p&gt;In this series of lessons we&amp;rsquo;ll build a complete game using Python and Pygame.  It&amp;rsquo;s intended for beginning programmers who already understand the basics of Python and are looking to deepen their Python understanding and learn the fundamentals of programming games.
-&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/Z2K2Yttvr5g&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;game-over&#34;&gt;Game Over&lt;/h2&gt;
-
-&lt;p&gt;Right now, when our player runs out of lives, the program just ends abruptly.  This isn&amp;rsquo;t very friendly, so we&amp;rsquo;re going to make a &amp;ldquo;Game Over&amp;rdquo; screen, and allow the player to play again if they wish.&lt;/p&gt;
-
-&lt;p&gt;The reason the game ends is that our game loop is controlled by the &lt;code&gt;running&lt;/code&gt; flag (&lt;em&gt;a flag is a variable that can be &lt;code&gt;True&lt;/code&gt; or &lt;code&gt;False&lt;/code&gt;&lt;/em&gt;) and we set &lt;code&gt;running&lt;/code&gt; to &lt;code&gt;False&lt;/code&gt; when the player dies.  Instead, we want to track what &lt;em&gt;state&lt;/em&gt; our game is in (showing game over, or playing), we&amp;rsquo;ll create a flag called &lt;code&gt;game_over&lt;/code&gt;, and add this to the top of our game loop:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Game loop&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;game_over&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;game_over&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;show_go_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;We&amp;rsquo;ll define &lt;code&gt;show_go_screen()&lt;/code&gt; in a moment, but we also need to think about something else.  When the game ends, and we go to the game over screen, if the player chooses to play again, we need to reset everything - the score, the meteors, the player&amp;rsquo;s lives, etc.  Right now we set those things right before the game loop starts, but now we&amp;rsquo;re going to move them to just after &lt;code&gt;show_go_screen()&lt;/code&gt; so they will happen whenever the player exits that screen:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Game loop&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;game_over&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;running&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;running&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;game_over&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;show_go_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;span class=&#34;hl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;game_over&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Group&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;mobs&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Group&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;bullets&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Group&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;powerups&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Group&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;all_sprites&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;newmob&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;/span&gt;&lt;span class=&#34;hl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;score&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;We also set &lt;code&gt;game_over&lt;/code&gt; to &lt;code&gt;False&lt;/code&gt; since we&amp;rsquo;re starting a new game.  Then, we can change what happens when the player runs out of lives:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# if the player died and the explosion has finished playing&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;lives&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;and&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;death_explosion&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;alive&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-&lt;span class=&#34;hl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;game_over&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id=&#34;the-game-over-screen&#34;&gt;The Game Over screen&lt;/h2&gt;
-
-&lt;p&gt;Now we just need to define what &lt;code&gt;show_go_screen&lt;/code&gt; does.  Since for this example, we&amp;rsquo;re only doing one &amp;ldquo;screen&amp;rdquo;, we&amp;rsquo;re just going to use the game&amp;rsquo;s title, and put some nice instructions for how to play:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;show_go_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;blit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;background&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;background_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;draw_text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;SHMUP!&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;64&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;draw_text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Arrow keys move, Space to fire&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;22&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-              &lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;draw_text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;Press a key to begin&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;18&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;WIDTH&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;HEIGHT&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;display&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;flip&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;waiting&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;waiting&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;clock&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tick&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FPS&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;QUIT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-                &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;quit&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pygame&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;KEYUP&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-                &lt;span class=&#34;n&#34;&gt;waiting&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The while loop at the end is how we handle the &amp;ldquo;Press a key to begin&amp;rdquo; part.  It&amp;rsquo;s kind of like a miniature game loop, but all we&amp;rsquo;re doing is checking for events.  The only events we care about are &lt;code&gt;pygame.QUIT&lt;/code&gt;, which happens when clicking the X on the window, and the event for pressing a key.  Did you notice we didn&amp;rsquo;t use &amp;lsquo;pygame.KEYDOWN&amp;rsquo; there?&lt;/p&gt;
-
-&lt;p&gt;The reason for using &lt;code&gt;KEYUP&lt;/code&gt; instead is so that we don&amp;rsquo;t start the game while the player is still holding down a key.  They have to tap &lt;em&gt;and&lt;/em&gt; release to continue.&lt;/p&gt;
-
-&lt;p&gt;This is a very simple way of doing the game over screen.  There are many other ways to handle it, but we&amp;rsquo;ll talk about those in later tutorials.&lt;/p&gt;
-
-&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h2&gt;
-
-&lt;p&gt;There we have it, your first full Pygame game!  If you&amp;rsquo;ve stuck with it through all these steps, you&amp;rsquo;re well on your way to becoming a game programmer.&lt;/p&gt;
-
-&lt;p&gt;There are obviously many more things we could add to this, like:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Increasing Difficulty&lt;/li&gt;
-&lt;li&gt;More powerups&lt;/li&gt;
-&lt;li&gt;Enemies (that shoot back!)&lt;/li&gt;
-&lt;li&gt;High score system&lt;/li&gt;
-&lt;li&gt;Boss levels&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;You can probably think of other ideas as well.  However, for the purposes of this video, we&amp;rsquo;re going to call this game complete.  In future lessons, we&amp;rsquo;ll cover other techniques which you could then come back and apply to the Shmup.&lt;/p&gt;
-
-&lt;p&gt;You can see what other lessons we&amp;rsquo;ve made here:
-&lt;a href=&#34;http://kidscancode.org/lessons/&#34;&gt;KidsCanCode Lessons and Tutorials&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Thanks for reading/watching these lessons!  Your support, questions, and comments are greatly appreciated.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-pygame-tutorials-blob-master-shmup-shmup-14-py-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/pygame_tutorials/blob/master/shmup/shmup-14.py&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/python-install.html&#34;&gt;Installing Python&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://kidscancode.org/blog/2015/09/pygame_install/&#34;&gt;Installing Pygame&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uve1tjVIQ6c&amp;ab_channel=KidsCanCode&#34;&gt;Setting up Atom for Python&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     
