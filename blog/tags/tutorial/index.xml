@@ -7,12 +7,348 @@
     <language>en-us</language>
     
     <copyright>KidsCanCode LLC</copyright>
-    <updated>Fri, 29 Dec 2017 08:12:12 -0700</updated>
+    <updated>Fri, 19 Jan 2018 15:12:12 -0700</updated>
+    
+    <item>
+      <title>Godot 3.0: Inheritance</title>
+      <link>/blog/2018/01/godot3_inheritance/</link>
+      <pubDate>Fri, 19 Jan 2018 15:12:12 -0700</pubDate>
+      
+      <guid>/blog/2018/01/godot3_inheritance/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;In this tutorial, we&amp;rsquo;ll explore how inheritance works in Godot. You can use
+inheritance in Godot to reuse code and create powerful hierarchies of object and
+scenes in your game.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ll imagine we&amp;rsquo;re making a classic top-down RPG and use Godot&amp;rsquo;s inheritance
+capabilities to create two different kinds of characters in the game.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;!--&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/xsAyx2r1bQU&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;--&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;In object oriented programming (OOP), &lt;em&gt;inheritance&lt;/em&gt; is a powerful tool. Put briefly, you can
+define a class that &lt;em&gt;inherits&lt;/em&gt; from another class. An object created using the first class will
+contain the methods and member variables of the &amp;ldquo;master&amp;rdquo; class as well as its own.&lt;/p&gt;
+
+&lt;p&gt;Godot is strongly object-oriented, and offers the opportunity to use inheritance
+not just with objects (scripts) but also with scenes.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s a preview of what we&amp;rsquo;re making:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/inh_preview.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/inh_preview.gif&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;The green character is controlled by the player, and the other characters are NPCs,
+walking around the tile-based map semi-randomly.&lt;/p&gt;
+
+&lt;h2 id=&#34;project-setup&#34;&gt;Project setup&lt;/h2&gt;
+
+&lt;p&gt;In &lt;em&gt;Project Settings&lt;/em&gt; create four new input actions called &amp;ldquo;left&amp;rdquo;, &amp;ldquo;right&amp;rdquo;, &amp;ldquo;up&amp;rdquo;, and &amp;ldquo;down&amp;rdquo; and assign
+each of them to the matching arrow key. We&amp;rsquo;ll be using those names as dictionary keys, so make sure to
+note the spelling and capitalization.&lt;/p&gt;
+
+&lt;p&gt;Set the display &lt;em&gt;Width&lt;/em&gt; and &lt;em&gt;Height&lt;/em&gt; to &lt;code&gt;640&lt;/code&gt; by &lt;code&gt;480&lt;/code&gt; (we&amp;rsquo;re using 32x32 tiles, so we don&amp;rsquo;t need much
+screen space for this demo).&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/inheritance_art.zip&#34;&gt;Download the art&lt;/a&gt; (character spritesheets) and unzip it in the project folder.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-characters&#34;&gt;Creating Characters&lt;/h2&gt;
+
+&lt;p&gt;Both kinds of characters share a number of properties and functions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A spritesheet containing the 4-directional movement animations&lt;/li&gt;
+&lt;li&gt;An AnimationPlayer to play the movement animations&lt;/li&gt;
+&lt;li&gt;Grid-based movement (the character can only move one full &amp;ldquo;square&amp;rdquo; at a time)&lt;/li&gt;
+&lt;li&gt;Collision detection with walls&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We&amp;rsquo;ll start by creating a scene that will contain all of the above. Start with an
+&lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_area2d.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;Area2D&lt;/code&gt;&lt;/a&gt;
+and name it &amp;ldquo;Character&amp;rdquo;. Give it the following children:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;Sprite&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_collisionshape2d.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;CollisionShape2D&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_tween.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;Tween&lt;/code&gt;&lt;/a&gt; (named &lt;code&gt;MoveTween&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animationplayer.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;AnimationPlayer&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We&amp;rsquo;ll leave the &lt;code&gt;Sprite&lt;/code&gt; without a texture for now, but in the Inspector set its &lt;em&gt;Vframes&lt;/em&gt; and &lt;em&gt;Hframes&lt;/em&gt; properties
+to &lt;code&gt;4&lt;/code&gt; and &lt;code&gt;3&lt;/code&gt; respectively.&lt;/p&gt;
+
+&lt;p&gt;Next, create a &lt;code&gt;RectangleShape2D&lt;/code&gt; in the collision shape and set its &lt;em&gt;Extents&lt;/em&gt; property in the Inspector to &lt;code&gt;(10, 18)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; Because all the characters are drawn to the same scale, we can be confident that the same sized collision
+shape will work for all characters. If this isn&amp;rsquo;t the case with the art you&amp;rsquo;re using, you can skip setting the collision
+shape here and configure it later for the inherited scenes.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&#34;animations&#34;&gt;Animations&lt;/h3&gt;
+
+&lt;p&gt;Create four animations in the &lt;code&gt;AnimationPlayer&lt;/code&gt; node. Name them to match the four directions we used in the input
+actions. For each animation, we&amp;rsquo;re going to set the length to &lt;code&gt;0.8&lt;/code&gt; and add a track for the &lt;code&gt;Sprite&lt;/code&gt;&amp;rsquo;s &lt;em&gt;Frame&lt;/em&gt; property.
+The pattern for each direction is listed below. See the screenshot for an example of the end result.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;direction&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;frames&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;left&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;9, 10, 11, 10&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;down&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;6, 7, 8, 7&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;right&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;3, 4, 5, 4&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;up&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;0, 1, 2, 1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/inh_animation_frames.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/inh_animation_frames.png&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;collision-detection&#34;&gt;Collision Detection&lt;/h3&gt;
+
+&lt;p&gt;Because the characters are moving on a grid, they will either move the full amount to the next tile or not at all.
+This means that before moving, the character needs to check if the move is possible. Add four &lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_raycast2d.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;RayCast2D&lt;/code&gt;&lt;/a&gt; nodes and
+set their names and &lt;em&gt;Cast To&lt;/em&gt; properties as follows:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;Name&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;&lt;em&gt;Cast To&lt;/em&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;RayCastRight&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;(32, 0)&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;RayCastLeft&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;(-32, 0)&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;RayCastDown&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;(0, 32)&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;RayCastUp&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;code&gt;(0, -32)&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Make sure to set the &lt;em&gt;Enabled&lt;/em&gt; property on each one (RayCast2Ds are disabled by default).
+Your final node setup should look something like this:
+&lt;img src=&#34;/blog/blog/img/inh_scene_char.png&#34; width=&#34;200&#34;&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;character-script&#34;&gt;Character Script&lt;/h3&gt;
+
+&lt;p&gt;Now add a script to the &lt;code&gt;Character&lt;/code&gt; node (it will automatically be named &amp;ldquo;Character.gd&amp;rdquo;).&lt;/p&gt;
+
+&lt;p&gt;First, we&amp;rsquo;ll define our class variables:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Area2D&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tile_size&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;32&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;right&amp;#39;&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;moves&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;right&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+             &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;left&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+             &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;up&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+             &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;down&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)}&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;raycasts&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;right&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;RayCastRight&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;left&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;RayCastLeft&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;up&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;RayCastUp&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;down&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;RayCastDown&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+ &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code&gt;can_move&lt;/code&gt; is a flag that will track whether the character can move. It will be &lt;code&gt;false&lt;/code&gt;
+while a movement is already underway. &lt;code&gt;facing&lt;/code&gt; is the current direction of movement.
+Note that the &lt;code&gt;moves&lt;/code&gt; and &lt;code&gt;raycasts&lt;/code&gt; dictionaries&amp;rsquo; keys match the input actions we created.&lt;/p&gt;
+
+&lt;p&gt;Next is the code that will execute a movement from one square to another:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;raycasts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;dir&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;false&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AnimationPlayer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MoveTween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;interpolate_property&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;position&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                      &lt;span class=&#34;n&#34;&gt;position&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;moves&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tile_size&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                      &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TRANS_SINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;EASE_IN_OUT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MoveTween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We pass a direction to &lt;code&gt;move()&lt;/code&gt;. If the RayCast2D for that direction detects a collision, the move
+is canceled. Otherwise, we change &lt;code&gt;facing&lt;/code&gt; to that direction, disable movement, and start playing
+the matching animation. To actually execute the movement, we use the &lt;code&gt;Tween&lt;/code&gt; node to interpolate
+the &lt;code&gt;position&lt;/code&gt; property from its current value to its current value plus a 32-pixel movement in
+the given direction. The duration is set to &lt;code&gt;0.8&lt;/code&gt; which matches the animation length.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; See the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tween.html&#34; target=&#34;_blank&#34;&gt;Tween
+documentation&lt;/a&gt; for details on how the &lt;code&gt;interpolate_property()&lt;/code&gt; method works.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Finally, to enable movement again, we need to reset &lt;code&gt;can_move&lt;/code&gt; when the movement has finished. Connect
+the &lt;code&gt;tween_completed&lt;/code&gt; signal from &lt;code&gt;MoveTween&lt;/code&gt; and add the following:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_MoveTween_tween_completed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;object&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;key&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&#34;implementing-the-player&#34;&gt;Implementing the Player&lt;/h2&gt;
+
+&lt;p&gt;The player character needs to inherit all the properties we gave to &lt;code&gt;Character&lt;/code&gt; as well as
+adding keyboard controlled movement.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ll start by making a new scene. However, instead of making a new empty scene,
+click on &lt;em&gt;Scene -&amp;gt; New Inherited Scene&lt;/em&gt; in the menu. Select the &lt;code&gt;Character.tscn&lt;/code&gt;.
+Rename the root node from &amp;ldquo;Character&amp;rdquo; to &amp;ldquo;Player&amp;rdquo; and save the new scene.&lt;/p&gt;
+
+&lt;p&gt;All we need to do for the &lt;code&gt;Sprite&lt;/code&gt; is set the texture, so choose a character you like from the &amp;ldquo;res://art/rpgsprites1&amp;rdquo;
+folder and drag it to the &lt;em&gt;Texture&lt;/em&gt; property.&lt;/p&gt;
+
+&lt;p&gt;Next, we need a new script for the player, so remove the attached one (&amp;ldquo;Character.gd&amp;rdquo;) and
+attach a new one. In the &amp;ldquo;Attach Node Script&amp;rdquo; dialog, click the folder icon next to the &lt;em&gt;Inherits&lt;/em&gt; option
+and choose &amp;ldquo;Character.gd&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/inh_script.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/inh_script.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s our player script (note that it &lt;code&gt;extends&lt;/code&gt; the character script):&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;res://Character.gd&amp;#34;&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;dir&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;moves&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;keys&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+                &lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Because we&amp;rsquo;ve inherited all the behavior from &amp;ldquo;Character.gd&amp;rdquo;, we only need to worry about control. Here, we&amp;rsquo;re
+using the &lt;code&gt;_process()&lt;/code&gt; function to check the keystate each frame. However, only if &lt;code&gt;can_move&lt;/code&gt; allows it do we
+actually check the keys and call &lt;code&gt;move()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Run the scene and try it out.&lt;/p&gt;
+
+&lt;h2 id=&#34;npc-characters&#34;&gt;NPC characters&lt;/h2&gt;
+
+&lt;p&gt;Hopefully you&amp;rsquo;re seeing how inheritance works by now, but let&amp;rsquo;s make another type of character: an NPC that
+will wander around the screen randomly. Make another scene inheriting from &amp;ldquo;Character.tscn&amp;rdquo; and name it NPC.&lt;/p&gt;
+
+&lt;p&gt;This time, leave the sprite&amp;rsquo;s &lt;em&gt;Texture&lt;/em&gt; blank and add a new script, again inheriting from &amp;ldquo;Character.gd&amp;rdquo;.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;res://Character.gd&amp;#34;&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;textures&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;mage_f.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;mage_m.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;healer_f.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;healer_m.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;townfolk1_f.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;townfolk1_m.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;randomize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;textures&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;randi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;textures&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;size&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()]&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;load&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;res://art/rpgsprites1/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;moves&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;keys&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;randi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;or&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;randi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;moves&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;keys&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;randi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This time, we&amp;rsquo;re using &lt;code&gt;_ready()&lt;/code&gt; to select a random texture and assign it. We&amp;rsquo;re also choosing a
+random starting direction.&lt;/p&gt;
+
+&lt;p&gt;As with the player, we&amp;rsquo;ll use &lt;code&gt;_process()&lt;/code&gt; to trigger the movement, but this time we&amp;rsquo;ll use the
+fact that the &lt;code&gt;move()&lt;/code&gt; function returns &lt;code&gt;true&lt;/code&gt; if it successfully executes (if the raycast detects
+an obstacle, it returns &lt;code&gt;false&lt;/code&gt;). So if the NPC can&amp;rsquo;t move, it will pick a new random direction.
+For variety, we also add a 50% chance that it will change direction anyway.&lt;/p&gt;
+
+&lt;p&gt;Run the scene and observe the NPC wandering randomly around the screen.&lt;/p&gt;
+
+&lt;h2 id=&#34;testing-collisions&#34;&gt;Testing Collisions&lt;/h2&gt;
+
+&lt;p&gt;Finally, to confirm that the collision detection is working, let&amp;rsquo;s create a small scene for the
+characters to wander around in. We&amp;rsquo;ll use a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tilemap.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;TileMap&lt;/code&gt;&lt;/a&gt; to quickly draw our map.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; See my &lt;a href=&#34;https://youtu.be/LBK5GgMB988&#34; target=&#34;_blank&#34;&gt;Tilemap tutorial&lt;/a&gt; for details on using
+TileMaps in Godot.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;There are two tiles (&amp;ldquo;grass.png&amp;rdquo; and &amp;ldquo;stone.png&amp;rdquo;) in the art folder. There is also a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tileset.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;TileSet&lt;/code&gt;&lt;/a&gt; called
+&amp;ldquo;tiles.tres&amp;rdquo; to save you the step of making your own. In it, only the stone tile has a collision shape, so it
+will be our obstacle.&lt;/p&gt;
+
+&lt;p&gt;Create a new &amp;ldquo;Main&amp;rdquo; scene (I usually like to use a plain &lt;code&gt;Node&lt;/code&gt; as the root). Add a &lt;code&gt;TileMap&lt;/code&gt; and drag &amp;ldquo;tileset.tres&amp;rdquo;
+into its &lt;em&gt;Tile Set&lt;/em&gt; property. Also don&amp;rsquo;t forget to change the &lt;em&gt;Size&lt;/em&gt; to &lt;code&gt;(32, 32)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Draw some walls as you like, and then add a &lt;code&gt;Player&lt;/code&gt; instance and a few instances of &lt;code&gt;NPC&lt;/code&gt;. Remember, the characters
+won&amp;rsquo;t know anything about the map - they just know if they can move one tile or not. If you want them to line up properly,
+you need to make sure the characters&amp;rsquo; starting positions are centered on a tile. This is easy to do if you turn
+on &amp;ldquo;Snap to Grid&amp;rdquo;. Click the &amp;ldquo;Use Snap&amp;rdquo; button and then open the grid menu by clicking on the three dots next to it:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/inh_snap2.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/inh_snap2.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Under &amp;ldquo;Configure Snap&amp;hellip;&amp;rdquo; set the &lt;em&gt;Grid Step&lt;/em&gt; and &lt;em&gt;Grid Offset&lt;/em&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/inh_snap.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/inh_snap.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Now you can drag the instanced characters around and they&amp;rsquo;ll always snap to the center of a tile.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Imagine we had built this project without using inheritance. The Player and NPC would each have their own scene
+setup and individual scripts. If we decided to change how we wanted movement to work, we would have to change
+everything twice. If we added more character types (Monsters, Pets, etc.) the duplicated code would
+multiply and quickly become unmanageable. With the setup we created above, everything is in one place, and any
+change to the character automatically propagates to everything that extends it.&lt;/p&gt;
+
+&lt;p&gt;As you&amp;rsquo;re working on your own projects, look for opportunities to consolidate code and use inheritance for
+your scenes and/or scripts. As your projects grow in size and complexity, it will quickly become a lifesaver.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-blog-img-inheritance-demo-zip-download-the-full-project-a&#34;&gt;&lt;a href=&#34;/blog/blog/img/Inheritance_Demo.zip&#34;&gt;Download the full project&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://godotengine.org/article/dev-snapshot-godot-3-0-beta-2&#34;&gt;Download Godot 3.0 Beta 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Godot 3.0: Rigid Bodies</title>
       <link>/blog/2017/12/godot3_kyn_rigidbody1/</link>
-      <pubDate>Fri, 29 Dec 2017 08:12:12 -0700</pubDate>
+      <pubDate>Sat, 30 Dec 2017 08:12:12 -0700</pubDate>
       
       <guid>/blog/2017/12/godot3_kyn_rigidbody1/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
@@ -32,7 +368,7 @@ examples will use RigidBody2D, but the lessons apply equally to 3D.&lt;/p&gt;
 
 &lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_rigidbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_rigid_body_2d&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_rigidbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_rigid_body_2d&#34;&gt;
 &lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_rigid_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;RigidBody2D&lt;/code&gt;&lt;/a&gt;
 is the physics body in Godot that provides simulated physics. This means that you
 don&amp;rsquo;t control a RigidBody2D directly. Instead you apply forces to it (gravity, impulses,
@@ -45,7 +381,7 @@ or &amp;ldquo;Bounce&amp;rdquo;, which can be set in the Inspector:&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;/blog/blog/img/rigidbody_properties.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/rigidbody_properties.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;The body&amp;rsquo;s behavior is also affected by the world, via the &lt;em&gt;Project Settings -&amp;gt; Physics&lt;/em&gt;
-properties, or by entering an &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_area2d.html&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_area_2d&#34; target=&#34;_blank&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_area_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;Area2D&lt;/code&gt;&lt;/a&gt; that is overriding the global physics properties.&lt;/p&gt;
+properties, or by entering an &lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_area2d.html&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_area_2d&#34; target=&#34;_blank&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_area_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;Area2D&lt;/code&gt;&lt;/a&gt; that is overriding the global physics properties.&lt;/p&gt;
 
 &lt;h2 id=&#34;using-rigidbody2d&#34;&gt;Using RigidBody2D&lt;/h2&gt;
 
@@ -57,8 +393,8 @@ will automatically be handled by the physics engine.&lt;/p&gt;
 
 &lt;h3 id=&#34;stacking-blocks&#34;&gt;Stacking blocks&lt;/h3&gt;
 
-&lt;p&gt;Start by making a RigidBody2D for the block and adding &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;Sprite&lt;/code&gt;&lt;/a&gt; and
-&lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_collisionshape2D.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_collision_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;CollisionShape2D&lt;/code&gt;&lt;/a&gt;
+&lt;p&gt;Start by making a RigidBody2D for the block and adding &lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;Sprite&lt;/code&gt;&lt;/a&gt; and
+&lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_collisionshape2D.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_collision_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;CollisionShape2D&lt;/code&gt;&lt;/a&gt;
 children:&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;/blog/blog/img/rigidbody_block_scene.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/rigidbody_block_scene.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
@@ -78,8 +414,8 @@ default global gravity. You can find this setting in &amp;ldquo;Project Settings
 &lt;em&gt;Physics -&amp;gt; 2d&lt;/em&gt;. You can also try changing the Block&amp;rsquo;s &lt;code&gt;Gravity Scale&lt;/code&gt; property in the
 Inspector. I&amp;rsquo;m using a value of &lt;code&gt;3&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Now create a Main scene (I usually use a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_node.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_node&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_node&#34;&gt;&lt;/svg&gt;Node&lt;/a&gt;) for the root).
-Add a few &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_staticbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_staticbody2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_static_body_2d&#34;&gt;&lt;/svg&gt;StaticBody2D&lt;/a&gt;
+&lt;p&gt;Now create a Main scene (I usually use a &lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_node.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_node&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_node&#34;&gt;&lt;/svg&gt;Node&lt;/a&gt;) for the root).
+Add a few &lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_staticbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_staticbody2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_static_body_2d&#34;&gt;&lt;/svg&gt;StaticBody2D&lt;/a&gt;
 nodes with rectangular collision shapes to serve as your &amp;ldquo;ground&amp;rdquo; and walls.&lt;/p&gt;
 
 &lt;p&gt;Instance a Block, and then duplicate it (&lt;code&gt;Ctrl-D&lt;/code&gt; on Windows and &lt;code&gt;Cmd-D&lt;/code&gt; on MacOS)
@@ -294,9 +630,9 @@ is in the docs.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;So there&amp;rsquo;s our answer. Instead of using &lt;code&gt;_physics_process()&lt;/code&gt; we need to use &lt;code&gt;_integrate_forces()&lt;/code&gt;,
-which gives us access to the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_physics2ddirectbodystate.html&#34; target=&#34;_blank&#34;&gt;Physics2DDirectBodyState&lt;/a&gt;. I highly recommend you take a look at the
+which gives us access to the &lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_physics2ddirectbodystate.html&#34; target=&#34;_blank&#34;&gt;Physics2DDirectBodyState&lt;/a&gt;. I highly recommend you take a look at the
 linked document, there is a lot of really useful data provided in the physics state object.
-For our purposes, the key piece of information is the body&amp;rsquo;s &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_transform2d.html&#34; target=&#34;_blank&#34;&gt;Transform2D&lt;/a&gt;.
+For our purposes, the key piece of information is the body&amp;rsquo;s &lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_transform2d.html&#34; target=&#34;_blank&#34;&gt;Transform2D&lt;/a&gt;.
 (Explaining transforms is beyond the scope of this document - see &lt;a href=&#34;http://docs.godotengine.org/en/latest/learning/features/math/matrices_and_transforms.html&#34;&gt;Matrices and transforms&lt;/a&gt;
 for more information.)&lt;/p&gt;
 
@@ -2001,125 +2337,6 @@ node is perfect for implementing characters and other moving bodies that don&amp
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2017-02-godot-101-03-godot-101-part-3-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/02/godot_101_03/&#34;&gt;Godot 101 - Part 3&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Godot 101 - Part 1: Introduction to Godot</title>
-      <link>/blog/2017/02/godot_101_01/</link>
-      <pubDate>Wed, 08 Feb 2017 05:22:12 -0700</pubDate>
-      
-      <guid>/blog/2017/02/godot_101_01/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;This is part 1 of &amp;ldquo;Godot 101&amp;rdquo;, where we&amp;rsquo;ll give an overview of what a game engine is in general, and what Godot is in specific.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
-
-&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
-&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/gHA4M2cqWb0&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;game-engine&#34;&gt;Game Engine?&lt;/h2&gt;
-
-&lt;p&gt;A game engine is sort of an all-in-one software package for making video games.  The purpose of most game engines is to make development easier by taking care of all the low level details, leaving the developer free to focus on making the actual game.  By &amp;ldquo;low level details&amp;rdquo;, we mean things like &lt;em&gt;rendering&lt;/em&gt; (producing the graphics), animation, collisions and physics, networking, etc.  In other words, the things you &lt;em&gt;need&lt;/em&gt; to make your game, but aren&amp;rsquo;t the actual game itself.&lt;/p&gt;
-
-&lt;h2 id=&#34;why-godot&#34;&gt;Why Godot?&lt;/h2&gt;
-
-&lt;p&gt;Most of you reading this have probably heard of &lt;a href=&#34;http://unity3d0.com&#34;&gt;Unity&lt;/a&gt;, which is the 500 lb gorilla of the game industry.  Many companies, large and small, use Unity - you&amp;rsquo;ve probably played games made with Unity, whether you realized it or not.&lt;/p&gt;
-
-&lt;p&gt;Even though it&amp;rsquo;s popular, Unity has some drawbacks, especially for beginners. For example, Unity is designed for 3D and while it supports 2D, that support is not very good, and is not easy to deal with. We have often said that beginners should start with 2D games, because working in 3D adds yet another layer of complexity.  Once you have a strong handle on the 2D fundamentals, it will be much easier to make the step up to 3D.&lt;/p&gt;
-
-&lt;p&gt;Godot, on the other hand, is very good at both 2D and 3D, making it a much better learning platform.  In addition, while Unity is technically free, it is commercial software, and you are required to pay for a license if your game makes a certain amount of money.  One of Godot&amp;rsquo;s big advantages is that it is 100% free.  It is open source (MIT License), which means that you will never pay anything for it, no matter what.&lt;/p&gt;
-
-&lt;p&gt;On top of all that, Godot supports all the most popular platforms for games - PC, mobile, and even consoles!&lt;/p&gt;
-
-&lt;p&gt;Finally, Godot&amp;rsquo;s scripting language (GDScript) is very similar to Python (it was based on it).  We think &lt;a href=&#34;/blog/blog/2015/09/whypython/&#34;&gt;Python is a great choice for beginners&lt;/a&gt;, so if you&amp;rsquo;ve been studying Python, Godot will be a smooth transition for you.&lt;/p&gt;
-
-&lt;p&gt;For these reasons, we&amp;rsquo;re big fans of Godot for learning game development.&lt;/p&gt;
-
-&lt;p&gt;Now, let&amp;rsquo;s look at some concepts:&lt;/p&gt;
-
-&lt;h2 id=&#34;nodes-and-scenes&#34;&gt;Nodes and Scenes&lt;/h2&gt;
-
-&lt;p&gt;In Godot, everything is a &lt;code&gt;Node&lt;/code&gt;.  A node can represent a sprite, an animation, a sound, or just about anything else in your project.  Every node has a few things in common:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Name - each node can be referred to by name&lt;/li&gt;
-&lt;li&gt;Properties - every node has a whole set of properties that define how it looks, acts, etc.&lt;/li&gt;
-&lt;li&gt;Callback - each has a callback function that can be set to process during every frame&lt;/li&gt;
-&lt;li&gt;Extendable - with code, any node can be extended to have additional properties and functionality&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Another very important characteristic of Nodes is they can be assigned to other nodes as children, creating a &lt;em&gt;tree&lt;/em&gt; structure:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_1.png&#34; width=&#34;250&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;In a tree, every node can have one (and only one) &lt;code&gt;parent&lt;/code&gt; and any number of &lt;code&gt;children&lt;/code&gt;.  A node can inherit behavior and properties from its parent, allowing you to organize them in a logical manner.&lt;/p&gt;
-
-&lt;p&gt;A group of nodes arranged in a tree is called a &lt;code&gt;Scene&lt;/code&gt;.  In Godot, scenes can be saved/loaded, duplicated, and can even spawn other scenes.  Running a game means running a scene.  All of your work in the Godot editor will be setting up and organizing scenes.&lt;/p&gt;
-
-&lt;h2 id=&#34;creating-a-godot-project&#34;&gt;Creating a Godot project&lt;/h2&gt;
-
-&lt;p&gt;You can download Godot here: &lt;a href=&#34;http://godotengine.org/&#34;&gt;http://godotengine.org/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;When you first open Godot, you will see the &amp;ldquo;Project Manager&amp;rdquo; window:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_2.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_2.png&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;In this window you can see a list of the Godot projects you may be working on. To start a new project, click &amp;ldquo;New Project&amp;rdquo;. Every project in Godot starts with a folder, so we need to create one - just pick a location that&amp;rsquo;s convenient for you.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_3.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_3.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;Now just click &amp;ldquo;Edit&amp;rdquo; to open the project.&lt;/p&gt;
-
-&lt;h2 id=&#34;a-simple-scene&#34;&gt;A simple scene&lt;/h2&gt;
-
-&lt;p&gt;This is the main Godot editor window you will see when you open a new project:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_4.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_4.png&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;The center of the window is your view of the game.  Using the buttons at the top marked &amp;ldquo;2D&amp;rdquo; and &amp;ldquo;3D&amp;rdquo;, you can change the mode. Let&amp;rsquo;s stick with &amp;ldquo;2D&amp;rdquo; for this one.&lt;/p&gt;
-
-&lt;p&gt;On the right side is a window labeled &amp;ldquo;Scene&amp;rdquo;:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_5.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_5.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;This is where we&amp;rsquo;ll build our &lt;code&gt;Scene&lt;/code&gt; (tree of nodes).  We can add a node by clicking the + button.  Now we can see a (long!) list of different node types to choose from.  This can be very overwhelming, but don&amp;rsquo;t worry - for most projects you may not ever use the majority of these nodes.  They are there for you if you need them.  The nodes are sorted into a hierarchy - green for UI nodes, blue for 2D nodes, and red for 3D nodes (plus some miscellaneous white and yellow ones).&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;re going to type &amp;ldquo;sprite&amp;rdquo; in the search box to narrow the list down to the node we&amp;rsquo;re looking for (&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; &lt;code&gt;Sprite&lt;/code&gt;) and click &amp;ldquo;Create&amp;rdquo;:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_6.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_6.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;Now we have a sprite in our scene, but it&amp;rsquo;s up in the corner and it doesn&amp;rsquo;t look very impressive.  You can control your view with the mouse: middle-click-and-drag will pan your view around, and the scroll wheel will control zoom.&lt;/p&gt;
-
-&lt;p&gt;To be able to see our sprite, we need to add a &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_texture&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_texture&#34;&gt;&lt;/svg&gt; &lt;code&gt;Texture&lt;/code&gt; to it.  We&amp;rsquo;re going to use the Godot icon that&amp;rsquo;s included with every new project.  Now, let&amp;rsquo;s look at the &amp;ldquo;Inspector&amp;rdquo; tab in the lower-right:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_7.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_7.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;Every time you click on a node in your scene, the Inspector will show all of that node&amp;rsquo;s properties - and there are a lot of them!  The one we care about is the first one, &amp;ldquo;Texture&amp;rdquo;, which is currently showing &lt;code&gt;&amp;lt;null&amp;gt;&lt;/code&gt;.  To set it, just drag the Godot icon image on top of the spot where you see &lt;code&gt;&amp;lt;null&amp;gt;&lt;/code&gt;.  Our sprite has an image!  Pick it up and drag it to the center of the screen.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_8.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_8.png&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h2&gt;
-
-&lt;p&gt;That&amp;rsquo;s our first simple scene!  To finish up, let&amp;rsquo;s save and run it.  To do that, click on the &amp;ldquo;Play the edited scene&amp;rdquo; button.  You will be asked to save your scene, and then click the button again:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_01_9.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_01_9.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;That&amp;rsquo;s it - your first Godot scene!  In later lessons, we&amp;rsquo;ll explore more nodes, begin writing code, and more.  If you have any questions, please post them below.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;a-href-blog-2017-02-godot-101-02-godot-101-part-2-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/02/godot_101_02/&#34;&gt;Godot 101 - Part 2&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 

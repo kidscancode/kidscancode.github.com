@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="generator" content="Hugo 0.32.4" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">33</span>
+                        <span class="badge">34</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">16</span>
+                        <span class="badge">17</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">33</span>
+                        <span class="badge">34</span>
                         tutorial
                     </a></li>
                     
@@ -119,7 +119,7 @@
         <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
         <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
     </ul>
-    <p>&copy; 2017 KidsCanCode LLC.</p>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
   </div>
 </div>
 
@@ -128,7 +128,7 @@
 			<div class="post">
 			 	<h1>Godot 3.0: Rigid Bodies</h1>
 			  <span class="post-author">by Chris Bradfield</span>
-			  <span class="post-date">Fri, Dec 29, 2017</span>
+			  <span class="post-date">Sat, Dec 30, 2017</span>
 			  <span id="tags"> <h6>Tags:
 			  
 			    <a href="/blog/tags/godot">godot</a>
@@ -156,7 +156,7 @@ examples will use RigidBody2D, but the lessons apply equally to 3D.</p>
 
 <h2 id="introduction">Introduction</h2>
 
-<p><a href="http://docs.godotengine.org/en/stable/classes/class_rigidbody2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_rigid_body_2d">
+<p><a href="http://docs.godotengine.org/en/latest/classes/class_rigidbody2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_rigid_body_2d">
 <use xlink:href="/blog/img/symbol-defs.svg#icon-icon_rigid_body_2d"></svg> <code>RigidBody2D</code></a>
 is the physics body in Godot that provides simulated physics. This means that you
 don&rsquo;t control a RigidBody2D directly. Instead you apply forces to it (gravity, impulses,
@@ -169,7 +169,7 @@ or &ldquo;Bounce&rdquo;, which can be set in the Inspector:</p>
 <p><a href="/blog/img/rigidbody_properties.png"><img src="/blog/img/rigidbody_properties.png" width="200"></a></p>
 
 <p>The body&rsquo;s behavior is also affected by the world, via the <em>Project Settings -&gt; Physics</em>
-properties, or by entering an <a href="http://docs.godotengine.org/en/stable/classes/class_area2d.html"><svg width="18" height="18" class="icon-icon_area_2d" target="_blank"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_area_2d"></svg> <code>Area2D</code></a> that is overriding the global physics properties.</p>
+properties, or by entering an <a href="http://docs.godotengine.org/en/latest/classes/class_area2d.html"><svg width="18" height="18" class="icon-icon_area_2d" target="_blank"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_area_2d"></svg> <code>Area2D</code></a> that is overriding the global physics properties.</p>
 
 <h2 id="using-rigidbody2d">Using RigidBody2D</h2>
 
@@ -181,8 +181,8 @@ will automatically be handled by the physics engine.</p>
 
 <h3 id="stacking-blocks">Stacking blocks</h3>
 
-<p>Start by making a RigidBody2D for the block and adding <a href="http://docs.godotengine.org/en/stable/classes/class_sprite.html" target="_blank"><svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg><code>Sprite</code></a> and
-<a href="http://docs.godotengine.org/en/stable/classes/class_collisionshape2D.html" target="_blank"><svg width="18" height="18" class="icon-icon_collision_shape_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d"></svg><code>CollisionShape2D</code></a>
+<p>Start by making a RigidBody2D for the block and adding <a href="http://docs.godotengine.org/en/latest/classes/class_sprite.html" target="_blank"><svg width="18" height="18" class="icon-icon_sprite"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_sprite"></svg><code>Sprite</code></a> and
+<a href="http://docs.godotengine.org/en/latest/classes/class_collisionshape2D.html" target="_blank"><svg width="18" height="18" class="icon-icon_collision_shape_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d"></svg><code>CollisionShape2D</code></a>
 children:</p>
 
 <p><a href="/blog/img/rigidbody_block_scene.png"><img src="/blog/img/rigidbody_block_scene.png" width="200"></a></p>
@@ -202,8 +202,8 @@ default global gravity. You can find this setting in &ldquo;Project Settings&rdq
 <em>Physics -&gt; 2d</em>. You can also try changing the Block&rsquo;s <code>Gravity Scale</code> property in the
 Inspector. I&rsquo;m using a value of <code>3</code>.</p>
 
-<p>Now create a Main scene (I usually use a <a href="http://docs.godotengine.org/en/stable/classes/class_node.html" target="_blank"><svg width="18" height="18" class="icon-icon_node"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_node"></svg>Node</a>) for the root).
-Add a few <a href="http://docs.godotengine.org/en/stable/classes/class_staticbody2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_staticbody2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_static_body_2d"></svg>StaticBody2D</a>
+<p>Now create a Main scene (I usually use a <a href="http://docs.godotengine.org/en/latest/classes/class_node.html" target="_blank"><svg width="18" height="18" class="icon-icon_node"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_node"></svg>Node</a>) for the root).
+Add a few <a href="http://docs.godotengine.org/en/latest/classes/class_staticbody2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_staticbody2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_static_body_2d"></svg>StaticBody2D</a>
 nodes with rectangular collision shapes to serve as your &ldquo;ground&rdquo; and walls.</p>
 
 <p>Instance a Block, and then duplicate it (<code>Ctrl-D</code> on Windows and <code>Cmd-D</code> on MacOS)
@@ -418,9 +418,9 @@ is in the docs.</p>
 </blockquote>
 
 <p>So there&rsquo;s our answer. Instead of using <code>_physics_process()</code> we need to use <code>_integrate_forces()</code>,
-which gives us access to the <a href="http://docs.godotengine.org/en/stable/classes/class_physics2ddirectbodystate.html" target="_blank">Physics2DDirectBodyState</a>. I highly recommend you take a look at the
+which gives us access to the <a href="http://docs.godotengine.org/en/latest/classes/class_physics2ddirectbodystate.html" target="_blank">Physics2DDirectBodyState</a>. I highly recommend you take a look at the
 linked document, there is a lot of really useful data provided in the physics state object.
-For our purposes, the key piece of information is the body&rsquo;s <a href="http://docs.godotengine.org/en/stable/classes/class_transform2d.html" target="_blank">Transform2D</a>.
+For our purposes, the key piece of information is the body&rsquo;s <a href="http://docs.godotengine.org/en/latest/classes/class_transform2d.html" target="_blank">Transform2D</a>.
 (Explaining transforms is beyond the scope of this document - see <a href="http://docs.godotengine.org/en/latest/learning/features/math/matrices_and_transforms.html">Matrices and transforms</a>
 for more information.)</p>
 
