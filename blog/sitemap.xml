@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/blog/2018/03/godot3_visibility_raycasts/</loc>
+    <lastmod>2018-03-10T08:12:12-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/2018/02/godot3_kinematic2d/</loc>
     <lastmod>2018-02-13T03:12:12-07:00</lastmod>
   </url>
@@ -215,7 +220,7 @@
   
   <url>
     <loc>/blog/tags/gamedev/</loc>
-    <lastmod>2018-02-13T03:12:12-07:00</lastmod>
+    <lastmod>2018-03-10T08:12:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -227,19 +232,19 @@
   
   <url>
     <loc>/blog/tags/godot/</loc>
-    <lastmod>2018-02-13T03:12:12-07:00</lastmod>
+    <lastmod>2018-03-10T08:12:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/blog/</loc>
-    <lastmod>2018-02-13T03:12:12-07:00</lastmod>
+    <lastmod>2018-03-10T08:12:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/blog/post/</loc>
-    <lastmod>2018-02-13T03:12:12-07:00</lastmod>
+    <lastmod>2018-03-10T08:12:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -275,7 +280,7 @@
   
   <url>
     <loc>/blog/tags/tutorial/</loc>
-    <lastmod>2018-02-13T03:12:12-07:00</lastmod>
+    <lastmod>2018-03-10T08:12:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   

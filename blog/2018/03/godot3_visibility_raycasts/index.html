@@ -1,0 +1,385 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.37" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 3.0: Visibility with Ray-casting &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">36</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">19</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">36</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 3.0: Visibility with Ray-casting</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sat, Mar 10, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			</h6></span>
+
+			      <p><img src="/blog/img/godot_logo.png" width="450"></p>
+
+<p>This tutorial shows how to use the ray-casting feature of Godot&rsquo;s physics engine (not the RayCast2D node) to make entities that can&rsquo;t see through walls.</p>
+
+<p>We&rsquo;ll use a TileMap for walls and create some rotating turrets that look for the player and shoot when they can see it.</p>
+
+<p><strong>Note:</strong> This is not a beginner-level tutorial. It assumes you have a general knowledge of Godot. If you&rsquo;re not there yet, start <a href="http://docs.godotengine.org/en/latest/getting_started/step_by_step/intro_to_the_editor_interface.html" target="_blank">here</a>.</p>
+
+<p></p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lNADi7kTDJ4" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>We&rsquo;re going to skip over the basic setup of the project and just summarize the setup here.</p>
+
+<p>You can download the starting project here: <a href="/blog/img/raycasting_demo_start.zip">raycasting_demo_start.zip</a></p>
+
+<p>At the start, we have a <code>Main</code> scene that contains a TileMap and instances of the <code>Player</code> and a <code>Turret</code>.  The <code>Player</code> is a <code>KinematicBody2D</code> with basic 8-way movement using <code>move_and_slide()</code>. See the project for the code, and see <a href="/blog/2018/02/godot3_kinematic2d/">Using KinematicBody2D</a> for more details on how this type of node works.</p>
+
+<p>We have the <code>Turret</code> node setup to detect the player and fire.</p>
+
+<p><a href="/blog/img/raycast_start.gif"><img src="/blog/img/raycast_start.gif" width="300"></a><sub>Click to enlarge</sub></p>
+
+<p>We use the turret&rsquo;s Area2D to detect the player entering and exiting. The code for the <code>Turret</code> looks like this:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">KinematicBody2D</span>
+
+<span class="n">export</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="n">var</span> <span class="n">detect_radius</span>  <span class="c1"># size of the visibility circle</span>
+<span class="n">export</span> <span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="n">var</span> <span class="n">fire_rate</span>  <span class="c1"># delay time (s) between bullets</span>
+<span class="n">export</span> <span class="p">(</span><span class="n">PackedScene</span><span class="p">)</span> <span class="n">var</span> <span class="n">Bullet</span>
+<span class="n">var</span> <span class="n">vis_color</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="o">.</span><span class="mi">867</span><span class="p">,</span> <span class="o">.</span><span class="mi">91</span><span class="p">,</span> <span class="o">.</span><span class="mi">247</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+<span class="n">var</span> <span class="n">target</span>  <span class="c1"># who are we shooting at?</span>
+<span class="n">var</span> <span class="n">can_shoot</span> <span class="o">=</span> <span class="n">true</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+    <span class="c1"># dim the sprite when not active</span>
+    <span class="err">$</span><span class="n">Sprite</span><span class="o">.</span><span class="n">self_modulate</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># set the collision area&#39;s radius</span>
+    <span class="n">var</span> <span class="n">shape</span> <span class="o">=</span> <span class="n">CircleShape2D</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+    <span class="n">shape</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">detect_radius</span>
+    <span class="err">$</span><span class="n">Visibility</span><span class="o">/</span><span class="n">CollisionShape2D</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">shape</span>
+    <span class="err">$</span><span class="n">ShootTimer</span><span class="o">.</span><span class="n">wait_time</span> <span class="o">=</span> <span class="n">fire_rate</span>
+
+<span class="n">func</span> <span class="n">_physics_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="n">update</span><span class="p">()</span>
+    <span class="c1"># if there&#39;s a target, rotate towards it and fire</span>
+    <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
+        <span class="n">rotation</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">can_shoot</span><span class="p">:</span>
+            <span class="n">shoot</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">shoot</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
+    <span class="n">var</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Bullet</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">var</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">pos</span> <span class="o">-</span> <span class="n">global_position</span><span class="p">)</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">global_position</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">rand_range</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">))</span>
+    <span class="n">get_parent</span><span class="p">()</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="n">can_shoot</span> <span class="o">=</span> <span class="n">false</span>
+    <span class="err">$</span><span class="n">ShootTimer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="n">func</span> <span class="n">_draw</span><span class="p">():</span>
+    <span class="c1"># display the visibility area</span>
+    <span class="n">draw_circle</span><span class="p">(</span><span class="n">Vector2</span><span class="p">(),</span> <span class="n">detect_radius</span><span class="p">,</span> <span class="n">vis_color</span><span class="p">)</span>
+
+<span class="n">func</span> <span class="n">_on_Visibility_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="c1"># connect this to the &#34;body_entered&#34; signal</span>
+    <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">body</span>
+    <span class="err">$</span><span class="n">Sprite</span><span class="o">.</span><span class="n">self_modulate</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="n">func</span> <span class="n">_on_Visibility_body_exited</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="c1"># connect this to the &#34;body_exited&#34; signal</span>
+    <span class="k">if</span> <span class="n">body</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">null</span>
+        <span class="err">$</span><span class="n">Sprite</span><span class="o">.</span><span class="n">self_modulate</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mf">0.2</span>
+
+<span class="n">func</span> <span class="n">_on_ShootTimer_timeout</span><span class="p">():</span>
+    <span class="n">can_shoot</span> <span class="o">=</span> <span class="n">true</span></code></pre></div>
+
+<p>This is fine in an open area, but if the player is behind a wall, the turret can still &ldquo;see&rdquo; them. This is what we are going to fix.</p>
+
+<p><a href="/blog/img/raycast_wall_ex.gif"><img src="/blog/img/raycast_wall_ex.gif" width="300"></a><sub>Click to enlarge</sub></p>
+
+<h2 id="ray-casting">Ray-casting</h2>
+
+<p>Godot has a <a href="http://docs.godotengine.org/en/latest/classes/class_raycast2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_ray_cast_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_ray_cast_2d"></svg> RayCast2D</a> node that can report collisions. However, there are situations where using the node will not be practical. For example, if you need to cast a large number of rays dynamically, it is very inefficient to instance nodes for each one, especially since the physics engine is going to do the actual collision detection anyway.</p>
+
+<p>Fortunately, we can access the physics server&rsquo;s state directly and use it for collision checks. We can do this using</p>
+
+<p><code>get_world_2d().direct_space_state</code></p>
+
+<p>Once we have access to the space, we can use the <code>intersect_ray()</code> function to cast a ray. If a collision occurs, the function will return useful information about the collision.</p>
+
+<p>Change the code in <code>_physics_process()</code> to the following:</p>
+
+<p><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">_physics_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="n">update</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
+        <span class="n">aim</span><span class="p">()</span></code></pre></div></p>
+
+<p>Instead of just shooting the target, we&rsquo;re going to try and aim at them first. We also want to be able to visualize what&rsquo;s going on, so add a <code>var hit_pos</code> at the top - this variable will store the position where the raycast hit so that we can draw it.</p>
+
+<p>In the <code>aim()</code> function we&rsquo;re going to cast the ray. The function works like this:</p>
+
+<p><code>intersect_ray(start, end, exceptions, mask)</code></p>
+
+<p>Note that the <code>start</code> and <code>end</code> coordinates need to be in <em>global coordinates</em>. <code>exceptions</code> lets us list any objects we want the ray to ignore and <code>mask</code> defines the collision layers they ray should scan.</p>
+
+<p>In the turret&rsquo;s case the ray will be cast from the turret to the player&rsquo;s position. We need to list the turret itself as an exception, or else the ray won&rsquo;t travel at all!. Finally, since the <code>Turret</code> node&rsquo;s collision mask is set to only detect walls (environment) and the player, we can use that same mask for the ray.</p>
+
+<p>Here is what the <code>aim()</code> function looks like:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">aim</span><span class="p">():</span>
+    <span class="n">var</span> <span class="n">space_state</span> <span class="o">=</span> <span class="n">get_world_2d</span><span class="p">()</span><span class="o">.</span><span class="n">direct_space_state</span>
+    <span class="n">var</span> <span class="n">result</span> <span class="o">=</span> <span class="n">space_state</span><span class="o">.</span><span class="n">intersect_ray</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span><span class="p">,</span>
+                    <span class="p">[</span><span class="bp">self</span><span class="p">],</span> <span class="n">collision_mask</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+        <span class="n">hit_pos</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">position</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">collider</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="sa"></span><span class="s1">&#39;Player&#39;</span><span class="p">:</span>
+            <span class="err">$</span><span class="n">Sprite</span><span class="o">.</span><span class="n">self_modulate</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="n">rotation</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">can_shoot</span><span class="p">:</span>
+                <span class="n">shoot</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">position</span><span class="p">)</span></code></pre></div>
+
+<p>If the ray intersects something, it could either be a wall or the player. Only if it&rsquo;s the player do we shoot as before. Also, move the <code>self_modulate</code> from <code>_on_Visibility_body_entered()</code> and put it here, so that the turret only lights up red when the player can be seen.</p>
+
+<p>We also stored the coordinates of the collision in <code>hit_pos</code> so that we can draw the ray. Add the following to <code>_draw()</code>:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">_draw</span><span class="p">():</span>
+    <span class="n">draw_circle</span><span class="p">(</span><span class="n">Vector2</span><span class="p">(),</span> <span class="n">detect_radius</span><span class="p">,</span> <span class="n">vis_color</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
+        <span class="n">draw_line</span><span class="p">(</span><span class="n">Vector2</span><span class="p">(),</span> <span class="p">(</span><span class="n">hit_pos</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="o">-</span><span class="n">rotation</span><span class="p">),</span> <span class="n">laser_color</span><span class="p">)</span>
+        <span class="n">draw_circle</span><span class="p">((</span><span class="n">hit_pos</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="o">-</span><span class="n">rotation</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="n">laser_color</span><span class="p">)</span></code></pre></div>
+
+<p><a href="/blog/img/raycast_aim1.gif"><img src="/blog/img/raycast_aim1.gif" width="300"></a></p>
+
+<p>Looking good! You can see the red line of the ray, and when it runs into a wall the turret remains inactive. However, we now have a different problem:</p>
+
+<p><a href="/blog/img/raycast_aim2.gif"><img src="/blog/img/raycast_aim2.gif" width="300"></a></p>
+
+<h2 id="casting-multiple-rays">Casting Multiple Rays</h2>
+
+<p>Since the ray is being cast toward the player&rsquo;s <code>position</code>, which is the center of the player&rsquo;s sprite, the turret can&rsquo;t &ldquo;see&rdquo; the player even when it should. To solve this, we need to cast rays to the player&rsquo;s corners, not its center. Now we will have a list of hits, so we must make <code>hit_pos</code> an array.</p>
+
+<p>To get the player&rsquo;s four corner positions, we use the <code>extents</code> of its collision shape. We&rsquo;re also subtracting <code>(5, 5)</code> to give a little leeway for the width of the bullets. The four corners are labeled <code>nw</code>, <code>ne</code>, <code>se</code>, and <code>sw</code>, and a ray is cast towards each:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">aim</span><span class="p">():</span>
+    <span class="n">hit_pos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">var</span> <span class="n">space_state</span> <span class="o">=</span> <span class="n">get_world_2d</span><span class="p">()</span><span class="o">.</span><span class="n">direct_space_state</span>
+    <span class="n">var</span> <span class="n">target_extents</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;CollisionShape2D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">extents</span> <span class="o">-</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">var</span> <span class="n">nw</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">target_extents</span>
+    <span class="n">var</span> <span class="n">se</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">target_extents</span>
+    <span class="n">var</span> <span class="n">ne</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">target_extents</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">target_extents</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">var</span> <span class="n">sw</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="n">target_extents</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">target_extents</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="p">[</span><span class="n">nw</span><span class="p">,</span> <span class="n">ne</span><span class="p">,</span> <span class="n">se</span><span class="p">,</span> <span class="n">sw</span><span class="p">]:</span>
+        <span class="n">var</span> <span class="n">result</span> <span class="o">=</span> <span class="n">space_state</span><span class="o">.</span><span class="n">intersect_ray</span><span class="p">(</span><span class="n">position</span><span class="p">,</span>
+                     <span class="n">pos</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="p">],</span> <span class="n">collision_mask</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">hit_pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">collider</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="sa"></span><span class="s2">&#34;Player&#34;</span><span class="p">:</span>
+                <span class="err">$</span><span class="n">Sprite</span><span class="o">.</span><span class="n">self_modulate</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mf">1.0</span>
+                <span class="n">rotation</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">can_shoot</span><span class="p">:</span>
+                    <span class="n">shoot</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span></code></pre></div>
+
+<p>And we need to change the draw function to use the array of hits:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">_draw</span><span class="p">():</span>
+    <span class="n">draw_circle</span><span class="p">(</span><span class="n">Vector2</span><span class="p">(),</span> <span class="n">detect_radius</span><span class="p">,</span> <span class="n">vis_color</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">hit_pos</span><span class="p">:</span>
+            <span class="n">draw_circle</span><span class="p">((</span><span class="n">hit</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="o">-</span><span class="n">rotation</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="n">laser_color</span><span class="p">)</span>
+            <span class="n">draw_line</span><span class="p">(</span><span class="n">Vector2</span><span class="p">(),</span> <span class="p">(</span><span class="n">hit</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="o">-</span><span class="n">rotation</span><span class="p">),</span> <span class="n">laser_color</span><span class="p">)</span></code></pre></div>
+
+<p><a href="/blog/img/raycast_aim3.gif"><img src="/blog/img/raycast_aim3.gif" width="300"></a></p>
+
+<p>We&rsquo;re almost there, but now you will notice that when the turret has a straight shot towards the player, it still shoots at the player&rsquo;s corner! We should add the center position back in, and check it <em>first</em>.  We also can add a <code>break</code> statement to the loop - if one of the rays hits, we don&rsquo;t need to continue checking the rest of them. The final <code>aim()</code> function looks like this:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">aim</span><span class="p">():</span>
+    <span class="n">hit_pos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">var</span> <span class="n">space_state</span> <span class="o">=</span> <span class="n">get_world_2d</span><span class="p">()</span><span class="o">.</span><span class="n">direct_space_state</span>
+    <span class="n">var</span> <span class="n">target_extents</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;CollisionShape2D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">extents</span> <span class="o">-</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">var</span> <span class="n">nw</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">target_extents</span>
+    <span class="n">var</span> <span class="n">se</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">target_extents</span>
+    <span class="n">var</span> <span class="n">ne</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">target_extents</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">target_extents</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">var</span> <span class="n">sw</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="n">target_extents</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">target_extents</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="p">[</span><span class="n">target</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">nw</span><span class="p">,</span> <span class="n">ne</span><span class="p">,</span> <span class="n">se</span><span class="p">,</span> <span class="n">sw</span><span class="p">]:</span>
+        <span class="n">var</span> <span class="n">result</span> <span class="o">=</span> <span class="n">space_state</span><span class="o">.</span><span class="n">intersect_ray</span><span class="p">(</span><span class="n">position</span><span class="p">,</span>
+                     <span class="n">pos</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="p">],</span> <span class="n">collision_mask</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">hit_pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">collider</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="sa"></span><span class="s2">&#34;Player&#34;</span><span class="p">:</span>
+                <span class="err">$</span><span class="n">Sprite</span><span class="o">.</span><span class="n">self_modulate</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mf">1.0</span>
+                <span class="n">rotation</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">can_shoot</span><span class="p">:</span>
+                    <span class="n">shoot</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+                <span class="k">break</span></code></pre></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Hopefully, you&rsquo;ll find this technique useful for your own projects. A similar process can be used for laser shots instead of bullets (draw the line for a brief time, or try using Line2D instead of <code>draw_line()</code> for a different effect). You can implement ricochets by taking the ray collision point and casting another ray from that point at the reflected angle.</p>
+
+<p>If you enjoyed this and found it useful, please let me know in the comments below. I&rsquo;m always happy to hear requests and suggestions for other gamedev-related material.</p>
+
+<h3 id="a-href-blog-img-raycasting-demo-finish-zip-download-the-finished-project-a"><a href="/blog/img/raycasting_demo_finish.zip">Download the finished project</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
