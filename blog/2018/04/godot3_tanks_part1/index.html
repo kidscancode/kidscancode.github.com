@@ -1,0 +1,359 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.37.1" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Topdown Tank Battle: Part 1 &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">37</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">20</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">37</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Topdown Tank Battle: Part 1</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Mon, Apr 2, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			</h6></span>
+
+			      <p>In this tutorial series, we&rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&rsquo;s workflow and show you various techniques that you can apply to your own projects.</p>
+
+<p></p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sQ1FpD0DYF8" frameborder="0" allowfullscreen></iframe></p>
+
+<p><strong>Note:</strong> I&rsquo;ll try to keep the written versions in sync with the video tutorials as much as possible, but the writeups tend to take quite a bit longer and generate a fraction of the response and feedback.</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p><a href="/blog/img/tanks_gameplay.png"><img src="/blog/img/tanks_gameplay.png" width="400"></a></p>
+
+<p>Here are a few of the features we have planned:</p>
+
+<ul>
+<li>User and AI controlled tanks that move and shoot</li>
+<li>Keyboard/mouse and touch controls</li>
+<li>Tile-based level maps</li>
+<li>Game UI including HUD and menus</li>
+<li>Multiple levels/maps</li>
+<li>Upgrades and powerups</li>
+<li>Bosses/boss levels</li>
+<li>Visual effects such as screen-shake, particles, and shaders</li>
+</ul>
+
+<p>This list will very likely change over time, as other ideas are suggested or just seem to make sense. It&rsquo;s exploratory programming at its finest.</p>
+
+<p>Note that this game is being developed as we go, so expect the occasional mistake or development dead-end requiring some backtracking. <em>Refactoring</em> is a useful technique of its own, and we&rsquo;ll likely need to make use of it liberally along the way.</p>
+
+<p>The latest code for the project will always be available at <a href="https://github.com/kidscancode/topdown_tanks" target="_blank"><a href="https://github.com/kidscancode/topdown_tanks">https://github.com/kidscancode/topdown_tanks</a></a>, with releases for each part available here: <a href="https://github.com/kidscancode/topdown_tanks/releases" target="_blank"><a href="https://github.com/kidscancode/topdown_tanks/releases">https://github.com/kidscancode/topdown_tanks/releases</a></a>.</p>
+
+<h2 id="project-setup">Project Setup</h2>
+
+<p>Open <em>Project -&gt; Project Settings</em> and in the <em>Rendering/Quality</em> section set <em>Use Pixel Snap</em> to &ldquo;On&rdquo;. In <em>Display/Window</em> set <em>Mode</em> to &ldquo;2d&rdquo; and <em>Aspect</em> to &ldquo;keep&rdquo;. We&rsquo;ll see later how these settings work when resizing the game window.</p>
+
+<p>The control scheme will be WASD for movement, and mouse for aim/shoot. We&rsquo;ll define these inputs by clicking on the &ldquo;Input Map&rdquo; tab in <em>Project Settings</em> and adding the following actions:</p>
+
+<p><a href="/blog/img/tank_input_actions.png"><img src="/blog/img/tank_input_actions.png" width="400"></a></p>
+
+<p>We also need to change the default import settings for textures. By default, &ldquo;filtering&rdquo; is on, which results in a blurred effect, especially when using pixel art. If we change the defaults before downloading the game assets, they&rsquo;ll be imported with the right settings.</p>
+
+<p>Click on the Godot icon (icon.png) and click the &ldquo;Import&rdquo; tab next to &ldquo;Scene&rdquo; in the upper-right. From the &ldquo;Preset&rdquo; menu, select &ldquo;2D Pixel&rdquo; and &ldquo;Set as Default for &lsquo;Texture&rsquo;&rdquo;, then click the &ldquo;Reimport&rdquo; button.</p>
+
+<p><a href="/blog/img/tex_import_settings.png"><img src="/blog/img/tex_import_settings.png" width="200"></a></p>
+
+<blockquote>
+<p>Whenever you make changes to a resource&rsquo;s import settings, you have to reimport the resource for them to take effect.</p>
+</blockquote>
+
+<p>Now we can download the assets and unzip them in the project folder.</p>
+
+<h3 id="assets">Assets</h3>
+
+<p>For this project, we&rsquo;re using Kenney&rsquo;s <a href="http://kenney.nl/assets/topdown-tanks-redux" target="_null">Top-down Tanks Redux</a> art pack. You can download it there, or get
+it directly from my project here: <a href="https://github.com/kidscancode/topdown_tanks/tree/master/assets" target="_null"><a href="https://github.com/kidscancode/topdown_tanks/tree/master/assets">https://github.com/kidscancode/topdown_tanks/tree/master/assets</a></a></p>
+
+<p>If you look closely at my version of the texture atlas, you&rsquo;ll notice we&rsquo;ve made one small change from the original download. In the &ldquo;assets&rdquo; folder you&rsquo;ll find a texture atlas called &ldquo;onlyObjects_retina_rotated.png&rdquo;. In the original art pack the tanks (and many of the other assets) are all drawn facing downwards. Because Godot&rsquo;s 2D orientation uses the x-axis (facing right) as the zero angle, we&rsquo;d have to rotate all our sprites when adding them. Instead, with the original atlas rotated, we can use them as they are.</p>
+
+<h2 id="tank-scene">Tank Scene</h2>
+
+<p>Eventually there will be several kinds of tank: player-controlled tanks, enemy tanks, boss tanks, etc. They&rsquo;ll likely share a lot of properties and functionality, so using inheritance is probably a good idea. However, since we&rsquo;re just starting out, rather than try and assume all the functionality we&rsquo;ll eventually need, we&rsquo;re going to start simple and refactor if necessary when we add more complex behaviors.</p>
+
+<p>Create the tank scene with the following nodes:</p>
+
+<ul>
+<li>KinematicBody2D (&ldquo;Tank&rdquo;)
+
+<ul>
+<li>Sprite (the tank&rsquo;s body)</li>
+<li>CollisionShape2D</li>
+<li>Sprite (&ldquo;Turret&rdquo; - the tank&rsquo;s gun)
+
+<ul>
+<li>Position2D (&ldquo;Muzzle&rdquo; - the spawn point for bullets)</li>
+</ul></li>
+<li>Timer (&ldquo;GunTimer&rdquo;) - the cooldown for shooting</li>
+</ul></li>
+</ul>
+
+<p>Save this scene in a folder called &ldquo;tanks&rdquo;. This is where you&rsquo;ll save all the tank-related
+scenes and scripts.</p>
+
+<h3 id="tank-script">Tank script</h3>
+
+<p>This code will be shared between all the different kinds of tanks. Switch to the
+Script editor and click <em>File -&gt; New</em>. Set the script to extend <code>KinematicBody2D</code>
+and save it in the tanks folder.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">KinematicBody2D</span>
+
+<span class="n">signal</span> <span class="n">health_changed</span>
+<span class="n">signal</span> <span class="n">dead</span>
+
+<span class="n">export</span> <span class="p">(</span><span class="n">PackedScene</span><span class="p">)</span> <span class="n">var</span> <span class="n">Bullet</span>
+<span class="n">export</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="n">var</span> <span class="n">speed</span>
+<span class="n">export</span> <span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="n">var</span> <span class="n">rotation_speed</span>
+<span class="n">export</span> <span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="n">var</span> <span class="n">gun_cooldown</span>
+<span class="n">export</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="n">var</span> <span class="n">health</span>
+
+<span class="n">var</span> <span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span>
+<span class="n">var</span> <span class="n">can_shoot</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">var</span> <span class="n">alive</span> <span class="o">=</span> <span class="n">true</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+        <span class="err">$</span><span class="n">GunTimer</span><span class="o">.</span><span class="n">wait_time</span> <span class="o">=</span> <span class="n">gun_cooldown</span>
+
+<span class="n">func</span> <span class="n">control</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="n">func</span> <span class="n">_physics_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">alive</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="n">control</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+        <span class="n">move_and_slide</span><span class="p">(</span><span class="n">velocity</span><span class="p">)</span></code></pre></div>
+
+<p>The code and variables should be pretty self-explanatory. The <code>control()</code> function
+is where the specific code will go for each type of tank. For example, the player
+will use input actions to set its velocity, while an enemy tank will use some sort
+of pathfinding AI.</p>
+
+<h2 id="player-scene">Player Scene</h2>
+
+<p>Create the player scene by clicking <em>Scene -&gt; New Inherited Scene</em> and choosing
+<code>Tank.tscn</code>. Rename the root node &ldquo;Player&rdquo; and save the scene. You now have a player
+scene with all the necessary nodes ready to go.</p>
+
+<p>The first thing you need to do is add textures to the sprite nodes. Drag <code>res://assets/onlyObjects_retina_rotated.png</code> from the FileSystem dock and drop it in the body sprite&rsquo;s <em>Texture</em> property.</p>
+
+<p>To select a subset of the atlas (a <em>region</em>) click the <em>Region</em> property to &ldquo;On&rdquo;, then click &ldquo;Texture Region&rdquo; at the bottom of the window to open the region selection panel.</p>
+
+<p>In this window you can select the portion of the image you want to use for your sprite. Choose one of the tank bodies that doesn&rsquo;t have a gun attached. You may find it helpful to enable &ldquo;Pixel Snap&rdquo; at the top of the window.</p>
+
+<p><a href="/blog/img/tanks_texture_region.png"><img src="/blog/img/tanks_texture_region.png" width="450"></a></p>
+
+<p>Do the same thing with the <code>Turret</code> sprite to select a gun image for your tank.</p>
+
+<p>The only problem with the turret is that if rotated, it will rotate around its center, which doesn&rsquo;t look correct. Select the <code>Turret</code> and increase the <code>x</code> value of its <em>Offset</em>. For the example here, <code>(20, 0)</code> works well, but if you chose a different gun image you may have to adjust.</p>
+
+<p><a href="/blog/img/tank_turret_offset.png"><img src="/blog/img/tank_turret_offset.png" width="200"></a></p>
+
+<p>Next, move the Muzzle marker to a position just in front of the barrel of the gun. This is the spawn point for bullets. A <em>Position</em> of <code>(60, 0)</code> works well with this particular barrel texture.</p>
+
+<p>Finally, add a rectangular collision shape to the <code>CollisionShape2D</code> and scale it to cover the tank&rsquo;s body. Remember to use the size handles on the shape itself, not the outer Node2D indicator.</p>
+
+<h3 id="player-script">Player script</h3>
+
+<p>Attach a script to the Player node and next to the <em>Inherits</em> field, click the folder icon and choose <code>res://tanks/Tank.gd</code>.</p>
+
+<p><a href="/blog/img/tanks_inherit_script.png"><img src="/blog/img/tanks_inherit_script.png" width="300"></a></p>
+
+<p>Add the following code to the new script:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="sa"></span><span class="s2">&#34;res://tanks/Tank.gd&#34;</span>
+
+<span class="n">func</span> <span class="n">control</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+	<span class="err">$</span><span class="n">Turret</span><span class="o">.</span><span class="n">look_at</span><span class="p">(</span><span class="n">get_global_mouse_position</span><span class="p">())</span>
+	<span class="n">var</span> <span class="n">rot_dir</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;turn_right&#39;</span><span class="p">):</span>
+		<span class="n">rot_dir</span> <span class="o">+=</span> <span class="mi">1</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;turn_left&#39;</span><span class="p">):</span>
+		<span class="n">rot_dir</span> <span class="o">-=</span> <span class="mi">1</span>
+	<span class="n">rotation</span> <span class="o">+=</span> <span class="n">rotation_speed</span> <span class="o">*</span> <span class="n">rot_dir</span> <span class="o">*</span> <span class="n">delta</span>
+	<span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;forward&#39;</span><span class="p">):</span>
+		<span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;back&#39;</span><span class="p">):</span>
+		<span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="n">speed</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span></code></pre></div>
+
+<p>Since we&rsquo;re inheriting the code from &ldquo;Tank.gd&rdquo; we only need to define the <code>control()</code> function to make things work. The key inputs rotate the tank and move it forward/backward in the facing direction. Meanwhile, the turret will always point at the mouse pointer by using <code>look_at()</code>.</p>
+
+<p>Run the scene and try driving your tank around!</p>
+
+<p><a href="/blog/img/tanks_movement1.gif"><img src="/blog/img/tanks_movement1.gif" width="300"></a></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That wraps up Part 1 of this series. In the next part, we&rsquo;ll lay out a basic level using TileMaps.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part01-download-the-code-for-this-part-a"><a href="https://github.com/kidscancode/topdown_tanks/releases/tag/part01">Download the code for this part</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>

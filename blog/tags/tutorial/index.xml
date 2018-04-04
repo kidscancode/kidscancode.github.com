@@ -7,7 +7,204 @@
     <language>en-us</language>
     
     
-    <updated>Sat, 10 Mar 2018 08:12:12 -0700</updated>
+    <updated>Mon, 02 Apr 2018 08:12:12 PDT</updated>
+    
+    <item>
+      <title>Topdown Tank Battle: Part 1</title>
+      <link>/blog/2018/04/godot3_tanks_part1/</link>
+      <pubDate>Mon, 02 Apr 2018 08:12:12 PDT</pubDate>
+      
+      <guid>/blog/2018/04/godot3_tanks_part1/</guid>
+      <description>&lt;p&gt;In this tutorial series, we&amp;rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&amp;rsquo;s workflow and show you various techniques that you can apply to your own projects.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/sQ1FpD0DYF8&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; I&amp;rsquo;ll try to keep the written versions in sync with the video tutorials as much as possible, but the writeups tend to take quite a bit longer and generate a fraction of the response and feedback.&lt;/p&gt;
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_gameplay.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_gameplay.png&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Here are a few of the features we have planned:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;User and AI controlled tanks that move and shoot&lt;/li&gt;
+&lt;li&gt;Keyboard/mouse and touch controls&lt;/li&gt;
+&lt;li&gt;Tile-based level maps&lt;/li&gt;
+&lt;li&gt;Game UI including HUD and menus&lt;/li&gt;
+&lt;li&gt;Multiple levels/maps&lt;/li&gt;
+&lt;li&gt;Upgrades and powerups&lt;/li&gt;
+&lt;li&gt;Bosses/boss levels&lt;/li&gt;
+&lt;li&gt;Visual effects such as screen-shake, particles, and shaders&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This list will very likely change over time, as other ideas are suggested or just seem to make sense. It&amp;rsquo;s exploratory programming at its finest.&lt;/p&gt;
+
+&lt;p&gt;Note that this game is being developed as we go, so expect the occasional mistake or development dead-end requiring some backtracking. &lt;em&gt;Refactoring&lt;/em&gt; is a useful technique of its own, and we&amp;rsquo;ll likely need to make use of it liberally along the way.&lt;/p&gt;
+
+&lt;p&gt;The latest code for the project will always be available at &lt;a href=&#34;https://github.com/kidscancode/topdown_tanks&#34; target=&#34;_blank&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks&#34;&gt;https://github.com/kidscancode/topdown_tanks&lt;/a&gt;&lt;/a&gt;, with releases for each part available here: &lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases&#34; target=&#34;_blank&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases&#34;&gt;https://github.com/kidscancode/topdown_tanks/releases&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;project-setup&#34;&gt;Project Setup&lt;/h2&gt;
+
+&lt;p&gt;Open &lt;em&gt;Project -&amp;gt; Project Settings&lt;/em&gt; and in the &lt;em&gt;Rendering/Quality&lt;/em&gt; section set &lt;em&gt;Use Pixel Snap&lt;/em&gt; to &amp;ldquo;On&amp;rdquo;. In &lt;em&gt;Display/Window&lt;/em&gt; set &lt;em&gt;Mode&lt;/em&gt; to &amp;ldquo;2d&amp;rdquo; and &lt;em&gt;Aspect&lt;/em&gt; to &amp;ldquo;keep&amp;rdquo;. We&amp;rsquo;ll see later how these settings work when resizing the game window.&lt;/p&gt;
+
+&lt;p&gt;The control scheme will be WASD for movement, and mouse for aim/shoot. We&amp;rsquo;ll define these inputs by clicking on the &amp;ldquo;Input Map&amp;rdquo; tab in &lt;em&gt;Project Settings&lt;/em&gt; and adding the following actions:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tank_input_actions.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tank_input_actions.png&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We also need to change the default import settings for textures. By default, &amp;ldquo;filtering&amp;rdquo; is on, which results in a blurred effect, especially when using pixel art. If we change the defaults before downloading the game assets, they&amp;rsquo;ll be imported with the right settings.&lt;/p&gt;
+
+&lt;p&gt;Click on the Godot icon (icon.png) and click the &amp;ldquo;Import&amp;rdquo; tab next to &amp;ldquo;Scene&amp;rdquo; in the upper-right. From the &amp;ldquo;Preset&amp;rdquo; menu, select &amp;ldquo;2D Pixel&amp;rdquo; and &amp;ldquo;Set as Default for &amp;lsquo;Texture&amp;rsquo;&amp;rdquo;, then click the &amp;ldquo;Reimport&amp;rdquo; button.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tex_import_settings.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tex_import_settings.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Whenever you make changes to a resource&amp;rsquo;s import settings, you have to reimport the resource for them to take effect.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Now we can download the assets and unzip them in the project folder.&lt;/p&gt;
+
+&lt;h3 id=&#34;assets&#34;&gt;Assets&lt;/h3&gt;
+
+&lt;p&gt;For this project, we&amp;rsquo;re using Kenney&amp;rsquo;s &lt;a href=&#34;http://kenney.nl/assets/topdown-tanks-redux&#34; target=&#34;_null&#34;&gt;Top-down Tanks Redux&lt;/a&gt; art pack. You can download it there, or get
+it directly from my project here: &lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/tree/master/assets&#34; target=&#34;_null&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/tree/master/assets&#34;&gt;https://github.com/kidscancode/topdown_tanks/tree/master/assets&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;If you look closely at my version of the texture atlas, you&amp;rsquo;ll notice we&amp;rsquo;ve made one small change from the original download. In the &amp;ldquo;assets&amp;rdquo; folder you&amp;rsquo;ll find a texture atlas called &amp;ldquo;onlyObjects_retina_rotated.png&amp;rdquo;. In the original art pack the tanks (and many of the other assets) are all drawn facing downwards. Because Godot&amp;rsquo;s 2D orientation uses the x-axis (facing right) as the zero angle, we&amp;rsquo;d have to rotate all our sprites when adding them. Instead, with the original atlas rotated, we can use them as they are.&lt;/p&gt;
+
+&lt;h2 id=&#34;tank-scene&#34;&gt;Tank Scene&lt;/h2&gt;
+
+&lt;p&gt;Eventually there will be several kinds of tank: player-controlled tanks, enemy tanks, boss tanks, etc. They&amp;rsquo;ll likely share a lot of properties and functionality, so using inheritance is probably a good idea. However, since we&amp;rsquo;re just starting out, rather than try and assume all the functionality we&amp;rsquo;ll eventually need, we&amp;rsquo;re going to start simple and refactor if necessary when we add more complex behaviors.&lt;/p&gt;
+
+&lt;p&gt;Create the tank scene with the following nodes:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;KinematicBody2D (&amp;ldquo;Tank&amp;rdquo;)
+
+&lt;ul&gt;
+&lt;li&gt;Sprite (the tank&amp;rsquo;s body)&lt;/li&gt;
+&lt;li&gt;CollisionShape2D&lt;/li&gt;
+&lt;li&gt;Sprite (&amp;ldquo;Turret&amp;rdquo; - the tank&amp;rsquo;s gun)
+
+&lt;ul&gt;
+&lt;li&gt;Position2D (&amp;ldquo;Muzzle&amp;rdquo; - the spawn point for bullets)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Timer (&amp;ldquo;GunTimer&amp;rdquo;) - the cooldown for shooting&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Save this scene in a folder called &amp;ldquo;tanks&amp;rdquo;. This is where you&amp;rsquo;ll save all the tank-related
+scenes and scripts.&lt;/p&gt;
+
+&lt;h3 id=&#34;tank-script&#34;&gt;Tank script&lt;/h3&gt;
+
+&lt;p&gt;This code will be shared between all the different kinds of tanks. Switch to the
+Script editor and click &lt;em&gt;File -&amp;gt; New&lt;/em&gt;. Set the script to extend &lt;code&gt;KinematicBody2D&lt;/code&gt;
+and save it in the tanks folder.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;KinematicBody2D&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;signal&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;health_changed&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;signal&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dead&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;PackedScene&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Bullet&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;float&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rotation_speed&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;float&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gun_cooldown&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;health&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;can_shoot&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;alive&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+        &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GunTimer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;wait_time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gun_cooldown&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;control&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_physics_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;alive&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+                &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;control&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;move_and_slide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The code and variables should be pretty self-explanatory. The &lt;code&gt;control()&lt;/code&gt; function
+is where the specific code will go for each type of tank. For example, the player
+will use input actions to set its velocity, while an enemy tank will use some sort
+of pathfinding AI.&lt;/p&gt;
+
+&lt;h2 id=&#34;player-scene&#34;&gt;Player Scene&lt;/h2&gt;
+
+&lt;p&gt;Create the player scene by clicking &lt;em&gt;Scene -&amp;gt; New Inherited Scene&lt;/em&gt; and choosing
+&lt;code&gt;Tank.tscn&lt;/code&gt;. Rename the root node &amp;ldquo;Player&amp;rdquo; and save the scene. You now have a player
+scene with all the necessary nodes ready to go.&lt;/p&gt;
+
+&lt;p&gt;The first thing you need to do is add textures to the sprite nodes. Drag &lt;code&gt;res://assets/onlyObjects_retina_rotated.png&lt;/code&gt; from the FileSystem dock and drop it in the body sprite&amp;rsquo;s &lt;em&gt;Texture&lt;/em&gt; property.&lt;/p&gt;
+
+&lt;p&gt;To select a subset of the atlas (a &lt;em&gt;region&lt;/em&gt;) click the &lt;em&gt;Region&lt;/em&gt; property to &amp;ldquo;On&amp;rdquo;, then click &amp;ldquo;Texture Region&amp;rdquo; at the bottom of the window to open the region selection panel.&lt;/p&gt;
+
+&lt;p&gt;In this window you can select the portion of the image you want to use for your sprite. Choose one of the tank bodies that doesn&amp;rsquo;t have a gun attached. You may find it helpful to enable &amp;ldquo;Pixel Snap&amp;rdquo; at the top of the window.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_texture_region.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_texture_region.png&#34; width=&#34;450&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Do the same thing with the &lt;code&gt;Turret&lt;/code&gt; sprite to select a gun image for your tank.&lt;/p&gt;
+
+&lt;p&gt;The only problem with the turret is that if rotated, it will rotate around its center, which doesn&amp;rsquo;t look correct. Select the &lt;code&gt;Turret&lt;/code&gt; and increase the &lt;code&gt;x&lt;/code&gt; value of its &lt;em&gt;Offset&lt;/em&gt;. For the example here, &lt;code&gt;(20, 0)&lt;/code&gt; works well, but if you chose a different gun image you may have to adjust.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tank_turret_offset.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tank_turret_offset.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, move the Muzzle marker to a position just in front of the barrel of the gun. This is the spawn point for bullets. A &lt;em&gt;Position&lt;/em&gt; of &lt;code&gt;(60, 0)&lt;/code&gt; works well with this particular barrel texture.&lt;/p&gt;
+
+&lt;p&gt;Finally, add a rectangular collision shape to the &lt;code&gt;CollisionShape2D&lt;/code&gt; and scale it to cover the tank&amp;rsquo;s body. Remember to use the size handles on the shape itself, not the outer Node2D indicator.&lt;/p&gt;
+
+&lt;h3 id=&#34;player-script&#34;&gt;Player script&lt;/h3&gt;
+
+&lt;p&gt;Attach a script to the Player node and next to the &lt;em&gt;Inherits&lt;/em&gt; field, click the folder icon and choose &lt;code&gt;res://tanks/Tank.gd&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_inherit_script.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_inherit_script.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Add the following code to the new script:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;res://tanks/Tank.gd&amp;#34;&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;control&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+	&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Turret&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;look_at&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_global_mouse_position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rot_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;turn_right&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;rot_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;turn_left&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;rot_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;rotation&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rotation_speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rot_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;
+	&lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;forward&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotated&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotation&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;back&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotated&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotation&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Since we&amp;rsquo;re inheriting the code from &amp;ldquo;Tank.gd&amp;rdquo; we only need to define the &lt;code&gt;control()&lt;/code&gt; function to make things work. The key inputs rotate the tank and move it forward/backward in the facing direction. Meanwhile, the turret will always point at the mouse pointer by using &lt;code&gt;look_at()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Run the scene and try driving your tank around!&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_movement1.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_movement1.gif&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;That wraps up Part 1 of this series. In the next part, we&amp;rsquo;ll lay out a basic level using TileMaps.&lt;/p&gt;
+
+&lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part01-download-the-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part01&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Godot 3.0: Visibility with Ray-casting</title>
@@ -2651,88 +2848,6 @@ node is perfect for implementing characters and other moving bodies that don&amp
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2017-02-godot-101-06-godot-101-part-6-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/02/godot_101_06/&#34;&gt;Godot 101 - Part 6&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Godot 101 - Part 4: Instancing Scenes</title>
-      <link>/blog/2017/02/godot_101_04/</link>
-      <pubDate>Wed, 15 Feb 2017 05:22:12 -0700</pubDate>
-      
-      <guid>/blog/2017/02/godot_101_04/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;This is part 4 of &amp;ldquo;Godot 101&amp;rdquo;, taking our bouncing sprite and showing how to quickly create multiple instances of it.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2017/02/godot_101_01/&#34;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
-
-&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
-&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/0WOqJy3lot4&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;instancing&#34;&gt;Instancing&lt;/h2&gt;
-
-&lt;p&gt;Now that we have a nice animated sprite bouncing around the screen, the natural next question is &amp;ldquo;how do I make a bunch of them?&amp;rdquo;  If we want, say, 10 sprites bouncing around, we don&amp;rsquo;t want to have to make 10 separate scenes for them.&lt;/p&gt;
-
-&lt;p&gt;Your first thought might be to duplicate the sprite node by right-clicking on it and choosing &amp;ldquo;Duplicate&amp;rdquo;:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_04_01.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_04_01.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;However, this won&amp;rsquo;t work - you get an error message:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot101_04_02.png&#34; width=&#34;300&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;Each scene tree has a root node - the first node you create - and can only have &lt;em&gt;one&lt;/em&gt; root node.  We could make another sprite as a &lt;em&gt;child&lt;/em&gt; of the first one, but that wouldn&amp;rsquo;t give use what we need - a child node is attached to its parent, inheriting its position, etc.  We need to create multiple independent versions of the original sprite.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;ll start by making a new scene (click on &lt;code&gt;Scene&lt;/code&gt; -&amp;gt; &amp;lsquo;New Scene&amp;rsquo;) and add a node to it.  We&amp;rsquo;re going to use the simplest node available: &lt;svg width=&#34;24&#34; height=&#34;24&#34; class=&#34;icon-icon_node&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_node&#34;&gt;&lt;/svg&gt;&lt;code&gt;Node&lt;/code&gt;.  This is a generic node, with no properties of its own.  This will be our main scene&amp;rsquo;s root node, so let&amp;rsquo;s rename it &amp;ldquo;main&amp;rdquo; by clicking on its name and then save it as &amp;ldquo;main.tscn&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;Now click the &amp;ldquo;Play&amp;rdquo; button at the top and you&amp;rsquo;ll see this message:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot101_04_03.png&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;We need to define what scene will be the one that is launched when the project starts.  Click &amp;ldquo;Select&amp;rdquo; and choose our new main.tscn. Now let&amp;rsquo;s add a script to the main node.  This will be our code to instance a sprite:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Node&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sa&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;res://Sprite.tscn&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;add_child&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
- &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;That first line uses the &lt;code&gt;preload&lt;/code&gt; function to load the sprite scene into memory at compile time, so that it&amp;rsquo;s ready to use.  The &lt;code&gt;onready&lt;/code&gt; statement ensures that the object is loaded in time for the &lt;code&gt;_ready()&lt;/code&gt; call.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;A note on resource paths&lt;/em&gt;:&lt;/p&gt;
-
-&lt;p&gt;Notice how we indicated where to load the sprite scene from: &amp;ldquo;res://Sprite.tscn&amp;rdquo;  All resources in your project will be under a &amp;ldquo;res://&amp;rdquo; path (&amp;ldquo;res&amp;rdquo; is short for resource).  If we were building a complex project with a large number of files, we might choose to put all our scenes into their own folder to help keep things organized.  In this case, the resource path might look like this: &amp;ldquo;res://scenes/Sprite.tscn&amp;rdquo;&lt;/p&gt;
-
-&lt;p&gt;Now hit &amp;ldquo;Play&amp;rdquo;, and you will see a sprite bouncing around the screen.  To see what&amp;rsquo;s going on, click the debugger and you can inspect the live scene tree:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_04_04.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_04_04.gif&#34; width=&#34;550&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;The Remote Inspector tab is very useful to see what&amp;rsquo;s going on in the game - what scene is active, what nodes are active, and what properties they all have.  For example, observe what changes is we add a loop to spawn more sprites:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;add_child&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
- &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h2&gt;
-
-&lt;p&gt;It&amp;rsquo;s that easy to create instances of scenes you&amp;rsquo;ve created.  In the future, this is how we&amp;rsquo;ll do things like spawning mobs or bullets - just by instancing them as needed and adding them to the current scene tree.  In the next lesson we&amp;rsquo;ll start looking at some other nodes and how they&amp;rsquo;re used.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;a-href-blog-2017-02-godot-101-05-godot-101-part-5-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/02/godot_101_05/&#34;&gt;Godot 101 - Part 5&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
