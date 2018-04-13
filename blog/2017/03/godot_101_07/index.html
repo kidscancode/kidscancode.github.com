@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.38.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">21</span>
+                        <span class="badge">22</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         tutorial
                     </a></li>
                     
@@ -164,9 +164,9 @@
 <p>Many beginners (and many beginner tutorials) will solve this problem in an obvious but incorrect manner.  They look at the tree image above and think, &ldquo;main is 2 levels above the gem, so I just need to go 2 levels up the tree.&rdquo;  The result is a solution like this to the <code>gem</code> script:</p>
 
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">_on_gem_area_enter</span><span class="p">(</span><span class="n">area</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">area</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="sa"></span><span class="s1">&#39;player&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">area</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;player&#39;</span><span class="p">:</span>
         <span class="n">queue_free</span><span class="p">()</span>
-        <span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;../..&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">gem_grabbed</span><span class="p">()</span></code></pre></div>
+        <span class="n">get_node</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">gem_grabbed</span><span class="p">()</span></code></pre></div>
 
 <p>And on <code>main.gd</code>:</p>
 
@@ -190,8 +190,8 @@
     <span class="k">pass</span>
 
 <span class="n">func</span> <span class="n">_on_gem_area_enter</span><span class="p">(</span> <span class="n">area</span> <span class="p">):</span>
-    <span class="k">if</span> <span class="n">area</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="sa"></span><span class="s2">&#34;player&#34;</span><span class="p">:</span>
-<span class="hl">        <span class="n">emit_signal</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;gem_grabbed&#34;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">area</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&#34;player&#34;</span><span class="p">:</span>
+<span class="hl">        <span class="n">emit_signal</span><span class="p">(</span><span class="s2">&#34;gem_grabbed&#34;</span><span class="p">)</span>
 </span>        <span class="n">queue_free</span><span class="p">()</span></code></pre></div>
 
 <p>Here, we&rsquo;ve created a custom signal called <code>gem_grabbed</code> and then when the player touches the gem, we use <code>emit_signal()</code> to trigger it.</p>
@@ -202,7 +202,7 @@
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
         <span class="n">var</span> <span class="n">g</span> <span class="o">=</span> <span class="n">gem</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
         <span class="n">gem_container</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
-<span class="hl">        <span class="n">g</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;gem_grabbed&#34;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;_on_gem_grabbed&#34;</span><span class="p">)</span>
+<span class="hl">        <span class="n">g</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&#34;gem_grabbed&#34;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="s2">&#34;_on_gem_grabbed&#34;</span><span class="p">)</span>
 </span>        <span class="n">g</span><span class="o">.</span><span class="n">set_pos</span><span class="p">(</span><span class="o">...</span>
 
 <span class="hl"><span class="n">func</span> <span class="n">_on_gem_grabbed</span><span class="p">():</span>
@@ -237,7 +237,7 @@
 
 <p>To have the score displayed, we just need to have our script update the <code>Text</code> property whenever the score changes, so add this to <code>main.gd</code>:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="hl"><span class="n">onready</span> <span class="n">var</span> <span class="n">score_label</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;HUD/score_label&#34;</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="hl"><span class="n">onready</span> <span class="n">var</span> <span class="n">score_label</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&#34;HUD/score_label&#34;</span><span class="p">)</span>
 </span>
 <span class="n">func</span> <span class="n">_on_gem_grabbed</span><span class="p">():</span>
 	<span class="n">score</span> <span class="o">+=</span> <span class="mi">10</span>

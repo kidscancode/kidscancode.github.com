@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.38.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">21</span>
+                        <span class="badge">22</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         tutorial
                     </a></li>
                     
@@ -160,21 +160,21 @@
 <p>We just need to load those frames like we did for the other explosions.  We&rsquo;ll just add another explosion type called <code>'player'</code> and load it in the same loop, since it has the same number of frames as the other explosion we&rsquo;re loading. Now our loading code will look like this:</p>
 
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">explosion_anim</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">explosion_anim</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;lg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">explosion_anim</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;sm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="hl"><span class="n">explosion_anim</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;player&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">explosion_anim</span><span class="p">[</span><span class="s1">&#39;lg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">explosion_anim</span><span class="p">[</span><span class="s1">&#39;sm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="hl"><span class="n">explosion_anim</span><span class="p">[</span><span class="s1">&#39;player&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;regularExplosion0{}.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;regularExplosion0{}.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
     <span class="n">img</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
     <span class="n">img_lg</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">75</span><span class="p">))</span>
-    <span class="n">explosion_anim</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;lg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_lg</span><span class="p">)</span>
+    <span class="n">explosion_anim</span><span class="p">[</span><span class="s1">&#39;lg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_lg</span><span class="p">)</span>
     <span class="n">img_sm</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
-    <span class="n">explosion_anim</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;sm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_sm</span><span class="p">)</span>
-<span class="hl">    <span class="n">filename</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;sonicExplosion0{}.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">explosion_anim</span><span class="p">[</span><span class="s1">&#39;sm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_sm</span><span class="p">)</span>
+<span class="hl">    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;sonicExplosion0{}.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 </span><span class="hl">    <span class="n">img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
 </span><span class="hl">    <span class="n">img</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span>
-</span><span class="hl">    <span class="n">explosion_anim</span><span class="p">[</span><span class="sa"></span><span class="s1">&#39;player&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img</span><span class="p">)</span></span></code></pre></div>
+</span><span class="hl">    <span class="n">explosion_anim</span><span class="p">[</span><span class="s1">&#39;player&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img</span><span class="p">)</span></span></code></pre></div>
 
 <p>We don&rsquo;t need to change anything in our <code>Explosion</code> sprite class, so we just need to create a player explosion when the player&rsquo;s shield runs out.  We can add that in the game loop where we&rsquo;re checking for player vs. meteor collisions:</p>
 
@@ -182,11 +182,11 @@
 <span class="n">hits</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">spritecollide</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">mobs</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">collide_circle</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">hits</span><span class="p">:</span>
     <span class="n">player</span><span class="o">.</span><span class="n">shield</span> <span class="o">-=</span> <span class="n">hit</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="mi">2</span>
-    <span class="n">expl</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">hit</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;sm&#39;</span><span class="p">)</span>
+    <span class="n">expl</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">hit</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="s1">&#39;sm&#39;</span><span class="p">)</span>
     <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">expl</span><span class="p">)</span>
     <span class="n">newmob</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">shield</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-<span class="hl">        <span class="n">death_explosion</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;player&#39;</span><span class="p">)</span>
+<span class="hl">        <span class="n">death_explosion</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="s1">&#39;player&#39;</span><span class="p">)</span>
 </span><span class="hl">        <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">death_explosion</span><span class="p">)</span>
 </span>		<span class="n">running</span> <span class="o">=</span> <span class="bp">False</span></code></pre></div>
 
@@ -195,7 +195,7 @@
 <p>To fix this, we need to not end the game until the explosion finishes.  So we&rsquo;ll delete the player, but not set <code>running</code> until the explosion disappears:</p>
 
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">shield</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">death_explosion</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;player&#39;</span><span class="p">)</span>
+        <span class="n">death_explosion</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="s1">&#39;player&#39;</span><span class="p">)</span>
         <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">death_explosion</span><span class="p">)</span>
 <span class="hl">		<span class="n">player</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
 </span><span class="hl">
@@ -209,7 +209,7 @@
 
 <p>Now we&rsquo;re going to give the player multiple lives.  We can track this with a variable, but we also want to be able to display it on the screen.  Rather than just show a number, it will look better if we use a smaller image of the player&rsquo;s ship to indicate how many lives are left.   First, we&rsquo;ll create that smaller image:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">player_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;playerShip1_orange.png&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">player_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_dir</span><span class="p">,</span> <span class="s2">&#34;playerShip1_orange.png&#34;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
 <span class="hl"><span class="n">player_mini_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">player_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">19</span><span class="p">))</span>
 </span><span class="hl"><span class="n">player_mini_img</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">(</span><span class="n">BLACK</span><span class="p">)</span></span></code></pre></div>
 
@@ -222,7 +222,7 @@
 <p>Now, when the player dies, instead of using <code>kill()</code>, we&rsquo;re going to hide the player and subtract 1 from <code>lives</code>.  We also reset the shield for the next life:</p>
 
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">if</span> <span class="n">player</span><span class="o">.</span><span class="n">shield</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">death_explosion</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;player&#39;</span><span class="p">)</span>
+        <span class="n">death_explosion</span> <span class="o">=</span> <span class="n">Explosion</span><span class="p">(</span><span class="n">player</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">center</span><span class="p">,</span> <span class="s1">&#39;player&#39;</span><span class="p">)</span>
         <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">death_explosion</span><span class="p">)</span>
 <span class="hl">        <span class="n">player</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 </span><span class="hl">        <span class="n">player</span><span class="o">.</span><span class="n">lives</span> <span class="o">-=</span> <span class="mi">1</span>

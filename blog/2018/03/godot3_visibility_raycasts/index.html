@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.38.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">21</span>
+                        <span class="badge">22</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         tutorial
                     </a></li>
                     
@@ -260,7 +260,7 @@
                     <span class="p">[</span><span class="bp">self</span><span class="p">],</span> <span class="n">collision_mask</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
         <span class="n">hit_pos</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">position</span>
-        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">collider</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="sa"></span><span class="s1">&#39;Player&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">collider</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Player&#39;</span><span class="p">:</span>
             <span class="err">$</span><span class="n">Sprite</span><span class="o">.</span><span class="n">self_modulate</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mf">1.0</span>
             <span class="n">rotation</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">can_shoot</span><span class="p">:</span>
@@ -291,7 +291,7 @@
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">aim</span><span class="p">():</span>
     <span class="n">hit_pos</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">var</span> <span class="n">space_state</span> <span class="o">=</span> <span class="n">get_world_2d</span><span class="p">()</span><span class="o">.</span><span class="n">direct_space_state</span>
-    <span class="n">var</span> <span class="n">target_extents</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;CollisionShape2D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">extents</span> <span class="o">-</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">var</span> <span class="n">target_extents</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="s1">&#39;CollisionShape2D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">extents</span> <span class="o">-</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
     <span class="n">var</span> <span class="n">nw</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">target_extents</span>
     <span class="n">var</span> <span class="n">se</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">target_extents</span>
     <span class="n">var</span> <span class="n">ne</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">target_extents</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">target_extents</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
@@ -301,7 +301,7 @@
                      <span class="n">pos</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="p">],</span> <span class="n">collision_mask</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
             <span class="n">hit_pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">collider</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="sa"></span><span class="s2">&#34;Player&#34;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">collider</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&#34;Player&#34;</span><span class="p">:</span>
                 <span class="err">$</span><span class="n">Sprite</span><span class="o">.</span><span class="n">self_modulate</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mf">1.0</span>
                 <span class="n">rotation</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">can_shoot</span><span class="p">:</span>
@@ -323,7 +323,7 @@
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">aim</span><span class="p">():</span>
     <span class="n">hit_pos</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">var</span> <span class="n">space_state</span> <span class="o">=</span> <span class="n">get_world_2d</span><span class="p">()</span><span class="o">.</span><span class="n">direct_space_state</span>
-    <span class="n">var</span> <span class="n">target_extents</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;CollisionShape2D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">extents</span> <span class="o">-</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="n">var</span> <span class="n">target_extents</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="s1">&#39;CollisionShape2D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">extents</span> <span class="o">-</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
     <span class="n">var</span> <span class="n">nw</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">target_extents</span>
     <span class="n">var</span> <span class="n">se</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">target_extents</span>
     <span class="n">var</span> <span class="n">ne</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">+</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">target_extents</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">target_extents</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
@@ -333,7 +333,7 @@
                      <span class="n">pos</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="p">],</span> <span class="n">collision_mask</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
             <span class="n">hit_pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">collider</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="sa"></span><span class="s2">&#34;Player&#34;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">collider</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&#34;Player&#34;</span><span class="p">:</span>
                 <span class="err">$</span><span class="n">Sprite</span><span class="o">.</span><span class="n">self_modulate</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mf">1.0</span>
                 <span class="n">rotation</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">can_shoot</span><span class="p">:</span>

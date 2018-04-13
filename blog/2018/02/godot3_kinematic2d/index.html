@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.38.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">21</span>
+                        <span class="badge">22</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         tutorial
                     </a></li>
                     
@@ -335,13 +335,13 @@ below.</p>
 <span class="n">func</span> <span class="n">get_input</span><span class="p">():</span>
 	<span class="c1"># Detect up/down/left/right keystate and only move when pressed</span>
 	<span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span>
-	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;ui_right&#39;</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_right&#39;</span><span class="p">):</span>
 		<span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
-	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;ui_left&#39;</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_left&#39;</span><span class="p">):</span>
 		<span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span>
-	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;ui_down&#39;</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_down&#39;</span><span class="p">):</span>
 		<span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span>
-	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;ui_up&#39;</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_up&#39;</span><span class="p">):</span>
 		<span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">-=</span> <span class="mi">1</span>
 	<span class="n">velocity</span> <span class="o">=</span> <span class="n">velocity</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span> <span class="o">*</span> <span class="n">speed</span>
 
@@ -393,11 +393,11 @@ the code for the Player, using <code>move_and_slide()</code>:</p>
 <span class="n">func</span> <span class="n">get_input</span><span class="p">():</span>
 	<span class="c1"># add these actions in Project Settings -&gt; Input Map</span>
 	<span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span>
-	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;backward&#39;</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;backward&#39;</span><span class="p">):</span>
 		<span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="n">speed</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span>
-	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;forward&#39;</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;forward&#39;</span><span class="p">):</span>
 		<span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span>
-	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_just_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;mouse_click&#39;</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_just_pressed</span><span class="p">(</span><span class="s1">&#39;mouse_click&#39;</span><span class="p">):</span>
 		<span class="n">shoot</span><span class="p">()</span>
 
 <span class="n">func</span> <span class="n">shoot</span><span class="p">():</span>
@@ -430,7 +430,7 @@ the code for the Player, using <code>move_and_slide()</code>:</p>
 	<span class="n">var</span> <span class="n">collision</span> <span class="o">=</span> <span class="n">move_and_collide</span><span class="p">(</span><span class="n">velocity</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
 	<span class="k">if</span> <span class="n">collision</span><span class="p">:</span>
 		<span class="n">velocity</span> <span class="o">=</span> <span class="n">velocity</span><span class="o">.</span><span class="n">bounce</span><span class="p">(</span><span class="n">collision</span><span class="o">.</span><span class="n">normal</span><span class="p">)</span>
-		<span class="k">if</span> <span class="n">collision</span><span class="o">.</span><span class="n">collider</span><span class="o">.</span><span class="n">has_method</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;hit&#34;</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">collision</span><span class="o">.</span><span class="n">collider</span><span class="o">.</span><span class="n">has_method</span><span class="p">(</span><span class="s2">&#34;hit&#34;</span><span class="p">):</span>
 			<span class="n">collision</span><span class="o">.</span><span class="n">collider</span><span class="o">.</span><span class="n">hit</span><span class="p">()</span>
 
 <span class="n">func</span> <span class="n">_on_VisibilityNotifier2D_screen_exited</span><span class="p">():</span>
@@ -478,17 +478,17 @@ the Wall to demonstrate this.</p>
     <span class="n">state</span> <span class="o">=</span> <span class="n">new_state</span>
     <span class="n">match</span> <span class="n">state</span><span class="p">:</span>
         <span class="n">IDLE</span><span class="p">:</span>
-            <span class="n">new_anim</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;idle&#39;</span>
+            <span class="n">new_anim</span> <span class="o">=</span> <span class="s1">&#39;idle&#39;</span>
         <span class="n">RUN</span><span class="p">:</span>
-            <span class="n">new_anim</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;run&#39;</span>
+            <span class="n">new_anim</span> <span class="o">=</span> <span class="s1">&#39;run&#39;</span>
         <span class="n">JUMP</span><span class="p">:</span>
-            <span class="n">new_anim</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;jump_up&#39;</span>
+            <span class="n">new_anim</span> <span class="o">=</span> <span class="s1">&#39;jump_up&#39;</span>
 
 <span class="n">func</span> <span class="n">get_input</span><span class="p">():</span>
     <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">var</span> <span class="n">right</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;ui_right&#39;</span><span class="p">)</span>
-    <span class="n">var</span> <span class="n">left</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;ui_left&#39;</span><span class="p">)</span>
-    <span class="n">var</span> <span class="n">jump</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_just_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;ui_select&#39;</span><span class="p">)</span>
+    <span class="n">var</span> <span class="n">right</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_right&#39;</span><span class="p">)</span>
+    <span class="n">var</span> <span class="n">left</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_left&#39;</span><span class="p">)</span>
+    <span class="n">var</span> <span class="n">jump</span> <span class="o">=</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_just_pressed</span><span class="p">(</span><span class="s1">&#39;ui_select&#39;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">jump</span> <span class="ow">and</span> <span class="n">is_on_floor</span><span class="p">():</span>
         <span class="n">change_state</span><span class="p">(</span><span class="n">JUMP</span><span class="p">)</span>

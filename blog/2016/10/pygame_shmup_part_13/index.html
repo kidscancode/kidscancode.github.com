@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.38.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">21</span>
+                        <span class="badge">22</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         tutorial
                     </a></li>
                     
@@ -157,7 +157,7 @@
 
 <p>There are a lot of things we could choose to have the gun powerup affect: fire rate, damage (although right now we destroy meteors with one hit), type of gun, etc.  For this lesson, we&rsquo;re going to make the player shoot more bullets, but to give us the flexibility to change it later if we want, we&rsquo;re going to define a new <code>Player</code> method and call it when we grab a <code>'gun'</code> powerup:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="k">if</span> <span class="n">hit</span><span class="o">.</span><span class="nb">type</span> <span class="o">==</span> <span class="sa"></span><span class="s1">&#39;gun&#39;</span><span class="p">:</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python">    <span class="k">if</span> <span class="n">hit</span><span class="o">.</span><span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;gun&#39;</span><span class="p">:</span>
         <span class="n">player</span><span class="o">.</span><span class="n">powerup</span><span class="p">()</span></code></pre></div>
 
 <p>To make this work, first let&rsquo;s add some new properties to the <code>Player</code> sprite: <code>power</code> to track what the &ldquo;power level&rdquo; is (each pow can raise this by one), and a <code>power_time</code> so we can drop back down after a certain amount of time goes by:</p>

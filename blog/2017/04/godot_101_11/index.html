@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.38.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">21</span>
+                        <span class="badge">22</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         tutorial
                     </a></li>
                     
@@ -183,16 +183,16 @@
 
 <p>Now in the <code>player.gd</code> we can specify which animation to play, and which direction to face (using the <code>Flip H</code> property).</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">onready</span> <span class="n">var</span> <span class="n">sprite</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;sprite&#34;</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">onready</span> <span class="n">var</span> <span class="n">sprite</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&#34;sprite&#34;</span><span class="p">)</span>
 
-<span class="n">var</span> <span class="n">anim</span> <span class="o">=</span> <span class="sa"></span><span class="s2">&#34;idle&#34;</span>
+<span class="n">var</span> <span class="n">anim</span> <span class="o">=</span> <span class="s2">&#34;idle&#34;</span>
 
 <span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
     <span class="c1"># set animation</span>
     <span class="k">if</span> <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">anim</span> <span class="o">=</span> <span class="sa"></span><span class="s2">&#34;idle&#34;</span>
+        <span class="n">anim</span> <span class="o">=</span> <span class="s2">&#34;idle&#34;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">anim</span> <span class="o">=</span> <span class="sa"></span><span class="s2">&#34;running&#34;</span>
+        <span class="n">anim</span> <span class="o">=</span> <span class="s2">&#34;running&#34;</span>
     <span class="k">if</span> <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">sprite</span><span class="o">.</span><span class="n">set_flip_h</span><span class="p">(</span><span class="n">false</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">vel</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>

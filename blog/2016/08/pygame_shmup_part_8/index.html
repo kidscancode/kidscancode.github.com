@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.38.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">21</span>
+                        <span class="badge">22</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         tutorial
                     </a></li>
                     
@@ -194,13 +194,13 @@
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
 
-<span class="n">img_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="sa"></span><span class="s1">&#39;img&#39;</span><span class="p">)</span>
-<span class="hl"><span class="n">snd_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="sa"></span><span class="s1">&#39;snd&#39;</span><span class="p">)</span></span></code></pre></div></p>
+<span class="n">img_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;img&#39;</span><span class="p">)</span>
+<span class="hl"><span class="n">snd_dir</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;snd&#39;</span><span class="p">)</span></span></code></pre></div></p>
 
 <p>Next, we need to load the sound files.  We will do that in the same location where we&rsquo;re loading the graphics.  Let&rsquo;s do the shooting sound first:</p>
 
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="hl"><span class="c1"># Load all game sounds</span>
-</span><span class="hl"><span class="n">shoot_sound</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">Sound</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">snd_dir</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;pew.wav&#39;</span><span class="p">))</span></span></code></pre></div>
+</span><span class="hl"><span class="n">shoot_sound</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">Sound</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">snd_dir</span><span class="p">,</span> <span class="s1">&#39;pew.wav&#39;</span><span class="p">))</span></span></code></pre></div>
 
 <p>Now we have the sound loaded and assigned to the variable <code>shoot_sound</code> so that we can refer to it.  We want the sound to play whenever the player shoots, so let&rsquo;s add that to the <code>shoot()</code> method:</p>
 
@@ -215,9 +215,9 @@
 <p>Next, let&rsquo;s add the explosion sounds.  We&rsquo;ll load both of them and put them in a list:</p>
 
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Load all game sounds</span>
-<span class="n">shoot_sound</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">Sound</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">snd_dir</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;pew.wav&#39;</span><span class="p">))</span>
+<span class="n">shoot_sound</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">Sound</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">snd_dir</span><span class="p">,</span> <span class="s1">&#39;pew.wav&#39;</span><span class="p">))</span>
 <span class="hl"><span class="n">expl_sounds</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span class="hl"><span class="k">for</span> <span class="n">snd</span> <span class="ow">in</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;expl3.wav&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;expl6.wav&#39;</span><span class="p">]:</span>
+</span><span class="hl"><span class="k">for</span> <span class="n">snd</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;expl3.wav&#39;</span><span class="p">,</span> <span class="s1">&#39;expl6.wav&#39;</span><span class="p">]:</span>
 </span><span class="hl">    <span class="n">expl_sounds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">Sound</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">snd_dir</span><span class="p">,</span> <span class="n">snd</span><span class="p">)))</span></span></code></pre></div>
 
 <p>To make the explosions play, we&rsquo;ll randomly select one of them whenever we destroy a meteor:</p>
@@ -238,9 +238,9 @@
 <p>First, load the music:</p>
 
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">expl_sounds</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">snd</span> <span class="ow">in</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;expl3.wav&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;expl6.wav&#39;</span><span class="p">]:</span>
+<span class="k">for</span> <span class="n">snd</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;expl3.wav&#39;</span><span class="p">,</span> <span class="s1">&#39;expl6.wav&#39;</span><span class="p">]:</span>
     <span class="n">expl_sounds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">Sound</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">snd_dir</span><span class="p">,</span> <span class="n">snd</span><span class="p">)))</span>
-<span class="hl"><span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">snd_dir</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;tgfcoder-FrozenJam-SeamlessLoop.ogg&#39;</span><span class="p">))</span>
+<span class="hl"><span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">snd_dir</span><span class="p">,</span> <span class="s1">&#39;tgfcoder-FrozenJam-SeamlessLoop.ogg&#39;</span><span class="p">))</span>
 </span><span class="hl"><span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">set_volume</span><span class="p">(</span><span class="mf">0.4</span><span class="p">)</span></span></code></pre></div>
 
 <p>This music file happens to be rather loud, and we don&rsquo;t want it to overpower the other sounds, so we&rsquo;ve also set the volume to 40% of maximum.</p>

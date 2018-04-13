@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.38.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">21</span>
+                        <span class="badge">22</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         tutorial
                     </a></li>
                     
@@ -192,7 +192,7 @@ in this scene.</p>
             <span class="n">ts</span><span class="o">.</span><span class="n">create_tile</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
             <span class="n">ts</span><span class="o">.</span><span class="n">tile_set_texture</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">texture</span><span class="p">)</span>
             <span class="n">ts</span><span class="o">.</span><span class="n">tile_set_region</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">region</span><span class="p">)</span>
-    <span class="n">ResourceSaver</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;res://terrain/terrain_tiles.tres&#34;</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span></code></pre></div>
+    <span class="n">ResourceSaver</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&#34;res://terrain/terrain_tiles.tres&#34;</span><span class="p">,</span> <span class="n">ts</span><span class="p">)</span></code></pre></div>
 
 <p>This script starts by getting the pixel size of the image and dividing by the tile size, so that we know how many tiles we have. Then it&rsquo;s a matter of looping through the tiles one by one and creating a tile in the new TileSet object. Note that tiles need to have a unique <code>id</code>, so we&rsquo;re generating one using <code>x + y * 10</code>. Then we add the texture and region for the tile.</p>
 

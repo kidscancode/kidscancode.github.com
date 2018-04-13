@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.38.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">21</span>
+                        <span class="badge">22</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         tutorial
                     </a></li>
                     
@@ -292,20 +292,20 @@ scene with all the necessary nodes ready to go.</p>
 
 <p>Add the following code to the new script:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="sa"></span><span class="s2">&#34;res://tanks/Tank.gd&#34;</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="s2">&#34;res://tanks/Tank.gd&#34;</span>
 
 <span class="n">func</span> <span class="n">control</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
 	<span class="err">$</span><span class="n">Turret</span><span class="o">.</span><span class="n">look_at</span><span class="p">(</span><span class="n">get_global_mouse_position</span><span class="p">())</span>
 	<span class="n">var</span> <span class="n">rot_dir</span> <span class="o">=</span> <span class="mi">0</span>
-	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;turn_right&#39;</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;turn_right&#39;</span><span class="p">):</span>
 		<span class="n">rot_dir</span> <span class="o">+=</span> <span class="mi">1</span>
-	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;turn_left&#39;</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;turn_left&#39;</span><span class="p">):</span>
 		<span class="n">rot_dir</span> <span class="o">-=</span> <span class="mi">1</span>
 	<span class="n">rotation</span> <span class="o">+=</span> <span class="n">rotation_speed</span> <span class="o">*</span> <span class="n">rot_dir</span> <span class="o">*</span> <span class="n">delta</span>
 	<span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span>
-	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;forward&#39;</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;forward&#39;</span><span class="p">):</span>
 		<span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span>
-	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s1">&#39;back&#39;</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;back&#39;</span><span class="p">):</span>
 		<span class="n">velocity</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="n">speed</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span></code></pre></div>
 
 <p>Since we&rsquo;re inheriting the code from &ldquo;Tank.gd&rdquo; we only need to define the <code>control()</code> function to make things work. The key inputs rotate the tank and move it forward/backward in the facing direction. Meanwhile, the turret will always point at the mouse pointer by using <code>look_at()</code>.</p>

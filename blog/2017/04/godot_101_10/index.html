@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.38.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">21</span>
+                        <span class="badge">22</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         tutorial
                     </a></li>
                     
@@ -159,7 +159,7 @@
 
 <span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
     <span class="c1"># ...</span>
-    <span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_up&#34;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&#34;ui_up&#34;</span><span class="p">):</span>
         <span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">JUMP_SPEED</span></code></pre></div>
 
 <p>The problem here is that tapping the key will jump, but holding it down sends the player flying up off the screen.  As long as the key is down, we continue to move upward.</p>
@@ -178,13 +178,13 @@
 
 <p>Now to use this in the code, add this to <code>player.gd</code>:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">onready</span> <span class="n">var</span> <span class="n">ground_ray</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ground_ray&#34;</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">onready</span> <span class="n">var</span> <span class="n">ground_ray</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&#34;ground_ray&#34;</span><span class="p">)</span>
 
 <span class="n">JUMP_SPEED</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
 
 <span class="n">func</span> <span class="n">_fixed_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
     <span class="c1"># ...</span>
-    <span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_up&#34;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ground_ray</span><span class="o">.</span><span class="n">is_colliding</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&#34;ui_up&#34;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ground_ray</span><span class="o">.</span><span class="n">is_colliding</span><span class="p">():</span>
         <span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">JUMP_SPEED</span></code></pre></div>
 
 <p>Now we only jump when standing on the ground, but what happens if we hold the key?</p>
@@ -197,7 +197,7 @@
     <span class="n">set_process_input</span><span class="p">(</span><span class="n">true</span><span class="p">)</span>
 
 <span class="n">func</span> <span class="n">_input</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_up&#34;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ground_ray</span><span class="o">.</span><span class="n">is_colliding</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&#34;ui_up&#34;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ground_ray</span><span class="o">.</span><span class="n">is_colliding</span><span class="p">():</span>
         <span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">JUMP_SPEED</span></code></pre></div>
 
 <p>Enabling input processing means that whenever an input event occurs, the <code>_input()</code> function will be called.  We then use that event to trigger the jump, instead of doing it every frame in <code>_fixed_process()</code>.</p>
@@ -225,7 +225,7 @@
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">MIN_JUMP</span> <span class="o">=</span> <span class="o">-</span><span class="mi">500</span>
 
 <span class="n">func</span> <span class="n">_input</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_released</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;ui_up&#34;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_released</span><span class="p">(</span><span class="s2">&#34;ui_up&#34;</span><span class="p">):</span>
         <span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">clamp</span><span class="p">(</span><span class="n">vel</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">MIN_JUMP</span><span class="p">,</span> <span class="n">vel</span><span class="o">.</span><span class="n">y</span><span class="p">)</span></code></pre></div>
 
 <p>Now, if the player releases the jump key, we check the velocity.  If it&rsquo;s less than -500 (going up <em>faster</em>) then we clamp it to -500, cutting the jump short.</p>

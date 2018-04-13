@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.38.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">21</span>
+                        <span class="badge">22</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         tutorial
                     </a></li>
                     
@@ -303,15 +303,15 @@ Your final node setup should look something like this:
 
 <span class="n">var</span> <span class="n">tile_size</span> <span class="o">=</span> <span class="mi">32</span>
 <span class="n">var</span> <span class="n">can_move</span> <span class="o">=</span> <span class="n">true</span>
-<span class="n">var</span> <span class="n">facing</span> <span class="o">=</span> <span class="sa"></span><span class="s1">&#39;right&#39;</span>
-<span class="n">var</span> <span class="n">moves</span> <span class="o">=</span> <span class="p">{</span><span class="sa"></span><span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-             <span class="sa"></span><span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-             <span class="sa"></span><span class="s1">&#39;up&#39;</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
-             <span class="sa"></span><span class="s1">&#39;down&#39;</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)}</span>
-<span class="n">var</span> <span class="n">raycasts</span> <span class="o">=</span> <span class="p">{</span><span class="sa"></span><span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="sa"></span><span class="s1">&#39;RayCastRight&#39;</span><span class="p">,</span>
-                <span class="sa"></span><span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="sa"></span><span class="s1">&#39;RayCastLeft&#39;</span><span class="p">,</span>
-                <span class="sa"></span><span class="s1">&#39;up&#39;</span><span class="p">:</span> <span class="sa"></span><span class="s1">&#39;RayCastUp&#39;</span><span class="p">,</span>
-                <span class="sa"></span><span class="s1">&#39;down&#39;</span><span class="p">:</span> <span class="sa"></span><span class="s1">&#39;RayCastDown&#39;</span><span class="p">}</span>
+<span class="n">var</span> <span class="n">facing</span> <span class="o">=</span> <span class="s1">&#39;right&#39;</span>
+<span class="n">var</span> <span class="n">moves</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+             <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+             <span class="s1">&#39;up&#39;</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+             <span class="s1">&#39;down&#39;</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)}</span>
+<span class="n">var</span> <span class="n">raycasts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="s1">&#39;RayCastRight&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="s1">&#39;RayCastLeft&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;up&#39;</span><span class="p">:</span> <span class="s1">&#39;RayCastUp&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;down&#39;</span><span class="p">:</span> <span class="s1">&#39;RayCastDown&#39;</span><span class="p">}</span>
  </code></pre></div>
 
 <p><code>can_move</code> is a flag that will track whether the character can move. It will be <code>false</code>
@@ -326,7 +326,7 @@ Note that the <code>moves</code> and <code>raycasts</code> dictionaries&rsquo; k
     <span class="n">facing</span> <span class="o">=</span> <span class="nb">dir</span>
     <span class="n">can_move</span> <span class="o">=</span> <span class="n">false</span>
     <span class="err">$</span><span class="n">AnimationPlayer</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">facing</span><span class="p">)</span>
-    <span class="err">$</span><span class="n">MoveTween</span><span class="o">.</span><span class="n">interpolate_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;position&#34;</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span>
+    <span class="err">$</span><span class="n">MoveTween</span><span class="o">.</span><span class="n">interpolate_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&#34;position&#34;</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span>
                       <span class="n">position</span> <span class="o">+</span> <span class="n">moves</span><span class="p">[</span><span class="n">facing</span><span class="p">]</span> <span class="o">*</span> <span class="n">tile_size</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span>
                       <span class="n">Tween</span><span class="o">.</span><span class="n">TRANS_SINE</span><span class="p">,</span> <span class="n">Tween</span><span class="o">.</span><span class="n">EASE_IN_OUT</span><span class="p">)</span>
     <span class="err">$</span><span class="n">MoveTween</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
@@ -369,7 +369,7 @@ and choose &ldquo;Character.gd&rdquo;.</p>
 
 <p>Here&rsquo;s our player script (note that it <code>extends</code> the character script):</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="sa"></span><span class="s2">&#34;res://Character.gd&#34;</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="s2">&#34;res://Character.gd&#34;</span>
 
 <span class="n">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">can_move</span><span class="p">:</span>
@@ -390,16 +390,16 @@ will wander around the screen randomly. Make another scene inheriting from &ldqu
 
 <p>This time, leave the sprite&rsquo;s <em>Texture</em> blank and add a new script, again inheriting from &ldquo;Character.gd&rdquo;.</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="sa"></span><span class="s2">&#34;res://Character.gd&#34;</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="s2">&#34;res://Character.gd&#34;</span>
 
-<span class="n">var</span> <span class="n">textures</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s1">&#39;mage_f.png&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;mage_m.png&#39;</span><span class="p">,</span>
-                <span class="sa"></span><span class="s1">&#39;healer_f.png&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;healer_m.png&#39;</span><span class="p">,</span>
-                <span class="sa"></span><span class="s1">&#39;townfolk1_f.png&#39;</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;townfolk1_m.png&#39;</span><span class="p">]</span>
+<span class="n">var</span> <span class="n">textures</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;mage_f.png&#39;</span><span class="p">,</span> <span class="s1">&#39;mage_m.png&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;healer_f.png&#39;</span><span class="p">,</span> <span class="s1">&#39;healer_m.png&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;townfolk1_f.png&#39;</span><span class="p">,</span> <span class="s1">&#39;townfolk1_m.png&#39;</span><span class="p">]</span>
 
 <span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
     <span class="n">randomize</span><span class="p">()</span>
     <span class="n">var</span> <span class="n">texture</span> <span class="o">=</span> <span class="n">textures</span><span class="p">[</span><span class="n">randi</span><span class="p">()</span> <span class="o">%</span> <span class="n">textures</span><span class="o">.</span><span class="n">size</span><span class="p">()]</span>
-    <span class="n">texture</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;res://art/rpgsprites1/</span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">texture</span><span class="p">)</span>
+    <span class="n">texture</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s2">&#34;res://art/rpgsprites1/</span><span class="si">%s</span><span class="s2">&#34;</span> <span class="o">%</span> <span class="n">texture</span><span class="p">)</span>
     <span class="err">$</span><span class="n">Sprite</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">texture</span>
     <span class="n">facing</span> <span class="o">=</span> <span class="n">moves</span><span class="o">.</span><span class="n">keys</span><span class="p">()[</span><span class="n">randi</span><span class="p">()</span> <span class="o">%</span> <span class="mi">4</span><span class="p">]</span>
 

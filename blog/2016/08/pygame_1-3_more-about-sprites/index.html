@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.38.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">21</span>
+                        <span class="badge">22</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         tutorial
                     </a></li>
                     
@@ -208,8 +208,8 @@ You can watch a video version of this lesson here:</p>
 
  <span class="c1"># set up asset folders</span>
  <span class="n">game_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
- <span class="n">img_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">game_folder</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;img&#39;</span><span class="p">)</span>
- <span class="n">player_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_folder</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;p1_jump.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+ <span class="n">img_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">game_folder</span><span class="p">,</span> <span class="s1">&#39;img&#39;</span><span class="p">)</span>
+ <span class="n">player_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">img_folder</span><span class="p">,</span> <span class="s1">&#39;p1_jump.png&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
  </code></pre></div>
 
 <p>Now we&rsquo;ve loaded our image by using <code>pygame.image.load()</code> and we&rsquo;ve made sure to use <code>convert()</code>, which will speed up Pygame&rsquo;s drawing by converting the image into a format that will be faster to draw on the screen. Now we&rsquo;re ready to replace the plain green square in our sprite with our fancy player image:</p>

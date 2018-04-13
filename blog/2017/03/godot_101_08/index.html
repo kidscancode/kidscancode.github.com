@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.38.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">21</span>
+                        <span class="badge">22</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">38</span>
+                        <span class="badge">39</span>
                         tutorial
                     </a></li>
                     
@@ -171,19 +171,19 @@
 
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Area2D</span>
 
-<span class="n">onready</span> <span class="n">var</span> <span class="n">effect</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;effect&#34;</span><span class="p">)</span>
-<span class="n">onready</span> <span class="n">var</span> <span class="n">sprite</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;sprite&#34;</span><span class="p">)</span>
+<span class="n">onready</span> <span class="n">var</span> <span class="n">effect</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&#34;effect&#34;</span><span class="p">)</span>
+<span class="n">onready</span> <span class="n">var</span> <span class="n">sprite</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&#34;sprite&#34;</span><span class="p">)</span>
 
 <span class="n">signal</span> <span class="n">gem_grabbed</span>
 
 <span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
-    <span class="n">effect</span><span class="o">.</span><span class="n">interpolate_property</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;transform/scale&#39;</span><span class="p">,</span>
+    <span class="n">effect</span><span class="o">.</span><span class="n">interpolate_property</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="s1">&#39;transform/scale&#39;</span><span class="p">,</span>
         <span class="n">sprite</span><span class="o">.</span><span class="n">get_scale</span><span class="p">(),</span> <span class="n">Vector2</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span> <span class="mf">0.3</span><span class="p">,</span>
         <span class="n">Tween</span><span class="o">.</span><span class="n">TRANS_QUAD</span><span class="p">,</span> <span class="n">Tween</span><span class="o">.</span><span class="n">EASE_OUT</span><span class="p">)</span>
 
 <span class="n">func</span> <span class="n">_on_gem_area_enter</span><span class="p">(</span> <span class="n">area</span> <span class="p">):</span>
-    <span class="k">if</span> <span class="n">area</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="sa"></span><span class="s2">&#34;player&#34;</span><span class="p">:</span>
-        <span class="n">emit_signal</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;gem_grabbed&#34;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">area</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&#34;player&#34;</span><span class="p">:</span>
+        <span class="n">emit_signal</span><span class="p">(</span><span class="s2">&#34;gem_grabbed&#34;</span><span class="p">)</span>
         <span class="n">clear_shapes</span><span class="p">()</span>
         <span class="n">effect</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
@@ -208,7 +208,7 @@
 
 <p>This is good, but we can do even better by interpolating <em>another</em> property as well: the opacity.  Tweens get really powerful when you apply them to multiple properties at once.  Add this to the gem&rsquo;s <code>_ready()</code>:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">effect</span><span class="o">.</span><span class="n">interpolate_property</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="sa"></span><span class="s1">&#39;visibility/opacity&#39;</span><span class="p">,</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">effect</span><span class="o">.</span><span class="n">interpolate_property</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="s1">&#39;visibility/opacity&#39;</span><span class="p">,</span>
     <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span>
     <span class="n">Tween</span><span class="o">.</span><span class="n">TRANS_QUAD</span><span class="p">,</span> <span class="n">Tween</span><span class="o">.</span><span class="n">EASE_OUT</span><span class="p">)</span></code></pre></div>
 
@@ -234,14 +234,14 @@
 
 <p>Here is the code we need to add to <code>main.gd</code>:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">onready</span> <span class="n">var</span> <span class="n">time_label</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;HUD/time_label&#34;</span><span class="p">)</span>
-<span class="n">onready</span> <span class="n">var</span> <span class="n">game_timer</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;game_timer&#34;</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">onready</span> <span class="n">var</span> <span class="n">time_label</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&#34;HUD/time_label&#34;</span><span class="p">)</span>
+<span class="n">onready</span> <span class="n">var</span> <span class="n">game_timer</span> <span class="o">=</span> <span class="n">get_node</span><span class="p">(</span><span class="s2">&#34;game_timer&#34;</span><span class="p">)</span>
 
 <span class="n">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
     <span class="n">time_label</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">game_timer</span><span class="o">.</span><span class="n">get_time_left</span><span class="p">())))</span>
 
 <span class="n">func</span> <span class="n">_on_game_timer_timeout</span><span class="p">():</span>
-    <span class="n">get_node</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;player&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">set_process</span><span class="p">(</span><span class="n">false</span><span class="p">)</span></code></pre></div>
+    <span class="n">get_node</span><span class="p">(</span><span class="s2">&#34;player&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">set_process</span><span class="p">(</span><span class="n">false</span><span class="p">)</span></code></pre></div>
 
 <p>Don&rsquo;t forget to connect the <svg width="18" height="18" class="icon-icon_signal"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_signal"></svg><code>timeout</code> signal.  Here, we&rsquo;re just disabling the player when the time runs out.  You might want to also add a &ldquo;Game Over&rdquo; label, setting it to <code>hidden</code> when the game starts, and then showing it at game end.</p>
 

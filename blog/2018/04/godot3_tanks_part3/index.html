@@ -1,0 +1,402 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.38.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Topdown Tank Battle: Part 3 &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">39</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">22</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">39</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Topdown Tank Battle: Part 3</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Thu, Apr 12, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			</h6></span>
+
+			      <p>In this tutorial series, we&rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&rsquo;s workflow and show you various techniques that you can apply to your own projects.</p>
+
+<p>This is Part 3: Enemy tank movement</p>
+
+<p></p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/soUBTPD4Iu8" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>If you&rsquo;ve been following the previous sections, you now how have a map with a
+player tank that can drive around and aim its turret. Now we&rsquo;re going to add an
+enemy tank and give it a &ldquo;patrol&rdquo; behavior so it will drive around the scene
+following a given path.</p>
+
+<h2 id="enemy-tank-scene">Enemy tank scene</h2>
+
+<p>We&rsquo;re going to start by making another <em>Inherited Scene</em> from Tank.tscn, like we
+did previously with the player tank. Add a texture to the body and turret sprites.
+I chose the red tank:</p>
+
+<p><a href="/blog/img/tanks_enemy_tank.png"><img src="/blog/img/tanks_enemy_tank.png" width="300"></a></p>
+
+<p>Remember you&rsquo;ll have to set the <em>Offset</em> of the turret sprite so that it will
+rotate around the correct point (depending on which texture you use).</p>
+
+<p>We&rsquo;ll attach a script extending <code>res://tanks/Tank.gd</code> so that we get all the
+common tank code. Again, for the tank&rsquo;s movement, we need to supply the code in
+the <code>control()</code> function.</p>
+
+<p>There are many possible movement behaviors we could implement for the enemy tank,
+such as path following, chasing, flocking, etc. In fact, later we&rsquo;ll probably
+want to have different tanks using different ones. To begin, however, we&rsquo;re going
+to use path following: the tank will &ldquo;patrol&rdquo; around a given predefined path using
+<a href="http://docs.godotengine.org/en/latest/classes/class_path2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_path_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_path_2d"></svg><code>Path2D</code></a> and <a href="http://docs.godotengine.org/en/latest/classes/class_pathfollow2d.html" target="_blank"><svg width="18" height="18" class="icon-icon_path_follow_2d"><use xlink:href="/blog/img/symbol-defs.svg#icon-icon_path_follow_2d"></svg><code>PathFollow2D</code></a>.</p>
+
+<p>Since we want to be able to assign other behaviors to the tank, we&rsquo;ll check to see if
+it has been attached to a PathFollow2D, and use the pathfollow code only in that case.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="s2">&#34;res://tanks/Tank.gd&#34;</span>
+
+<span class="n">onready</span> <span class="n">var</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">get_parent</span><span class="p">()</span>
+
+<span class="n">func</span> <span class="n">control</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="n">PathFollow2D</span><span class="p">:</span>
+        <span class="n">parent</span><span class="o">.</span><span class="n">set_offset</span><span class="p">(</span><span class="n">get_offset</span><span class="p">()</span> <span class="o">+</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># other movement code</span>
+        <span class="k">pass</span></code></pre></div>
+
+<p>Now if we add an enemy tank to a path, it will automatically follow it. Don&rsquo;t forget
+to set the Tank&rsquo;s <em>Speed</em> in the Inspector.</p>
+
+<h2 id="creating-paths">Creating paths</h2>
+
+<p><code>Path2D</code> lets you draw a curve that a node can follow. Add a &ldquo;Paths&rdquo; <code>Node2D</code>
+to the map to hold them (we will eventually add a bunch of these), and add a <code>Path2D</code> to that.</p>
+
+<p>Hopefully you&rsquo;ve used Path2D before. If you haven&rsquo;t, there&rsquo;s a great example of
+using and drawing them in the <a href="http://docs.godotengine.org/en/latest/getting_started/step_by_step/your_first_game.html" target="_blank">official Godot tutorial</a>,
+which I also have a <a href="https://www.youtube.com/playlist?list=PLsk-HSGFjnaFutTDzgik2KMRl6W1JxFgD" target="_blank">video series about</a>._</p>
+
+<p>Draw a path that circles around part of your map, like so:</p>
+
+<p><a href="/blog/img/tanks_path1.gif"><img src="/blog/img/tanks_path1.gif" width="300"></a></p>
+
+<p>Note that the light blue color of the path in the editor is very hard to see against the
+road/grass tileset. While you&rsquo;re drawing, you can darken the map by changing its <em>Modulate</em>
+property.</p>
+
+<p>Now add a <code>PathFollow2D</code> node to the path. By changing this node&rsquo;s <code>offset</code> property, you
+can move it along the path. Then add an instance of the EnemyTank as a child of the
+PathFollow2D.</p>
+
+<p><a href="/blog/img/tanks_path_nodes.png"><img src="/blog/img/tanks_path_nodes.png" width="250"></a></p>
+
+<p>Hit play on the scene and check it out. The tank moves along the path, but there&rsquo;s
+a problem at the corners:</p>
+
+<p><a href="/blog/img/tanks_path2.gif"><img src="/blog/img/tanks_path2.gif" width="300"></a></p>
+
+<p>The sudden direction change looks very unnatural, so we need a way to smoothly
+turn around corners.</p>
+
+<h2 id="smoothing-the-path">Smoothing the path</h2>
+
+<p>Let&rsquo;s redraw the path, this time cutting across the corners diagonally:</p>
+
+<p><a href="/blog/img/tanks_path_corners.png"><img src="/blog/img/tanks_path_corners.png" width="350"></a></p>
+
+<p><a href="/blog/img/tanks_path3.gif"><img src="/blog/img/tanks_path3.gif" width="300"></a></p>
+
+<p>This is an improvement, but we can do a lot better.</p>
+
+<p>Select the path and in the toolbar, click the &ldquo;Select Control Points&rdquo; button:</p>
+
+<p><a href="/blog/img/tanks_path_control_points.png"><img src="/blog/img/tanks_path_control_points.png" width="200"></a></p>
+
+<p>Then click and drag from any point on the path to create a control point you can use to curve the line. If you&rsquo;re careful, you can align the path along the road&rsquo;s centerline.</p>
+
+<p><a href="/blog/img/tanks_path4.gif"><img src="/blog/img/tanks_path4.gif" width="300"></a></p>
+
+<h2 id="collisions">Collisions</h2>
+
+<p>Now that we have the tank moving around the path correctly, we can address a
+different problem. Play the game and position your player tank on the path in
+front of the enemy tank. It will stop moving when it hits, but then something
+very unexpected will happen:</p>
+
+<p><a href="/blog/img/tanks_path5.gif"><img src="/blog/img/tanks_path5.gif" width="300"></a></p>
+
+<p>What&rsquo;s happening is that the PathFollow2D is continuing to move, even though the
+tank can&rsquo;t. As a result, the tank is getting offset from the path. We need to
+make sure the tank always sticks with the path follower.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">control</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="n">PathFollow2D</span><span class="p">:</span>
+        <span class="n">parent</span><span class="o">.</span><span class="n">set_offset</span><span class="p">(</span><span class="n">get_offset</span><span class="p">()</span> <span class="o">+</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+		<span class="n">position</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span></code></pre></div>
+
+<p><a href="/blog/img/tanks_path6.gif"><img src="/blog/img/tanks_path6.gif" width="300"></a></p>
+
+<h2 id="enemy-turret">Enemy turret</h2>
+
+<p>The next thing we need the enemy to do is rotate its turret to aim at the player.
+However, we don&rsquo;t want the enemy to have an infinite range, so we need a way to
+only detect the player when it&rsquo;s in range.</p>
+
+<h3 id="detecting-the-player">Detecting the player</h3>
+
+<p>Add an <code>Area2D</code> to the player called &ldquo;DetectRadius&rdquo; and give it a <code>CollisionShape2D</code>.
+Don&rsquo;t assign a shape, though - we&rsquo;ll do that in code so it can be customized per
+enemy.</p>
+
+<p>Add variables to set the turret rotation speed and the DetectRadius&rsquo; side, as well
+as one to track its target. Then in <code>_ready()</code> we&rsquo;ll create the collision circle.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">export</span> <span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="n">var</span> <span class="n">turret_speed</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">export</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="n">var</span> <span class="n">detect_radius</span> <span class="o">=</span> <span class="mi">400</span>
+
+<span class="n">var</span> <span class="n">target</span> <span class="o">=</span> <span class="n">null</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+    <span class="n">var</span> <span class="n">circle</span> <span class="o">=</span> <span class="n">CircleShape2D</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+    <span class="err">$</span><span class="n">DetectRadius</span><span class="o">/</span><span class="n">CollisionShape2D</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">circle</span>
+    <span class="err">$</span><span class="n">DetectRadius</span><span class="o">/</span><span class="n">CollisionShape2D</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">detect_radius</span></code></pre></div>
+
+<p><code>1</code> and <code>400</code> are good default values to start with. Turn on &ldquo;Visible Collision
+Shapes&rdquo; in the Debug menu and run the game to verify that your collision circle
+is being set.</p>
+
+<p>To detect the player, connect the DetectRadius&rsquo; <code>body_entered</code> and <code>body_exited</code>
+signals.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">_on_DetectRadius_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">body</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Player&#39;</span><span class="p">:</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">body</span>
+
+<span class="n">func</span> <span class="n">_on_DetectRadius_body_exited</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">body</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">null</span></code></pre></div>
+
+<p>Now the tank can acquire and lose the player target.</p>
+
+<h3 id="aiming-at-the-player">Aiming at the player</h3>
+
+<p>Aiming the turret can now be done by comparing the direction to the target to the
+turret&rsquo;s current direction and moving it at the turret&rsquo;s speed. We can use
+Vector2&rsquo;s <code>linear_interpolate</code> method for that.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
+        <span class="n">var</span> <span class="n">target_dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">global_position</span> <span class="o">-</span> <span class="n">global_position</span><span class="p">)</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
+        <span class="n">var</span> <span class="n">current_dir</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="err">$</span><span class="n">Turret</span><span class="o">.</span><span class="n">global_rotation</span><span class="p">)</span>
+        <span class="err">$</span><span class="n">Turret</span><span class="o">.</span><span class="n">global_rotation</span> <span class="o">=</span> <span class="n">current_dir</span><span class="o">.</span><span class="n">linear_interpolate</span><span class="p">(</span><span class="n">target_dir</span><span class="p">,</span> <span class="n">turret_speed</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span></code></pre></div>
+
+<p>Run the game and check that the aiming is working. Try using different values of <code>turret_speed</code> to
+see what the effect is. Higher values make the enemy tank very quick!</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>To sum up, here&rsquo;s the full &ldquo;EnemyTank.gd&rdquo; script:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="s2">&#34;res://tanks/Tank.gd&#34;</span>
+
+<span class="n">onready</span> <span class="n">var</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">get_parent</span><span class="p">()</span>
+
+<span class="n">export</span> <span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="n">var</span> <span class="n">turret_speed</span>
+<span class="n">export</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="n">var</span> <span class="n">detect_radius</span>
+
+<span class="n">var</span> <span class="n">target</span> <span class="o">=</span> <span class="n">null</span>
+
+<span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
+    <span class="n">var</span> <span class="n">circle</span> <span class="o">=</span> <span class="n">CircleShape2D</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+    <span class="err">$</span><span class="n">DetectRadius</span><span class="o">/</span><span class="n">CollisionShape2D</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">circle</span>
+    <span class="err">$</span><span class="n">DetectRadius</span><span class="o">/</span><span class="n">CollisionShape2D</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">detect_radius</span>
+
+<span class="n">func</span> <span class="n">control</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="n">PathFollow2D</span><span class="p">:</span>
+        <span class="n">parent</span><span class="o">.</span><span class="n">set_offset</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">get_offset</span><span class="p">()</span> <span class="o">+</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># other movement code</span>
+        <span class="k">pass</span>
+
+<span class="n">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
+        <span class="n">var</span> <span class="n">target_dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">global_position</span> <span class="o">-</span> <span class="n">global_position</span><span class="p">)</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
+        <span class="n">var</span> <span class="n">current_dir</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="err">$</span><span class="n">Turret</span><span class="o">.</span><span class="n">global_rotation</span><span class="p">)</span>
+        <span class="err">$</span><span class="n">Turret</span><span class="o">.</span><span class="n">global_rotation</span> <span class="o">=</span> <span class="n">current_dir</span><span class="o">.</span><span class="n">linear_interpolate</span><span class="p">(</span><span class="n">target_dir</span><span class="p">,</span> <span class="n">turret_speed</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span>
+
+<span class="n">func</span> <span class="n">_on_DetectRadius_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">body</span>
+
+<span class="n">func</span> <span class="n">_on_DetectRadius_body_exited</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">body</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">null</span></code></pre></div>
+
+<p>That&rsquo;ll do it for Part 3 of this series. In the next part we&rsquo;ll add a projectile
+and give the player and enemy tanks the ability to fire.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part02-download-the-code-for-this-part-a"><a href="https://github.com/kidscancode/topdown_tanks/releases/tag/part02">Download the code for this part</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
