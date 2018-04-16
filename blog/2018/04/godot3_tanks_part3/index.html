@@ -257,7 +257,7 @@ make sure the tank always sticks with the path follower.</p>
 
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">func</span> <span class="n">control</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="n">PathFollow2D</span><span class="p">:</span>
-        <span class="n">parent</span><span class="o">.</span><span class="n">set_offset</span><span class="p">(</span><span class="n">get_offset</span><span class="p">()</span> <span class="o">+</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+        <span class="n">parent</span><span class="o">.</span><span class="n">set_offset</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">get_offset</span><span class="p">()</span> <span class="o">+</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
 		<span class="n">position</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">()</span></code></pre></div>
 
 <p><a href="/blog/img/tanks_path6.gif"><img src="/blog/img/tanks_path6.gif" width="300"></a></p>
@@ -352,7 +352,8 @@ see what the effect is. Higher values make the enemy tank very quick!</p>
         <span class="err">$</span><span class="n">Turret</span><span class="o">.</span><span class="n">global_rotation</span> <span class="o">=</span> <span class="n">current_dir</span><span class="o">.</span><span class="n">linear_interpolate</span><span class="p">(</span><span class="n">target_dir</span><span class="p">,</span> <span class="n">turret_speed</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span>
 
 <span class="n">func</span> <span class="n">_on_DetectRadius_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
-    <span class="n">target</span> <span class="o">=</span> <span class="n">body</span>
+    <span class="k">if</span> <span class="n">body</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Player&#39;</span><span class="p">:</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">body</span>
 
 <span class="n">func</span> <span class="n">_on_DetectRadius_body_exited</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">body</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
