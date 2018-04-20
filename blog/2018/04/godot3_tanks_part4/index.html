@@ -1,0 +1,406 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.39" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Topdown Tank Battle: Part 4 &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">40</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">23</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">40</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Topdown Tank Battle: Part 4</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Thu, Apr 19, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			</h6></span>
+
+			      <p>In this tutorial series, we&rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&rsquo;s workflow and show you various techniques that you can apply to your own projects.</p>
+
+<p>This is Part 4: Player shooting</p>
+
+<p></p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UKfzBnfh4Ak" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<h3 id="physics-layers">Physics Layers</h3>
+
+<p>As we add more objects to the game, the interactions between them are going to be
+more and more complex. We&rsquo;ll use Godot&rsquo;s <em>physics layer</em> system to organize what
+other objects can &ldquo;see&rdquo; and interact with.</p>
+
+<p>To make it easier to track layers, you can assign names to them in <em>Project Settings -&gt;
+Layer Names</em>:</p>
+
+<p><a href="/blog/img/tanks_physics_layers.png"><img src="/blog/img/tanks_physics_layers.png" width="450"></a></p>
+
+<p><strong>Screenshot: setting layers</strong></p>
+
+<p>Here are the layer settings you should use for the object&rsquo;s we&rsquo;ve made so far:</p>
+
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Layer(s)</th>
+<th>Mask</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>Player</strong></td>
+<td><code>player</code></td>
+<td><code>environment</code>, <code>enemies</code></td>
+</tr>
+
+<tr>
+<td><strong>EnemyTank</strong></td>
+<td><code>enemies</code></td>
+<td><code>environment</code>, <code>player</code></td>
+</tr>
+
+<tr>
+<td><strong>Enemy DetectRadius</strong></td>
+<td><code>enemies</code></td>
+<td><code>player</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>Note that we haven&rsquo;t put <code>enemies</code> in the enemy tank&rsquo;s mask. This way if we have
+two enemy tanks that have overlapping paths, they&rsquo;ll just drive through each other.
+We may change this later, but for now, it&rsquo;ll keep things simple.</p>
+
+<p>Also, since we set the <code>DetectRadius</code> area&rsquo;s mask to <code>players</code> it won&rsquo;t &ldquo;see&rdquo; any
+other objects. This means we can simplify the code a little bit, changing this:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_on_DetectRadius_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">body</span><span class="p">.</span><span class="n">name</span> <span class="p">==</span> <span class="err">&#39;</span><span class="n">Player</span><span class="err">&#39;</span><span class="p">:</span>
+        <span class="n">target</span> <span class="p">=</span> <span class="n">body</span></code></pre></div>
+
+<p>to this:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_on_DetectRadius_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="n">target</span> <span class="p">=</span> <span class="n">body</span></code></pre></div>
+
+<h2 id="bullet-scene">Bullet Scene</h2>
+
+<p>As with the tanks, we&rsquo;re going to make a master bullet scene that will be inherited
+by any bullet types we may make. Here&rsquo;s the scene setup:</p>
+
+<ul>
+<li><code>Area2D</code> named &ldquo;Bullet&rdquo;
+
+<ul>
+<li><code>Sprite</code></li>
+<li><code>CollisionShape2D</code></li>
+<li><code>Timer</code> named &ldquo;Lifetime&rdquo;</li>
+</ul></li>
+</ul>
+
+<p>Area2Ds are convenient for projectiles because they don&rsquo;t need physics or collisions,
+they just need to detect <em>contact</em>. When the bullet contacts an object, it will
+explode and deal damage.</p>
+
+<p>The &ldquo;Lifetime&rdquo; timer will be used to destroy the bullet after a given time.</p>
+
+<p>Save the scene in a &ldquo;bullets&rdquo; folder, where we&rsquo;ll also save the objects that inherit
+from it.</p>
+
+<h3 id="bullet-script">Bullet script</h3>
+
+<p>Attach a script, which will serve as the shared code for all projectiles.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">Area2D</span>
+
+<span class="n">export</span> <span class="p">(</span><span class="n">int</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">speed</span>
+<span class="n">export</span> <span class="p">(</span><span class="n">int</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">damage</span>
+<span class="n">export</span> <span class="p">(</span><span class="n">float</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">lifetime</span>
+
+<span class="kd">var</span> <span class="nv">velocity</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">()</span>
+
+<span class="kd">func</span> <span class="nf">start</span><span class="p">(</span><span class="n">_position</span><span class="p">,</span> <span class="n">_direction</span><span class="p">):</span>
+    <span class="n">position</span> <span class="p">=</span> <span class="n">_position</span>
+    <span class="n">rotation</span> <span class="p">=</span> <span class="n">_direction</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span>
+    <span class="err">$</span><span class="n">Lifetime</span><span class="p">.</span><span class="n">wait_time</span> <span class="p">=</span> <span class="n">lifetime</span>
+    <span class="n">velocity</span> <span class="p">=</span> <span class="n">_direction</span> <span class="o">*</span> <span class="n">speed</span>
+
+<span class="kd">func</span> <span class="nf">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="n">position</span> <span class="o">+=</span> <span class="n">velocity</span> <span class="o">*</span> <span class="n">delta</span>
+
+<span class="kd">func</span> <span class="nf">explode</span><span class="p">():</span>
+    <span class="n">queue_free</span><span class="p">()</span></code></pre></div>
+
+<p>Later we&rsquo;ll give the bullet a fancy-looking explosion, but for now we&rsquo;ll just
+delete it. We also need to attach two signals:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_on_Bullet_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="n">explode</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">body</span><span class="p">.</span><span class="n">has_method</span><span class="p">(</span><span class="err">&#39;</span><span class="n">take_damage</span><span class="err">&#39;</span><span class="p">):</span>
+        <span class="n">body</span><span class="p">.</span><span class="n">take_damage</span><span class="p">(</span><span class="n">damage</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">_on_Lifetime_timeout</span><span class="p">():</span>
+    <span class="n">explode</span><span class="p">()</span></code></pre></div>
+
+<p>The bullet might hit a variety of bodies. Some of them will take damage, and some
+won&rsquo;t. By using <code>has_method()</code> we can deal the bullet&rsquo;s damage to any body that
+accepts it.</p>
+
+<h2 id="player-bullet">Player Bullet</h2>
+
+<p>For the player bullet, create a new inherited scene and use one of the images
+from the spritesheet.</p>
+
+<p><a href="/blog/img/tanks_player_bullet.png"><img src="/blog/img/tanks_player_bullet.png" width="300"></a></p>
+
+<p>Note that most of the bullets in the spritesheet are drawn facing <em>left</em>. To correct this,
+set the Sprite&rsquo;s <em>Rotation Degrees</em> to <code>180</code> (alternatively, you can use <em>Flip H</em>).</p>
+
+<p>Next, add a collision shape. You can use a rectangle or a capsule here - it won&rsquo;t really make
+much difference as long as you don&rsquo;t scale incorrectly.</p>
+
+<p>Attach a script that extends from <code>res://bullets/Bullet.gd</code>, although we don&rsquo;t have
+anything extra to add to the player bullet right now. Don&rsquo;t forget to set the <em>Speed</em>,
+<em>Damage</em>, and <em>Lifetime</em> properties in the Inspector. I&rsquo;m using <code>750</code>, <code>10</code>, and <code>0.5</code>
+respectively.</p>
+
+<p>The next step is to make the &ldquo;shoot&rdquo; action instance a bullet.</p>
+
+<h3 id="bullet-handling">Bullet Handling</h3>
+
+<p>This is where a lot of beginners run into trouble. If you instance a bullet and
+add it as a child of the player, you&rsquo;ll see something odd. When you move or turn after
+firing, the bullet&rsquo;s path changes too!</p>
+
+<p><a href="/blog/img/tanks_child_bullets.gif"><img src="/blog/img/tanks_child_bullets.gif" width="250"></a></p>
+
+<p>This is because a child node&rsquo;s transform follows its parent&rsquo;s. One common solution
+is to make a &ldquo;container&rdquo; using a <code>Node</code>. Since <code>Node</code> has no 2d positional information,
+its children will not inherit any transforms. However, the problem with this is that
+since the bullets are still part of the object&rsquo;s scene, if the object is deleted, so
+are the bullets.</p>
+
+<p>In order to avoid this, the bullet should be independent of the object that fired
+it. The tank should shoot, and then no longer have any responsibility for or
+knowledge of the bullet. We can accomplish this by using a signal, &ldquo;emitting&rdquo;
+the bullet, and letting some other node (our main scene in this case) take responsibility
+for managing the bullet.</p>
+
+<p>We already made a <code>Bullet</code> export variable on the player, so drag the PlayerBullet
+into this in the Inspector.</p>
+
+<p>Since both the enemy and the player tank will be firing, we can add the shooting
+code to the generic Tank.gd script.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">signal</span> <span class="n">shoot</span>
+
+<span class="kd">func</span> <span class="nf">shoot</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">can_shoot</span><span class="p">:</span>
+        <span class="n">can_shoot</span> <span class="p">=</span> <span class="kc">false</span>
+        <span class="err">$</span><span class="n">GunTimer</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="kd">var</span> <span class="nv">dir</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="n">rotated</span><span class="p">(</span><span class="err">$</span><span class="n">Turret</span><span class="p">.</span><span class="n">global_rotation</span><span class="p">)</span>
+        <span class="n">emit_signal</span><span class="p">(</span><span class="err">&#39;</span><span class="n">shoot</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">Bullet</span><span class="p">,</span>
+                <span class="err">$</span><span class="n">Turret</span><span class="o">/</span><span class="n">Muzzle</span><span class="p">.</span><span class="n">global_position</span><span class="p">,</span> <span class="n">dir</span><span class="p">)</span></code></pre></div>
+
+<p>When the shoot function is triggered, it emits the <code>shoot</code> signal and passes
+along the location and direction where the bullet needs to start.</p>
+
+<p>Add this to the <code>control()</code> function of the Player.gd script:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="k">if</span> <span class="n">Input</span><span class="p">.</span><span class="n">is_action_just_pressed</span><span class="p">(</span><span class="err">&#39;</span><span class="n">click</span><span class="err">&#39;</span><span class="p">):</span>
+    <span class="n">shoot</span><span class="p">()</span></code></pre></div>
+
+<p>Now if you run the game, clicking will emit the signal with the bullet. Even though
+we haven&rsquo;t connected the signal to anything, the player doesn&rsquo;t &ldquo;know&rdquo; there&rsquo;s any
+problem. You can even run the player scene alone, so that it has no parent, and it
+will continue to function even though the bullets don&rsquo;t actually appear.</p>
+
+<h3 id="map-script">Map script</h3>
+
+<p>In the map script, we need a function to handle the emitted bullets. This function
+doesn&rsquo;t care whether it was the player or any other object that&rsquo;s firing. It just
+needs to accept the incoming bullet and add it to the scene.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_on_Tank_shoot</span><span class="p">(</span><span class="n">bullet</span><span class="p">,</span> <span class="n">_position</span><span class="p">,</span> <span class="n">_direction</span><span class="p">):</span>
+    <span class="kd">var</span> <span class="nv">b</span> <span class="p">=</span> <span class="n">bullet</span><span class="p">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">add_child</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="n">b</span><span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="n">_position</span><span class="p">,</span> <span class="n">_direction</span><span class="p">)</span></code></pre></div>
+
+<p>Now in the map&rsquo;s player instance, we can connect the <code>shoot</code> signal to this new
+function.</p>
+
+<p>Run the scene and you should be able to shoot as expected.
+<a href="/blog/img/tanks_player_shoot.gif"><img src="/blog/img/tanks_player_shoot.gif" width="250"></a></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That&rsquo;ll do it for Part 4 of this series. In the next part we&rsquo;ll make the enemy
+tanks shoot as well, and create another enemy type: a machine-gun turret.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part04-download-the-code-for-this-part-a"><a href="https://github.com/kidscancode/topdown_tanks/releases/tag/part04">Download the code for this part</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>

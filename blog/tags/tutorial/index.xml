@@ -7,7 +7,251 @@
     <language>en-us</language>
     
     
-    <updated>Thu, 12 Apr 2018 14:12:12 PDT</updated>
+    <updated>Thu, 19 Apr 2018 14:14:12 PDT</updated>
+    
+    <item>
+      <title>Topdown Tank Battle: Part 4</title>
+      <link>/blog/2018/04/godot3_tanks_part4/</link>
+      <pubDate>Thu, 19 Apr 2018 14:14:12 PDT</pubDate>
+      
+      <guid>/blog/2018/04/godot3_tanks_part4/</guid>
+      <description>&lt;p&gt;In this tutorial series, we&amp;rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&amp;rsquo;s workflow and show you various techniques that you can apply to your own projects.&lt;/p&gt;
+
+&lt;p&gt;This is Part 4: Player shooting&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/UKfzBnfh4Ak&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;h3 id=&#34;physics-layers&#34;&gt;Physics Layers&lt;/h3&gt;
+
+&lt;p&gt;As we add more objects to the game, the interactions between them are going to be
+more and more complex. We&amp;rsquo;ll use Godot&amp;rsquo;s &lt;em&gt;physics layer&lt;/em&gt; system to organize what
+other objects can &amp;ldquo;see&amp;rdquo; and interact with.&lt;/p&gt;
+
+&lt;p&gt;To make it easier to track layers, you can assign names to them in &lt;em&gt;Project Settings -&amp;gt;
+Layer Names&lt;/em&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_physics_layers.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_physics_layers.png&#34; width=&#34;450&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Screenshot: setting layers&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Here are the layer settings you should use for the object&amp;rsquo;s we&amp;rsquo;ve made so far:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Object&lt;/th&gt;
+&lt;th&gt;Layer(s)&lt;/th&gt;
+&lt;th&gt;Mask&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Player&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;player&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;environment&lt;/code&gt;, &lt;code&gt;enemies&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;EnemyTank&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;enemies&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;environment&lt;/code&gt;, &lt;code&gt;player&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Enemy DetectRadius&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;enemies&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;player&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Note that we haven&amp;rsquo;t put &lt;code&gt;enemies&lt;/code&gt; in the enemy tank&amp;rsquo;s mask. This way if we have
+two enemy tanks that have overlapping paths, they&amp;rsquo;ll just drive through each other.
+We may change this later, but for now, it&amp;rsquo;ll keep things simple.&lt;/p&gt;
+
+&lt;p&gt;Also, since we set the &lt;code&gt;DetectRadius&lt;/code&gt; area&amp;rsquo;s mask to &lt;code&gt;players&lt;/code&gt; it won&amp;rsquo;t &amp;ldquo;see&amp;rdquo; any
+other objects. This means we can simplify the code a little bit, changing this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_DetectRadius_body_entered&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;target&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;to this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_DetectRadius_body_entered&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;target&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&#34;bullet-scene&#34;&gt;Bullet Scene&lt;/h2&gt;
+
+&lt;p&gt;As with the tanks, we&amp;rsquo;re going to make a master bullet scene that will be inherited
+by any bullet types we may make. Here&amp;rsquo;s the scene setup:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Area2D&lt;/code&gt; named &amp;ldquo;Bullet&amp;rdquo;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Sprite&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CollisionShape2D&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Timer&lt;/code&gt; named &amp;ldquo;Lifetime&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Area2Ds are convenient for projectiles because they don&amp;rsquo;t need physics or collisions,
+they just need to detect &lt;em&gt;contact&lt;/em&gt;. When the bullet contacts an object, it will
+explode and deal damage.&lt;/p&gt;
+
+&lt;p&gt;The &amp;ldquo;Lifetime&amp;rdquo; timer will be used to destroy the bullet after a given time.&lt;/p&gt;
+
+&lt;p&gt;Save the scene in a &amp;ldquo;bullets&amp;rdquo; folder, where we&amp;rsquo;ll also save the objects that inherit
+from it.&lt;/p&gt;
+
+&lt;h3 id=&#34;bullet-script&#34;&gt;Bullet script&lt;/h3&gt;
+
+&lt;p&gt;Attach a script, which will serve as the shared code for all projectiles.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Area2D&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;speed&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;damage&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;float&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;lifetime&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;_position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_direction&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;position&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_position&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;rotation&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_direction&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;angle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Lifetime&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;wait_time&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;lifetime&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_direction&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;position&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;explode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Later we&amp;rsquo;ll give the bullet a fancy-looking explosion, but for now we&amp;rsquo;ll just
+delete it. We also need to attach two signals:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_Bullet_body_entered&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;explode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;has_method&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;take_damage&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;take_damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_Lifetime_timeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;explode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The bullet might hit a variety of bodies. Some of them will take damage, and some
+won&amp;rsquo;t. By using &lt;code&gt;has_method()&lt;/code&gt; we can deal the bullet&amp;rsquo;s damage to any body that
+accepts it.&lt;/p&gt;
+
+&lt;h2 id=&#34;player-bullet&#34;&gt;Player Bullet&lt;/h2&gt;
+
+&lt;p&gt;For the player bullet, create a new inherited scene and use one of the images
+from the spritesheet.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_player_bullet.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_player_bullet.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that most of the bullets in the spritesheet are drawn facing &lt;em&gt;left&lt;/em&gt;. To correct this,
+set the Sprite&amp;rsquo;s &lt;em&gt;Rotation Degrees&lt;/em&gt; to &lt;code&gt;180&lt;/code&gt; (alternatively, you can use &lt;em&gt;Flip H&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;Next, add a collision shape. You can use a rectangle or a capsule here - it won&amp;rsquo;t really make
+much difference as long as you don&amp;rsquo;t scale incorrectly.&lt;/p&gt;
+
+&lt;p&gt;Attach a script that extends from &lt;code&gt;res://bullets/Bullet.gd&lt;/code&gt;, although we don&amp;rsquo;t have
+anything extra to add to the player bullet right now. Don&amp;rsquo;t forget to set the &lt;em&gt;Speed&lt;/em&gt;,
+&lt;em&gt;Damage&lt;/em&gt;, and &lt;em&gt;Lifetime&lt;/em&gt; properties in the Inspector. I&amp;rsquo;m using &lt;code&gt;750&lt;/code&gt;, &lt;code&gt;10&lt;/code&gt;, and &lt;code&gt;0.5&lt;/code&gt;
+respectively.&lt;/p&gt;
+
+&lt;p&gt;The next step is to make the &amp;ldquo;shoot&amp;rdquo; action instance a bullet.&lt;/p&gt;
+
+&lt;h3 id=&#34;bullet-handling&#34;&gt;Bullet Handling&lt;/h3&gt;
+
+&lt;p&gt;This is where a lot of beginners run into trouble. If you instance a bullet and
+add it as a child of the player, you&amp;rsquo;ll see something odd. When you move or turn after
+firing, the bullet&amp;rsquo;s path changes too!&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_child_bullets.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_child_bullets.gif&#34; width=&#34;250&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This is because a child node&amp;rsquo;s transform follows its parent&amp;rsquo;s. One common solution
+is to make a &amp;ldquo;container&amp;rdquo; using a &lt;code&gt;Node&lt;/code&gt;. Since &lt;code&gt;Node&lt;/code&gt; has no 2d positional information,
+its children will not inherit any transforms. However, the problem with this is that
+since the bullets are still part of the object&amp;rsquo;s scene, if the object is deleted, so
+are the bullets.&lt;/p&gt;
+
+&lt;p&gt;In order to avoid this, the bullet should be independent of the object that fired
+it. The tank should shoot, and then no longer have any responsibility for or
+knowledge of the bullet. We can accomplish this by using a signal, &amp;ldquo;emitting&amp;rdquo;
+the bullet, and letting some other node (our main scene in this case) take responsibility
+for managing the bullet.&lt;/p&gt;
+
+&lt;p&gt;We already made a &lt;code&gt;Bullet&lt;/code&gt; export variable on the player, so drag the PlayerBullet
+into this in the Inspector.&lt;/p&gt;
+
+&lt;p&gt;Since both the enemy and the player tank will be firing, we can add the shooting
+code to the generic Tank.gd script.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;signal&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;shoot&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;shoot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;can_shoot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;can_shoot&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;
+        &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GunTimer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;dir&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotated&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Turret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;global_rotation&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;emit_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shoot&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Turret&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Muzzle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;global_position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;When the shoot function is triggered, it emits the &lt;code&gt;shoot&lt;/code&gt; signal and passes
+along the location and direction where the bullet needs to start.&lt;/p&gt;
+
+&lt;p&gt;Add this to the &lt;code&gt;control()&lt;/code&gt; function of the Player.gd script:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_just_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;click&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;shoot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now if you run the game, clicking will emit the signal with the bullet. Even though
+we haven&amp;rsquo;t connected the signal to anything, the player doesn&amp;rsquo;t &amp;ldquo;know&amp;rdquo; there&amp;rsquo;s any
+problem. You can even run the player scene alone, so that it has no parent, and it
+will continue to function even though the bullets don&amp;rsquo;t actually appear.&lt;/p&gt;
+
+&lt;h3 id=&#34;map-script&#34;&gt;Map script&lt;/h3&gt;
+
+&lt;p&gt;In the map script, we need a function to handle the emitted bullets. This function
+doesn&amp;rsquo;t care whether it was the player or any other object that&amp;rsquo;s firing. It just
+needs to accept the incoming bullet and add it to the scene.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_Tank_shoot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_direction&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;b&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bullet&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;add_child&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;_position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_direction&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now in the map&amp;rsquo;s player instance, we can connect the &lt;code&gt;shoot&lt;/code&gt; signal to this new
+function.&lt;/p&gt;
+
+&lt;p&gt;Run the scene and you should be able to shoot as expected.
+&lt;a href=&#34;/blog/blog/img/tanks_player_shoot.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_player_shoot.gif&#34; width=&#34;250&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;That&amp;rsquo;ll do it for Part 4 of this series. In the next part we&amp;rsquo;ll make the enemy
+tanks shoot as well, and create another enemy type: a machine-gun turret.&lt;/p&gt;
+
+&lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part04-download-the-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part04&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Topdown Tank Battle: Part 3</title>
@@ -2803,136 +3047,6 @@ node is perfect for implementing characters and other moving bodies that don&amp
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2017-04-godot-101-09-godot-101-part-9-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/04/godot_101_09/&#34;&gt;Godot 101 - Part 9&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Godot 101 - Part 7: Using Signals</title>
-      <link>/blog/2017/03/godot_101_07/</link>
-      <pubDate>Wed, 01 Mar 2017 05:22:12 -0700</pubDate>
-      
-      <guid>/blog/2017/03/godot_101_07/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;This is part 7 of &amp;ldquo;Godot 101&amp;rdquo;. In this installment, we&amp;rsquo;ll learn how properly communicate between nodes, using a Godot feature called a &lt;em&gt;signal&lt;/em&gt;.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2017/02/godot_101_01/&#34;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
-
-&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
-&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/5WnumDQyJhg&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;communicating-between-scenes&#34;&gt;Communicating between scenes&lt;/h3&gt;
-
-&lt;p&gt;In the last part, we caused the gems to disappear when they are touched by the player.  Now, we want something to happen when the gems are collected - specifically, we want to increase the player&amp;rsquo;s score.  The problem we have is that &lt;code&gt;score&lt;/code&gt; is a variable in the &lt;code&gt;main&lt;/code&gt; scene&amp;rsquo;s script, but the gem collection happens on the gem&amp;rsquo;s script.  Put another way, we need a way for the gem&amp;rsquo;s script to change a variable on &lt;code&gt;main&lt;/code&gt;.  The tree looks like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_07_01.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_07_01.png&#34; width=&#34;250&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;Each &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_area_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_area_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;gem&lt;/code&gt; is a child of &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_node&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_node&#34;&gt;&lt;/svg&gt;&lt;code&gt;gem_container&lt;/code&gt;, which is a child of &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_node&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_node&#34;&gt;&lt;/svg&gt;&lt;code&gt;main&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;obvious-but-wrong&#34;&gt;Obvious, but wrong&lt;/h3&gt;
-
-&lt;p&gt;Many beginners (and many beginner tutorials) will solve this problem in an obvious but incorrect manner.  They look at the tree image above and think, &amp;ldquo;main is 2 levels above the gem, so I just need to go 2 levels up the tree.&amp;rdquo;  The result is a solution like this to the &lt;code&gt;gem&lt;/code&gt; script:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_gem_area_enter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;area&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;area&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;player&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;../..&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;gem_grabbed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;And on &lt;code&gt;main.gd&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gem_grabbed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;score&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;score&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now, this &lt;em&gt;will&lt;/em&gt; work, and you will see the score being printed every time you grab a gem. However there are several problems with this approach.  First, it can ruin your ability to test a scene separately.  For example, we can run the gem scene by itself (remember how we did that with the player to test out movement?), but when we do, there is no node 2 levels above it!  If you have code that uses &lt;code&gt;get_node(&#39;../..&#39;)&lt;/code&gt;, it will report an error.&lt;/p&gt;
-
-&lt;p&gt;This method is also very fragile.  Because the gem scene is now written specifically to work with the main scene as it is &lt;em&gt;now&lt;/em&gt;, if you ever change the structure of &lt;code&gt;main&lt;/code&gt;, your gem code will be broken.&lt;/p&gt;
-
-&lt;h3 id=&#34;signaling-events&#34;&gt;Signaling events&lt;/h3&gt;
-
-&lt;p&gt;The correct method to solve this problem in Godot is to use &lt;em&gt;signals&lt;/em&gt;.  We&amp;rsquo;ve already used one of the built-in signals that &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_area2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_area_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_area_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;Area2D&lt;/code&gt;&lt;/a&gt; provides to trigger an event.  Now, we want to define a &lt;em&gt;custom&lt;/em&gt; signal that we can use when the gem is collected.  This can be done with the &lt;code&gt;signal&lt;/code&gt; keyword:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Area2D&lt;/span&gt;
-
-&lt;span class=&#34;hl&#34;&gt;&lt;span class=&#34;n&#34;&gt;signal&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gem_grabbed&lt;/span&gt;
-&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_gem_area_enter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;area&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;area&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;player&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-&lt;span class=&#34;hl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;emit_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;gem_grabbed&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;        &lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Here, we&amp;rsquo;ve created a custom signal called &lt;code&gt;gem_grabbed&lt;/code&gt; and then when the player touches the gem, we use &lt;code&gt;emit_signal()&lt;/code&gt; to trigger it.&lt;/p&gt;
-
-&lt;p&gt;Now, in &lt;code&gt;main.gd&lt;/code&gt; we just need to connect that signal to a function:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;spawn_gems&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;num&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;num&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;g&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gem&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;gem_container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add_child&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;hl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;connect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;gem_grabbed&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;_on_gem_grabbed&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;        &lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_pos&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;...&lt;/span&gt;
-
-&lt;span class=&#34;hl&#34;&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_gem_grabbed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-&lt;/span&gt;    &lt;span class=&#34;n&#34;&gt;score&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;score&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;As each gem instance is created, we connect its &lt;code&gt;gem_grabbed&lt;/code&gt; signal to a local function called &lt;code&gt;on_gem_grabbed()&lt;/code&gt; (following the &lt;code&gt;_on_*&lt;/code&gt; naming scheme that Godot uses by default). Any time that signal is emitted, the function will be called.&lt;/p&gt;
-
-&lt;p&gt;Running the game now will result in exactly the same behavior as before, but by using Godot&amp;rsquo;s &lt;code&gt;signal&lt;/code&gt; functionality, we avoid the pitfalls of hard-coding the tree structure in our code.  If you ever find yourself typing &lt;code&gt;get_node(&#39;..&#39;)&lt;/code&gt; or &lt;code&gt;get_tree().get_root()&lt;/code&gt; you probably would be better off using a signal instead.&lt;/p&gt;
-
-&lt;h3 id=&#34;displaying-information&#34;&gt;Displaying information&lt;/h3&gt;
-
-&lt;p&gt;Finally, let&amp;rsquo;s display the score on the game screen, rather than printing it in the console log.  To start, we&amp;rsquo;re going to add to &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_node&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_node&#34;&gt;&lt;/svg&gt;&lt;code&gt;main&lt;/code&gt; a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_control.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_control&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_control&#34;&gt;&lt;/svg&gt;&lt;code&gt;Control&lt;/code&gt;&lt;/a&gt; node.  This is the base node type for all Godot&amp;rsquo;s various GUI nodes.  Name this node &lt;code&gt;HUD&lt;/code&gt; (&amp;ldquo;heads-up display&amp;rdquo;).  The &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_control&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_control&#34;&gt;&lt;/svg&gt;&lt;code&gt;HUD&lt;/code&gt; will contain all the nodes we want to have displaying information on the screen, as an overlay on top of the rest of the game.&lt;/p&gt;
-
-&lt;p&gt;We want the &lt;code&gt;HUD&lt;/code&gt; to be the same size as our game window, so we will use the &lt;code&gt;anchor&lt;/code&gt; properties of the node (all &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_control.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_control&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_control&#34;&gt;&lt;/svg&gt;&lt;code&gt;Control&lt;/code&gt;&lt;/a&gt; nodes have these properties) and set them like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_07_02.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_07_02.png&#34; width=&#34;250&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;These settings control where the margin of the node will be measured in relation to the parent node.  So if we set our margins like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_07_03.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_07_03.png&#34; width=&#34;250&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;The &lt;code&gt;HUD&lt;/code&gt;&amp;rsquo;s size will be exactly the same as the parent&amp;rsquo;s, even if the parent node changes. Click the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_lock&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_lock&#34;&gt;&lt;code&gt;Lock&lt;/code&gt;&lt;/svg&gt; button at the top to prevent accidentally clicking the node and moving it.&lt;/p&gt;
-
-&lt;p&gt;Now to display the score, we will use a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_label.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_label&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_label&#34;&gt;&lt;/svg&gt;&lt;code&gt;Label&lt;/code&gt;&lt;/a&gt; and name it &lt;code&gt;score_label&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;This is a simple node that displays text.  You can type directly into the &lt;code&gt;Text&lt;/code&gt; property and see it on the screen:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_07_04.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_07_04.png&#34; width=&#34;250&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;We won&amp;rsquo;t be talking about formatting the text (fonts, styles, etc.) just yet, but if you want the text bigger, don&amp;rsquo;t resize the node (that will set the size of the node, not the text inside), you can use the &lt;code&gt;Scale&lt;/code&gt; property in the inspector.  Set it to something like &lt;code&gt;(2.5, 2.5)&lt;/code&gt;.  It won&amp;rsquo;t look great, but that&amp;rsquo;s ok for now.&lt;/p&gt;
-
-&lt;p&gt;To have the score displayed, we just need to have our script update the &lt;code&gt;Text&lt;/code&gt; property whenever the score changes, so add this to &lt;code&gt;main.gd&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;hl&#34;&gt;&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;score_label&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;HUD/score_label&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_gem_grabbed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-	&lt;span class=&#34;n&#34;&gt;score&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;
-&lt;span class=&#34;hl&#34;&gt;	&lt;span class=&#34;n&#34;&gt;score_label&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;score&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now we can see our score change whever we grab a gem:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_07_05.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_07_05.gif&#34; width=&#34;350&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h2&gt;
-
-&lt;p&gt;Signals are a very powerful feature in Godot, and something that is important to understand well.  Resist the temptation to use &lt;code&gt;get_node(&#39;..&#39;)&lt;/code&gt;, especially when using instanced scenes. It may be hard to grasp at first, but with practice you&amp;rsquo;ll find it&amp;rsquo;s a far more robust way of doing things.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;a-href-blog-2017-03-godot-101-08-godot-101-part-8-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/03/godot_101_08/&#34;&gt;Godot 101 - Part 8&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
