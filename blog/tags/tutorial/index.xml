@@ -7,7 +7,163 @@
     <language>en-us</language>
     
     
-    <updated>Thu, 19 Apr 2018 14:14:12 PDT</updated>
+    <updated>Thu, 26 Apr 2018 14:14:12 PDT</updated>
+    
+    <item>
+      <title>Topdown Tank Battle: Part 5</title>
+      <link>/blog/2018/04/godot3_tanks_part5/</link>
+      <pubDate>Thu, 26 Apr 2018 14:14:12 PDT</pubDate>
+      
+      <guid>/blog/2018/04/godot3_tanks_part5/</guid>
+      <description>&lt;p&gt;In this tutorial series, we&amp;rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&amp;rsquo;s workflow and show you various techniques that you can apply to your own projects.&lt;/p&gt;
+
+&lt;p&gt;This is Part 5: Enemy shooting and improved enemy movement&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;!-- You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/UKfzBnfh4Ak&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt; --&gt;
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;In the last part, we added shooting to the player, so this time we need to do the
+same for the enemy tank. But first, there&amp;rsquo;s a small fix we need to make:&lt;/p&gt;
+
+&lt;p&gt;In the enemy tank&amp;rsquo;s &lt;code&gt;Detect&lt;/code&gt; area, we attached a &lt;code&gt;CollisionShape2D&lt;/code&gt; with a circle shape.
+The problem is that when we instance the enemies, the shape is &lt;em&gt;shared&lt;/em&gt; between them.
+This means that when we set that shape&amp;rsquo;s radius in &lt;code&gt;_ready()&lt;/code&gt; all the tanks wind
+up with the same size, ignoring our &lt;code&gt;detect_radius&lt;/code&gt; property.&lt;/p&gt;
+
+&lt;p&gt;To fix this, clear the shape from the &lt;code&gt;CollisionShape2D&lt;/code&gt; in the scene, and change
+the &lt;code&gt;EnemyTank.gd&lt;/code&gt; code like so:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;circle&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CircleShape2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DetectRadius&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CollisionShape2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shape&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;circle&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DetectRadius&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CollisionShape2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shape&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;detect_radius&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This ensures that each enemy gets its own unique shape resource, set to its
+desired size.&lt;/p&gt;
+
+&lt;h2 id=&#34;enemy-bullets&#34;&gt;Enemy Bullets&lt;/h2&gt;
+
+&lt;p&gt;First, we create a new &lt;code&gt;EnemyBullet&lt;/code&gt; scene exactly like the player bullet we made
+in the last part. The only difference should be which texture you use for the
+appearance. Make sure you set the collision layer/mask properties. The enemy
+bullet should be in the &amp;ldquo;bullets&amp;rdquo; layer, and its mask should see &amp;ldquo;environment&amp;rdquo;
+and &amp;ldquo;player&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;After saving the scene, make sure to drop it in the EnemyTank&amp;rsquo;s &lt;em&gt;Bullet&lt;/em&gt;
+property.&lt;/p&gt;
+
+&lt;h3 id=&#34;aiming&#34;&gt;Aiming&lt;/h3&gt;
+
+&lt;p&gt;We already have our enemy tank aiming its turret at the player. Now we want it to
+fire, but only when it&amp;rsquo;s pointing towards the player (i.e. the angle between the
+turret and the player is small).&lt;/p&gt;
+
+&lt;p&gt;In the enemy&amp;rsquo;s &lt;code&gt;_process()&lt;/code&gt; function, we already have a direction vector pointing
+at the player, &lt;code&gt;target_dir&lt;/code&gt;, and one representing the turret&amp;rsquo;s direction, &lt;code&gt;current_dir&lt;/code&gt;.
+To check the angle between them, we can use the dot product.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Quick review of dot product:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The dot product of two unit vectors (vectors of length &lt;code&gt;1&lt;/code&gt;), is a number between
+&lt;code&gt;-1&lt;/code&gt; and &lt;code&gt;1&lt;/code&gt;. &lt;code&gt;0&lt;/code&gt; means the two vectors are exactly 90 degrees apart, and &lt;code&gt;1&lt;/code&gt; means
+they are pointing in the same direction. For a review of vector math, including
+dot product, see &lt;a href=&#34;http://docs.godotengine.org/en/latest/tutorials/math/vector_math.html&#34;&gt;http://docs.godotengine.org/en/latest/tutorials/math/vector_math.html&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;If the dot product of the two vectors is close to &lt;code&gt;1&lt;/code&gt; then the tank is aiming near
+the player, and should attempt to shoot. Update the enemy tank&amp;rsquo;s code:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;target_dir&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;global_position&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;global_position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;normalized&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+		&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;current_dir&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotated&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Turret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;global_rotation&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+		&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Turret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;global_rotation&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;current_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;linear_interpolate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;target_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;turret_speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;angle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+		&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;target_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.9&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+			&lt;span class=&#34;n&#34;&gt;shoot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We defined &lt;code&gt;shoot()&lt;/code&gt; in the base &lt;code&gt;Tank&lt;/code&gt; script, so the bullet will be emitted using
+the &lt;code&gt;shoot&lt;/code&gt; signal just like the player&amp;rsquo;s bullet.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;Main&lt;/code&gt; script already has a function, &lt;code&gt;_on_Tank_shoot&lt;/code&gt;, that can receive an
+emitted bullet. Connect each enemy instance&amp;rsquo;s &lt;code&gt;shoot&lt;/code&gt; signal to that function.&lt;/p&gt;
+
+&lt;h2 id=&#34;enemy-movement&#34;&gt;Enemy movement&lt;/h2&gt;
+
+&lt;p&gt;We can also make some improvements to the enemy&amp;rsquo;s movement. Right now, if we drive
+in front of the enemy, the collision is a bit glitchy as the two bodies try and
+slide around each other.&lt;/p&gt;
+
+&lt;p&gt;Instead, let&amp;rsquo;s make the enemy tank hit the brakes if there&amp;rsquo;s an obstacle in front
+of it. We can accomplish this by adding a &lt;code&gt;RayCast2D&lt;/code&gt; to the enemy tank scene.&lt;/p&gt;
+
+&lt;p&gt;Set the &lt;em&gt;Enabled&lt;/em&gt; property to &amp;ldquo;On&amp;rdquo; (it&amp;rsquo;s off by default), and the &amp;ldquo;Cast To&amp;rdquo; to &lt;code&gt;(100, 0)&lt;/code&gt;
+so that it projects ahead of the tank.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_raycast.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_raycast.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;em&gt;Collision Mask&lt;/em&gt; of the raycast should be set to &amp;ldquo;environment&amp;rdquo;, &amp;ldquo;enemies&amp;rdquo;, and &amp;ldquo;player&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Now we also need the enemy to change its speed. In &lt;code&gt;Tank.gd&lt;/code&gt;, change the &lt;code&gt;speed&lt;/code&gt;
+export variable to &lt;code&gt;max_speed&lt;/code&gt;. Note: this means we need to change the variable name
+in the player&amp;rsquo;s script too!&lt;/p&gt;
+
+&lt;p&gt;Add &lt;code&gt;var speed&lt;/code&gt; to the top of the enemy script. This will now be our &amp;ldquo;current&amp;rdquo; speed,
+which may change over time. If the raycast detects something, &lt;code&gt;speed&lt;/code&gt; will ramp down
+to &lt;code&gt;0&lt;/code&gt; and if it doesn&amp;rsquo;t, it will ramp up to &lt;code&gt;max_speed&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;We can accomplish this &amp;ldquo;ramping&amp;rdquo; effect using GDScript&amp;rsquo;s linear interpolation function: &lt;code&gt;lerp&lt;/code&gt;.
+Update the enemy tank&amp;rsquo;s &lt;code&gt;control()&lt;/code&gt; function:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;control&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LookAhead&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;lerp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ramp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;down&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;lerp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max_speed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.05&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ramp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;up&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;max&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;parent&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;PathFollow2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;parent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_offset&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;parent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_offset&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;other&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;movement&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;code&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;pass&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Run the scene and try it out. If you drive the player in front of the enemy tank,
+it should stop moving.&lt;/p&gt;
+
+&lt;p&gt;However, we still have a small problem: if the collision happens with an offset or
+around a corner, the ray may not &amp;ldquo;see&amp;rdquo; anything. We can improve the obstacle detection
+if we use two raycasts instead of one:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_raycast2.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_raycast2.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;If you click on the &lt;code&gt;LookAhead&lt;/code&gt; node and press &lt;em&gt;Ctrl+D&lt;/em&gt; you can duplicate the node
+with all of its settings. Adjust the &lt;em&gt;Position&lt;/em&gt; of each so that one is shifted
+&lt;code&gt;30&lt;/code&gt; pixels up and the other  down.&lt;/p&gt;
+
+&lt;p&gt;Now we just need to make sure we check both of them:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LookAhead1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;or&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LookAhead2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;That&amp;rsquo;ll do it for Part 4 of this series. In the next part we&amp;rsquo;ll make the enemy
+tanks shoot as well, and create another enemy type: a machine-gun turret.&lt;/p&gt;
+
+&lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part04-download-the-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part04&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Topdown Tank Battle: Part 4</title>
@@ -2913,140 +3069,6 @@ node is perfect for implementing characters and other moving bodies that don&amp
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2017-04-godot-101-10-godot-101-part-10-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/04/godot_101_10/&#34;&gt;Godot 101 - Part 10&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Godot 101 - Part 8: Tweens and Timers</title>
-      <link>/blog/2017/03/godot_101_08/</link>
-      <pubDate>Sat, 18 Mar 2017 05:22:12 PDT</pubDate>
-      
-      <guid>/blog/2017/03/godot_101_08/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;This is part 8 of &amp;ldquo;Godot 101&amp;rdquo;. In this installment, we&amp;rsquo;ll learn about two of the simplest yet most useful nodes in Godot: the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tween.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_tween&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_tween&#34;&gt;&lt;/svg&gt;Tween&lt;/a&gt; and the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_timer.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_timer&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_timer&#34;&gt;&lt;/svg&gt;Timer&lt;/a&gt;.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2017/02/godot_101_01/&#34;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
-
-&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
-&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/ToXknbBmCr8&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;adding-visual-appeal&#34;&gt;Adding visual appeal&lt;/h3&gt;
-
-&lt;p&gt;In game design circles, it&amp;rsquo;s sometimes called &amp;ldquo;juice&amp;rdquo; - the little visual effects that make the difference between a game that&amp;rsquo;s boring and a game that feels great to play.&lt;/p&gt;
-
-&lt;p&gt;Collecting the gems is a perfect example of a place where we could add a little juice.  It&amp;rsquo;s not very visually appealing to see the gems just vanish like they do now.  Instead, we&amp;rsquo;re going to use a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tween.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_tween&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_tween&#34;&gt;&lt;/svg&gt;Tween&lt;/a&gt; to juice things up. Add a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tween.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_tween&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_tween&#34;&gt;&lt;/svg&gt;Tween&lt;/a&gt; to the &lt;code&gt;gem&lt;/code&gt; scene and name it &lt;code&gt;&#39;effect&#39;&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;For a great example of how Tweens work, have a look at this page: &lt;a href=&#34;http://easings.net&#34; target=&#34;_blank&#34;&gt;Easings.net&lt;/a&gt;.  &amp;ldquo;Easing&amp;rdquo; is another word that&amp;rsquo;s sometimes used in place of &amp;ldquo;tweening&amp;rdquo;.  Essentially, a tween is a way to change some value over time (from a start value to an end value) using a particular function. Hover over the different functions on this page to see how they work.&lt;/p&gt;
-
-&lt;p&gt;When choosing a tween, you have two choices to make: 1) which function to use (examples: Sine or Bounce) and 2) which direction to apply that function (examples: In or In-Out).&lt;/p&gt;
-
-&lt;h3 id=&#34;interpolating-properties&#34;&gt;Interpolating properties&lt;/h3&gt;
-
-&lt;p&gt;&amp;ldquo;Interpolation&amp;rdquo; means calculating the value(s) between two points.  In this case, we want to alter some of the properties of the gem&amp;rsquo;s &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;sprite&lt;/code&gt; node.  Specifically, the scale.  You can find Godot&amp;rsquo;s name for a node&amp;rsquo;s properties by hovering over the property name in the Inspector:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_08_01.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_08_01.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;This tells us that we will be modifying the property &lt;code&gt;transform/scale&lt;/code&gt;.  We will use the tween&amp;rsquo;s &lt;code&gt;interpolate_property()&lt;/code&gt; function to define the animation:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Area2D&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;effect&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;sprite&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;signal&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gem_grabbed&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;interpolate_property&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;transform/scale&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_scale&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;2.0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;2.0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TRANS_QUAD&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;EASE_OUT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_gem_area_enter&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;area&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;area&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;player&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;emit_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;gem_grabbed&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;clear_shapes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_effect_tween_complete&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;object&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;key&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;code&gt;interpolate_property()&lt;/code&gt; takes a number of arguments:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;target object: the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;sprite&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;target property: &lt;code&gt;transform/scale&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;starting value: the current value obtained from &lt;code&gt;get_scale()&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;ending value: we want to scale up to 2x&lt;/li&gt;
-&lt;li&gt;duration (in s): 0.3s because we want a quick effect&lt;/li&gt;
-&lt;li&gt;tween function: feel free to try other ones besides &lt;code&gt;TRANS_QUAD&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;tween &amp;ldquo;ends&amp;rdquo;: you can also use other settings like &lt;code&gt;EASE_IN&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Now that the effect is set up, we use &lt;code&gt;start()&lt;/code&gt; to start it when the gem is touched.  However, we don&amp;rsquo;t want the gem to still be detecting collisions during the animation time, so we use &lt;code&gt;clear_shapes()&lt;/code&gt; to remove the collision detection.  Finally, we connect the tween&amp;rsquo;s &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_signal&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_signal&#34;&gt;&lt;/svg&gt;&lt;code&gt;tween_complete&lt;/code&gt; signal to actually delete the node.  Now our animation looks like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_08_02.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_08_02.gif&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;This is good, but we can do even better by interpolating &lt;em&gt;another&lt;/em&gt; property as well: the opacity.  Tweens get really powerful when you apply them to multiple properties at once.  Add this to the gem&amp;rsquo;s &lt;code&gt;_ready()&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;effect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;interpolate_property&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;visibility/opacity&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-    &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TRANS_QUAD&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;EASE_OUT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now at the same time we&amp;rsquo;re scaling the sprite larger, we&amp;rsquo;re changing the opacity from 1 (fully visible) to 0 (fully transparent).  Now it looks even nicer:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_08_03.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_08_03.gif&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;timers&#34;&gt;Timers&lt;/h3&gt;
-
-&lt;p&gt;Next we&amp;rsquo;re going to use the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_timer.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_timer&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_timer&#34;&gt;&lt;/svg&gt;Timer&lt;/a&gt; node to give our game a goal: collect as many gems as you can before the time runs out!&lt;/p&gt;
-
-&lt;p&gt;Create a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_timer.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_timer&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_timer&#34;&gt;&lt;/svg&gt;Timer&lt;/a&gt; node and call it &lt;code&gt;&#39;game_timer&#39;&lt;/code&gt;.  While you&amp;rsquo;re at it, add another &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_label.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_label&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_label&#34;&gt;&lt;/svg&gt;Label&lt;/a&gt; to the &lt;code&gt;HUD&lt;/code&gt; to display the countdown - call it &lt;code&gt;&#39;time_label&#39;&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;A &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_timer.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_timer&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_timer&#34;&gt;&lt;/svg&gt;Timer&lt;/a&gt; node is also very simple, with only a few properties - set them as follows:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_08_04.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_08_04.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Wait Time&lt;/code&gt;: how long the timer should run, in seconds&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;One Shot&lt;/code&gt;: if this is &lt;code&gt;false&lt;/code&gt;, the timer will restart every time it reaches zero&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Autostart&lt;/code&gt;: if this is &amp;lsquo;true&amp;rsquo;, the timer will start automatically when the node enters the tree&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Here is the code we need to add to &lt;code&gt;main.gd&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;time_label&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;HUD/time_label&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;game_timer&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;game_timer&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;time_label&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_text&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;game_timer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_time_left&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())))&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_game_timer_timeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;player&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Don&amp;rsquo;t forget to connect the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_signal&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_signal&#34;&gt;&lt;/svg&gt;&lt;code&gt;timeout&lt;/code&gt; signal.  Here, we&amp;rsquo;re just disabling the player when the time runs out.  You might want to also add a &amp;ldquo;Game Over&amp;rdquo; label, setting it to &lt;code&gt;hidden&lt;/code&gt; when the game starts, and then showing it at game end.&lt;/p&gt;
-
-&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h2&gt;
-
-&lt;p&gt;These two nodes are incredibly useful for many, many situations.  You should try to use tweens whenever possible - they just make everything look better.  Also, note that you can create these nodes directly in code as an alternative to adding them to the scene tree:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tween&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;add_child&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tween&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Feel free to use timers all over your projects as well. They can be used to measure durations, create regular repeating effects, and lots more.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;a-href-blog-2017-04-godot-101-09-godot-101-part-9-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/04/godot_101_09/&#34;&gt;Godot 101 - Part 9&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 

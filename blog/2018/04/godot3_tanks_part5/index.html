@@ -1,0 +1,318 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.39" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Topdown Tank Battle: Part 5 &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">41</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">24</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">41</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Topdown Tank Battle: Part 5</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Thu, Apr 26, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			</h6></span>
+
+			      <p>In this tutorial series, we&rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&rsquo;s workflow and show you various techniques that you can apply to your own projects.</p>
+
+<p>This is Part 5: Enemy shooting and improved enemy movement</p>
+
+<p></p>
+
+<!-- You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UKfzBnfh4Ak" frameborder="0" allowfullscreen></iframe> -->
+
+<h2 id="introduction">Introduction</h2>
+
+<p>In the last part, we added shooting to the player, so this time we need to do the
+same for the enemy tank. But first, there&rsquo;s a small fix we need to make:</p>
+
+<p>In the enemy tank&rsquo;s <code>Detect</code> area, we attached a <code>CollisionShape2D</code> with a circle shape.
+The problem is that when we instance the enemies, the shape is <em>shared</em> between them.
+This means that when we set that shape&rsquo;s radius in <code>_ready()</code> all the tanks wind
+up with the same size, ignoring our <code>detect_radius</code> property.</p>
+
+<p>To fix this, clear the shape from the <code>CollisionShape2D</code> in the scene, and change
+the <code>EnemyTank.gd</code> code like so:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_ready</span><span class="p">():</span>
+    <span class="kd">var</span> <span class="nv">circle</span> <span class="p">=</span> <span class="n">CircleShape2D</span><span class="p">.</span><span class="n">new</span><span class="p">()</span>
+    <span class="err">$</span><span class="n">DetectRadius</span><span class="o">/</span><span class="n">CollisionShape2D</span><span class="p">.</span><span class="n">shape</span> <span class="p">=</span> <span class="n">circle</span>
+    <span class="err">$</span><span class="n">DetectRadius</span><span class="o">/</span><span class="n">CollisionShape2D</span><span class="p">.</span><span class="n">shape</span><span class="p">.</span><span class="n">radius</span> <span class="p">=</span> <span class="n">detect_radius</span></code></pre></div>
+
+<p>This ensures that each enemy gets its own unique shape resource, set to its
+desired size.</p>
+
+<h2 id="enemy-bullets">Enemy Bullets</h2>
+
+<p>First, we create a new <code>EnemyBullet</code> scene exactly like the player bullet we made
+in the last part. The only difference should be which texture you use for the
+appearance. Make sure you set the collision layer/mask properties. The enemy
+bullet should be in the &ldquo;bullets&rdquo; layer, and its mask should see &ldquo;environment&rdquo;
+and &ldquo;player&rdquo;.</p>
+
+<p>After saving the scene, make sure to drop it in the EnemyTank&rsquo;s <em>Bullet</em>
+property.</p>
+
+<h3 id="aiming">Aiming</h3>
+
+<p>We already have our enemy tank aiming its turret at the player. Now we want it to
+fire, but only when it&rsquo;s pointing towards the player (i.e. the angle between the
+turret and the player is small).</p>
+
+<p>In the enemy&rsquo;s <code>_process()</code> function, we already have a direction vector pointing
+at the player, <code>target_dir</code>, and one representing the turret&rsquo;s direction, <code>current_dir</code>.
+To check the angle between them, we can use the dot product.</p>
+
+<p><strong>Quick review of dot product:</strong></p>
+
+<blockquote>
+<p>The dot product of two unit vectors (vectors of length <code>1</code>), is a number between
+<code>-1</code> and <code>1</code>. <code>0</code> means the two vectors are exactly 90 degrees apart, and <code>1</code> means
+they are pointing in the same direction. For a review of vector math, including
+dot product, see <a href="http://docs.godotengine.org/en/latest/tutorials/math/vector_math.html">http://docs.godotengine.org/en/latest/tutorials/math/vector_math.html</a></p>
+</blockquote>
+
+<p>If the dot product of the two vectors is close to <code>1</code> then the tank is aiming near
+the player, and should attempt to shoot. Update the enemy tank&rsquo;s code:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">target</span><span class="p">:</span>
+		<span class="kd">var</span> <span class="nv">target_dir</span> <span class="p">=</span> <span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">global_position</span> <span class="o">-</span> <span class="n">global_position</span><span class="p">).</span><span class="n">normalized</span><span class="p">()</span>
+		<span class="kd">var</span> <span class="nv">current_dir</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="n">rotated</span><span class="p">(</span><span class="err">$</span><span class="n">Turret</span><span class="p">.</span><span class="n">global_rotation</span><span class="p">)</span>
+		<span class="err">$</span><span class="n">Turret</span><span class="p">.</span><span class="n">global_rotation</span> <span class="p">=</span> <span class="n">current_dir</span><span class="p">.</span><span class="n">linear_interpolate</span><span class="p">(</span><span class="n">target_dir</span><span class="p">,</span> <span class="n">turret_speed</span> <span class="o">*</span> <span class="n">delta</span><span class="p">).</span><span class="n">angle</span><span class="p">()</span>
+		<span class="k">if</span> <span class="n">target_dir</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">current_dir</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.9</span><span class="p">:</span>
+			<span class="n">shoot</span><span class="p">()</span></code></pre></div>
+
+<p>We defined <code>shoot()</code> in the base <code>Tank</code> script, so the bullet will be emitted using
+the <code>shoot</code> signal just like the player&rsquo;s bullet.</p>
+
+<p>The <code>Main</code> script already has a function, <code>_on_Tank_shoot</code>, that can receive an
+emitted bullet. Connect each enemy instance&rsquo;s <code>shoot</code> signal to that function.</p>
+
+<h2 id="enemy-movement">Enemy movement</h2>
+
+<p>We can also make some improvements to the enemy&rsquo;s movement. Right now, if we drive
+in front of the enemy, the collision is a bit glitchy as the two bodies try and
+slide around each other.</p>
+
+<p>Instead, let&rsquo;s make the enemy tank hit the brakes if there&rsquo;s an obstacle in front
+of it. We can accomplish this by adding a <code>RayCast2D</code> to the enemy tank scene.</p>
+
+<p>Set the <em>Enabled</em> property to &ldquo;On&rdquo; (it&rsquo;s off by default), and the &ldquo;Cast To&rdquo; to <code>(100, 0)</code>
+so that it projects ahead of the tank.</p>
+
+<p><a href="/blog/img/tanks_raycast.png"><img src="/blog/img/tanks_raycast.png" width="300"></a></p>
+
+<p>The <em>Collision Mask</em> of the raycast should be set to &ldquo;environment&rdquo;, &ldquo;enemies&rdquo;, and &ldquo;player&rdquo;.</p>
+
+<p>Now we also need the enemy to change its speed. In <code>Tank.gd</code>, change the <code>speed</code>
+export variable to <code>max_speed</code>. Note: this means we need to change the variable name
+in the player&rsquo;s script too!</p>
+
+<p>Add <code>var speed</code> to the top of the enemy script. This will now be our &ldquo;current&rdquo; speed,
+which may change over time. If the raycast detects something, <code>speed</code> will ramp down
+to <code>0</code> and if it doesn&rsquo;t, it will ramp up to <code>max_speed</code>.</p>
+
+<p>We can accomplish this &ldquo;ramping&rdquo; effect using GDScript&rsquo;s linear interpolation function: <code>lerp</code>.
+Update the enemy tank&rsquo;s <code>control()</code> function:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">control</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+	<span class="k">if</span> <span class="err">$</span><span class="n">LookAhead</span><span class="p">.</span><span class="n">is_colliding</span><span class="p">():</span>
+		<span class="n">speed</span> <span class="p">=</span> <span class="n">lerp</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span> <span class="p">#</span> <span class="n">ramp</span> <span class="n">speed</span> <span class="n">down</span> <span class="n">to</span> <span class="mi">0</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">speed</span> <span class="p">=</span> <span class="n">lerp</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="n">max_speed</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span> <span class="p">#</span> <span class="n">ramp</span> <span class="n">speed</span> <span class="n">up</span> <span class="n">to</span> <span class="bp">max</span>
+	<span class="k">if</span> <span class="n">parent</span> <span class="k">is</span> <span class="n">PathFollow2D</span><span class="p">:</span>
+		<span class="n">parent</span><span class="p">.</span><span class="n">set_offset</span><span class="p">(</span><span class="n">parent</span><span class="p">.</span><span class="n">get_offset</span><span class="p">()</span> <span class="o">+</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+		<span class="n">position</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">()</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="p">#</span> <span class="n">other</span> <span class="n">movement</span> <span class="n">code</span>
+		<span class="n">pass</span></code></pre></div>
+
+<p>Run the scene and try it out. If you drive the player in front of the enemy tank,
+it should stop moving.</p>
+
+<p>However, we still have a small problem: if the collision happens with an offset or
+around a corner, the ray may not &ldquo;see&rdquo; anything. We can improve the obstacle detection
+if we use two raycasts instead of one:</p>
+
+<p><a href="/blog/img/tanks_raycast2.png"><img src="/blog/img/tanks_raycast2.png" width="300"></a></p>
+
+<p>If you click on the <code>LookAhead</code> node and press <em>Ctrl+D</em> you can duplicate the node
+with all of its settings. Adjust the <em>Position</em> of each so that one is shifted
+<code>30</code> pixels up and the other  down.</p>
+
+<p>Now we just need to make sure we check both of them:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift">	<span class="k">if</span> <span class="err">$</span><span class="n">LookAhead1</span><span class="p">.</span><span class="n">is_colliding</span><span class="p">()</span> <span class="n">or</span> <span class="err">$</span><span class="n">LookAhead2</span><span class="p">.</span><span class="n">is_colliding</span><span class="p">():</span></code></pre></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That&rsquo;ll do it for Part 4 of this series. In the next part we&rsquo;ll make the enemy
+tanks shoot as well, and create another enemy type: a machine-gun turret.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part04-download-the-code-for-this-part-a"><a href="https://github.com/kidscancode/topdown_tanks/releases/tag/part04">Download the code for this part</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>

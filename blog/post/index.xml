@@ -7,7 +7,163 @@
     <language>en-us</language>
     
     
-    <updated>Thu, 19 Apr 2018 14:14:12 PDT</updated>
+    <updated>Thu, 26 Apr 2018 14:14:12 PDT</updated>
+    
+    <item>
+      <title>Topdown Tank Battle: Part 5</title>
+      <link>/blog/2018/04/godot3_tanks_part5/</link>
+      <pubDate>Thu, 26 Apr 2018 14:14:12 PDT</pubDate>
+      
+      <guid>/blog/2018/04/godot3_tanks_part5/</guid>
+      <description>&lt;p&gt;In this tutorial series, we&amp;rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&amp;rsquo;s workflow and show you various techniques that you can apply to your own projects.&lt;/p&gt;
+
+&lt;p&gt;This is Part 5: Enemy shooting and improved enemy movement&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;!-- You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/UKfzBnfh4Ak&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt; --&gt;
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;In the last part, we added shooting to the player, so this time we need to do the
+same for the enemy tank. But first, there&amp;rsquo;s a small fix we need to make:&lt;/p&gt;
+
+&lt;p&gt;In the enemy tank&amp;rsquo;s &lt;code&gt;Detect&lt;/code&gt; area, we attached a &lt;code&gt;CollisionShape2D&lt;/code&gt; with a circle shape.
+The problem is that when we instance the enemies, the shape is &lt;em&gt;shared&lt;/em&gt; between them.
+This means that when we set that shape&amp;rsquo;s radius in &lt;code&gt;_ready()&lt;/code&gt; all the tanks wind
+up with the same size, ignoring our &lt;code&gt;detect_radius&lt;/code&gt; property.&lt;/p&gt;
+
+&lt;p&gt;To fix this, clear the shape from the &lt;code&gt;CollisionShape2D&lt;/code&gt; in the scene, and change
+the &lt;code&gt;EnemyTank.gd&lt;/code&gt; code like so:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;circle&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CircleShape2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DetectRadius&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CollisionShape2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shape&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;circle&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DetectRadius&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CollisionShape2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shape&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;detect_radius&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This ensures that each enemy gets its own unique shape resource, set to its
+desired size.&lt;/p&gt;
+
+&lt;h2 id=&#34;enemy-bullets&#34;&gt;Enemy Bullets&lt;/h2&gt;
+
+&lt;p&gt;First, we create a new &lt;code&gt;EnemyBullet&lt;/code&gt; scene exactly like the player bullet we made
+in the last part. The only difference should be which texture you use for the
+appearance. Make sure you set the collision layer/mask properties. The enemy
+bullet should be in the &amp;ldquo;bullets&amp;rdquo; layer, and its mask should see &amp;ldquo;environment&amp;rdquo;
+and &amp;ldquo;player&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;After saving the scene, make sure to drop it in the EnemyTank&amp;rsquo;s &lt;em&gt;Bullet&lt;/em&gt;
+property.&lt;/p&gt;
+
+&lt;h3 id=&#34;aiming&#34;&gt;Aiming&lt;/h3&gt;
+
+&lt;p&gt;We already have our enemy tank aiming its turret at the player. Now we want it to
+fire, but only when it&amp;rsquo;s pointing towards the player (i.e. the angle between the
+turret and the player is small).&lt;/p&gt;
+
+&lt;p&gt;In the enemy&amp;rsquo;s &lt;code&gt;_process()&lt;/code&gt; function, we already have a direction vector pointing
+at the player, &lt;code&gt;target_dir&lt;/code&gt;, and one representing the turret&amp;rsquo;s direction, &lt;code&gt;current_dir&lt;/code&gt;.
+To check the angle between them, we can use the dot product.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Quick review of dot product:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The dot product of two unit vectors (vectors of length &lt;code&gt;1&lt;/code&gt;), is a number between
+&lt;code&gt;-1&lt;/code&gt; and &lt;code&gt;1&lt;/code&gt;. &lt;code&gt;0&lt;/code&gt; means the two vectors are exactly 90 degrees apart, and &lt;code&gt;1&lt;/code&gt; means
+they are pointing in the same direction. For a review of vector math, including
+dot product, see &lt;a href=&#34;http://docs.godotengine.org/en/latest/tutorials/math/vector_math.html&#34;&gt;http://docs.godotengine.org/en/latest/tutorials/math/vector_math.html&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;If the dot product of the two vectors is close to &lt;code&gt;1&lt;/code&gt; then the tank is aiming near
+the player, and should attempt to shoot. Update the enemy tank&amp;rsquo;s code:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;target_dir&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;global_position&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;global_position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;normalized&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+		&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;current_dir&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotated&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Turret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;global_rotation&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+		&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Turret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;global_rotation&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;current_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;linear_interpolate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;target_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;turret_speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;angle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+		&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;target_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.9&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+			&lt;span class=&#34;n&#34;&gt;shoot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We defined &lt;code&gt;shoot()&lt;/code&gt; in the base &lt;code&gt;Tank&lt;/code&gt; script, so the bullet will be emitted using
+the &lt;code&gt;shoot&lt;/code&gt; signal just like the player&amp;rsquo;s bullet.&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;Main&lt;/code&gt; script already has a function, &lt;code&gt;_on_Tank_shoot&lt;/code&gt;, that can receive an
+emitted bullet. Connect each enemy instance&amp;rsquo;s &lt;code&gt;shoot&lt;/code&gt; signal to that function.&lt;/p&gt;
+
+&lt;h2 id=&#34;enemy-movement&#34;&gt;Enemy movement&lt;/h2&gt;
+
+&lt;p&gt;We can also make some improvements to the enemy&amp;rsquo;s movement. Right now, if we drive
+in front of the enemy, the collision is a bit glitchy as the two bodies try and
+slide around each other.&lt;/p&gt;
+
+&lt;p&gt;Instead, let&amp;rsquo;s make the enemy tank hit the brakes if there&amp;rsquo;s an obstacle in front
+of it. We can accomplish this by adding a &lt;code&gt;RayCast2D&lt;/code&gt; to the enemy tank scene.&lt;/p&gt;
+
+&lt;p&gt;Set the &lt;em&gt;Enabled&lt;/em&gt; property to &amp;ldquo;On&amp;rdquo; (it&amp;rsquo;s off by default), and the &amp;ldquo;Cast To&amp;rdquo; to &lt;code&gt;(100, 0)&lt;/code&gt;
+so that it projects ahead of the tank.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_raycast.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_raycast.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;em&gt;Collision Mask&lt;/em&gt; of the raycast should be set to &amp;ldquo;environment&amp;rdquo;, &amp;ldquo;enemies&amp;rdquo;, and &amp;ldquo;player&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Now we also need the enemy to change its speed. In &lt;code&gt;Tank.gd&lt;/code&gt;, change the &lt;code&gt;speed&lt;/code&gt;
+export variable to &lt;code&gt;max_speed&lt;/code&gt;. Note: this means we need to change the variable name
+in the player&amp;rsquo;s script too!&lt;/p&gt;
+
+&lt;p&gt;Add &lt;code&gt;var speed&lt;/code&gt; to the top of the enemy script. This will now be our &amp;ldquo;current&amp;rdquo; speed,
+which may change over time. If the raycast detects something, &lt;code&gt;speed&lt;/code&gt; will ramp down
+to &lt;code&gt;0&lt;/code&gt; and if it doesn&amp;rsquo;t, it will ramp up to &lt;code&gt;max_speed&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;We can accomplish this &amp;ldquo;ramping&amp;rdquo; effect using GDScript&amp;rsquo;s linear interpolation function: &lt;code&gt;lerp&lt;/code&gt;.
+Update the enemy tank&amp;rsquo;s &lt;code&gt;control()&lt;/code&gt; function:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;control&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LookAhead&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;lerp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ramp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;down&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;lerp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max_speed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.05&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ramp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;up&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;max&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;parent&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;PathFollow2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;parent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_offset&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;parent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_offset&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+	&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+		&lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;other&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;movement&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;code&lt;/span&gt;
+		&lt;span class=&#34;n&#34;&gt;pass&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Run the scene and try it out. If you drive the player in front of the enemy tank,
+it should stop moving.&lt;/p&gt;
+
+&lt;p&gt;However, we still have a small problem: if the collision happens with an offset or
+around a corner, the ray may not &amp;ldquo;see&amp;rdquo; anything. We can improve the obstacle detection
+if we use two raycasts instead of one:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_raycast2.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_raycast2.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;If you click on the &lt;code&gt;LookAhead&lt;/code&gt; node and press &lt;em&gt;Ctrl+D&lt;/em&gt; you can duplicate the node
+with all of its settings. Adjust the &lt;em&gt;Position&lt;/em&gt; of each so that one is shifted
+&lt;code&gt;30&lt;/code&gt; pixels up and the other  down.&lt;/p&gt;
+
+&lt;p&gt;Now we just need to make sure we check both of them:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LookAhead1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;or&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LookAhead2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;That&amp;rsquo;ll do it for Part 4 of this series. In the next part we&amp;rsquo;ll make the enemy
+tanks shoot as well, and create another enemy type: a machine-gun turret.&lt;/p&gt;
+
+&lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part04-download-the-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part04&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Topdown Tank Battle: Part 4</title>
@@ -2859,202 +3015,6 @@ node is perfect for implementing characters and other moving bodies that don&amp
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2017-04-godot-101-11-godot-101-part-11-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/04/godot_101_11/&#34;&gt;Godot 101 - Part 11&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Godot 101 - Part 9: Arcade Physics (KinematicBody2D)</title>
-      <link>/blog/2017/04/godot_101_09/</link>
-      <pubDate>Mon, 03 Apr 2017 05:22:12 PDT</pubDate>
-      
-      <guid>/blog/2017/04/godot_101_09/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;This is part 9 of &amp;ldquo;Godot 101&amp;rdquo;. In this installment, we&amp;rsquo;ll learn about how to do simple arcade-style physics using Godot&amp;rsquo;s built-in physics engine.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2017/02/godot_101_01/&#34;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
-
-&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
-&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/oy9L0b5X0BY&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;new-project-and-game-art&#34;&gt;New Project and Game Art&lt;/h2&gt;
-
-&lt;p&gt;For this lesson, we&amp;rsquo;re going to start by creating a new Godot project and a new scene.  The art we will use can be found on &lt;a href=&#34;http://opengameart.org/content/red-haired-run-and-jump-sprite-sheets&#34;&gt;OpenGameArt&lt;/a&gt;.  It contains the images for a few different character animations:&lt;/p&gt;
-
-&lt;table&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Idle&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;&lt;strong&gt;Running&lt;/strong&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;sub&gt;&lt;img src=&#34;/blog/blog/img/godot101_09_01.gif&#34; width=&#34;200&#34;&gt;&lt;/td&gt;
-&lt;td&gt;&lt;img src=&#34;/blog/blog/img/godot101_09_02.gif&#34; width=&#34;350&#34;&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Unpack it all into the &lt;code&gt;art&lt;/code&gt; folder in your project (I made a &lt;code&gt;player&lt;/code&gt; folder to put it all in).  We&amp;rsquo;ll talk about how to use these animations for our player character soon, but first we will create the scene and make the character move.&lt;/p&gt;
-
-&lt;h3 id=&#34;setting-up-the-scene&#34;&gt;Setting up the Scene&lt;/h3&gt;
-
-&lt;p&gt;As we discussed earlier, there are 3 types of &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_physicsbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;PhysicsBody2D&lt;/code&gt;&lt;/a&gt; in Godot.  The one we will use for this project is the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_kinematicbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_kinematic_body_2d&#34;&gt;
-&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;KinematicBody2D&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;This node type has basic collision physics and movement, and is perfect for arcade-style games where you don&amp;rsquo;t need accurate, realistic physics.  Create the following scene tree and save it as &lt;code&gt;player.tscn&lt;/code&gt;:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_kinematic_body_2d&#34;&gt;
-&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;player (KinematicBody2D)&lt;/code&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; &lt;code&gt;sprite (Sprite)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_collision_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;collision (CollisionShape2D)&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;For the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; &lt;code&gt;sprite&lt;/code&gt; texture, drag the first frame of the idle animation (&lt;code&gt;idle-frame-1.png&lt;/code&gt;) into the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_texture&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_texture&#34;&gt;&lt;/svg&gt; &lt;code&gt;Texture&lt;/code&gt; field in the Inspector.&lt;/p&gt;
-
-&lt;p&gt;The first thing you&amp;rsquo;ll notice is that the character is &lt;em&gt;huge&lt;/em&gt;.  This art was created at a very high resolution (which is nice - but it&amp;rsquo;s way too big for our screen).  Scroll down to the &lt;code&gt;Scale&lt;/code&gt; property and set it to &lt;code&gt;(0.2, 0.2)&lt;/code&gt; for a much more reasonable size.&lt;/p&gt;
-
-&lt;p&gt;Now we can create the collision shape.  There are many different ways you can set up your collisions with different shapes, but for this exercise we&amp;rsquo;re going to choose the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_capsule_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_capsule_shape_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;CapsuleShape2D&lt;/code&gt;, which is a common choice for platformer characters.  Drag the size handles so that it looks like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_09_03.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_09_03.png&#34; width=&#34;150&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;Now we&amp;rsquo;re ready to write some code, so right-click on the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_kinematic_body_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;player&lt;/code&gt; node and choose &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_script&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_script&#34;&gt;&lt;/svg&gt; &amp;ldquo;&lt;code&gt;Add Script&lt;/code&gt;&amp;rdquo;.&lt;/p&gt;
-
-&lt;h3 id=&#34;simple-physics&#34;&gt;Simple Physics&lt;/h3&gt;
-
-&lt;p&gt;Here&amp;rsquo;s our starting point for the player script:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;KinematicBody2D&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ACCEL&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1500&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MAX_SPEED&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;500&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;FRICTION&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;500&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;set_fixed_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_fixed_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;pass&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;First, we have 3 constants to adjust the player&amp;rsquo;s behavior:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;ACCEL&lt;/code&gt; is how fast the player accelerates when a key is pressed&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;MAX_SPEED&lt;/code&gt; is the maximum speed&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;FRICTION&lt;/code&gt; controls how quickly the player comes to a stop&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Next, we have two &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_vector2.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;Vector2&lt;/code&gt;&lt;/a&gt; variables to store the player&amp;rsquo;s movement.&lt;/p&gt;
-
-&lt;p&gt;Finally, we are using the &lt;code&gt;fixed_process()&lt;/code&gt; function for per-frame code. This is recommended for physics bodies because the &lt;code&gt;delta&lt;/code&gt; time is fixed to &lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;60&lt;/sub&gt; s (0.01667 s) and Godot&amp;rsquo;s physics engine works best with a fixed timestep.&lt;/p&gt;
-
-&lt;p&gt;Now, let&amp;rsquo;s add the controls:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_fixed_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;ui_right&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;ui_left&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ACCEL&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;FRICTION&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;clamp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MAX_SPEED&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;MAX_SPEED&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;We start by getting the direction from the user&amp;rsquo;s input.  Each &lt;code&gt;is_action_pressed()&lt;/code&gt; results in either 0 or 1, so we will have a value of &lt;code&gt;1&lt;/code&gt; if &lt;code&gt;&amp;quot;ui_right&amp;quot;&lt;/code&gt; is pressed and &lt;code&gt;-1&lt;/code&gt; if &lt;code&gt;&amp;quot;ui_left&amp;quot;&lt;/code&gt; is pressed (these actions are mapped to the arrow keys by default). Note that if both keys are pressed, the result is &lt;code&gt;0&lt;/code&gt; - they cancel out.&lt;/p&gt;
-
-&lt;p&gt;We then multiply this direction value by &lt;code&gt;ACCEL&lt;/code&gt; to get the correct magnitude and apply it to &lt;code&gt;vel&lt;/code&gt; for the updated speed.  The &lt;code&gt;clamp()&lt;/code&gt; function is used to keep the value of &lt;code&gt;vel.x&lt;/code&gt; from going above or below the &lt;code&gt;MAX_SPEED&lt;/code&gt; value.&lt;/p&gt;
-
-&lt;p&gt;If the player is not pressing a key (&lt;code&gt;acc.x&lt;/code&gt; is &lt;code&gt;0&lt;/code&gt;), then we apply &lt;code&gt;FRICTION&lt;/code&gt;, which will slow the player down.&lt;/p&gt;
-
-&lt;p&gt;Now, if you followed the earlier tutorials, where we used an &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_area2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_area_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_area_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;Area2D&lt;/code&gt;&lt;/a&gt; node, you&amp;rsquo;ll recall we moved the object by using &lt;code&gt;set_pos()&lt;/code&gt;.  This is not correct for PhysicsBodies, because Godot needs to simulate them &lt;em&gt;moving&lt;/em&gt;, not teleporting to a new position.  Always use &lt;code&gt;move()&lt;/code&gt; to move a PhysicsBody or you may find things not working the way you expect.&lt;/p&gt;
-
-&lt;p&gt;Press &amp;ldquo;Play&amp;rdquo; and try moving around.&lt;/p&gt;
-
-&lt;h3 id=&#34;platforms-somewhere-to-fall&#34;&gt;Platforms: Somewhere to Fall&lt;/h3&gt;
-
-&lt;p&gt;The next logical thing to add would be gravity, but then our player would just fall off the screen, so let&amp;rsquo;s add a platform to land on.  Create a new scene - this time we&amp;rsquo;re going to use &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_staticbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_static_body_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_static_body_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;StaticBody2D&lt;/code&gt;&lt;/a&gt; for the root node.  Set up the tree like this:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_static_body_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_static_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;platform&lt;/code&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; &lt;code&gt;sprite&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_collision_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;collision&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;We&amp;rsquo;re using &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_staticbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_static_body_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_static_body_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;StaticBody2D&lt;/code&gt;&lt;/a&gt; because it is a PhysicsBody that is optimized for static objects - things that don&amp;rsquo;t move, but just need to collide with other bodies.&lt;/p&gt;
-
-&lt;p&gt;For the sprite, we&amp;rsquo;re going to use this simple colored square texture:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/green_square.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/green_square.png&#34; width=&#34;32&#34;&gt;&lt;/a&gt;&lt;sub&gt;Save this in your &amp;lsquo;art&amp;rsquo; folder&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;Set this image as the sprite&amp;rsquo;s texture, and then we&amp;rsquo;ll use the &lt;code&gt;Scale&lt;/code&gt; property to size the platform.  Set it to &lt;code&gt;(20, 1)&lt;/code&gt; and then add a &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_rectangle_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_rectangle_shape_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;RectangleShape2D&lt;/code&gt; to the &lt;code&gt;collision&lt;/code&gt; node and size it to cover the sprite.&lt;/p&gt;
-
-&lt;h3 id=&#34;adding-gravity&#34;&gt;Adding Gravity&lt;/h3&gt;
-
-&lt;p&gt;Now let&amp;rsquo;s put it all together.  Create a new scene with a &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_node&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_node&#34;&gt;&lt;/svg&gt; &lt;code&gt;main&lt;/code&gt; node and click the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_instance&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_instance&#34;&gt;&lt;/svg&gt; &lt;code&gt;Instance&lt;/code&gt; button to add an instance of &lt;code&gt;player&lt;/code&gt; and &lt;code&gt;platform&lt;/code&gt;.  Arrange them in the scene like so:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_09_04.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_09_04.png&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;Next, add the following to &lt;code&gt;player.gd&lt;/code&gt; and press &lt;code&gt;Play&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GRAVITY&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2000&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_fixed_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;acc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;GRAVITY&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;You should see the player fall (due to &lt;code&gt;GRAVITY&lt;/code&gt; accelerating downward) and stop when it hits the platform.  But now you will find a new problem: the player can no longer move!&lt;/p&gt;
-
-&lt;h3 id=&#34;collision-response&#34;&gt;Collision Response&lt;/h3&gt;
-
-&lt;p&gt;The reason for this has to do with how our movement works, and what we do (or don&amp;rsquo;t do) when a collision occurs.  Here is our normal movement situation, when there are no obstacles:
-&lt;img src=&#34;/blog/blog/img/godot101_09_05.png&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;Two forces are acting on the player (gravity, and the movement input) so the result is a diagonal vector.  However, if there is an obstacle in the path, we have this:
-&lt;img src=&#34;/blog/blog/img/godot101_09_06.png&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;When Godot detects a collision with another &lt;code&gt;PhysicsBody2D&lt;/code&gt;, it immediately stops the movement.  Note that there is still a remaining portion of the movement vector that is unused.  In fact, this situation happens also when the player is standing on the platform:
-&lt;img src=&#34;/blog/blog/img/godot101_09_07.png&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;Because the desired movement vector results in a collision, the movement is &lt;em&gt;immediately&lt;/em&gt; stopped, even though you may be pressing the arrow keys.&lt;/p&gt;
-
-&lt;p&gt;Here is how this problem is solved:
-&lt;img src=&#34;/blog/blog/img/godot101_09_08.png&#34; width=&#34;400&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;We start by finding the &lt;em&gt;collision normal&lt;/em&gt;.  A &lt;em&gt;normal&lt;/em&gt; is a vector of length &lt;code&gt;1&lt;/code&gt; that is perpendicular to a surface.  It essentially tells us which way the surface is oriented.  In the case of our horizontal platform, the normal vector is &lt;code&gt;(0, -1)&lt;/code&gt;.  We can then use that normal to &lt;em&gt;slide&lt;/em&gt; the movement vector along the surface.&lt;/p&gt;
-
-&lt;p&gt;Add the following code to  &lt;code&gt;fixed_process()&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_collision_normal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;slide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;slide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;First the &lt;code&gt;move()&lt;/code&gt; function we used before has a return value of the remaining movement vector, which we&amp;rsquo;re calling &lt;code&gt;motion&lt;/code&gt;.  Next we use &lt;code&gt;is_colliding()&lt;/code&gt; to check if a collision has happened.  If so, we find the collision normal and &lt;code&gt;slide&lt;/code&gt; the &lt;code&gt;motion&lt;/code&gt; and &lt;code&gt;vel&lt;/code&gt; vectors along it.&lt;/p&gt;
-
-&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h2&gt;
-
-&lt;p&gt;Those are the basics of using the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_kinematicbody2d.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_kinematic_body_2d&#34;&gt;
-&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;KinematicBody2D&lt;/code&gt;&lt;/a&gt; node.  In the next installment, we&amp;rsquo;ll add jumping to the player.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;a-href-blog-2017-04-godot-101-10-godot-101-part-10-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/04/godot_101_10/&#34;&gt;Godot 101 - Part 10&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
