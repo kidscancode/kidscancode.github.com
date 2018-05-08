@@ -1,0 +1,399 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.40.1" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Topdown Tank Battle: Part 6 &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">42</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">25</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">42</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Topdown Tank Battle: Part 6</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sun, May 6, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			</h6></span>
+
+			      <p>In this tutorial series, we&rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&rsquo;s workflow and show you various techniques that you can apply to your own projects.</p>
+
+<p>This is Part 6: Tank damage and UI</p>
+
+<p></p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/87wtxNXx69Q" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>In the last part, we added shooting, and the bullets are detecting contact
+with the tanks. Now we need them to deal damage.</p>
+
+<h2 id="dealing-damage">Dealing damage</h2>
+
+<p>We&rsquo;ll start with the <code>Tank.gd</code> script by changing the <code>health</code> export variable
+to <code>max_health</code>. This will be the &ldquo;full&rdquo; value, which can be configured per tank.
+Then, add a new <code>var health</code> which will track the current health value.</p>
+
+<p>Add code to the <code>_ready</code> function to handle this. Note that when we emit the signal,
+we&rsquo;re passing a <em>percentage</em> rather than the raw health value:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_ready</span><span class="p">():</span>
+    <span class="n">health</span> <span class="p">=</span> <span class="n">max_health</span>
+    <span class="n">emit_signal</span><span class="p">(</span><span class="err">&#39;</span><span class="n">health_changed</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">health</span> <span class="o">*</span> <span class="mi">100</span><span class="o">/</span><span class="n">max_health</span><span class="p">)</span>
+    <span class="err">$</span><span class="n">GunTimer</span><span class="p">.</span><span class="n">wait_time</span> <span class="p">=</span> <span class="n">gun_cooldown</span></code></pre></div>
+
+<p>Next, we add a method that will handle applying incoming damage:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">take_damage</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+    <span class="n">health</span> <span class="o">-=</span> <span class="n">amount</span>
+    <span class="n">emit_signal</span><span class="p">(</span><span class="err">&#39;</span><span class="n">health_changed</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">health</span> <span class="o">*</span> <span class="mi">100</span><span class="o">/</span><span class="n">max_health</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">health</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">explode</span><span class="p">()</span>
+
+<span class="kd">func</span> <span class="nf">explode</span><span class="p">():</span>
+    <span class="n">queue_free</span><span class="p">()</span></code></pre></div>
+
+<p>What we need to do now is make the bullet call that method when it collides.</p>
+
+<p>In the <code>Bullet.gd</code> script, we already have code that applies damage if the colliding
+body can accept it:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_on_Bullet_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="n">explode</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">body</span><span class="p">.</span><span class="n">has_method</span><span class="p">(</span><span class="err">&#39;</span><span class="n">take_damage</span><span class="err">&#39;</span><span class="p">):</span>
+        <span class="n">body</span><span class="p">.</span><span class="n">take_damage</span><span class="p">(</span><span class="n">damage</span><span class="p">)</span></code></pre></div>
+
+<p>Run the game and you should be able to destroy the enemy tanks if you hit them
+enough times, depending on what health &amp; damage values you assigned in the Inspector.</p>
+
+<h2 id="ui-setup">UI Setup</h2>
+
+<p>Now we need to display the player&rsquo;s health, so we&rsquo;ll create a HUD (&ldquo;heads-up display&rdquo;).
+This will eventually display a variety of game data, but we&rsquo;ll start with a bar
+showing the player&rsquo;s health.</p>
+
+<p>Create a new scene with the following nodes and save it in a &ldquo;ui&rdquo; folder:</p>
+
+<ul>
+<li><code>CanvasLayer</code> (&ldquo;HUD&rdquo;)
+
+<ul>
+<li><code>MarginContainer</code> (&ldquo;Margin&rdquo;)
+
+<ul>
+<li><code>HBoxContainer</code> (&ldquo;Container&rdquo;)
+
+<ul>
+<li><code>TextureRect</code></li>
+<li><code>TextureProgress</code> (&ldquo;HealthBar&rdquo;)</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+
+<p>The <code>MarginContainer</code> keeps its children from getting too close to the edges of the
+screen. In the &ldquo;Layout&rdquo; menu set it to &ldquo;Full Rect&rdquo; and in the Inspector set all
+four of its <em>Custom Constants</em> values to <code>20</code>.</p>
+
+<p>Drag the <code>res://assets/shield_silver.png</code> image into the <em>Texture</em> property of the
+TextureRect.</p>
+
+<p>The TextureProgress node will handle the health display. It works by displaying a
+portion of a given texture, determined by the <code>value</code> property.</p>
+
+<p>Drag <code>res://assets/UI/barHorizontal_green_mid 200.png</code> to the <em>Texture/Progress</em> property
+and <code>res://assets/UI/glassPanel_200.png</code> to the <em>Texture/Over</em> property. Set the
+<em>Value</em> to <code>75</code> to see a portion of the green bar displayed.</p>
+
+<p><a href="/blog/img/tanks_healthbar1.png"><img src="/blog/img/tanks_healthbar1.png" width="350"></a></p>
+
+<h2 id="ui-script">UI Script</h2>
+
+<p>Add a script to the HUD with a function that updates the bar&rsquo;s value to the one
+given:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">CanvasLayer</span>
+
+<span class="kd">func</span> <span class="nf">update_healthbar</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">value</span> <span class="p">=</span> <span class="n">value</span></code></pre></div>
+
+<p>Now that method needs to be connected to the player&rsquo;s <code>health_changed</code> signal.</p>
+
+<p>Add an instance of the HUD scene to the map scene. Click on the Player instance and
+connect <code>health_changed</code> to <code>update_healthbar</code> in the HUD.</p>
+
+<p>Run the game and you should see the bar going down when bullets hit you.</p>
+
+<h2 id="making-it-pretty">Making it pretty</h2>
+
+<p>Now that we have the healthbar working, we&rsquo;re going to add a little &ldquo;juice&rdquo; to make
+it look more appealing. We&rsquo;ll add a few effects:</p>
+
+<ul>
+<li>Changing color from green -&gt; yellow -&gt; red as the value decreases</li>
+<li>A gradual animation when the value changes</li>
+<li>A flashing effect when hit</li>
+</ul>
+
+<h3 id="changing-color">Changing color</h3>
+
+<p>The various colored bars are already in the <code>assets</code> folder, we just need to load
+them and apply them to the bar&rsquo;s <code>texture_progress</code> property. Add the following to
+the hud script. Note: you can right-click on the file in the FileManager and choose
+&ldquo;Copy Path&rdquo; rather than type out the file locations.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">CanvasLayer</span>
+
+<span class="kd">var</span> <span class="nv">bar_red</span> <span class="p">=</span> <span class="n">preload</span><span class="p">(</span><span class="s">&#34;res://assets/UI/barHorizontal_red_mid 200.png&#34;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nv">bar_green</span> <span class="p">=</span> <span class="n">preload</span><span class="p">(</span><span class="s">&#34;res://assets/UI/barHorizontal_green_mid 200.png&#34;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nv">bar_yellow</span> <span class="p">=</span> <span class="n">preload</span><span class="p">(</span><span class="s">&#34;res://assets/UI/barHorizontal_yellow_mid 200.png&#34;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nv">bar_texture</span>
+
+<span class="kd">func</span> <span class="nf">update_healthbar</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="n">bar_texture</span> <span class="p">=</span> <span class="n">bar_green</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">:</span>
+        <span class="n">bar_texture</span> <span class="p">=</span> <span class="n">bar_yellow</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">:</span>
+        <span class="n">bar_texture</span> <span class="p">=</span> <span class="n">bar_red</span>
+    <span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">texture_progress</span> <span class="p">=</span> <span class="n">bar_texture</span>
+    <span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">value</span> <span class="p">=</span> <span class="n">value</span></code></pre></div>
+
+<p>Try running and the bar&rsquo;s color should change as the value decreases.</p>
+
+<h3 id="gradually-changing-value">Gradually changing value</h3>
+
+<p>Next, we&rsquo;re going to animate the change so that it doesn&rsquo;t instantly jump to the
+new value. We&rsquo;ll do this with a <code>Tween</code> node. Add one as a child of the HealthBar.</p>
+
+<p>We&rsquo;ll use the Tween to <em>interpolate</em> the bar&rsquo;s <code>value</code> from its current value to
+the new value.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">CanvasLayer</span>
+
+<span class="kd">var</span> <span class="nv">bar_red</span> <span class="p">=</span> <span class="n">preload</span><span class="p">(</span><span class="s">&#34;res://assets/UI/barHorizontal_red_mid 200.png&#34;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nv">bar_green</span> <span class="p">=</span> <span class="n">preload</span><span class="p">(</span><span class="s">&#34;res://assets/UI/barHorizontal_green_mid 200.png&#34;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nv">bar_yellow</span> <span class="p">=</span> <span class="n">preload</span><span class="p">(</span><span class="s">&#34;res://assets/UI/barHorizontal_yellow_mid 200.png&#34;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nv">bar_texture</span>
+
+<span class="kd">func</span> <span class="nf">update_healthbar</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="n">bar_texture</span> <span class="p">=</span> <span class="n">bar_green</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">:</span>
+        <span class="n">bar_texture</span> <span class="p">=</span> <span class="n">bar_yellow</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">:</span>
+        <span class="n">bar_texture</span> <span class="p">=</span> <span class="n">bar_red</span>
+    <span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">texture_progress</span> <span class="p">=</span> <span class="n">bar_texture</span>
+    <span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="o">/</span><span class="n">Tween</span><span class="p">.</span><span class="n">interpolate_property</span><span class="p">(</span><span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="p">,</span>
+            <span class="err">&#39;</span><span class="n">value</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span>
+            <span class="mf">0.2</span><span class="p">,</span> <span class="n">Tween</span><span class="p">.</span><span class="n">TRANS_LINEAR</span><span class="p">,</span> <span class="n">Tween</span><span class="p">.</span><span class="n">EASE_IN_OUT</span><span class="p">)</span>
+    <span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="o">/</span><span class="n">Tween</span><span class="p">.</span><span class="n">start</span><span class="p">()</span></code></pre></div>
+
+<p>Note that we don&rsquo;t have to explicitly set the node&rsquo;s <code>value</code> because the tween
+ends at the value we want.</p>
+
+<h3 id="flashing-the-bar">Flashing the bar</h3>
+
+<p>For the flashing bar animation, we&rsquo;ll use <code>AnimationPlayer</code>. Add one to the HUD and
+create a new animation called &ldquo;healthbar_flash&rdquo;. Set the <em>Length</em> to <code>0.2</code> and the
+<em>Steps</em> to <code>0.05</code>.</p>
+
+<p>This animation will affect the <code>texture_progress</code> property, so start by dragging the
+red texture into that property and clicking the keyframe button. Now alternate keyframes
+with the white and red textures until you reach the end of the 0.2 seconds.</p>
+
+<p>After the animation plays, the bar will be left with the red texture, so we&rsquo;ll
+connect the AnimationPlayer&rsquo;s <code>animation_finished</code> signal so that we can set the
+bar back to its correct color.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">CanvasLayer</span>
+
+<span class="kd">var</span> <span class="nv">bar_red</span> <span class="p">=</span> <span class="n">preload</span><span class="p">(</span><span class="s">&#34;res://assets/UI/barHorizontal_red_mid 200.png&#34;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nv">bar_green</span> <span class="p">=</span> <span class="n">preload</span><span class="p">(</span><span class="s">&#34;res://assets/UI/barHorizontal_green_mid 200.png&#34;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nv">bar_yellow</span> <span class="p">=</span> <span class="n">preload</span><span class="p">(</span><span class="s">&#34;res://assets/UI/barHorizontal_yellow_mid 200.png&#34;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nv">bar_texture</span>
+
+<span class="kd">func</span> <span class="nf">update_healthbar</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="n">bar_texture</span> <span class="p">=</span> <span class="n">bar_green</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">:</span>
+        <span class="n">bar_texture</span> <span class="p">=</span> <span class="n">bar_yellow</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">:</span>
+        <span class="n">bar_texture</span> <span class="p">=</span> <span class="n">bar_red</span>
+    <span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">texture_progress</span> <span class="p">=</span> <span class="n">bar_texture</span>
+    <span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="o">/</span><span class="n">Tween</span><span class="p">.</span><span class="n">interpolate_property</span><span class="p">(</span><span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="p">,</span>
+            <span class="err">&#39;</span><span class="n">value</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span>
+            <span class="mf">0.2</span><span class="p">,</span> <span class="n">Tween</span><span class="p">.</span><span class="n">TRANS_LINEAR</span><span class="p">,</span> <span class="n">Tween</span><span class="p">.</span><span class="n">EASE_IN_OUT</span><span class="p">)</span>
+    <span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="o">/</span><span class="n">Tween</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="err">$</span><span class="n">AnimationPlayer</span><span class="p">.</span><span class="n">play</span><span class="p">(</span><span class="s">&#34;healthbar_flash&#34;</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">_on_AnimationPlayer_animation_finished</span><span class="p">(</span><span class="n">anim_name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">anim_name</span> <span class="p">==</span> <span class="err">&#39;</span><span class="n">healthbar_flash</span><span class="err">&#39;</span><span class="p">:</span>
+        <span class="err">$</span><span class="n">Margin</span><span class="o">/</span><span class="n">Container</span><span class="o">/</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">texture_progress</span> <span class="p">=</span> <span class="n">bar_texture</span></code></pre></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That completes Part 6 of this series. In the next part we&rsquo;ll continue adding
+visuals with individual unit healthbars on the enemy tanks and explosions for the bullets.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part06-download-the-code-for-this-part-a"><a href="https://github.com/kidscancode/topdown_tanks/releases/tag/part06">Download the code for this part</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
