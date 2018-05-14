@@ -1,0 +1,315 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.40.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Topdown Tank Battle: Part 7 &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">43</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">26</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">43</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Topdown Tank Battle: Part 7</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sun, May 13, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			</h6></span>
+
+			      <p>In this tutorial series, we&rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&rsquo;s workflow and show you various techniques that you can apply to your own projects.</p>
+
+<p>This is Part 7: Enemy tank health and explosions</p>
+
+<p></p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VnfQa_A2880" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>In the last part we added a healthbar for the player, so now we need to do the
+same for the enemies. We&rsquo;re also going to make some explosions!</p>
+
+<h2 id="unit-health-display">Unit health display</h2>
+
+<p>For the enemy units, we want the health to display as a small bar just above the
+unit, which moves with them. Since every enemy tank will have one, and possibly
+other things, we&rsquo;re going to create this as a separate scene we can attach to any
+object.</p>
+
+<p>Create a new scene with a <code>Node2D</code> named &ldquo;UnitDisplay&rdquo; as its root. We&rsquo;ll use this
+to display the health and any other enemy data (armor, invincibility, etc.) that we
+may add later in the game. Add a <code>TextureProgress</code> as its child.</p>
+
+<p>Add the green bar texture to the <em>Texture/Progress</em> property and set <em>Value</em> to
+<code>100</code> so we can see it. Drag the bar so that it&rsquo;s positioned above the <code>(0, 0)</code>
+point of the parent node.</p>
+
+<p><a href="/blog/img/tanks_unit_healthbar1.png"><img src="/blog/img/tanks_unit_healthbar1.png" width="300"></a></p>
+
+<p>Set the <em>Scale</em> of the root node to <code>(0.5, 0.5)</code>.</p>
+
+<p>With this attached to the unit, it will follow the unit as it moves, but also
+rotate along with its parent, which we don&rsquo;t want. However, we can take care of
+that in the script.</p>
+
+<p>In the script, we want to have a lot of the same behavior from the player healthbar,
+such as changing color as it shrinks. Add a script and the code below, which is
+very similar to that in the UI scene.</p>
+
+<p>We also want the bar to be hidden until the enemy first takes damage, so
+we&rsquo;ll make all the display elements hidden to begin, and the healthbar will
+show if it drops below 100%.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">Node2D</span>
+
+<span class="kd">var</span> <span class="nv">bar_red</span> <span class="p">=</span> <span class="n">preload</span><span class="p">(</span><span class="s">&#34;res://assets/UI/barHorizontal_red_mid 200.png&#34;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nv">bar_green</span> <span class="p">=</span> <span class="n">preload</span><span class="p">(</span><span class="s">&#34;res://assets/UI/barHorizontal_green_mid 200.png&#34;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nv">bar_yellow</span> <span class="p">=</span> <span class="n">preload</span><span class="p">(</span><span class="s">&#34;res://assets/UI/barHorizontal_yellow_mid 200.png&#34;</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">_ready</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="k">in</span> <span class="n">get_children</span><span class="p">():</span>
+        <span class="n">node</span><span class="p">.</span><span class="n">hide</span><span class="p">()</span>
+
+<span class="kd">func</span> <span class="nf">update_healthbar</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="err">$</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">texture_progress</span> <span class="p">=</span> <span class="n">bar_green</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">:</span>
+        <span class="err">$</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">texture_progress</span> <span class="p">=</span> <span class="n">bar_yellow</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">:</span>
+        <span class="err">$</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">texture_progress</span> <span class="p">=</span> <span class="n">bar_red</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="err">$</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="err">$</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="err">$</span><span class="n">HealthBar</span><span class="p">.</span><span class="n">value</span> <span class="p">=</span> <span class="n">value</span></code></pre></div>
+
+<p>We also want the node to ignore its parent&rsquo;s rotation, so add the following:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="n">global_rotation</span> <span class="p">=</span> <span class="mi">0</span></code></pre></div>
+
+<p>Now go to the <code>EnemyTank</code> scene and attach an instance of the unit display.</p>
+
+<p><a href="/blog/img/tanks_unit_healthbar2.png"><img src="/blog/img/tanks_unit_healthbar2.png" width="300"></a></p>
+
+<p>We are already emittting the <code>health_changed</code> signal in <code>Tank.gd</code>, which the enemy
+tank inherits from, so we just need to connect that signal. Connect it to the
+UnitDisplay <code>update_healthbar()</code> function.</p>
+
+<p>Run the game and verify that when you shoot the enemy, the healthbar appears and
+reduces.</p>
+
+<h2 id="explosions">Explosions</h2>
+
+<p>Included in the tank art pack we&rsquo;re using are two different styles of explosion
+animations. We&rsquo;ll use them by creating a separate scene and attaching it to anything
+that needs to explode.</p>
+
+<p>Create a new scene with an <code>AnimatedSprite</code> node and call it &ldquo;Explosion&rdquo;. Save it
+in an &ldquo;effects&rdquo; folder. Add a new <code>SpriteFrames</code> resource and in the SpriteFrames
+panel, create two animations: &ldquo;smoke&rdquo; and &ldquo;fire&rdquo;, containing the respective
+images.</p>
+
+<p><a href="/blog/img/tanks_explosion_frames.png"><img src="/blog/img/tanks_explosion_frames.png" width="450"></a></p>
+
+<p>We&rsquo;ll start by adding the explosion to the Bullet scene. Set its <em>Scale</em> to <code>(0.5, 0.5)</code>
+and click the &ldquo;eye&rdquo; symbol to make it hidden.</p>
+
+<p><a href="/blog/img/tanks_explosion_bullet.png"><img src="/blog/img/tanks_explosion_bullet.png" width="250"></a></p>
+
+<p>We already created an <code>explode()</code> method on the bullet. Now we&rsquo;ll change that to
+play the animation.</p>
+
+<p>We also need to connect the explosion&rsquo;s <code>animation_finished</code> signal so that we can
+remove the bullet.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">explode</span><span class="p">():</span>
+	<span class="n">velocity</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">()</span>
+	<span class="err">$</span><span class="n">Sprite</span><span class="p">.</span><span class="n">hide</span><span class="p">()</span>
+	<span class="err">$</span><span class="n">Explosion</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+	<span class="err">$</span><span class="n">Explosion</span><span class="p">.</span><span class="n">play</span><span class="p">(</span><span class="s">&#34;smoke&#34;</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">_on_Explosion_animation_finished</span><span class="p">():</span>
+	<span class="n">queue_free</span><span class="p">()</span></code></pre></div>
+
+<p><a href="/blog/img/tanks_explosions1.gif"><img src="/blog/img/tanks_explosions1.gif" width="250"></a></p>
+
+<h2 id="cursor">Cursor</h2>
+
+<p>Finally, before we wrap up, let&rsquo;s try using one of the custom cursor images from
+the UI pack:</p>
+
+<p><a href="/blog/img/crossair_black.png"><img src="/blog/img/crossair_black.png" width="32"></a></p>
+
+<p>To use it as our mouse cursor, add the following line to <code>Map.gd</code>:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">Input</span><span class="p">.</span><span class="n">set_custom_mouse_cursor</span><span class="p">(</span><span class="n">load</span><span class="p">(</span><span class="s">&#34;res://assets/UI/crossair_black.png&#34;</span><span class="p">),</span>
+        <span class="n">Input</span><span class="p">.</span><span class="n">CURSOR_ARROW</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span></code></pre></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That completes Part 7 of this series. In the next part we&rsquo;ll start adding some
+obstacles and items to the game.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part07-download-the-code-for-this-part-a"><a href="https://github.com/kidscancode/topdown_tanks/releases/tag/part07">Download the code for this part</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
