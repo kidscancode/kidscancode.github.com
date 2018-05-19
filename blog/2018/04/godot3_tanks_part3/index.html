@@ -185,7 +185,7 @@ it has been attached to a PathFollow2D, and use the pathfollow code only in that
 
 <span class="n">func</span> <span class="n">control</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="n">PathFollow2D</span><span class="p">:</span>
-        <span class="n">parent</span><span class="o">.</span><span class="n">set_offset</span><span class="p">(</span><span class="n">get_offset</span><span class="p">()</span> <span class="o">+</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+        <span class="n">parent</span><span class="o">.</span><span class="n">set_offset</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">get_offset</span><span class="p">()</span> <span class="o">+</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># other movement code</span>
         <span class="k">pass</span></code></pre></div>
