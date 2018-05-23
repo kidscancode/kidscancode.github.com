@@ -7,7 +7,112 @@
     <language>en-us</language>
     
     
-    <updated>Sun, 13 May 2018 14:14:12 PDT</updated>
+    <updated>Mon, 21 May 2018 14:14:12 PDT</updated>
+    
+    <item>
+      <title>Topdown Tank Battle: Part 8</title>
+      <link>/blog/2018/05/godot3_tanks_part8/</link>
+      <pubDate>Mon, 21 May 2018 14:14:12 PDT</pubDate>
+      
+      <guid>/blog/2018/05/godot3_tanks_part8/</guid>
+      <description>&lt;p&gt;In this tutorial series, we&amp;rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&amp;rsquo;s workflow and show you various techniques that you can apply to your own projects.&lt;/p&gt;
+
+&lt;p&gt;This is Part 8: Tank explosions and shooting effects&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/iTBZwpDYfJU&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;In this installment, we&amp;rsquo;ll add explosions to the enemy tanks (we already made them
+for bullets) and create a &amp;ldquo;muzzle flash&amp;rdquo; effect when the tanks shoot.&lt;/p&gt;
+
+&lt;h2 id=&#34;muzzle-flash&#34;&gt;Muzzle Flash&lt;/h2&gt;
+
+&lt;p&gt;Open &lt;code&gt;Tank.tscn&lt;/code&gt;, the master tank scene that the enemy and player both inherit from.
+Add a &lt;code&gt;Sprite&lt;/code&gt; node named &amp;ldquo;Flash&amp;rdquo; as a child of the &lt;code&gt;Muzzle&lt;/code&gt; and an &lt;code&gt;AnimationPlayer&lt;/code&gt;
+as the child of the root node. You can also add an instance of the &lt;code&gt;Explosion&lt;/code&gt;
+scene, which we&amp;rsquo;ll set up after. Here is the updated scene tree.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/tanks_muzzle_nodes.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Set the &lt;code&gt;Flash&lt;/code&gt; node&amp;rsquo;s &lt;em&gt;Region/Enabled&lt;/em&gt; property &amp;ldquo;On&amp;rdquo; (this will save you having to set
+it on the inherited scenes) and the &lt;code&gt;Explosion&lt;/code&gt;&amp;rsquo;s &lt;em&gt;Animation&lt;/em&gt; to &amp;ldquo;fire&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ll set the actual image on the inherited scene, but the animation(s) will be the
+same, so we&amp;rsquo;ll create them here.&lt;/p&gt;
+
+&lt;p&gt;In the AnimationPlayer, we need to create two animations: &amp;ldquo;init&amp;rdquo;, which will set
+the animated properties to their initial values; and &amp;ldquo;muzzle_flash&amp;rdquo; for the effect.&lt;/p&gt;
+
+&lt;p&gt;In the &amp;ldquo;init&amp;rdquo; animation, click the &amp;ldquo;Autoplay on Load&amp;rdquo; button and add one track by
+setting the &amp;ldquo;Alpha&amp;rdquo; value in the&lt;code&gt;Flash&lt;/code&gt; sprite&amp;rsquo;s &lt;em&gt;Modulate&lt;/em&gt; property to &lt;code&gt;255&lt;/code&gt; and
+clicking the property&amp;rsquo;s &amp;ldquo;key&amp;rdquo; button.&lt;/p&gt;
+
+&lt;p&gt;Next, add the &amp;ldquo;muzzle_flash&amp;rdquo; animation, setting its &lt;em&gt;Length&lt;/em&gt; to &lt;code&gt;0.15&lt;/code&gt; and &lt;em&gt;Step&lt;/em&gt;
+to &lt;code&gt;0.01&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;This animation will have tracks for two properties: &lt;code&gt;modulate&lt;/code&gt; and &lt;code&gt;scale&lt;/code&gt;. See the
+image below for the values and keyframe positions:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_muzzle_animation.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_muzzle_animation.png&#34; width=&#34;450&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Now open the &lt;code&gt;Player.tscn&lt;/code&gt; and drag the spritesheet into the &lt;code&gt;Flash&lt;/code&gt; sprite&amp;rsquo;s &lt;em&gt;Texture&lt;/em&gt;.
+Because we want the scaling to happen from the muzzle end of the flash and not its
+center, set the &lt;em&gt;Offset&lt;/em&gt; so that it is placed at the end, and then the &lt;em&gt;Transform/Position&lt;/em&gt;
+so that it is located at the tip of the barrel:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/tanks_muzzle_sprite.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For this image, we set &lt;em&gt;Offset&lt;/em&gt; to &lt;code&gt;(25, 0)&lt;/code&gt; and &lt;em&gt;Position&lt;/em&gt; to &lt;code&gt;(55, 0)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Play the Player scene and try it out:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/tanks_muzzle_flash.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Follow the same process with the enemy tank&lt;/p&gt;
+
+&lt;h2 id=&#34;tank-explosion&#34;&gt;Tank Explosion&lt;/h2&gt;
+
+&lt;p&gt;We added an instance of the explosion, now change the Tank&amp;rsquo;s &lt;code&gt;explode()&lt;/code&gt; function
+as follows:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;explode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CollisionShape2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;disabled&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;alive&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Turret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Explosion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;show&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Explosion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;When playing the explosion, this ensures that the tank disapears, stops moving,
+and stops detecting collisions. However, now we need to delete it when the explosion
+finishes, so connect the Explosion&amp;rsquo;s &lt;code&gt;animation_finished&lt;/code&gt; signal:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_Explosion_animation_finished&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You may want to scale up the explosion a bit: try setting its &lt;em&gt;Scale&lt;/em&gt; in the Inspector to
+&lt;code&gt;(1.5, 1.5)&lt;/code&gt; for example.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;That completes Part 8 of this series. This was a fairly short one, but in the next
+part we&amp;rsquo;ll start adding some obstacles and pickup items to the game.&lt;/p&gt;
+
+&lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
+
+&lt;h3 id=&#34;download-the-code-for-this-part-https-github-com-kidscancode-topdown-tanks-releases-tag-part08&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part08&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Topdown Tank Battle: Part 7</title>
@@ -3033,121 +3138,6 @@ node is perfect for implementing characters and other moving bodies that don&amp
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;a-href-blog-2017-06-godot-101-13-godot-101-part-13-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/06/godot_101_13/&#34;&gt;Godot 101 - Part 13&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Godot 101 - Part 11: Animated Sprites</title>
-      <link>/blog/2017/04/godot_101_11/</link>
-      <pubDate>Sun, 09 Apr 2017 05:22:12 PDT</pubDate>
-      
-      <guid>/blog/2017/04/godot_101_11/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;This is part 11 of &amp;ldquo;Godot 101&amp;rdquo;. In this installment, we&amp;rsquo;ll add animation to the player character.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2017/02/godot_101_01/&#34;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
-
-&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
-&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/rbWL8zFMWZc&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;animated-sprites&#34;&gt;Animated Sprites&lt;/h2&gt;
-
-&lt;p&gt;In the art folder are animations for idle, running and jumping, and we&amp;rsquo;d like to use those animations on the player sprite.  However, a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;Sprite&lt;/code&gt;&lt;/a&gt; node can only use one texture at a time. Instead, we&amp;rsquo;ll use an &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animated_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_animated_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;AnimatedSprite&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Instead of creating a new node, we can convert the current one.  In the &lt;code&gt;player&lt;/code&gt; scene, right-click on the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; &lt;code&gt;sprite&lt;/code&gt; node and choose &lt;code&gt;Change Type&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;The texture disappears and now we have a warning:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_11_01.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_11_01.png&#34; width=&#34;450&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;An &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animated_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_animated_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;AnimatedSprite&lt;/code&gt;&lt;/a&gt; must have a &lt;code&gt;SpriteFrames&lt;/code&gt; resource defined. This resource will contain all the properties of the animation (frames, rate, etc).  In the Inspector, click the down arrow next to &lt;code&gt;Frames&lt;/code&gt; and choose &lt;code&gt;New SpriteFrames&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_11_02.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_11_02.png&#34; width=&#34;250&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Next, click the right arrow &lt;code&gt;&amp;gt;&lt;/code&gt; and a new panel will open:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_11_03.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_11_03.png&#34; width=&#34;500&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;On the left, you can define multiple animations.  On the right will be the individual frames, arranged in order.  You can also specify whether the animation should loop, and at what speed it should run.&lt;/p&gt;
-
-&lt;p&gt;Change the &lt;code&gt;default&lt;/code&gt; animation name to &lt;code&gt;idle&lt;/code&gt;, and drag the two frames of the idle animation from the &lt;code&gt;FileSystem&lt;/code&gt; tab into the &lt;code&gt;Animation Frames&lt;/code&gt; box. Make sure &lt;code&gt;Loop&lt;/code&gt; is set to &lt;code&gt;On&lt;/code&gt; .Now click back on the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animated_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_animated_sprite&#34;&gt;&lt;/svg&gt; &lt;code&gt;sprite&lt;/code&gt; node and check the box next to the &lt;code&gt;Playing&lt;/code&gt; property.  Our sprite is now animated!&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_11_04.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_11_04.gif&#34; width=&#34;150&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;The default speed is a little fast, so feel free to adjust the &lt;code&gt;Speed&lt;/code&gt; parameter; &lt;code&gt;3&lt;/code&gt; works pretty well.&lt;/p&gt;
-
-&lt;p&gt;Next, to add the running animation, just click the new button and name the new animation &lt;code&gt;running&lt;/code&gt;.  Drag the 6 running animation frames into &lt;code&gt;Animation Frames&lt;/code&gt;. &lt;code&gt;8&lt;/code&gt; works well for the &lt;code&gt;Speed&lt;/code&gt; here.&lt;/p&gt;
-
-&lt;h3 id=&#34;choosing-animations&#34;&gt;Choosing Animations&lt;/h3&gt;
-
-&lt;p&gt;Now in the &lt;code&gt;player.gd&lt;/code&gt; we can specify which animation to play, and which direction to face (using the &lt;code&gt;Flip H&lt;/code&gt; property).&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;sprite&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;anim&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;idle&amp;#34;&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_fixed_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;c1&#34;&gt;# set animation&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;anim&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;idle&amp;#34;&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;anim&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;running&amp;#34;&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_flip_h&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;false&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_flip_h&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;anim&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;First we choose which animation based on the player&amp;rsquo;s &lt;code&gt;vel.x&lt;/code&gt; and use the direction to select whether to flip the image.  However, when you run this you will notice that when the player stops moving, it doesn&amp;rsquo;t switch back to the &lt;code&gt;idle&lt;/code&gt; animation.  This is because while friction is reducing the vel.x, it&amp;rsquo;s a floating point number and never actually reaching 0. We can fix that by setting the speed to 0 if it falls below a certain value.  Add the following to &lt;code&gt;fixed_process()&lt;/code&gt; after the movement code:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;abs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&#34;platform-images&#34;&gt;Platform Images&lt;/h3&gt;
-
-&lt;p&gt;Let&amp;rsquo;s change the appearance of the platforms as well. Instead of the plain green square, we can use this nice grass block image:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/grass_main_64x64.png&#34; width=&#34;64&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;Drag it from the art folder onto the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_texture&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_texture&#34;&gt;&lt;/svg&gt; &lt;code&gt;Texture&lt;/code&gt; property.  Oh no! This doesn&amp;rsquo;t look good:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot101_11_05.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;We can&amp;rsquo;t scale this block, so change the &lt;code&gt;Scale&lt;/code&gt; property back to &lt;code&gt;(1, 1)&lt;/code&gt;.  Now we can see the 64x64 block, but we&amp;rsquo;d like to be able to make the platforms as wide as we like.  Here&amp;rsquo;s how we do that:&lt;/p&gt;
-
-&lt;p&gt;First, click the &lt;code&gt;&amp;gt;&lt;/code&gt; next to &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_texture&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_texture&#34;&gt;&lt;/svg&gt; &lt;code&gt;Texture&lt;/code&gt; and in &lt;code&gt;Flags&lt;/code&gt; make sure &lt;code&gt;Mipmaps&lt;/code&gt; and &lt;code&gt;Repeat&lt;/code&gt; are checked.&lt;/p&gt;
-
-&lt;p&gt;Next, check the box labeled &lt;code&gt;Region&lt;/code&gt;.  The grass block will disappear, but that&amp;rsquo;s OK, we still need to fill in the &lt;code&gt;Region Rect&lt;/code&gt;, which is right now set to &lt;code&gt;(0, 0, 0, 0)&lt;/code&gt;.  This will be how we choose the size of our platform.  Set the height (&lt;code&gt;h&lt;/code&gt;) to &lt;code&gt;64&lt;/code&gt; and the width (&lt;code&gt;w&lt;/code&gt;) to &lt;code&gt;64*10&lt;/code&gt; (did you know you can type math expressions in property fields?).&lt;/p&gt;
-
-&lt;p&gt;Finally, choose the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_collision_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;collision&lt;/code&gt; node and adjust the size to match the new image.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_11_06.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_11_06.gif&#34; width=&#34;250&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;background-image&#34;&gt;Background Image&lt;/h3&gt;
-
-&lt;p&gt;Finally, let&amp;rsquo;s add a background image.  Go to the &lt;code&gt;main&lt;/code&gt; scene and add a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;Sprite&lt;/code&gt;&lt;/a&gt;. Make sure it&amp;rsquo;s at the top of the tree (right under &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_node&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_node&#34;&gt;&lt;/svg&gt;&lt;code&gt;main&lt;/code&gt;), so it will be behind the other objects.  Name this node &lt;code&gt;background&lt;/code&gt; and drag the background image into the &lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_texture&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_texture&#34;&gt;&lt;/svg&gt; &lt;code&gt;Texture&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/background.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/background.png&#34; width=&#34;500&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;This image is quite large, so set the scale to &lt;code&gt;(0.5, 0.5)&lt;/code&gt; (or whatever you like).&lt;/p&gt;
-
-&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animated_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_animated_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;AnimatedSprite&lt;/code&gt;&lt;/a&gt; nodes are a great way to add animation to your character (there are other ways, which we&amp;rsquo;ll get to later).&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-full-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Full code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;a-href-blog-2017-04-godot-101-12-godot-101-part-12-a&#34;&gt;&lt;a href=&#34;/blog/blog/2017/04/godot_101_12/&#34;&gt;Godot 101 - Part 12&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 

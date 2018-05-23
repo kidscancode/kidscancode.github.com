@@ -1,0 +1,267 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.40.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Topdown Tank Battle: Part 8 &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">44</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">27</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">44</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Topdown Tank Battle: Part 8</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Mon, May 21, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			</h6></span>
+
+			      <p>In this tutorial series, we&rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&rsquo;s workflow and show you various techniques that you can apply to your own projects.</p>
+
+<p>This is Part 8: Tank explosions and shooting effects</p>
+
+<p></p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/iTBZwpDYfJU" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>In this installment, we&rsquo;ll add explosions to the enemy tanks (we already made them
+for bullets) and create a &ldquo;muzzle flash&rdquo; effect when the tanks shoot.</p>
+
+<h2 id="muzzle-flash">Muzzle Flash</h2>
+
+<p>Open <code>Tank.tscn</code>, the master tank scene that the enemy and player both inherit from.
+Add a <code>Sprite</code> node named &ldquo;Flash&rdquo; as a child of the <code>Muzzle</code> and an <code>AnimationPlayer</code>
+as the child of the root node. You can also add an instance of the <code>Explosion</code>
+scene, which we&rsquo;ll set up after. Here is the updated scene tree.</p>
+
+<p><img src="/blog/img/tanks_muzzle_nodes.png" alt="" /></p>
+
+<p>Set the <code>Flash</code> node&rsquo;s <em>Region/Enabled</em> property &ldquo;On&rdquo; (this will save you having to set
+it on the inherited scenes) and the <code>Explosion</code>&rsquo;s <em>Animation</em> to &ldquo;fire&rdquo;.</p>
+
+<p>We&rsquo;ll set the actual image on the inherited scene, but the animation(s) will be the
+same, so we&rsquo;ll create them here.</p>
+
+<p>In the AnimationPlayer, we need to create two animations: &ldquo;init&rdquo;, which will set
+the animated properties to their initial values; and &ldquo;muzzle_flash&rdquo; for the effect.</p>
+
+<p>In the &ldquo;init&rdquo; animation, click the &ldquo;Autoplay on Load&rdquo; button and add one track by
+setting the &ldquo;Alpha&rdquo; value in the<code>Flash</code> sprite&rsquo;s <em>Modulate</em> property to <code>255</code> and
+clicking the property&rsquo;s &ldquo;key&rdquo; button.</p>
+
+<p>Next, add the &ldquo;muzzle_flash&rdquo; animation, setting its <em>Length</em> to <code>0.15</code> and <em>Step</em>
+to <code>0.01</code>.</p>
+
+<p>This animation will have tracks for two properties: <code>modulate</code> and <code>scale</code>. See the
+image below for the values and keyframe positions:</p>
+
+<p><a href="/blog/img/tanks_muzzle_animation.png"><img src="/blog/img/tanks_muzzle_animation.png" width="450"></a></p>
+
+<p>Now open the <code>Player.tscn</code> and drag the spritesheet into the <code>Flash</code> sprite&rsquo;s <em>Texture</em>.
+Because we want the scaling to happen from the muzzle end of the flash and not its
+center, set the <em>Offset</em> so that it is placed at the end, and then the <em>Transform/Position</em>
+so that it is located at the tip of the barrel:</p>
+
+<p><img src="/blog/img/tanks_muzzle_sprite.png" alt="" /></p>
+
+<p>For this image, we set <em>Offset</em> to <code>(25, 0)</code> and <em>Position</em> to <code>(55, 0)</code>.</p>
+
+<p>Play the Player scene and try it out:</p>
+
+<p><img src="/blog/img/tanks_muzzle_flash.gif" alt="" /></p>
+
+<p>Follow the same process with the enemy tank</p>
+
+<h2 id="tank-explosion">Tank Explosion</h2>
+
+<p>We added an instance of the explosion, now change the Tank&rsquo;s <code>explode()</code> function
+as follows:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">explode</span><span class="p">():</span>
+    <span class="err">$</span><span class="n">CollisionShape2D</span><span class="p">.</span><span class="n">disabled</span> <span class="p">=</span> <span class="kc">true</span>
+    <span class="n">alive</span> <span class="p">=</span> <span class="kc">false</span>
+    <span class="err">$</span><span class="n">Turret</span><span class="p">.</span><span class="n">hide</span><span class="p">()</span>
+    <span class="err">$</span><span class="n">Body</span><span class="p">.</span><span class="n">hide</span><span class="p">()</span>
+    <span class="err">$</span><span class="n">Explosion</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="err">$</span><span class="n">Explosion</span><span class="p">.</span><span class="n">play</span><span class="p">()</span></code></pre></div>
+
+<p>When playing the explosion, this ensures that the tank disapears, stops moving,
+and stops detecting collisions. However, now we need to delete it when the explosion
+finishes, so connect the Explosion&rsquo;s <code>animation_finished</code> signal:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_on_Explosion_animation_finished</span><span class="p">():</span>
+    <span class="n">queue_free</span><span class="p">()</span></code></pre></div>
+
+<p>You may want to scale up the explosion a bit: try setting its <em>Scale</em> in the Inspector to
+<code>(1.5, 1.5)</code> for example.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That completes Part 8 of this series. This was a fairly short one, but in the next
+part we&rsquo;ll start adding some obstacles and pickup items to the game.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="download-the-code-for-this-part-https-github-com-kidscancode-topdown-tanks-releases-tag-part08"><a href="https://github.com/kidscancode/topdown_tanks/releases/tag/part08">Download the code for this part</a></h3>
+
+<h3 id="helpful-links">Helpful Links</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
