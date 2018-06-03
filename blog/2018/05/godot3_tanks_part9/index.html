@@ -1,0 +1,431 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.40.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Topdown Tank Battle: Part 9 &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">45</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">28</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">45</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Topdown Tank Battle: Part 9</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Thu, May 31, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			</h6></span>
+
+			      <p>In this tutorial series, we&rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&rsquo;s workflow and show you various techniques that you can apply to your own projects.</p>
+
+<p>This is Part 9: Obstacles (and tool scripts)</p>
+
+<p></p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VctsP1_1EfE" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>In this part, we&rsquo;re going to add obstacles to the world and begin to think about
+how levels are going to be designed.</p>
+
+<h2 id="small-additions">Small additions</h2>
+
+<p>Before tackling the obstacles, a couple of small changes to the code.</p>
+
+<p>First, we&rsquo;re adding a machine gun turret, which is a stationary enemy. It inherits
+from <code>EnemyTank</code> and has all the same features, but its speed is set to <code>0</code> so
+that it doesn&rsquo;t move.</p>
+
+<p><img src="/blog/img/tanks_mg_turret.png" alt="" /></p>
+
+<p>Second, change the EnemyTank script so that it doesn&rsquo;t use the LookAhead raycasts
+when it&rsquo;s not a moving object:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">control</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">parent</span> <span class="k">is</span> <span class="n">PathFollow2D</span><span class="p">:</span>
+        <span class="k">if</span> <span class="err">$</span><span class="n">LookAhead1</span><span class="p">.</span><span class="n">is_colliding</span><span class="p">()</span> <span class="n">or</span> <span class="err">$</span><span class="n">LookAhead2</span><span class="p">.</span><span class="n">is_colliding</span><span class="p">():</span>
+            <span class="n">speed</span> <span class="p">=</span> <span class="n">lerp</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">speed</span> <span class="p">=</span> <span class="n">lerp</span><span class="p">(</span><span class="n">speed</span><span class="p">,</span> <span class="n">max_speed</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+        <span class="n">parent</span><span class="p">.</span><span class="n">set_offset</span><span class="p">(</span><span class="n">parent</span><span class="p">.</span><span class="n">get_offset</span><span class="p">()</span> <span class="o">+</span> <span class="n">speed</span> <span class="o">*</span> <span class="n">delta</span><span class="p">)</span>
+        <span class="n">position</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="p">#</span> <span class="n">other</span> <span class="n">movement</span> <span class="n">code</span>
+        <span class="n">pass</span></code></pre></div>
+
+<h2 id="obstacles">Obstacles</h2>
+
+<p>In the art pack there are sandbags, trees, barriers, and many other useful
+objects to decorate the world and make it less empty. However, because they are
+not all the same size or shape, they will require different collision shapes. This
+means we can&rsquo;t really use a TileMap to place them. In addition, we also want to
+be able to place them at any angle, not just the orthogonal rotations allowed in
+TileMaps.</p>
+
+<p>So what approach should we use? We could make a bunch of different StaticBody
+objects, but that is going to be hard to manage with so many. Instead, we can make
+a single collision object that can be made to represent all of the possible obstacles.
+The idea is that as we get further into the project, we could turn this into a full
+level-design tool.</p>
+
+<h3 id="obstacle-scene">Obstacle scene</h3>
+
+<p>Create a new <code>Obstacle</code> scene with a StaticBody, Sprite, and CollisionShape2D, saving
+it in a folder called &ldquo;environment&rdquo;. Drop the asset sheet into the Sprite&rsquo;s <em>Texture</em>
+and set its <em>Region</em> on.</p>
+
+<p>Now, rather than selecting the region manually in the editor, we want to automatically
+grab all the obstacle images out of the sheet. Fortunately, when Kenney creates his
+art packs, he includes an xml file like the following along with the spritesheets.
+This file lists the coordinates of every image, making it easy to find them
+programmatically. Since we don&rsquo;t need all of the objects, just the obstacles, we
+can create a new file listing just those objects:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="p">&lt;</span><span class="n">TextureAtlas</span> <span class="n">imagePath</span><span class="p">=</span><span class="s">&#34;onlyObjects_retina.png&#34;</span><span class="o">&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;barrelBlack_side.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;652&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;532&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;40&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;56&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;barrelBlack_top.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;645&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;220&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;48&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;48&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;barrelGreen_side.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;652&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;476&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;40&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;56&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;barrelGreen_top.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;597&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;220&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;48&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;48&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;barrelRed_side.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;648&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;420&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;40&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;56&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;barrelRed_top.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;645&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;172&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;48&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;48&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;barrelRust_side.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;652&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;588&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;40&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;56&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;barrelRust_top.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;597&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;172&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;48&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;48&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;barricadeMetal.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;596&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;532&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;56&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;56&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;barricadeWood.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;596&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;72&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;56&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;56&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;fenceRed.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;243&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;336&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;96&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;32&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;fenceYellow.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;128&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;216&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;104&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;32&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;sandbagBeige.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;436&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;164&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;64&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;44&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;sandbagBeige_open.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;348&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;518&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;84&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;55&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;sandbagBrown.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;440&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;622&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;64&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;44&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;sandbagBrown_open.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;248&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;596&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;84&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;55&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;treeBrown_large.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;0&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;0&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;128&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;128&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;treeBrown_small.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;592&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;694&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;72&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;72&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;treeGreen_large.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;0&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;128&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;128&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;128&#34;</span><span class="o">/&gt;</span>
+        <span class="p">&lt;</span><span class="n">SubTexture</span> <span class="n">name</span><span class="p">=</span><span class="s">&#34;treeGreen_small.png&#34;</span> <span class="n">x</span><span class="p">=</span><span class="s">&#34;520&#34;</span> <span class="n">y</span><span class="p">=</span><span class="s">&#34;694&#34;</span> <span class="n">width</span><span class="p">=</span><span class="s">&#34;72&#34;</span> <span class="n">height</span><span class="p">=</span><span class="s">&#34;72&#34;</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">TextureAtlas</span><span class="o">&gt;</span></code></pre></div>
+
+<p><a href="/blog/img/obstacles.xml">Click here</a> to download this file.</p>
+
+<h3 id="rotating-spritesheet-coordinates">Rotating spritesheet coordinates</h3>
+
+<p>However, now we have a problem. At the beginning of the project we rotated the
+spritesheet by 90 degrees so that it was oriented pointing right to match Godot&rsquo;s
+zero angle. That means that the coordinates in the xml file are no longer valid!</p>
+
+<p>Fortunately, I have a Python script from a previoius project that parses the
+Kenney xml, so we can use that. Python is a great choice for tool scripts like
+this.</p>
+
+<p>Once we&rsquo;ve parsed the xml and extracted the x, y, width, and height values, we need
+to do a little math to transform them to the new orientation:</p>
+
+<p><img src="/blog/img/tanks_rotated_sprite_coordinates.png" alt="" /></p>
+
+<p>In this image, you can see how a point rotated 90 degrees counter-clockwise is
+transformed. In addition to this, since Godot expects <code>x</code> &amp; <code>y</code> to represent the
+rectangle&rsquo;s top-left corner, we also have to subtract <code>h</code> from <code>y</code>.</p>
+
+<p>Here is the Python script to do all that:</p>
+
+<p><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Extract sprite coordinates from rotated</span>
+<span class="c1"># Kenney spritesheet</span>
+<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">as</span> <span class="nn">ET</span>
+
+<span class="n">datafile</span> <span class="o">=</span> <span class="s1">&#39;obstacles.xml&#39;</span>
+<span class="n">enum_name</span> <span class="o">=</span> <span class="s1">&#39;Items&#39;</span>
+<span class="n">sheet_width</span> <span class="o">=</span> <span class="mi">782</span>
+<span class="n">sheet_height</span> <span class="o">=</span> <span class="mi">782</span>
+
+<span class="c1"># parse Kenney XML file</span>
+<span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">datafile</span><span class="p">)</span>
+<span class="n">rects</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="nb">iter</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">rects</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">rects</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)))</span>
+        <span class="n">rects</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)))</span>
+        <span class="n">rects</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">)))</span>
+        <span class="n">rects</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">)))</span>
+
+<span class="n">enum</span> <span class="o">=</span> <span class="s1">&#39;enum Items {&#39;</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">rects</span><span class="p">:</span>
+    <span class="n">enum</span> <span class="o">+=</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span>
+<span class="n">enum</span> <span class="o">+=</span> <span class="s1">&#39;}&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">enum</span><span class="p">)</span>
+<span class="k">print</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;var regions = {&#34;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">rect</span> <span class="ow">in</span> <span class="n">rects</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">rect</span>
+    <span class="c1"># offset center</span>
+    <span class="n">x</span> <span class="o">-=</span> <span class="n">sheet_width</span><span class="o">//</span><span class="mi">2</span>
+    <span class="n">y</span> <span class="o">-=</span> <span class="n">sheet_height</span><span class="o">//</span><span class="mi">2</span>
+    <span class="c1"># rotate 90deg counter-clockwise</span>
+    <span class="c1"># and use new top-left corner</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="o">-</span><span class="n">x</span>
+    <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span>
+    <span class="n">y</span> <span class="o">-=</span> <span class="n">h</span>
+    <span class="c1"># remove offset</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="n">sheet_width</span><span class="o">//</span><span class="mi">2</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">sheet_height</span><span class="o">//</span><span class="mi">2</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\t</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">: Rect2(</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">),&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">enum_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;}&#34;</span><span class="p">)</span></code></pre></div></p>
+
+<p>In addition to applying the transform, we&rsquo;re also printing the result in a particular
+format, so that we can use it in our GDScript code. We will be left with an <code>enum</code>
+called <code>Items</code> listing the various obstacles and a dictionary called <code>regions</code>
+containing the coordinates as <code>Rect2</code> objects.</p>
+
+<h3 id="obstacle-script">Obstacle Script</h3>
+
+<p>Paste the Python script&rsquo;s output into the Obstacle script:</p>
+
+<p><div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">StaticBody2D</span>
+
+<span class="kd">enum</span> <span class="nc">Items</span> <span class="p">{</span><span class="n">barrelBlack_side</span><span class="p">,</span> <span class="n">barrelBlack_top</span><span class="p">,</span> <span class="n">barrelGreen_side</span><span class="p">,</span>
+            <span class="n">barrelGreen_top</span><span class="p">,</span> <span class="n">barrelRed_side</span><span class="p">,</span> <span class="n">barrelRed_top</span><span class="p">,</span>
+            <span class="n">barrelRust_side</span><span class="p">,</span> <span class="n">barrelRust_top</span><span class="p">,</span> <span class="n">barricadeMetal</span><span class="p">,</span>
+            <span class="n">barricadeWood</span><span class="p">,</span> <span class="n">fenceRed</span><span class="p">,</span> <span class="n">fenceYellow</span><span class="p">,</span> <span class="n">sandbagBeige</span><span class="p">,</span>
+            <span class="n">sandbagBeige_open</span><span class="p">,</span> <span class="n">sandbagBrown</span><span class="p">,</span> <span class="n">sandbagBrown_open</span><span class="p">,</span>
+            <span class="n">treeBrown_large</span><span class="p">,</span> <span class="n">treeBrown_small</span><span class="p">,</span> <span class="n">treeGreen_large</span><span class="p">,</span>
+            <span class="n">treeGreen_small</span><span class="p">}</span>
+
+<span class="kd">var</span> <span class="nv">regions</span> <span class="p">=</span> <span class="p">{</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">barrelBlack_side</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">532</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">barrelBlack_top</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">220</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">48</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">barrelGreen_side</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">476</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">barrelGreen_top</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">220</span><span class="p">,</span> <span class="mi">137</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">48</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">barrelRed_side</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">420</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">barrelRed_top</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">172</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">48</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">barrelRust_side</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">588</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">barrelRust_top</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">172</span><span class="p">,</span> <span class="mi">137</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">48</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">barricadeMetal</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">532</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">56</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">barricadeWood</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">72</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">56</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">fenceRed</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">336</span><span class="p">,</span> <span class="mi">443</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">96</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">fenceYellow</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">216</span><span class="p">,</span> <span class="mi">550</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">104</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">sandbagBeige</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">164</span><span class="p">,</span> <span class="mi">282</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">sandbagBeige_open</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">518</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">84</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">sandbagBrown</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">622</span><span class="p">,</span> <span class="mi">278</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">sandbagBrown_open</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">596</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">84</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">treeBrown_large</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">654</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">treeBrown_small</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">694</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">72</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">treeGreen_large</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">654</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+    <span class="n">Items</span><span class="p">.</span><span class="n">treeGreen_small</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">694</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">72</span><span class="p">)</span>
+<span class="p">}</span></code></pre></div></p>
+
+<p>Next, we want to be able to choose the item from the Inspector, so we need to
+export a variable that uses the <code>Items</code> enum:</p>
+
+<p><div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">export</span> <span class="p">(</span><span class="n">Items</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">type</span> <span class="n">setget</span> <span class="n">_update</span></code></pre></div></p>
+
+<p>Setting the <code>type</code> variable will trigger the <code>_update()</code> function, which sets
+the <em>Region</em> and creates a correctly sized collision rectangle:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_update</span><span class="p">(</span><span class="n">_type</span><span class="p">):</span>
+    <span class="n">type</span> <span class="p">=</span> <span class="n">_type</span>
+    <span class="err">$</span><span class="n">Sprite</span><span class="p">.</span><span class="n">region_rect</span> <span class="p">=</span> <span class="n">regions</span><span class="p">[</span><span class="n">type</span><span class="p">]</span>
+    <span class="kd">var</span> <span class="nv">rect</span> <span class="p">=</span> <span class="n">RectangleShape2D</span><span class="p">.</span><span class="n">new</span><span class="p">()</span>
+    <span class="n">rect</span><span class="p">.</span><span class="n">extents</span> <span class="p">=</span> <span class="err">$</span><span class="n">Sprite</span><span class="p">.</span><span class="n">region_rect</span><span class="p">.</span><span class="n">size</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="err">$</span><span class="n">CollisionShape2D</span><span class="p">.</span><span class="n">shape</span> <span class="p">=</span> <span class="n">rect</span></code></pre></div>
+
+<p>We need this code to run when we&rsquo;re in the editor, not when the game is running,
+so add <code>tool</code> as the first line of the script. This tells Godot that we want the
+code to run in the editor.</p>
+
+<p><img src="/blog/img/tanks_obstacle_select.gif" alt="" /></p>
+
+<h3 id="adding-obstacles">Adding Obstacles</h3>
+
+<p>Now add some obstacle instances to the map, choosing some different types and
+arranging them as you like. However, when you try and run the game, you&rsquo;ll see
+an error message:</p>
+
+<p><code>Invalid set index 'region_rect' (on base: 'null instance') with value of type 'Rect2'.</code></p>
+
+<p>This happens because the <code>setget</code> is running <em>before</em> the Obstacle scene has
+finished loading - specifically before its child node <code>Sprite</code> has loaded. We can
+fix this by telling the node to wait until it&rsquo;s ready when being run in the scene
+tree (i.e. not in the editor):</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_update</span><span class="p">(</span><span class="n">_type</span><span class="p">):</span>
+    <span class="n">type</span> <span class="p">=</span> <span class="n">_type</span>
+    <span class="k">if</span> <span class="o">!</span><span class="n">Engine</span><span class="p">.</span><span class="n">editor_hint</span><span class="p">:</span>
+        <span class="n">yield</span><span class="p">(</span><span class="kc">self</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">tree_entered</span><span class="err">&#39;</span><span class="p">)</span>
+    <span class="err">$</span><span class="n">Sprite</span><span class="p">.</span><span class="n">region_rect</span> <span class="p">=</span> <span class="n">regions</span><span class="p">[</span><span class="n">type</span><span class="p">]</span>
+    <span class="kd">var</span> <span class="nv">rect</span> <span class="p">=</span> <span class="n">RectangleShape2D</span><span class="p">.</span><span class="n">new</span><span class="p">()</span>
+    <span class="n">rect</span><span class="p">.</span><span class="n">extents</span> <span class="p">=</span> <span class="err">$</span><span class="n">Sprite</span><span class="p">.</span><span class="n">region_rect</span><span class="p">.</span><span class="n">size</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="err">$</span><span class="n">CollisionShape2D</span><span class="p">.</span><span class="n">shape</span> <span class="p">=</span> <span class="n">rect</span></code></pre></div>
+
+<p>Now you can run the game and test that the obstacles are working:</p>
+
+<p><img src="/blog/img/tanks_obstacles1.png" alt="" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That completes Part 9 of this series. Still to come: pickup items (i.e. supplies,
+goals, etc.) and more weapon types.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="download-the-code-for-this-part-https-github-com-kidscancode-topdown-tanks-releases-tag-part09"><a href="https://github.com/kidscancode/topdown_tanks/releases/tag/part09">Download the code for this part</a></h3>
+
+<h3 id="helpful-links">Helpful Links</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
