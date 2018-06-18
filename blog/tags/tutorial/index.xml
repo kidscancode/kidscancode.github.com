@@ -7,7 +7,274 @@
     <language>en-us</language>
     
     
-    <updated>Thu, 31 May 2018 14:14:12 PDT</updated>
+    <updated>Sat, 16 Jun 2018 08:12:12 PDT</updated>
+    
+    <item>
+      <title>Godot 3.0: Simple Mobile UI (with transitions)</title>
+      <link>/blog/2018/06/godot3_simple_ui/</link>
+      <pubDate>Sat, 16 Jun 2018 08:12:12 PDT</pubDate>
+      
+      <guid>/blog/2018/06/godot3_simple_ui/</guid>
+      <description>
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;mobile-ui&#34;&gt;Mobile UI&lt;/h1&gt;
+
+&lt;p&gt;Building the UI is usually the least fun part of your game. When I&amp;rsquo;m working on
+a project, I tend to ignore this part for as long as I can. On the plus side,
+once you&amp;rsquo;ve built a few game screens and UI systems, you can often use them across
+mulitiple projects.&lt;/p&gt;
+
+&lt;p&gt;In this tutorial, we&amp;rsquo;ll make a small UI system for a mobile game. We&amp;rsquo;ll focus
+on the UI screens only, with the goal that you can plug this into your own game
+to jump-start construction of your various game screens.&lt;/p&gt;
+
+&lt;p&gt;A simple setup might be to have four screens:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Title Screen&lt;/li&gt;
+&lt;li&gt;Settings&lt;/li&gt;
+&lt;li&gt;Gameplay (HUD)&lt;/li&gt;
+&lt;li&gt;End Screen&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here&amp;rsquo;s an example of what we want to accomplish, moving between screens with a
+nice animated transition:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/ui_example.gif&#34; alt=&#34;&amp;lt; preview gif &amp;gt;&#34; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;You can download the example project here:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/mobile_ui_example.zip&#34;&gt;Mobile UI Example&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;display-setup&#34;&gt;Display setup&lt;/h2&gt;
+
+&lt;p&gt;For this demo, we want to simulate a mobile device screen in Portrait mode. In
+&lt;em&gt;Project Settings &amp;gt; Display &amp;gt; Window&lt;/em&gt; set the &lt;em&gt;Width&lt;/em&gt; and &lt;em&gt;Height&lt;/em&gt; to &lt;code&gt;480&lt;/code&gt; and
+&lt;code&gt;854&lt;/code&gt; and the &lt;em&gt;Orientation&lt;/em&gt; to &amp;ldquo;portrait&amp;rdquo;.&lt;/p&gt;
+
+&lt;h2 id=&#34;master-screen&#34;&gt;Master screen&lt;/h2&gt;
+
+&lt;p&gt;Because all of the screens are going to share some common layout, we can use
+Godot&amp;rsquo;s scene inheritance to make things a bit easier. We&amp;rsquo;ll create a master scene
+containing the common nodes and configuration and use that as the base for the
+individual screens.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s the node setup (node types are in parentheses):
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;╴Screen (CanvasLayer)&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┠╴Margins (MarginContainer)&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┃  ┖╴Main (VBoxContainer)&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┃     ┖╴Title (Label)&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┖╴AnimationPlayer&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;Save this as &amp;ldquo;Screen.tscn&amp;rdquo; and set up the nodes as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Screen (CanvasLayer)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We&amp;rsquo;re using a &lt;code&gt;CanvasLayer&lt;/code&gt; node as the scene&amp;rsquo;s root, which will allow the UI
+screens to be independent of any Camera movement or other transformations you
+apply to the default layer. The menu screens will &amp;ldquo;float&amp;rdquo; on top of any game
+objects.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Margins&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This node will be the root container, and allows us to arrange everything with
+a nice margin around the edges of the screen. Remember that in Godot&amp;rsquo;s UI hierarchy,
+containers will &lt;em&gt;automatically&lt;/em&gt; control the size of their children, so you won&amp;rsquo;t
+be individually setting any other nodes&amp;rsquo; layout. This automatic formatting will
+be especially useful if you change resolutions or rotate from portrait to
+landscape.&lt;/p&gt;
+
+&lt;p&gt;From the &amp;ldquo;Layout&amp;rdquo; menu select &amp;ldquo;Full Rect&amp;rdquo; and then in the &amp;ldquo;Custom Constants&amp;rdquo;
+section of the Inspector, set the four &lt;em&gt;Margin&lt;/em&gt; properties to &lt;code&gt;20&lt;/code&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Most control nodes have a &amp;ldquo;Custom Constants&amp;rdquo; section where their unique properties can be set.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Main&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The &lt;code&gt;VBoxContainer&lt;/code&gt; automatically &amp;ldquo;stacks&amp;rdquo; its children, spacing them out
+vertically from the top, midddle, or bottom (set by the &lt;em&gt;Alignment&lt;/em&gt; property).
+The only setting we need to change is the &lt;em&gt;Separation&lt;/em&gt;, which we&amp;rsquo;ll set to &lt;code&gt;100&lt;/code&gt;
+to space out the container&amp;rsquo;s items.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Title&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Most, if not all, of the screens will have some sort of title at the top, so we&amp;rsquo;ll
+give it a common configuration here. Set &lt;em&gt;Align&lt;/em&gt; to &amp;ldquo;Center&amp;rdquo;. Put &amp;ldquo;Title&amp;rdquo; or any
+other word in the &lt;em&gt;Text&lt;/em&gt; property so you can see the result.&lt;/p&gt;
+
+&lt;p&gt;Next, configure the &amp;ldquo;Custom Fonts&amp;rdquo; section with your preferred font. For this demo
+I&amp;rsquo;m using the free &amp;ldquo;Xolonium&amp;rdquo; font, which you can &lt;a href=&#34;https://www.dafont.com/xolonium.font&#34;&gt;download here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;TIP:&lt;/strong&gt; Once you&amp;rsquo;ve configured the font, click the &amp;ldquo;Save&amp;rdquo; icon to save the resource.
+Then you can add it to another node later and avoid having to set all the properties
+again.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/custom_font_save.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;transitions&#34;&gt;Transitions&lt;/h2&gt;
+
+&lt;p&gt;The next step is to set up the transition animation that will take the user from
+screen to screen. For this example, we&amp;rsquo;ll make the screens &amp;ldquo;slide&amp;rdquo; in and out from
+the right side. You could also add any other kinds of transitions, such as zooms,
+fades, etc.&lt;/p&gt;
+
+&lt;p&gt;First, we&amp;rsquo;ll make sure the screen starts in the right state. Add a new animation
+to the AnimationPlayer called &amp;ldquo;init&amp;rdquo; and set it to &amp;ldquo;Autoplay on Load&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;We want the screen&amp;rsquo;s starting position to be &amp;ldquo;offscreen&amp;rdquo;, to the right of the
+display, so set the CanvasLayer&amp;rsquo;s &lt;em&gt;Offset&lt;/em&gt; to &lt;code&gt;(500, 0)&lt;/code&gt; and click the key icon
+to add a keyframe.&lt;/p&gt;
+
+&lt;p&gt;Now add another animation called &amp;ldquo;transition&amp;rdquo;. Set the Length to &lt;code&gt;0.3&lt;/code&gt; (or however
+long you want the transition to take - faster is probably better). Add a keyframe
+for &lt;em&gt;Offset&lt;/em&gt; at the start of &lt;code&gt;(500, 0)&lt;/code&gt; and at the end of &lt;code&gt;(0, 0)&lt;/code&gt;. Play the animation
+to test it out.&lt;/p&gt;
+
+&lt;p&gt;You can add any other transition effects here as well.&lt;/p&gt;
+
+&lt;h2 id=&#34;common-screen-code&#34;&gt;Common screen code&lt;/h2&gt;
+
+&lt;p&gt;Add a script to the &amp;ldquo;Screen&amp;rdquo; scene:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CanvasLayer&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;appear&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AnimationPlayer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;appear&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;disappear&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AnimationPlayer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play_backwards&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;appear&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We&amp;rsquo;ll extend this script on other screens to process buttons, etc.&lt;/p&gt;
+
+&lt;h2 id=&#34;individual-screens&#34;&gt;Individual screens&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s start with the title screen. Click &lt;em&gt;Scene &amp;gt; New Inherited Scene&lt;/em&gt; and select
+&lt;code&gt;res://Screen.tscn&lt;/code&gt;. Name the new scene &amp;ldquo;TitleScreen&amp;rdquo; and save it.&lt;/p&gt;
+
+&lt;p&gt;Change the Title&amp;rsquo;s &lt;em&gt;Text&lt;/em&gt; to your game title and add the following new nodes:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;╴TitleScreen&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┠╴Margins&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┃  ┖╴Main&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┃     ┠╴Title&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┃     ┖╴Buttons (HBoxContainer)&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┃        ┠╴PlayButton (TextureButton)&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┃        ┖╴SettingsButton (TextureButton)&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┖╴AnimationPlayer&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In the &lt;code&gt;Buttons&lt;/code&gt; container, set the &lt;em&gt;Alignment&lt;/em&gt; to &amp;ldquo;Center&amp;rdquo; and &lt;em&gt;Custom Constants/Separation&lt;/em&gt;
+to &lt;code&gt;75&lt;/code&gt;. Add the appropriate texture to each button&amp;rsquo;s &lt;em&gt;Textures/Normal&lt;/em&gt; property.&lt;/p&gt;
+
+&lt;p&gt;Disconnect the script and add a new one extending &lt;code&gt;res://Screen.gd&lt;/code&gt;. Connect
+both buttons&amp;rsquo; &lt;code&gt;pressed&lt;/code&gt; signal:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;res://Screen.gd&amp;#34;&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;signal&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;signal&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;settings&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_PlayButton_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;emit_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_SettingsButton_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;emit_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;settings&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Each screen you want will be set up like this. Add any buttons or other UI controls
+and if they need to trigger a transition, emit an appropriate signal. The main
+display script can then handle the signals and initiate the transition. In this way,
+the individual screens need no knowledge of each other or how they are connected.&lt;/p&gt;
+
+&lt;h2 id=&#34;switching-scenes&#34;&gt;Switching scenes&lt;/h2&gt;
+
+&lt;p&gt;To switch between the screens, we&amp;rsquo;ll make a &amp;ldquo;main&amp;rdquo; script. In your game, this might
+be your main scene or a separate UI scene that you load when the game starts. For
+this demo, just make a new scene with a &lt;code&gt;Node&lt;/code&gt; root and instance one of each of
+your screen scenes in it. For example, here&amp;rsquo;s how mine looks once I&amp;rsquo;ve made the
+four screens I described in the introduction:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/mobile_ui_main_screen.png&#34; alt=&#34;mobile_ui_main_screen&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now add a script and connect each screen&amp;rsquo;s signals (which are emitted when the
+player pushes its buttons). Your script will look like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Node&lt;/span&gt;
+
+&lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;this&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;signal&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;can&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;your&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;main&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;scene&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;know&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;that&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;the&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;player&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;started&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;the&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;game&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;signal&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;start_game&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;current_screen&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;null&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;change_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TitleScreen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;When&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;changing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screens&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;make&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sure&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;wait&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;until&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;the&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;transition&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;animation&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;has&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;finished&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;before&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;calling&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;another&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;change_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;new_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;printt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;changing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;new_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;current_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;current_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;disappear&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;yield&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AnimationPlayer&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;animation_finished&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;current_screen&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;new_screen&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;current_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;appear&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;yield&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AnimationPlayer&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;animation_finished&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Below&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;here&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;are&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;the&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;functions&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;connected&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;each&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;signals&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;your&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;map&amp;#34;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;of&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;what&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;screen&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;connects&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;another&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_TitleScreen_play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;change_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;PlayScreen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;emit_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start_game&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_TitleScreen_settings&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;change_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;SettingsScreen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_SettingsScreen_return_to_title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;change_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TitleScreen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_PlayScreen_game_over&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;change_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;EndScreen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_EndScreen_home&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;change_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TitleScreen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_EndScreen_play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;change_screen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;PlayScreen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;emit_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start_game&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That&amp;rsquo;s the basic idea.&lt;a href=&#34;/blog/blog/img/mobile_ui_example.zip&#34;&gt;Download the project&lt;/a&gt; to
+see it in action and experiment with how everything is connected up.&lt;/p&gt;
+
+&lt;h2 id=&#34;styling&#34;&gt;Styling&lt;/h2&gt;
+
+&lt;p&gt;I&amp;rsquo;ve purposely left this demo with very little styling beyond the container layout.
+Feel free to add your own button images and spice up the look-and-feel.&lt;/p&gt;
+
+&lt;p&gt;Some other things you can add to spice it up:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Additional transition effects&lt;/li&gt;
+&lt;li&gt;Color and background animation&lt;/li&gt;
+&lt;li&gt;Audio: play sound effects on transition and button press&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Topdown Tank Battle: Part 9</title>
@@ -3182,152 +3449,6 @@ luck, and happy game making!&lt;/p&gt;
 &lt;p&gt;Shaders are powerful, and this only scratches the surface of what you can do with them.  To learn more, see the links below to resources where you can learn more about how to create your own shader effects.&lt;/p&gt;
 
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-releases-download-godot101-godot101-part-13-zip-project-files-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/releases/download/godot101/Godot101_Part_13.zip&#34;&gt;Project Files&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Godot 101 - Part 13: KinematicBody2D Collisions Done Right</title>
-      <link>/blog/2017/06/godot_101_13/</link>
-      <pubDate>Sat, 24 Jun 2017 05:22:12 PDT</pubDate>
-      
-      <guid>/blog/2017/06/godot_101_13/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;This is part 13 of &amp;ldquo;Godot 101&amp;rdquo;. In this installment, we take a deeper look at how to handle KinematicBody2D collisions in a simple and accurate way, and how to avoid a few common mistakes.  If you haven&amp;rsquo;t already read through the previous parts, please start with &lt;a href=&#34;http://kidscancode.org/blog/2017/02/godot_101_01/&#34;&gt;Part 1&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
-
-&lt;p&gt;Godot 101 is an introduction to the Godot game engine and how it works. If you&amp;rsquo;ve never used a game engine before, or if you&amp;rsquo;re just new to Godot, this is the place to start.  If you&amp;rsquo;re new here, a quick note about this website: we&amp;rsquo;re called KidsCanCode because we teach programming and game development to kids, but if you&amp;rsquo;re an adult you&amp;rsquo;re welcome here, too.  We don&amp;rsquo;t believe in dumbing-down the material for kids, and game development is &lt;em&gt;hard&lt;/em&gt; - so it will probably be challenging no matter what your age.
-&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/tkMSAme-BnY&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;doing-collisions-right&#34;&gt;Doing Collisions Right&lt;/h2&gt;
-
-&lt;p&gt;We have seen before how the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_kinematic_body_2D.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_kinematic_body_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;KinematicBody2D&lt;/code&gt;&lt;/a&gt;
-node is perfect for implementing characters and other moving bodies that don&amp;rsquo;t need the full simulation of physics, but just need movement and collision detection.  And while collision detection is very simple in Godot (the physics bodies just take care of it), we also need to understand how to make the bodies &lt;em&gt;respond&lt;/em&gt; to collisions.&lt;/p&gt;
-
-&lt;p&gt;The basic structure of a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_kinematic_body_2D.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_kinematic_body_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;KinematicBody2D&lt;/code&gt;&lt;/a&gt; scene is this:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_kinematic_body_2d&#34;&gt;
-&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_kinematic_body_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;KinematicBody2D&lt;/code&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; &lt;code&gt;Sprite&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_collision_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;CollisionShape2D&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;For the example in this demonstration, we&amp;rsquo;ll use a round image for the sprite, and a circular collision shape:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/ball.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/ball.png&#34; width=&#34;100&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;When using a &lt;code&gt;KinematicBody2D&lt;/code&gt;, you must use the &lt;code&gt;move()&lt;/code&gt; method to change its position.  This method takes a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_vector2.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;Vector2&lt;/code&gt;&lt;/a&gt; as its argument, which represents the distance &amp;amp; direction you wish to move the body.  The method returns another &lt;code&gt;Vector2&lt;/code&gt; representing the motion remaining after a collision.  We then have two choices of how to respond to this collision.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s look at this process in more detail:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_13_01.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_13_01.png&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;Here we see the gray vector representing the desired movement, which we will pass to the move method.  However, the green obstacle is in the way, so the move will stop when the collision occurs.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_13_02.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_13_02.png&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;The red vector is the returned value of the &lt;code&gt;move()&lt;/code&gt; method: representing the amount of the movement that was unable to be completed.  Now we have a choice: to &lt;em&gt;slide&lt;/em&gt; the body along the obstacle (as if it were sticky) or to &lt;em&gt;reflect&lt;/em&gt; it off (i.e. bounce).  In either case, we need to know the obstacle&amp;rsquo;s &lt;code&gt;normal&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_13_03.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_13_03.png&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;A &lt;code&gt;normal&lt;/code&gt; vector is a unit-length vector pointing perpendicularly away from a surface.  This vector tells us what direction the surface is facing (for example which edge of a shape was hit).  Using this vector we can calculate the response.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_13_04.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_13_04.png&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;If we wish the body to slide along the object&amp;rsquo;s surface, we use &lt;code&gt;n.slide()&lt;/code&gt; and if we want it to bounce, we use &lt;code&gt;n.reflect()&lt;/code&gt;.  Note that the length of the resulting vector when using &lt;code&gt;slide()&lt;/code&gt; is only the &lt;em&gt;component&lt;/em&gt; of the remaining motion in the desired direction.&lt;/p&gt;
-
-&lt;h3 id=&#34;seeing-it-in-action&#34;&gt;Seeing it in action&lt;/h3&gt;
-
-&lt;p&gt;Here is an example using the &lt;code&gt;reflect()&lt;/code&gt; option:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_13_05.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_13_05.gif&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;Note that not only flat surfaces have normals. Curved surfaces have a different normal at each point, resulting in a proper looking bounce off a round object:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_13_06.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_13_06.gif&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;On the other hand, if we switch to slide mode, the result looks like this:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_13_07.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_13_07.gif&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;Note how the velocity vectors are much shorter, especially if the collision angle is steep.&lt;/p&gt;
-
-&lt;h3 id=&#34;the-code&#34;&gt;The code&lt;/h3&gt;
-
-&lt;p&gt;Here is the code for the ball object, including both kinds of collision response:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;KinematicBody2D&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;200&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# pixels/sec&lt;/span&gt;
-
-&lt;span class=&#34;c1&#34;&gt;# set this to &amp;lt; 1.0 to demonstrate loss of energy&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bounce_coefficent&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1.0&lt;/span&gt;
-&lt;span class=&#34;c1&#34;&gt;# this toggles reflect or slide mode&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reflect&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-	&lt;span class=&#34;n&#34;&gt;randomize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-	&lt;span class=&#34;c1&#34;&gt;# set start velocity towards mouse position&lt;/span&gt;
-	&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_global_mouse_pos&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_pos&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;normalized&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;
-	&lt;span class=&#34;n&#34;&gt;set_fixed_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_fixed_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-	&lt;span class=&#34;c1&#34;&gt;# move the body&lt;/span&gt;
-	&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-		&lt;span class=&#34;c1&#34;&gt;# find the normal&lt;/span&gt;
-		&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_collision_normal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-		&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reflect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-			&lt;span class=&#34;c1&#34;&gt;# reflect the motion *and* the velocity&lt;/span&gt;
-			&lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;reflect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-			&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;reflect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bounce_coefficent&lt;/span&gt;
-		&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-			&lt;span class=&#34;c1&#34;&gt;# or slide them&lt;/span&gt;
-			&lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;slide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-			&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;slide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;vel&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-		&lt;span class=&#34;c1&#34;&gt;# remember to also move by the resulting motion&lt;/span&gt;
-		&lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;motion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;This should be self-explanatory.  Note that we reflect/slide both the remaining motion vector (so that the movement is continued) &lt;em&gt;and&lt;/em&gt; the velocity vector (so that it is now moving in the proper direction).&lt;/p&gt;
-
-&lt;h2 id=&#34;important-read-this&#34;&gt;IMPORTANT: Read this!&lt;/h2&gt;
-
-&lt;p&gt;Are your collisions doing this?&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/godot101_13_08.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/godot101_13_08.gif&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;One of the most common mistakes we see among beginners when using physics bodies is incorrectly scaling the nodes.  For example, when creating the circular collision shape for the ball, you must use the &lt;em&gt;inner&lt;/em&gt; size handle to set the shape&amp;rsquo;s size.  Never use the outer rectangle, or you will cause the node to be scaled.&lt;/p&gt;
-
-&lt;p&gt;If you have &amp;ldquo;glitchy&amp;rdquo; collisions, this is most likely the cause.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;NEVER SCALE A PHYSICS BODY OR COLLISION SHAPE!&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Always make sure that the &lt;code&gt;KinematicBody2D&lt;/code&gt; &lt;em&gt;and&lt;/em&gt; the &lt;code&gt;CollisionShape2D&lt;/code&gt; have their &lt;code&gt;scale&lt;/code&gt; property set to &lt;code&gt;(1, 1)&lt;/code&gt;.  Always.&lt;/p&gt;
-
-&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h2&gt;
-
-&lt;p&gt;Good collision response is easy if you follow a few simple rules, and take advantage of Godot&amp;rsquo;s built-in functions. If you&amp;rsquo;d like to experiment with the code used for the examples here, you can download the full project, or click the link below for the source code.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-releases-download-godot101-godot101-part-13-zip-collision-example-project-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/releases/download/godot101/Godot101_Part_13.zip&#34;&gt;Collision example project&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-tree-master-godot101-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/tree/master/Godot101&#34;&gt;Code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;a-href-godot-101-part-14-coming-soon-a&#34;&gt;&lt;a href=&#34;&#34;&gt;Godot 101 - Part 14 (coming soon)&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 

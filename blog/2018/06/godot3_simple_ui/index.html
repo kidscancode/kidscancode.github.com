@@ -1,0 +1,429 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.41" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 3.0: Simple Mobile UI (with transitions) &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">46</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">29</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">46</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 3.0: Simple Mobile UI (with transitions)</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sat, Jun 16, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			</h6></span>
+
+			      
+
+<p><img src="/blog/img/godot_logo.png" width="450"></p>
+
+<h1 id="mobile-ui">Mobile UI</h1>
+
+<p>Building the UI is usually the least fun part of your game. When I&rsquo;m working on
+a project, I tend to ignore this part for as long as I can. On the plus side,
+once you&rsquo;ve built a few game screens and UI systems, you can often use them across
+mulitiple projects.</p>
+
+<p>In this tutorial, we&rsquo;ll make a small UI system for a mobile game. We&rsquo;ll focus
+on the UI screens only, with the goal that you can plug this into your own game
+to jump-start construction of your various game screens.</p>
+
+<p>A simple setup might be to have four screens:</p>
+
+<ul>
+<li>Title Screen</li>
+<li>Settings</li>
+<li>Gameplay (HUD)</li>
+<li>End Screen</li>
+</ul>
+
+<p>Here&rsquo;s an example of what we want to accomplish, moving between screens with a
+nice animated transition:</p>
+
+<p><img src="/blog/img/ui_example.gif" alt="&lt; preview gif &gt;" /></p>
+
+<blockquote>
+<p>You can download the example project here:</p>
+
+<p><a href="/blog/img/mobile_ui_example.zip">Mobile UI Example</a></p>
+</blockquote>
+
+<h2 id="display-setup">Display setup</h2>
+
+<p>For this demo, we want to simulate a mobile device screen in Portrait mode. In
+<em>Project Settings &gt; Display &gt; Window</em> set the <em>Width</em> and <em>Height</em> to <code>480</code> and
+<code>854</code> and the <em>Orientation</em> to &ldquo;portrait&rdquo;.</p>
+
+<h2 id="master-screen">Master screen</h2>
+
+<p>Because all of the screens are going to share some common layout, we can use
+Godot&rsquo;s scene inheritance to make things a bit easier. We&rsquo;ll create a master scene
+containing the common nodes and configuration and use that as the base for the
+individual screens.</p>
+
+<p>Here&rsquo;s the node setup (node types are in parentheses):
+<div class="highlight"><pre class="chroma"><code class="language-markdown" data-lang="markdown">╴Screen (CanvasLayer)<span class="err">
+</span><span class="err"></span>    ┠╴Margins (MarginContainer)<span class="err">
+</span><span class="err"></span>    ┃  ┖╴Main (VBoxContainer)<span class="err">
+</span><span class="err"></span>    ┃     ┖╴Title (Label)<span class="err">
+</span><span class="err"></span>    ┖╴AnimationPlayer</code></pre></div></p>
+
+<p>Save this as &ldquo;Screen.tscn&rdquo; and set up the nodes as follows:</p>
+
+<ul>
+<li>Screen (CanvasLayer)</li>
+</ul>
+
+<p>We&rsquo;re using a <code>CanvasLayer</code> node as the scene&rsquo;s root, which will allow the UI
+screens to be independent of any Camera movement or other transformations you
+apply to the default layer. The menu screens will &ldquo;float&rdquo; on top of any game
+objects.</p>
+
+<ul>
+<li>Margins</li>
+</ul>
+
+<p>This node will be the root container, and allows us to arrange everything with
+a nice margin around the edges of the screen. Remember that in Godot&rsquo;s UI hierarchy,
+containers will <em>automatically</em> control the size of their children, so you won&rsquo;t
+be individually setting any other nodes&rsquo; layout. This automatic formatting will
+be especially useful if you change resolutions or rotate from portrait to
+landscape.</p>
+
+<p>From the &ldquo;Layout&rdquo; menu select &ldquo;Full Rect&rdquo; and then in the &ldquo;Custom Constants&rdquo;
+section of the Inspector, set the four <em>Margin</em> properties to <code>20</code>.</p>
+
+<blockquote>
+<p><strong>Note:</strong> Most control nodes have a &ldquo;Custom Constants&rdquo; section where their unique properties can be set.</p>
+</blockquote>
+
+<ul>
+<li>Main</li>
+</ul>
+
+<p>The <code>VBoxContainer</code> automatically &ldquo;stacks&rdquo; its children, spacing them out
+vertically from the top, midddle, or bottom (set by the <em>Alignment</em> property).
+The only setting we need to change is the <em>Separation</em>, which we&rsquo;ll set to <code>100</code>
+to space out the container&rsquo;s items.</p>
+
+<ul>
+<li>Title</li>
+</ul>
+
+<p>Most, if not all, of the screens will have some sort of title at the top, so we&rsquo;ll
+give it a common configuration here. Set <em>Align</em> to &ldquo;Center&rdquo;. Put &ldquo;Title&rdquo; or any
+other word in the <em>Text</em> property so you can see the result.</p>
+
+<p>Next, configure the &ldquo;Custom Fonts&rdquo; section with your preferred font. For this demo
+I&rsquo;m using the free &ldquo;Xolonium&rdquo; font, which you can <a href="https://www.dafont.com/xolonium.font">download here</a>.</p>
+
+<blockquote>
+<p><strong>TIP:</strong> Once you&rsquo;ve configured the font, click the &ldquo;Save&rdquo; icon to save the resource.
+Then you can add it to another node later and avoid having to set all the properties
+again.</p>
+</blockquote>
+
+<p><img src="/blog/img/custom_font_save.png" alt="" /></p>
+
+<h2 id="transitions">Transitions</h2>
+
+<p>The next step is to set up the transition animation that will take the user from
+screen to screen. For this example, we&rsquo;ll make the screens &ldquo;slide&rdquo; in and out from
+the right side. You could also add any other kinds of transitions, such as zooms,
+fades, etc.</p>
+
+<p>First, we&rsquo;ll make sure the screen starts in the right state. Add a new animation
+to the AnimationPlayer called &ldquo;init&rdquo; and set it to &ldquo;Autoplay on Load&rdquo;.</p>
+
+<p>We want the screen&rsquo;s starting position to be &ldquo;offscreen&rdquo;, to the right of the
+display, so set the CanvasLayer&rsquo;s <em>Offset</em> to <code>(500, 0)</code> and click the key icon
+to add a keyframe.</p>
+
+<p>Now add another animation called &ldquo;transition&rdquo;. Set the Length to <code>0.3</code> (or however
+long you want the transition to take - faster is probably better). Add a keyframe
+for <em>Offset</em> at the start of <code>(500, 0)</code> and at the end of <code>(0, 0)</code>. Play the animation
+to test it out.</p>
+
+<p>You can add any other transition effects here as well.</p>
+
+<h2 id="common-screen-code">Common screen code</h2>
+
+<p>Add a script to the &ldquo;Screen&rdquo; scene:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">CanvasLayer</span>
+
+<span class="kd">func</span> <span class="nf">appear</span><span class="p">():</span>
+    <span class="err">$</span><span class="n">AnimationPlayer</span><span class="p">.</span><span class="n">play</span><span class="p">(</span><span class="err">&#39;</span><span class="n">appear</span><span class="err">&#39;</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">disappear</span><span class="p">():</span>
+    <span class="err">$</span><span class="n">AnimationPlayer</span><span class="p">.</span><span class="n">play_backwards</span><span class="p">(</span><span class="err">&#39;</span><span class="n">appear</span><span class="err">&#39;</span><span class="p">)</span></code></pre></div>
+
+<p>We&rsquo;ll extend this script on other screens to process buttons, etc.</p>
+
+<h2 id="individual-screens">Individual screens</h2>
+
+<p>Let&rsquo;s start with the title screen. Click <em>Scene &gt; New Inherited Scene</em> and select
+<code>res://Screen.tscn</code>. Name the new scene &ldquo;TitleScreen&rdquo; and save it.</p>
+
+<p>Change the Title&rsquo;s <em>Text</em> to your game title and add the following new nodes:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-markdown" data-lang="markdown">╴TitleScreen<span class="err">
+</span><span class="err"></span>    ┠╴Margins<span class="err">
+</span><span class="err"></span>    ┃  ┖╴Main<span class="err">
+</span><span class="err"></span>    ┃     ┠╴Title<span class="err">
+</span><span class="err"></span>    ┃     ┖╴Buttons (HBoxContainer)<span class="err">
+</span><span class="err"></span>    ┃        ┠╴PlayButton (TextureButton)<span class="err">
+</span><span class="err"></span>    ┃        ┖╴SettingsButton (TextureButton)<span class="err">
+</span><span class="err"></span>    ┖╴AnimationPlayer</code></pre></div>
+
+<p>In the <code>Buttons</code> container, set the <em>Alignment</em> to &ldquo;Center&rdquo; and <em>Custom Constants/Separation</em>
+to <code>75</code>. Add the appropriate texture to each button&rsquo;s <em>Textures/Normal</em> property.</p>
+
+<p>Disconnect the script and add a new one extending <code>res://Screen.gd</code>. Connect
+both buttons&rsquo; <code>pressed</code> signal:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="s">&#34;res://Screen.gd&#34;</span>
+
+<span class="n">signal</span> <span class="n">play</span>
+<span class="n">signal</span> <span class="n">settings</span>
+
+<span class="kd">func</span> <span class="nf">_on_PlayButton_pressed</span><span class="p">():</span>
+    <span class="n">emit_signal</span><span class="p">(</span><span class="err">&#39;</span><span class="n">play</span><span class="err">&#39;</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">_on_SettingsButton_pressed</span><span class="p">():</span>
+    <span class="n">emit_signal</span><span class="p">(</span><span class="err">&#39;</span><span class="n">settings</span><span class="err">&#39;</span><span class="p">)</span></code></pre></div>
+
+<p>Each screen you want will be set up like this. Add any buttons or other UI controls
+and if they need to trigger a transition, emit an appropriate signal. The main
+display script can then handle the signals and initiate the transition. In this way,
+the individual screens need no knowledge of each other or how they are connected.</p>
+
+<h2 id="switching-scenes">Switching scenes</h2>
+
+<p>To switch between the screens, we&rsquo;ll make a &ldquo;main&rdquo; script. In your game, this might
+be your main scene or a separate UI scene that you load when the game starts. For
+this demo, just make a new scene with a <code>Node</code> root and instance one of each of
+your screen scenes in it. For example, here&rsquo;s how mine looks once I&rsquo;ve made the
+four screens I described in the introduction:</p>
+
+<p><img src="/blog/img/mobile_ui_main_screen.png" alt="mobile_ui_main_screen" /></p>
+
+<p>Now add a script and connect each screen&rsquo;s signals (which are emitted when the
+player pushes its buttons). Your script will look like this:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">Node</span>
+
+<span class="p">#</span> <span class="n">this</span> <span class="n">signal</span> <span class="n">can</span> <span class="kd">let</span> <span class="nv">your</span> <span class="n">main</span> <span class="n">scene</span> <span class="n">know</span> <span class="n">that</span> <span class="n">the</span> <span class="n">player</span>
+<span class="p">#</span> <span class="n">started</span> <span class="n">the</span> <span class="n">game</span>
+<span class="n">signal</span> <span class="n">start_game</span>
+
+<span class="kd">var</span> <span class="nv">current_screen</span> <span class="p">=</span> <span class="n">null</span>
+
+<span class="kd">func</span> <span class="nf">_ready</span><span class="p">():</span>
+    <span class="n">change_screen</span><span class="p">(</span><span class="err">$</span><span class="n">TitleScreen</span><span class="p">)</span>
+
+<span class="p">#</span> <span class="n">When</span> <span class="n">changing</span> <span class="n">screens</span><span class="p">,</span> <span class="n">make</span> <span class="n">sure</span> <span class="n">to</span> <span class="n">wait</span> <span class="n">until</span> <span class="n">the</span> <span class="n">transition</span>
+<span class="p">#</span> <span class="n">animation</span> <span class="n">has</span> <span class="n">finished</span> <span class="n">before</span> <span class="n">calling</span> <span class="n">another</span>
+<span class="kd">func</span> <span class="nf">change_screen</span><span class="p">(</span><span class="n">new_screen</span><span class="p">):</span>
+    <span class="n">printt</span><span class="p">(</span><span class="err">&#39;</span><span class="n">changing</span> <span class="n">to</span><span class="p">:</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">new_screen</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">current_screen</span><span class="p">:</span>
+        <span class="n">current_screen</span><span class="p">.</span><span class="n">disappear</span><span class="p">()</span>
+        <span class="n">yield</span><span class="p">(</span><span class="n">current_screen</span><span class="p">.</span><span class="n">get_node</span><span class="p">(</span><span class="err">&#39;</span><span class="n">AnimationPlayer</span><span class="err">&#39;</span><span class="p">),</span> <span class="err">&#39;</span><span class="n">animation_finished</span><span class="err">&#39;</span><span class="p">)</span>
+    <span class="n">current_screen</span> <span class="p">=</span> <span class="n">new_screen</span>
+    <span class="n">current_screen</span><span class="p">.</span><span class="n">appear</span><span class="p">()</span>
+    <span class="n">yield</span><span class="p">(</span><span class="n">current_screen</span><span class="p">.</span><span class="n">get_node</span><span class="p">(</span><span class="err">&#39;</span><span class="n">AnimationPlayer</span><span class="err">&#39;</span><span class="p">),</span> <span class="err">&#39;</span><span class="n">animation_finished</span><span class="err">&#39;</span><span class="p">)</span>
+
+<span class="p">#</span> <span class="n">Below</span> <span class="n">here</span> <span class="n">are</span> <span class="n">the</span> <span class="n">functions</span> <span class="n">connected</span> <span class="n">to</span> <span class="n">each</span> <span class="n">screen</span><span class="err">&#39;</span><span class="n">s</span>
+<span class="p">#</span> <span class="n">signals</span><span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">e</span><span class="p">.</span> <span class="n">your</span> <span class="s">&#34;map&#34;</span> <span class="n">of</span> <span class="n">what</span> <span class="n">screen</span> <span class="n">connects</span> <span class="n">to</span>
+<span class="p">#</span> <span class="n">another</span><span class="p">.</span>
+<span class="kd">func</span> <span class="nf">_on_TitleScreen_play</span><span class="p">():</span>
+    <span class="n">change_screen</span><span class="p">(</span><span class="err">$</span><span class="n">PlayScreen</span><span class="p">)</span>
+    <span class="n">emit_signal</span><span class="p">(</span><span class="err">&#39;</span><span class="n">start_game</span><span class="err">&#39;</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">_on_TitleScreen_settings</span><span class="p">():</span>
+    <span class="n">change_screen</span><span class="p">(</span><span class="err">$</span><span class="n">SettingsScreen</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">_on_SettingsScreen_return_to_title</span><span class="p">():</span>
+    <span class="n">change_screen</span><span class="p">(</span><span class="err">$</span><span class="n">TitleScreen</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">_on_PlayScreen_game_over</span><span class="p">():</span>
+    <span class="n">change_screen</span><span class="p">(</span><span class="err">$</span><span class="n">EndScreen</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">_on_EndScreen_home</span><span class="p">():</span>
+    <span class="n">change_screen</span><span class="p">(</span><span class="err">$</span><span class="n">TitleScreen</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">_on_EndScreen_play</span><span class="p">():</span>
+    <span class="n">change_screen</span><span class="p">(</span><span class="err">$</span><span class="n">PlayScreen</span><span class="p">)</span>
+    <span class="n">emit_signal</span><span class="p">(</span><span class="err">&#39;</span><span class="n">start_game</span><span class="err">&#39;</span><span class="p">)</span></code></pre></div>
+
+<p>That&rsquo;s the basic idea.<a href="/blog/img/mobile_ui_example.zip">Download the project</a> to
+see it in action and experiment with how everything is connected up.</p>
+
+<h2 id="styling">Styling</h2>
+
+<p>I&rsquo;ve purposely left this demo with very little styling beyond the container layout.
+Feel free to add your own button images and spice up the look-and-feel.</p>
+
+<p>Some other things you can add to spice it up:</p>
+
+<ul>
+<li>Additional transition effects</li>
+<li>Color and background animation</li>
+<li>Audio: play sound effects on transition and button press</li>
+</ul>
+
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
