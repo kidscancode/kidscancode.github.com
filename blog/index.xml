@@ -54,7 +54,7 @@ this way, we can save time in the code by using:&lt;/p&gt;
 &lt;p&gt;This way both characters can use the same script for movement. Just assign the
 appropriate value to &lt;code&gt;id&lt;/code&gt; for each player.&lt;/p&gt;
 
-&lt;p&gt;The two players are added to a scene containing a TileMap:&lt;/p&gt;
+&lt;p&gt;The two players are added to a &amp;ldquo;World&amp;rdquo; scene containing a TileMap:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;/blog/blog/img/splitscreen_map.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
@@ -82,11 +82,11 @@ use an &lt;code&gt;HBoxContainer&lt;/code&gt;.&lt;/p&gt;
 gap between the two viewports, set &lt;em&gt;Custom Constants/Separation&lt;/em&gt; to &lt;code&gt;5&lt;/code&gt;. In the
 &amp;ldquo;Layout&amp;rdquo; menu, choose &amp;ldquo;Full Rect&amp;rdquo;.&lt;/p&gt;
 
-&lt;p&gt;Now add two ViewportContainers as children, naming them with a &lt;code&gt;1&lt;/code&gt; and &lt;code&gt;2&lt;/code&gt; (to
+&lt;p&gt;Now add two ViewportContainers as children, naming them with a &lt;code&gt;2&lt;/code&gt; and &lt;code&gt;1&lt;/code&gt; (to
 match the player they&amp;rsquo;ll display). Set the &lt;em&gt;Size Flags&lt;/em&gt; on both to &amp;ldquo;Fill, Expand&amp;rdquo;
 so that they will each expand to fill half of the screen. Also, check the &lt;em&gt;Stretch&lt;/em&gt;
 property so that the Viewport will automatically be set to the size of the
-control.&lt;/p&gt;
+container.&lt;/p&gt;
 
 &lt;p&gt;Inside each of these containers add a &lt;code&gt;Viewport&lt;/code&gt;. Note that if you set the viewport&amp;rsquo;s
 &lt;em&gt;Size&lt;/em&gt; property, it will be reset by the container.&lt;/p&gt;
@@ -100,12 +100,17 @@ to get a better view of the area around the player.&lt;/p&gt;
 
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt; ┖╴Main (Node)&lt;span class=&#34;err&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┖╴Viewports (HBoxContainer)&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┠╴ViewportContainer1&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┃  ┖╴Viewport1&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┠╴ViewportContainer2&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┃  ┖╴Viewport2&lt;span class=&#34;err&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┃    ┖╴Camera2D&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┖╴ViewportContainer2&lt;span class=&#34;err&#34;&gt;
-&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;          ┖╴Viewport2&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┖╴ViewportContainer1&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;          ┖╴Viewport1&lt;span class=&#34;err&#34;&gt;
 &lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;            ┖╴Camera2D&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Note that we&amp;rsquo;ve put &lt;code&gt;ViewportContainer1&lt;/code&gt; second in the HBoxContainer. This will
+place it on the right side since Player 1 uses the arrow keys.&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;h3 id=&#34;adding-the-world&#34;&gt;Adding the World&lt;/h3&gt;
 
@@ -113,7 +118,7 @@ to get a better view of the area around the player.&lt;/p&gt;
 &amp;ldquo;world&amp;rdquo; to render. A viewport&amp;rsquo;s &lt;code&gt;world&lt;/code&gt; (for 3D) or &lt;code&gt;world_2d&lt;/code&gt; property represent
 the source for the viewport&amp;rsquo;s environment and determine what will be rendered by
 its camera. The world can be set in code, but for 2D it will also display any
-child 2D nodes it has.&lt;/p&gt;
+child 2D nodes we add to it.&lt;/p&gt;
 
 &lt;p&gt;Let&amp;rsquo;s instance the &amp;ldquo;World&amp;rdquo; scene as a child of &lt;code&gt;Viewport1&lt;/code&gt;. Now when we play the scene
 we see the world inside the left viewport.&lt;/p&gt;
@@ -190,7 +195,12 @@ map so the players can orient themselves.&lt;/p&gt;
 &lt;p&gt;We&amp;rsquo;ll need another ViewportContainer, this one a child of &lt;code&gt;Main&lt;/code&gt;. This time, we
 &lt;em&gt;don&amp;rsquo;t&lt;/em&gt; want to use &lt;em&gt;Stretch&lt;/em&gt;. Add a Viewport and set its &lt;em&gt;Size&lt;/em&gt; to &lt;code&gt;(340, 200)&lt;/code&gt;
 then add a Camera2D. We&amp;rsquo;ll set the Camera2D&amp;rsquo;s &lt;em&gt;Position&lt;/em&gt; to &lt;code&gt;(512, 300)&lt;/code&gt; to center
-it on the screen. We&amp;rsquo;ll zoom out by setting &lt;em&gt;Zoom&lt;/em&gt; to &lt;code&gt;(9, 9)&lt;/code&gt;.&lt;/p&gt;
+it on the screen. We&amp;rsquo;ll zoom out by setting &lt;em&gt;Zoom&lt;/em&gt; to &lt;code&gt;(9, 9)&lt;/code&gt;. Don&amp;rsquo;t forget to
+click &lt;em&gt;Current&lt;/em&gt; on this camera as well.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;code&gt;_ready()&lt;/code&gt;, set the minimap to use the same world as the other two viewports:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Minimap&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewport&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world_2d&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;viewport1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world_2d&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Use the &amp;ldquo;Layout&amp;rdquo; menu to align the Minimap container at &amp;ldquo;Center Bottom&amp;rdquo;. Let&amp;rsquo;s
 see what it looks like:&lt;/p&gt;

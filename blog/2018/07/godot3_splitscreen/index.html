@@ -178,7 +178,7 @@ this way, we can save time in the code by using:</p>
 <p>This way both characters can use the same script for movement. Just assign the
 appropriate value to <code>id</code> for each player.</p>
 
-<p>The two players are added to a scene containing a TileMap:</p>
+<p>The two players are added to a &ldquo;World&rdquo; scene containing a TileMap:</p>
 
 <p><img src="/blog/img/splitscreen_map.png" alt="" /></p>
 
@@ -206,11 +206,11 @@ use an <code>HBoxContainer</code>.</p>
 gap between the two viewports, set <em>Custom Constants/Separation</em> to <code>5</code>. In the
 &ldquo;Layout&rdquo; menu, choose &ldquo;Full Rect&rdquo;.</p>
 
-<p>Now add two ViewportContainers as children, naming them with a <code>1</code> and <code>2</code> (to
+<p>Now add two ViewportContainers as children, naming them with a <code>2</code> and <code>1</code> (to
 match the player they&rsquo;ll display). Set the <em>Size Flags</em> on both to &ldquo;Fill, Expand&rdquo;
 so that they will each expand to fill half of the screen. Also, check the <em>Stretch</em>
 property so that the Viewport will automatically be set to the size of the
-control.</p>
+container.</p>
 
 <p>Inside each of these containers add a <code>Viewport</code>. Note that if you set the viewport&rsquo;s
 <em>Size</em> property, it will be reset by the container.</p>
@@ -224,12 +224,17 @@ to get a better view of the area around the player.</p>
 
 <div class="highlight"><pre class="chroma"><code class="language-markdown" data-lang="markdown"> ┖╴Main (Node)<span class="err">
 </span><span class="err"></span>    ┖╴Viewports (HBoxContainer)<span class="err">
-</span><span class="err"></span>       ┠╴ViewportContainer1<span class="err">
-</span><span class="err"></span>       ┃  ┖╴Viewport1<span class="err">
+</span><span class="err"></span>       ┠╴ViewportContainer2<span class="err">
+</span><span class="err"></span>       ┃  ┖╴Viewport2<span class="err">
 </span><span class="err"></span>       ┃    ┖╴Camera2D<span class="err">
-</span><span class="err"></span>       ┖╴ViewportContainer2<span class="err">
-</span><span class="err"></span>          ┖╴Viewport2<span class="err">
+</span><span class="err"></span>       ┖╴ViewportContainer1<span class="err">
+</span><span class="err"></span>          ┖╴Viewport1<span class="err">
 </span><span class="err"></span>            ┖╴Camera2D</code></pre></div>
+
+<blockquote>
+<p>Note that we&rsquo;ve put <code>ViewportContainer1</code> second in the HBoxContainer. This will
+place it on the right side since Player 1 uses the arrow keys.</p>
+</blockquote>
 
 <h3 id="adding-the-world">Adding the World</h3>
 
@@ -237,7 +242,7 @@ to get a better view of the area around the player.</p>
 &ldquo;world&rdquo; to render. A viewport&rsquo;s <code>world</code> (for 3D) or <code>world_2d</code> property represent
 the source for the viewport&rsquo;s environment and determine what will be rendered by
 its camera. The world can be set in code, but for 2D it will also display any
-child 2D nodes it has.</p>
+child 2D nodes we add to it.</p>
 
 <p>Let&rsquo;s instance the &ldquo;World&rdquo; scene as a child of <code>Viewport1</code>. Now when we play the scene
 we see the world inside the left viewport.</p>
@@ -314,7 +319,12 @@ map so the players can orient themselves.</p>
 <p>We&rsquo;ll need another ViewportContainer, this one a child of <code>Main</code>. This time, we
 <em>don&rsquo;t</em> want to use <em>Stretch</em>. Add a Viewport and set its <em>Size</em> to <code>(340, 200)</code>
 then add a Camera2D. We&rsquo;ll set the Camera2D&rsquo;s <em>Position</em> to <code>(512, 300)</code> to center
-it on the screen. We&rsquo;ll zoom out by setting <em>Zoom</em> to <code>(9, 9)</code>.</p>
+it on the screen. We&rsquo;ll zoom out by setting <em>Zoom</em> to <code>(9, 9)</code>. Don&rsquo;t forget to
+click <em>Current</em> on this camera as well.</p>
+
+<p>In the <code>_ready()</code>, set the minimap to use the same world as the other two viewports:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="err">$</span><span class="n">Minimap</span><span class="o">/</span><span class="n">Viewport</span><span class="p">.</span><span class="n">world_2d</span> <span class="p">=</span> <span class="n">viewport1</span><span class="p">.</span><span class="n">world_2d</span></code></pre></div>
 
 <p>Use the &ldquo;Layout&rdquo; menu to align the Minimap container at &ldquo;Center Bottom&rdquo;. Let&rsquo;s
 see what it looks like:</p>
