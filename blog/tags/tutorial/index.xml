@@ -7,7 +7,223 @@
     <language>en-us</language>
     
     
-    <updated>Sat, 16 Jun 2018 08:12:12 PDT</updated>
+    <updated>Tue, 10 Jul 2018 08:12:12 PDT</updated>
+    
+    <item>
+      <title>Godot 3.0: Splitscreen Demo (Using Viewports)</title>
+      <link>/blog/2018/07/godot3_splitscreen/</link>
+      <pubDate>Tue, 10 Jul 2018 08:12:12 PDT</pubDate>
+      
+      <guid>/blog/2018/07/godot3_splitscreen/</guid>
+      <description>
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
+
+&lt;p&gt;In this demo, we&amp;rsquo;ll consider a local multiplayer game - a topdown-style maze game with
+two players (one using arrow keys and the other using WASD controls). This is
+not a problem if our game world all fits on one screen, but if the map is large,
+we&amp;rsquo;ll want to have a &amp;ldquo;split screen&amp;rdquo; view tracking the two players separately.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/splitscreen2.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ll also look at a quick way to set up a minimap display.&lt;/p&gt;
+
+&lt;h2 id=&#34;game-setup&#34;&gt;Game setup&lt;/h2&gt;
+
+&lt;p&gt;We won&amp;rsquo;t spend a lot of time on the setup of the game world. The two players
+are KinematicBody2D objects using no-frills 8-way movement.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;If you need help setting up this part, see the following section in the official Godot docs: &lt;a href=&#34;http://docs.godotengine.org/en/stable/tutorials/2d/2d_movement.html&#34;&gt;2D Movement Overview&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Each player has its input actions set up in the &lt;em&gt;Project Settings -&amp;gt; Input Map&lt;/em&gt;
+section: &amp;ldquo;right_1&amp;rdquo; to Right Arrow, &amp;ldquo;right_2&amp;rdquo; to D, etc. Note that by naming them
+this way, we can save time in the code by using:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;id&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;get_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;right_&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;etc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This way both characters can use the same script for movement. Just assign the
+appropriate value to &lt;code&gt;id&lt;/code&gt; for each player.&lt;/p&gt;
+
+&lt;p&gt;The two players are added to a scene containing a TileMap:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/splitscreen_map.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you like, you can download the starting project, with the world already set
+up, here:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/splitscreen_start.zip&#34;&gt;splitscreen_start.zip&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that the map is much larger than the game screen, but aside from that everything
+works as intended. Setting up your game &amp;ldquo;world&amp;rdquo; separately like this will make
+setting up the viewports much easier and more flexible.&lt;/p&gt;
+
+&lt;h2 id=&#34;viewports-cameras-and-worlds&#34;&gt;Viewports, Cameras, and Worlds&lt;/h2&gt;
+
+&lt;p&gt;We&amp;rsquo;re going to start with a new scene that&amp;rsquo;s going to contain our two viewports.
+Create a node to serve as the root. I like to use &lt;code&gt;Node&lt;/code&gt; since it has no properties
+of its own - it&amp;rsquo;s just there to contain the rest of the scene.&lt;/p&gt;
+
+&lt;p&gt;By themselves, &lt;code&gt;Viewport&lt;/code&gt; nodes don&amp;rsquo;t have position information (they don&amp;rsquo;t
+inherit from &lt;code&gt;Spatial&lt;/code&gt; or &lt;code&gt;CanvasItem&lt;/code&gt;). We&amp;rsquo;re going to use &lt;code&gt;ViewportContainer&lt;/code&gt;,
+a &lt;code&gt;Control&lt;/code&gt; node, to hold each viewport. To keep them arranged side-by-side, we&amp;rsquo;ll
+use an &lt;code&gt;HBoxContainer&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Set the HBoxContainer&amp;rsquo;s &lt;em&gt;Alignment&lt;/em&gt; to &amp;ldquo;Center&amp;rdquo; and to have a small
+gap between the two viewports, set &lt;em&gt;Custom Constants/Separation&lt;/em&gt; to &lt;code&gt;5&lt;/code&gt;. In the
+&amp;ldquo;Layout&amp;rdquo; menu, choose &amp;ldquo;Full Rect&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Now add two ViewportContainers as children, naming them with a &lt;code&gt;1&lt;/code&gt; and &lt;code&gt;2&lt;/code&gt; (to
+match the player they&amp;rsquo;ll display). Set the &lt;em&gt;Size Flags&lt;/em&gt; on both to &amp;ldquo;Fill, Expand&amp;rdquo;
+so that they will each expand to fill half of the screen. Also, check the &lt;em&gt;Stretch&lt;/em&gt;
+property so that the Viewport will automatically be set to the size of the
+control.&lt;/p&gt;
+
+&lt;p&gt;Inside each of these containers add a &lt;code&gt;Viewport&lt;/code&gt;. Note that if you set the viewport&amp;rsquo;s
+&lt;em&gt;Size&lt;/em&gt; property, it will be reset by the container.&lt;/p&gt;
+
+&lt;p&gt;In order for a Viewport to display anything, we&amp;rsquo;ll need a &lt;code&gt;Camera2D&lt;/code&gt; which will render
+onto the Viewport. Add one to each viewport. Don&amp;rsquo;t forget to check the &lt;em&gt;Current&lt;/em&gt;
+property to activate the camera. We can also set each camera&amp;rsquo;s &lt;em&gt;Zoom&lt;/em&gt; to &lt;code&gt;(0.75, 0.75)&lt;/code&gt;
+to get a better view of the area around the player.&lt;/p&gt;
+
+&lt;p&gt;Your node setup should look like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt; ┖╴Main (Node)&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┖╴Viewports (HBoxContainer)&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┠╴ViewportContainer1&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┃  ┖╴Viewport1&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┃    ┖╴Camera2D&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┖╴ViewportContainer2&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;          ┖╴Viewport2&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;            ┖╴Camera2D&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&#34;adding-the-world&#34;&gt;Adding the World&lt;/h3&gt;
+
+&lt;p&gt;When we run the scene we won&amp;rsquo;t see anything because the viewports don&amp;rsquo;t have any
+&amp;ldquo;world&amp;rdquo; to render. A viewport&amp;rsquo;s &lt;code&gt;world&lt;/code&gt; (for 3D) or &lt;code&gt;world_2d&lt;/code&gt; property represent
+the source for the viewport&amp;rsquo;s environment and determine what will be rendered by
+its camera. The world can be set in code, but for 2D it will also display any
+child 2D nodes it has.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s instance the &amp;ldquo;World&amp;rdquo; scene as a child of &lt;code&gt;Viewport1&lt;/code&gt;. Now when we play the scene
+we see the world inside the left viewport.&lt;/p&gt;
+
+&lt;p&gt;We also need to add a world to &lt;code&gt;Viewport2&lt;/code&gt;, but we want it to use the same one.
+We can handle this in code. Attach a script to &lt;code&gt;Main&lt;/code&gt; and add the following:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Node&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;viewport1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewports&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ViewportContainer1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewport1&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;viewport2&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewports&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ViewportContainer2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewport2&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;camera1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewports&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ViewportContainer1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewport1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Camera2D&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;camera2&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewports&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ViewportContainer2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewport2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Camera2D&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;world&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewports&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ViewportContainer1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewport1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;World&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;viewport2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world_2d&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;viewport1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world_2d&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code&gt;onready&lt;/code&gt; node references are for convenience - we&amp;rsquo;ll be using them as we move
+forward. Remember that when you type &amp;ldquo;&lt;code&gt;$&lt;/code&gt;&amp;rdquo; Godot will autosuggest node paths so you
+don&amp;rsquo;t have to type them. You can also drag a node from the scene tree into the
+script editor and you&amp;rsquo;ll get the node&amp;rsquo;s path.&lt;/p&gt;
+
+&lt;p&gt;When we run the scene now, we see the world rendered in both viewports. However,
+neither camera is moving so we only see a small part of the world.&lt;/p&gt;
+
+&lt;h3 id=&#34;setting-up-the-cameras&#34;&gt;Setting up the cameras&lt;/h3&gt;
+
+&lt;p&gt;Attach the following script to each camera:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Camera2D&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;target&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;null&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_physics_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;position&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can assign a target to each camera and it will follow that node&amp;rsquo;s position.
+We&amp;rsquo;ll do that in the &lt;code&gt;Main&lt;/code&gt; script:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;viewport2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world_2d&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;viewport1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world_2d&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;camera1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;target&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Player_1&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;camera2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;target&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Player_2&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;When we run the scene now, each player is centered in its viewport and our splitscreen
+setup works!&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Note: I find it looks best if you disable the &lt;em&gt;Drag Margin&lt;/em&gt; properties of the
+cameras.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;camera-limits&#34;&gt;Camera limits&lt;/h2&gt;
+
+&lt;p&gt;Next, let&amp;rsquo;s add some limits to the player cameras so that they don&amp;rsquo;t scroll outside
+the bounds of the map. Add this function to the main script and call it in &lt;code&gt;_ready()&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;set_camera_limits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;map_limits&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_used_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;map_cellsize&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cell_size&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cam&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;camera1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;camera2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;cam&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;limit_left&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_limits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_cellsize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;cam&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;limit_right&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_limits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_cellsize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;cam&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;limit_top&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_limits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_cellsize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;cam&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;limit_bottom&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_limits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_cellsize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&#34;minimap&#34;&gt;Minimap&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s add one more fun feature: a minimap showing a zoomed-out view of the entire
+map so the players can orient themselves.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ll need another ViewportContainer, this one a child of &lt;code&gt;Main&lt;/code&gt;. This time, we
+&lt;em&gt;don&amp;rsquo;t&lt;/em&gt; want to use &lt;em&gt;Stretch&lt;/em&gt;. Add a Viewport and set its &lt;em&gt;Size&lt;/em&gt; to &lt;code&gt;(340, 200)&lt;/code&gt;
+then add a Camera2D. We&amp;rsquo;ll set the Camera2D&amp;rsquo;s &lt;em&gt;Position&lt;/em&gt; to &lt;code&gt;(512, 300)&lt;/code&gt; to center
+it on the screen. We&amp;rsquo;ll zoom out by setting &lt;em&gt;Zoom&lt;/em&gt; to &lt;code&gt;(9, 9)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Use the &amp;ldquo;Layout&amp;rdquo; menu to align the Minimap container at &amp;ldquo;Center Bottom&amp;rdquo;. Let&amp;rsquo;s
+see what it looks like:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/splitscreen_minimap1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We need to get rid of that grey area around the edges. We could find the precise
+zoom level that matches our desired minimap size, but instead, we&amp;rsquo;ll check the
+&lt;em&gt;Transparent Bg&lt;/em&gt; on the Viewport. Now our non-map areas aren&amp;rsquo;t visible and the
+minimap appears floating directly on top of the main viewports.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/splitscreen_minimap2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Viewports can be very powerful, but also confusing. One way of managing them is to
+try to keep them separate from the game logic and only use them as displays.&lt;/p&gt;
+
+&lt;p&gt;This demo is only a small example of what&amp;rsquo;s possible with Viewports. More demos
+and examples are coming soon.&lt;/p&gt;
+
+&lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-blog-img-splitscreen-demo-zip-download-the-code-for-this-tutorial-a&#34;&gt;&lt;a href=&#34;/blog/blog/img/splitscreen_demo.zip&#34;&gt;Download the code for this tutorial&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Godot 3.0: Simple Mobile UI (with transitions)</title>
@@ -1577,7 +1793,7 @@ only detect the player when it&amp;rsquo;s in range.&lt;/p&gt;
 
 &lt;h3 id=&#34;detecting-the-player&#34;&gt;Detecting the player&lt;/h3&gt;
 
-&lt;p&gt;Add an &lt;code&gt;Area2D&lt;/code&gt; to the player called &amp;ldquo;DetectRadius&amp;rdquo; and give it a &lt;code&gt;CollisionShape2D&lt;/code&gt;.
+&lt;p&gt;Add an &lt;code&gt;Area2D&lt;/code&gt; to the enemy called &amp;ldquo;DetectRadius&amp;rdquo; and give it a &lt;code&gt;CollisionShape2D&lt;/code&gt;.
 Don&amp;rsquo;t assign a shape, though - we&amp;rsquo;ll do that in code so it can be customized per
 enemy.&lt;/p&gt;
 
@@ -3185,7 +3401,7 @@ a nice space background (but this is totally optional).&lt;/p&gt;
 &lt;/ul&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; In Godot 3.0, &lt;code&gt;0&lt;/code&gt; degrees points to the left (along the &lt;strong&gt;x&lt;/strong&gt; axis).
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; In Godot 3.0, &lt;code&gt;0&lt;/code&gt; degrees points to the right (along the &lt;strong&gt;x&lt;/strong&gt; axis).
 This means you need to add a &lt;code&gt;Rotation&lt;/code&gt; of &lt;code&gt;90&lt;/code&gt; to the &lt;code&gt;Sprite&lt;/code&gt; so it will
 match the body&amp;rsquo;s direction.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -3217,7 +3433,7 @@ when we let go of the keys, so set the ship&amp;rsquo;s &lt;code&gt;Angular -&am
 		&lt;span class=&#34;n&#34;&gt;rotation_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
 	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;ui_left&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
 		&lt;span class=&#34;n&#34;&gt;rotation_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
-		
+
 &lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
 	&lt;span class=&#34;n&#34;&gt;get_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
 
@@ -3329,132 +3545,6 @@ luck, and happy game making!&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://godotengine.org/article/dev-snapshot-godot-3-0-beta-2&#34;&gt;Download Godot 3.0 Beta 2&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Godot - Animating Tiles Using Shaders</title>
-      <link>/blog/2017/08/godot_tilemap_shaders/</link>
-      <pubDate>Sun, 06 Aug 2017 15:22:12 PDT</pubDate>
-      
-      <guid>/blog/2017/08/godot_tilemap_shaders/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/j2gJgFzg-yU&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;animated-tiles&#34;&gt;Animated Tiles&lt;/h2&gt;
-
-&lt;p&gt;Our goal for this project is to create an animated tile that we can use in a Godot &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tilemap.html&#34; target=&#34;_blank&#34;&gt;TileMap&lt;/a&gt; like this example:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/anim_tile1.gif&#34; width=&#34;250&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;It is possible to do this using an &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animationplayer.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animation_player&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_animation_player&#34;&gt;&lt;/svg&gt;AnimationPlayer&lt;/a&gt; node (see &lt;a href=&#34; https://youtu.be/jYTGvlCQd0E&#34; target=&#34;_blank&#34;&gt;this video&lt;/a&gt; for details).  However, for this lesson, we are instead going to implement the tile animation using a &lt;a href=&#34;http://docs.godotengine.org/en/2.1/learning/features/shading/shading_language.html&#34; target=&#34;_blank&#34;&gt;Shader&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;about-shaders&#34;&gt;About Shaders&lt;/h3&gt;
-
-&lt;p&gt;If you&amp;rsquo;ve never encountered &lt;a href=&#34;https://en.wikipedia.org/wiki/Shader&#34; target=&#34;_blank&#34;&gt;shaders&lt;/a&gt; before, they can be very intimidating.  This is not intended to be a comprehensive introduction to the subject, so here are a few links to get you started:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://docs.godotengine.org/en/2.1/learning/features/shading/shading_language.html&#34;&gt;Godot shader reference&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://thebookofshaders.com/&#34;&gt;The Book of Shaders&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://notes.underscorediscovery.com/shaders-a-primer/&#34;&gt;Primer: Shaders&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;creating-a-new-shader&#34;&gt;Creating a new shader&lt;/h3&gt;
-
-&lt;p&gt;We will start with a regular TileSet, which is just a collection of &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; Sprite&lt;/a&gt; nodes. You can use your own art, or download the &lt;a href=&#34;/blog/blog/img/anim_water.zip&#34;&gt;example water pack&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Add a new &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; Sprite&lt;/a&gt; and name it &lt;code&gt;water shader&lt;/code&gt;.  You can use any texture you like, as the image will be replaced when our shader is working.&lt;/p&gt;
-
-&lt;p&gt;Add a shader to the sprite by adding a new &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_canvasitemmaterial.html&#34; target=&#34;_blank&#34;&gt;CanvasItemMaterial&lt;/a&gt; followed by a new &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_canvasitemshader.html&#34; target=&#34;_blank&#34;&gt;CanvasItemShader&lt;/a&gt; like so:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/create_shader.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/create_shader.gif&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;When you have done this, you will see a new pane open, with three tabs labeled &lt;code&gt;Vertex&lt;/code&gt;, &lt;code&gt;Fragment&lt;/code&gt;, and &lt;code&gt;Lighting&lt;/code&gt;.  We will be creating a &amp;ldquo;fragment&amp;rdquo; (aka pixel) shader, so make sure the correct tab is selected.&lt;/p&gt;
-
-&lt;h3 id=&#34;shader-code&#34;&gt;Shader code&lt;/h3&gt;
-
-&lt;p&gt;Shader code uses syntax similar to C.  We will start by defining our textures (the frames for the animation).  There are 3 animations in the pack, each with 5 frames.  We will focus on one to start with:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-glsl&#34; data-lang=&#34;glsl&#34;&gt;&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;code&gt;uniform&lt;/code&gt; keyword will expose the variable so that it can be set in the Inspector (similar to &lt;code&gt;export&lt;/code&gt; in GDScript).  If you look at the &lt;code&gt;CanvasItemMaterial&lt;/code&gt; now, you will see the 5 texture variables:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/shader_ex01.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/shader_ex01.png&#34; width=&#34;200&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;Drag the 5 textures into the 5 slots in the Inspector.  Let&amp;rsquo;s test to see if it works:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-glsl&#34; data-lang=&#34;glsl&#34;&gt;&lt;span class=&#34;n&#34;&gt;COLOR&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;This just sets each pixel of the sprite to use the corresponding pixel of &lt;code&gt;frame1&lt;/code&gt;.  Change it to &lt;code&gt;frame2&lt;/code&gt; and observe the difference.&lt;/p&gt;
-
-&lt;h3 id=&#34;incorporating-time&#34;&gt;Incorporating time&lt;/h3&gt;
-
-&lt;p&gt;Now we need that process to change with respect to time.  In Godot, the &lt;code&gt;TIME&lt;/code&gt; variable will contain the current time (in seconds).  This value will steadily increase, but we are only interested in the fractional part, so we will use that:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-glsl&#34; data-lang=&#34;glsl&#34;&gt;&lt;span class=&#34;k&#34;&gt;float&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fract&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TIME&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;color&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;col&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-
-&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-	&lt;span class=&#34;n&#34;&gt;col&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;COLOR&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;col&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;We check if the time is less than 0.5 and then use the texture pixel as before. Now you should see texture #1 for half a second, and nothing for the other half.  The only remaining thing is to break the second in to 5 parts and set the texture based on which fraction we are in.  We will also add a &lt;code&gt;speed&lt;/code&gt; uniform to allow easy adjustment of the animation speed.  Here is the final shader code in full:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-glsl&#34; data-lang=&#34;glsl&#34;&gt;&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;frame5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;uniform&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;float&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1.0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;color&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;col&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;float&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fract&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TIME&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-
-&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-	&lt;span class=&#34;n&#34;&gt;col&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-		&lt;span class=&#34;n&#34;&gt;col&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-	&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-		&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.6&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-			&lt;span class=&#34;n&#34;&gt;col&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-		&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-			&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-				&lt;span class=&#34;n&#34;&gt;col&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-			&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;else&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-				&lt;span class=&#34;n&#34;&gt;col&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;frame5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;UV&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
-			&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-		&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-	&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;COLOR&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;col&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h3 id=&#34;creating-the-tileset&#34;&gt;Creating the tileset&lt;/h3&gt;
-
-&lt;p&gt;Now it just remains to save the sprites as a TileSet (&lt;code&gt;Scene -&amp;gt; Convert To.. -&amp;gt; TileSet..&lt;/code&gt;) and load it in your &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tilemap.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_tile_map&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_tile_map&#34;&gt;&lt;/svg&gt; TileMap&lt;/a&gt;.  You can use the tile like any other, but when placed it will animate.&lt;/p&gt;
-
-&lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h2&gt;
-
-&lt;p&gt;Shaders are powerful, and this only scratches the surface of what you can do with them.  To learn more, see the links below to resources where you can learn more about how to create your own shader effects.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-godot-tutorials-releases-download-godot101-godot101-part-13-zip-project-files-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot_tutorials/releases/download/godot101/Godot101_Part_13.zip&#34;&gt;Project Files&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     

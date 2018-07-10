@@ -1,0 +1,378 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.42.2" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 3.0: Splitscreen Demo (Using Viewports) &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">47</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">30</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">47</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 3.0: Splitscreen Demo (Using Viewports)</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Tue, Jul 10, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			</h6></span>
+
+			      
+
+<p><img src="/blog/img/godot_logo.png" width="450"></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>In this demo, we&rsquo;ll consider a local multiplayer game - a topdown-style maze game with
+two players (one using arrow keys and the other using WASD controls). This is
+not a problem if our game world all fits on one screen, but if the map is large,
+we&rsquo;ll want to have a &ldquo;split screen&rdquo; view tracking the two players separately.</p>
+
+<p><img src="/blog/img/splitscreen2.gif" alt="" /></p>
+
+<p>We&rsquo;ll also look at a quick way to set up a minimap display.</p>
+
+<h2 id="game-setup">Game setup</h2>
+
+<p>We won&rsquo;t spend a lot of time on the setup of the game world. The two players
+are KinematicBody2D objects using no-frills 8-way movement.</p>
+
+<blockquote>
+<p>If you need help setting up this part, see the following section in the official Godot docs: <a href="http://docs.godotengine.org/en/stable/tutorials/2d/2d_movement.html">2D Movement Overview</a></p>
+</blockquote>
+
+<p>Each player has its input actions set up in the <em>Project Settings -&gt; Input Map</em>
+section: &ldquo;right_1&rdquo; to Right Arrow, &ldquo;right_2&rdquo; to D, etc. Note that by naming them
+this way, we can save time in the code by using:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">export</span> <span class="kd">var</span> <span class="nv">id</span> <span class="p">=</span> <span class="mi">0</span>
+
+<span class="kd">func</span> <span class="nf">get_input</span><span class="p">():</span>
+    <span class="n">velocity</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">Input</span><span class="p">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="err">&#39;</span><span class="n">right_</span><span class="o">%</span><span class="n">s</span><span class="err">&#39;</span> <span class="o">%</span> <span class="n">id</span><span class="p">):</span>
+        <span class="n">velocity</span><span class="p">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="p">#</span> <span class="n">etc</span><span class="p">.</span></code></pre></div>
+
+<p>This way both characters can use the same script for movement. Just assign the
+appropriate value to <code>id</code> for each player.</p>
+
+<p>The two players are added to a scene containing a TileMap:</p>
+
+<p><img src="/blog/img/splitscreen_map.png" alt="" /></p>
+
+<p>If you like, you can download the starting project, with the world already set
+up, here:</p>
+
+<p><a href="/blog/img/splitscreen_start.zip">splitscreen_start.zip</a></p>
+
+<p>Note that the map is much larger than the game screen, but aside from that everything
+works as intended. Setting up your game &ldquo;world&rdquo; separately like this will make
+setting up the viewports much easier and more flexible.</p>
+
+<h2 id="viewports-cameras-and-worlds">Viewports, Cameras, and Worlds</h2>
+
+<p>We&rsquo;re going to start with a new scene that&rsquo;s going to contain our two viewports.
+Create a node to serve as the root. I like to use <code>Node</code> since it has no properties
+of its own - it&rsquo;s just there to contain the rest of the scene.</p>
+
+<p>By themselves, <code>Viewport</code> nodes don&rsquo;t have position information (they don&rsquo;t
+inherit from <code>Spatial</code> or <code>CanvasItem</code>). We&rsquo;re going to use <code>ViewportContainer</code>,
+a <code>Control</code> node, to hold each viewport. To keep them arranged side-by-side, we&rsquo;ll
+use an <code>HBoxContainer</code>.</p>
+
+<p>Set the HBoxContainer&rsquo;s <em>Alignment</em> to &ldquo;Center&rdquo; and to have a small
+gap between the two viewports, set <em>Custom Constants/Separation</em> to <code>5</code>. In the
+&ldquo;Layout&rdquo; menu, choose &ldquo;Full Rect&rdquo;.</p>
+
+<p>Now add two ViewportContainers as children, naming them with a <code>1</code> and <code>2</code> (to
+match the player they&rsquo;ll display). Set the <em>Size Flags</em> on both to &ldquo;Fill, Expand&rdquo;
+so that they will each expand to fill half of the screen. Also, check the <em>Stretch</em>
+property so that the Viewport will automatically be set to the size of the
+control.</p>
+
+<p>Inside each of these containers add a <code>Viewport</code>. Note that if you set the viewport&rsquo;s
+<em>Size</em> property, it will be reset by the container.</p>
+
+<p>In order for a Viewport to display anything, we&rsquo;ll need a <code>Camera2D</code> which will render
+onto the Viewport. Add one to each viewport. Don&rsquo;t forget to check the <em>Current</em>
+property to activate the camera. We can also set each camera&rsquo;s <em>Zoom</em> to <code>(0.75, 0.75)</code>
+to get a better view of the area around the player.</p>
+
+<p>Your node setup should look like this:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-markdown" data-lang="markdown"> ┖╴Main (Node)<span class="err">
+</span><span class="err"></span>    ┖╴Viewports (HBoxContainer)<span class="err">
+</span><span class="err"></span>       ┠╴ViewportContainer1<span class="err">
+</span><span class="err"></span>       ┃  ┖╴Viewport1<span class="err">
+</span><span class="err"></span>       ┃    ┖╴Camera2D<span class="err">
+</span><span class="err"></span>       ┖╴ViewportContainer2<span class="err">
+</span><span class="err"></span>          ┖╴Viewport2<span class="err">
+</span><span class="err"></span>            ┖╴Camera2D</code></pre></div>
+
+<h3 id="adding-the-world">Adding the World</h3>
+
+<p>When we run the scene we won&rsquo;t see anything because the viewports don&rsquo;t have any
+&ldquo;world&rdquo; to render. A viewport&rsquo;s <code>world</code> (for 3D) or <code>world_2d</code> property represent
+the source for the viewport&rsquo;s environment and determine what will be rendered by
+its camera. The world can be set in code, but for 2D it will also display any
+child 2D nodes it has.</p>
+
+<p>Let&rsquo;s instance the &ldquo;World&rdquo; scene as a child of <code>Viewport1</code>. Now when we play the scene
+we see the world inside the left viewport.</p>
+
+<p>We also need to add a world to <code>Viewport2</code>, but we want it to use the same one.
+We can handle this in code. Attach a script to <code>Main</code> and add the following:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">Node</span>
+
+<span class="n">onready</span> <span class="kd">var</span> <span class="nv">viewport1</span> <span class="p">=</span> <span class="err">$</span><span class="n">Viewports</span><span class="o">/</span><span class="n">ViewportContainer1</span><span class="o">/</span><span class="n">Viewport1</span>
+<span class="n">onready</span> <span class="kd">var</span> <span class="nv">viewport2</span> <span class="p">=</span> <span class="err">$</span><span class="n">Viewports</span><span class="o">/</span><span class="n">ViewportContainer2</span><span class="o">/</span><span class="n">Viewport2</span>
+<span class="n">onready</span> <span class="kd">var</span> <span class="nv">camera1</span> <span class="p">=</span> <span class="err">$</span><span class="n">Viewports</span><span class="o">/</span><span class="n">ViewportContainer1</span><span class="o">/</span><span class="n">Viewport1</span><span class="o">/</span><span class="n">Camera2D</span>
+<span class="n">onready</span> <span class="kd">var</span> <span class="nv">camera2</span> <span class="p">=</span> <span class="err">$</span><span class="n">Viewports</span><span class="o">/</span><span class="n">ViewportContainer2</span><span class="o">/</span><span class="n">Viewport2</span><span class="o">/</span><span class="n">Camera2D</span>
+<span class="n">onready</span> <span class="kd">var</span> <span class="nv">world</span> <span class="p">=</span> <span class="err">$</span><span class="n">Viewports</span><span class="o">/</span><span class="n">ViewportContainer1</span><span class="o">/</span><span class="n">Viewport1</span><span class="o">/</span><span class="n">World</span>
+
+<span class="kd">func</span> <span class="nf">_ready</span><span class="p">():</span>
+    <span class="n">viewport2</span><span class="p">.</span><span class="n">world_2d</span> <span class="p">=</span> <span class="n">viewport1</span><span class="p">.</span><span class="n">world_2d</span></code></pre></div>
+
+<p>The <code>onready</code> node references are for convenience - we&rsquo;ll be using them as we move
+forward. Remember that when you type &ldquo;<code>$</code>&rdquo; Godot will autosuggest node paths so you
+don&rsquo;t have to type them. You can also drag a node from the scene tree into the
+script editor and you&rsquo;ll get the node&rsquo;s path.</p>
+
+<p>When we run the scene now, we see the world rendered in both viewports. However,
+neither camera is moving so we only see a small part of the world.</p>
+
+<h3 id="setting-up-the-cameras">Setting up the cameras</h3>
+
+<p>Attach the following script to each camera:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">Camera2D</span>
+
+<span class="kd">var</span> <span class="nv">target</span> <span class="p">=</span> <span class="n">null</span>
+
+<span class="kd">func</span> <span class="nf">_physics_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
+        <span class="n">position</span> <span class="p">=</span> <span class="n">target</span><span class="p">.</span><span class="n">position</span></code></pre></div>
+
+<p>Now we can assign a target to each camera and it will follow that node&rsquo;s position.
+We&rsquo;ll do that in the <code>Main</code> script:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_ready</span><span class="p">():</span>
+    <span class="n">viewport2</span><span class="p">.</span><span class="n">world_2d</span> <span class="p">=</span> <span class="n">viewport1</span><span class="p">.</span><span class="n">world_2d</span>
+    <span class="n">camera1</span><span class="p">.</span><span class="n">target</span> <span class="p">=</span> <span class="n">world</span><span class="p">.</span><span class="n">get_node</span><span class="p">(</span><span class="s">&#34;Player_1&#34;</span><span class="p">)</span>
+    <span class="n">camera2</span><span class="p">.</span><span class="n">target</span> <span class="p">=</span> <span class="n">world</span><span class="p">.</span><span class="n">get_node</span><span class="p">(</span><span class="s">&#34;Player_2&#34;</span><span class="p">)</span></code></pre></div>
+
+<p>When we run the scene now, each player is centered in its viewport and our splitscreen
+setup works!</p>
+
+<blockquote>
+<p>Note: I find it looks best if you disable the <em>Drag Margin</em> properties of the
+cameras.</p>
+</blockquote>
+
+<h2 id="camera-limits">Camera limits</h2>
+
+<p>Next, let&rsquo;s add some limits to the player cameras so that they don&rsquo;t scroll outside
+the bounds of the map. Add this function to the main script and call it in <code>_ready()</code>:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">set_camera_limits</span><span class="p">():</span>
+    <span class="kd">var</span> <span class="nv">map_limits</span> <span class="p">=</span> <span class="n">world</span><span class="p">.</span><span class="n">get_used_rect</span><span class="p">()</span>
+    <span class="kd">var</span> <span class="nv">map_cellsize</span> <span class="p">=</span> <span class="n">world</span><span class="p">.</span><span class="n">cell_size</span>
+    <span class="k">for</span> <span class="n">cam</span> <span class="k">in</span> <span class="p">[</span><span class="n">camera1</span><span class="p">,</span> <span class="n">camera2</span><span class="p">]:</span>
+        <span class="n">cam</span><span class="p">.</span><span class="n">limit_left</span> <span class="p">=</span> <span class="n">map_limits</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">map_cellsize</span><span class="p">.</span><span class="n">x</span>
+        <span class="n">cam</span><span class="p">.</span><span class="n">limit_right</span> <span class="p">=</span> <span class="n">map_limits</span><span class="p">.</span><span class="n">end</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">map_cellsize</span><span class="p">.</span><span class="n">x</span>
+        <span class="n">cam</span><span class="p">.</span><span class="n">limit_top</span> <span class="p">=</span> <span class="n">map_limits</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">map_cellsize</span><span class="p">.</span><span class="n">y</span>
+        <span class="n">cam</span><span class="p">.</span><span class="n">limit_bottom</span> <span class="p">=</span> <span class="n">map_limits</span><span class="p">.</span><span class="n">end</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">map_cellsize</span><span class="p">.</span><span class="n">y</span></code></pre></div>
+
+<h2 id="minimap">Minimap</h2>
+
+<p>Let&rsquo;s add one more fun feature: a minimap showing a zoomed-out view of the entire
+map so the players can orient themselves.</p>
+
+<p>We&rsquo;ll need another ViewportContainer, this one a child of <code>Main</code>. This time, we
+<em>don&rsquo;t</em> want to use <em>Stretch</em>. Add a Viewport and set its <em>Size</em> to <code>(340, 200)</code>
+then add a Camera2D. We&rsquo;ll set the Camera2D&rsquo;s <em>Position</em> to <code>(512, 300)</code> to center
+it on the screen. We&rsquo;ll zoom out by setting <em>Zoom</em> to <code>(9, 9)</code>.</p>
+
+<p>Use the &ldquo;Layout&rdquo; menu to align the Minimap container at &ldquo;Center Bottom&rdquo;. Let&rsquo;s
+see what it looks like:</p>
+
+<p><img src="/blog/img/splitscreen_minimap1.png" alt="" /></p>
+
+<p>We need to get rid of that grey area around the edges. We could find the precise
+zoom level that matches our desired minimap size, but instead, we&rsquo;ll check the
+<em>Transparent Bg</em> on the Viewport. Now our non-map areas aren&rsquo;t visible and the
+minimap appears floating directly on top of the main viewports.</p>
+
+<p><img src="/blog/img/splitscreen_minimap2.png" alt="" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Viewports can be very powerful, but also confusing. One way of managing them is to
+try to keep them separate from the game logic and only use them as displays.</p>
+
+<p>This demo is only a small example of what&rsquo;s possible with Viewports. More demos
+and examples are coming soon.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="a-href-blog-img-splitscreen-demo-zip-download-the-code-for-this-tutorial-a"><a href="/blog/img/splitscreen_demo.zip">Download the code for this tutorial</a></h3>
+
+<h3 id="helpful-links">Helpful Links:</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>

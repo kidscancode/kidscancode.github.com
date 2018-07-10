@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.41" />
+  <meta name="generator" content="Hugo 0.42.2" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">46</span>
+                        <span class="badge">47</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">29</span>
+                        <span class="badge">30</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">46</span>
+                        <span class="badge">47</span>
                         tutorial
                     </a></li>
                     
@@ -316,7 +316,7 @@ a nice space background (but this is totally optional).</p>
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> In Godot 3.0, <code>0</code> degrees points to the left (along the <strong>x</strong> axis).
+<p><strong>Note:</strong> In Godot 3.0, <code>0</code> degrees points to the right (along the <strong>x</strong> axis).
 This means you need to add a <code>Rotation</code> of <code>90</code> to the <code>Sprite</code> so it will
 match the body&rsquo;s direction.</p>
 </blockquote>
@@ -348,7 +348,7 @@ when we let go of the keys, so set the ship&rsquo;s <code>Angular -&gt; Damp</co
 		<span class="n">rotation_dir</span> <span class="o">+=</span> <span class="mi">1</span>
 	<span class="k">if</span> <span class="n">Input</span><span class="p">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s">&#34;ui_left&#34;</span><span class="p">):</span>
 		<span class="n">rotation_dir</span> <span class="o">-=</span> <span class="mi">1</span>
-		
+
 <span class="kd">func</span> <span class="nf">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
 	<span class="n">get_input</span><span class="p">()</span>
 

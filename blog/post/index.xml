@@ -7,7 +7,223 @@
     <language>en-us</language>
     
     
-    <updated>Sat, 16 Jun 2018 08:12:12 PDT</updated>
+    <updated>Tue, 10 Jul 2018 08:12:12 PDT</updated>
+    
+    <item>
+      <title>Godot 3.0: Splitscreen Demo (Using Viewports)</title>
+      <link>/blog/2018/07/godot3_splitscreen/</link>
+      <pubDate>Tue, 10 Jul 2018 08:12:12 PDT</pubDate>
+      
+      <guid>/blog/2018/07/godot3_splitscreen/</guid>
+      <description>
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
+
+&lt;p&gt;In this demo, we&amp;rsquo;ll consider a local multiplayer game - a topdown-style maze game with
+two players (one using arrow keys and the other using WASD controls). This is
+not a problem if our game world all fits on one screen, but if the map is large,
+we&amp;rsquo;ll want to have a &amp;ldquo;split screen&amp;rdquo; view tracking the two players separately.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/splitscreen2.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ll also look at a quick way to set up a minimap display.&lt;/p&gt;
+
+&lt;h2 id=&#34;game-setup&#34;&gt;Game setup&lt;/h2&gt;
+
+&lt;p&gt;We won&amp;rsquo;t spend a lot of time on the setup of the game world. The two players
+are KinematicBody2D objects using no-frills 8-way movement.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;If you need help setting up this part, see the following section in the official Godot docs: &lt;a href=&#34;http://docs.godotengine.org/en/stable/tutorials/2d/2d_movement.html&#34;&gt;2D Movement Overview&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Each player has its input actions set up in the &lt;em&gt;Project Settings -&amp;gt; Input Map&lt;/em&gt;
+section: &amp;ldquo;right_1&amp;rdquo; to Right Arrow, &amp;ldquo;right_2&amp;rdquo; to D, etc. Note that by naming them
+this way, we can save time in the code by using:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;id&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;get_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;right_&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;etc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This way both characters can use the same script for movement. Just assign the
+appropriate value to &lt;code&gt;id&lt;/code&gt; for each player.&lt;/p&gt;
+
+&lt;p&gt;The two players are added to a scene containing a TileMap:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/splitscreen_map.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you like, you can download the starting project, with the world already set
+up, here:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;/blog/blog/img/splitscreen_start.zip&#34;&gt;splitscreen_start.zip&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that the map is much larger than the game screen, but aside from that everything
+works as intended. Setting up your game &amp;ldquo;world&amp;rdquo; separately like this will make
+setting up the viewports much easier and more flexible.&lt;/p&gt;
+
+&lt;h2 id=&#34;viewports-cameras-and-worlds&#34;&gt;Viewports, Cameras, and Worlds&lt;/h2&gt;
+
+&lt;p&gt;We&amp;rsquo;re going to start with a new scene that&amp;rsquo;s going to contain our two viewports.
+Create a node to serve as the root. I like to use &lt;code&gt;Node&lt;/code&gt; since it has no properties
+of its own - it&amp;rsquo;s just there to contain the rest of the scene.&lt;/p&gt;
+
+&lt;p&gt;By themselves, &lt;code&gt;Viewport&lt;/code&gt; nodes don&amp;rsquo;t have position information (they don&amp;rsquo;t
+inherit from &lt;code&gt;Spatial&lt;/code&gt; or &lt;code&gt;CanvasItem&lt;/code&gt;). We&amp;rsquo;re going to use &lt;code&gt;ViewportContainer&lt;/code&gt;,
+a &lt;code&gt;Control&lt;/code&gt; node, to hold each viewport. To keep them arranged side-by-side, we&amp;rsquo;ll
+use an &lt;code&gt;HBoxContainer&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Set the HBoxContainer&amp;rsquo;s &lt;em&gt;Alignment&lt;/em&gt; to &amp;ldquo;Center&amp;rdquo; and to have a small
+gap between the two viewports, set &lt;em&gt;Custom Constants/Separation&lt;/em&gt; to &lt;code&gt;5&lt;/code&gt;. In the
+&amp;ldquo;Layout&amp;rdquo; menu, choose &amp;ldquo;Full Rect&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Now add two ViewportContainers as children, naming them with a &lt;code&gt;1&lt;/code&gt; and &lt;code&gt;2&lt;/code&gt; (to
+match the player they&amp;rsquo;ll display). Set the &lt;em&gt;Size Flags&lt;/em&gt; on both to &amp;ldquo;Fill, Expand&amp;rdquo;
+so that they will each expand to fill half of the screen. Also, check the &lt;em&gt;Stretch&lt;/em&gt;
+property so that the Viewport will automatically be set to the size of the
+control.&lt;/p&gt;
+
+&lt;p&gt;Inside each of these containers add a &lt;code&gt;Viewport&lt;/code&gt;. Note that if you set the viewport&amp;rsquo;s
+&lt;em&gt;Size&lt;/em&gt; property, it will be reset by the container.&lt;/p&gt;
+
+&lt;p&gt;In order for a Viewport to display anything, we&amp;rsquo;ll need a &lt;code&gt;Camera2D&lt;/code&gt; which will render
+onto the Viewport. Add one to each viewport. Don&amp;rsquo;t forget to check the &lt;em&gt;Current&lt;/em&gt;
+property to activate the camera. We can also set each camera&amp;rsquo;s &lt;em&gt;Zoom&lt;/em&gt; to &lt;code&gt;(0.75, 0.75)&lt;/code&gt;
+to get a better view of the area around the player.&lt;/p&gt;
+
+&lt;p&gt;Your node setup should look like this:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt; ┖╴Main (Node)&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;    ┖╴Viewports (HBoxContainer)&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┠╴ViewportContainer1&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┃  ┖╴Viewport1&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┃    ┖╴Camera2D&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;       ┖╴ViewportContainer2&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;          ┖╴Viewport2&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;            ┖╴Camera2D&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&#34;adding-the-world&#34;&gt;Adding the World&lt;/h3&gt;
+
+&lt;p&gt;When we run the scene we won&amp;rsquo;t see anything because the viewports don&amp;rsquo;t have any
+&amp;ldquo;world&amp;rdquo; to render. A viewport&amp;rsquo;s &lt;code&gt;world&lt;/code&gt; (for 3D) or &lt;code&gt;world_2d&lt;/code&gt; property represent
+the source for the viewport&amp;rsquo;s environment and determine what will be rendered by
+its camera. The world can be set in code, but for 2D it will also display any
+child 2D nodes it has.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s instance the &amp;ldquo;World&amp;rdquo; scene as a child of &lt;code&gt;Viewport1&lt;/code&gt;. Now when we play the scene
+we see the world inside the left viewport.&lt;/p&gt;
+
+&lt;p&gt;We also need to add a world to &lt;code&gt;Viewport2&lt;/code&gt;, but we want it to use the same one.
+We can handle this in code. Attach a script to &lt;code&gt;Main&lt;/code&gt; and add the following:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Node&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;viewport1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewports&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ViewportContainer1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewport1&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;viewport2&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewports&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ViewportContainer2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewport2&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;camera1&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewports&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ViewportContainer1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewport1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Camera2D&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;camera2&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewports&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ViewportContainer2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewport2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Camera2D&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;world&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewports&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ViewportContainer1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Viewport1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;World&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;viewport2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world_2d&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;viewport1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world_2d&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code&gt;onready&lt;/code&gt; node references are for convenience - we&amp;rsquo;ll be using them as we move
+forward. Remember that when you type &amp;ldquo;&lt;code&gt;$&lt;/code&gt;&amp;rdquo; Godot will autosuggest node paths so you
+don&amp;rsquo;t have to type them. You can also drag a node from the scene tree into the
+script editor and you&amp;rsquo;ll get the node&amp;rsquo;s path.&lt;/p&gt;
+
+&lt;p&gt;When we run the scene now, we see the world rendered in both viewports. However,
+neither camera is moving so we only see a small part of the world.&lt;/p&gt;
+
+&lt;h3 id=&#34;setting-up-the-cameras&#34;&gt;Setting up the cameras&lt;/h3&gt;
+
+&lt;p&gt;Attach the following script to each camera:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Camera2D&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;target&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;null&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_physics_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;position&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can assign a target to each camera and it will follow that node&amp;rsquo;s position.
+We&amp;rsquo;ll do that in the &lt;code&gt;Main&lt;/code&gt; script:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;viewport2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world_2d&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;viewport1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;world_2d&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;camera1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;target&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Player_1&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;camera2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;target&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Player_2&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;When we run the scene now, each player is centered in its viewport and our splitscreen
+setup works!&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Note: I find it looks best if you disable the &lt;em&gt;Drag Margin&lt;/em&gt; properties of the
+cameras.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;camera-limits&#34;&gt;Camera limits&lt;/h2&gt;
+
+&lt;p&gt;Next, let&amp;rsquo;s add some limits to the player cameras so that they don&amp;rsquo;t scroll outside
+the bounds of the map. Add this function to the main script and call it in &lt;code&gt;_ready()&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;set_camera_limits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;map_limits&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_used_rect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;map_cellsize&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;world&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cell_size&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cam&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;camera1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;camera2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;cam&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;limit_left&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_limits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_cellsize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;cam&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;limit_right&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_limits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_cellsize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;cam&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;limit_top&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_limits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_cellsize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;cam&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;limit_bottom&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_limits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_cellsize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&#34;minimap&#34;&gt;Minimap&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s add one more fun feature: a minimap showing a zoomed-out view of the entire
+map so the players can orient themselves.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ll need another ViewportContainer, this one a child of &lt;code&gt;Main&lt;/code&gt;. This time, we
+&lt;em&gt;don&amp;rsquo;t&lt;/em&gt; want to use &lt;em&gt;Stretch&lt;/em&gt;. Add a Viewport and set its &lt;em&gt;Size&lt;/em&gt; to &lt;code&gt;(340, 200)&lt;/code&gt;
+then add a Camera2D. We&amp;rsquo;ll set the Camera2D&amp;rsquo;s &lt;em&gt;Position&lt;/em&gt; to &lt;code&gt;(512, 300)&lt;/code&gt; to center
+it on the screen. We&amp;rsquo;ll zoom out by setting &lt;em&gt;Zoom&lt;/em&gt; to &lt;code&gt;(9, 9)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Use the &amp;ldquo;Layout&amp;rdquo; menu to align the Minimap container at &amp;ldquo;Center Bottom&amp;rdquo;. Let&amp;rsquo;s
+see what it looks like:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/splitscreen_minimap1.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We need to get rid of that grey area around the edges. We could find the precise
+zoom level that matches our desired minimap size, but instead, we&amp;rsquo;ll check the
+&lt;em&gt;Transparent Bg&lt;/em&gt; on the Viewport. Now our non-map areas aren&amp;rsquo;t visible and the
+minimap appears floating directly on top of the main viewports.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/splitscreen_minimap2.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Viewports can be very powerful, but also confusing. One way of managing them is to
+try to keep them separate from the game logic and only use them as displays.&lt;/p&gt;
+
+&lt;p&gt;This demo is only a small example of what&amp;rsquo;s possible with Viewports. More demos
+and examples are coming soon.&lt;/p&gt;
+
+&lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
+
+&lt;h3 id=&#34;a-href-blog-img-splitscreen-demo-zip-download-the-code-for-this-tutorial-a&#34;&gt;&lt;a href=&#34;/blog/blog/img/splitscreen_demo.zip&#34;&gt;Download the code for this tutorial&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Godot 3.0: Simple Mobile UI (with transitions)</title>
@@ -1577,7 +1793,7 @@ only detect the player when it&amp;rsquo;s in range.&lt;/p&gt;
 
 &lt;h3 id=&#34;detecting-the-player&#34;&gt;Detecting the player&lt;/h3&gt;
 
-&lt;p&gt;Add an &lt;code&gt;Area2D&lt;/code&gt; to the player called &amp;ldquo;DetectRadius&amp;rdquo; and give it a &lt;code&gt;CollisionShape2D&lt;/code&gt;.
+&lt;p&gt;Add an &lt;code&gt;Area2D&lt;/code&gt; to the enemy called &amp;ldquo;DetectRadius&amp;rdquo; and give it a &lt;code&gt;CollisionShape2D&lt;/code&gt;.
 Don&amp;rsquo;t assign a shape, though - we&amp;rsquo;ll do that in code so it can be customized per
 enemy.&lt;/p&gt;
 
@@ -3185,7 +3401,7 @@ a nice space background (but this is totally optional).&lt;/p&gt;
 &lt;/ul&gt;
 
 &lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; In Godot 3.0, &lt;code&gt;0&lt;/code&gt; degrees points to the left (along the &lt;strong&gt;x&lt;/strong&gt; axis).
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; In Godot 3.0, &lt;code&gt;0&lt;/code&gt; degrees points to the right (along the &lt;strong&gt;x&lt;/strong&gt; axis).
 This means you need to add a &lt;code&gt;Rotation&lt;/code&gt; of &lt;code&gt;90&lt;/code&gt; to the &lt;code&gt;Sprite&lt;/code&gt; so it will
 match the body&amp;rsquo;s direction.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -3217,7 +3433,7 @@ when we let go of the keys, so set the ship&amp;rsquo;s &lt;code&gt;Angular -&am
 		&lt;span class=&#34;n&#34;&gt;rotation_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
 	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;ui_left&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
 		&lt;span class=&#34;n&#34;&gt;rotation_dir&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
-		
+
 &lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
 	&lt;span class=&#34;n&#34;&gt;get_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
 
@@ -3329,148 +3545,6 @@ luck, and happy game making!&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://godotengine.org/article/dev-snapshot-godot-3-0-beta-2&#34;&gt;Download Godot 3.0 Beta 2&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Godot Engine in the Classroom: Getting Started</title>
-      <link>/blog/2017/11/godot_classroom_1/</link>
-      <pubDate>Fri, 10 Nov 2017 08:22:12 -0700</pubDate>
-      
-      <guid>/blog/2017/11/godot_classroom_1/</guid>
-      <description>&lt;p&gt;I began using Godot Engine with a group of students. This is a small group of
-my most advanced middle schoolers (ages 11-12), with 1+ years of Python
-experience. I do an &amp;ldquo;advanced topics&amp;rdquo; class with them every Thursday after school.
-They have never used a game engine before.&lt;/p&gt;
-
-&lt;p&gt;Here&amp;rsquo;s how it went.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-
-&lt;p&gt;Part of the reason for doing this was to get some real-world experience taking
-students through the &lt;a href=&#34;http://docs.godotengine.org/en/latest/learning/step_by_step/your_first_game.html&#34;&gt;
-&amp;ldquo;Dodge the Creeps&amp;rdquo;&lt;/a&gt; tutorial I wrote for the Godot 3.0
-documentation. This is designed to be a user&amp;rsquo;s first experience making a project
-in Godot, and I wanted to see first-hand where any pain points might be.&lt;/p&gt;
-
-&lt;p&gt;This means we are using the Godot 3.0 alpha. It&amp;rsquo;s very stable at this point,
-so I feel fairly confident that students won&amp;rsquo;t run into any showstopping bugs
-along the way. Fortunately, these kids are happy to be guinea pigs.&lt;/p&gt;
-
-&lt;h2 id=&#34;first-steps&#34;&gt;First steps&lt;/h2&gt;
-
-&lt;p&gt;We started with an introduction to the engine UI and an overview of the concept
-of scenes and nodes - the fundamental building blocks of Godot. Since they are
-very familiar with Python&amp;rsquo;s object model, they were able to relate the ideas of
-a Godot node and a Python object.&lt;/p&gt;
-
-&lt;p&gt;Most of the students have at heard of Unity, so there was some discussion of what
-a game engine is, closed- versus open-source, and why a developer might choose
-one option over another.&lt;/p&gt;
-
-&lt;p&gt;Two of the students either didn&amp;rsquo;t hear or were too excited, and didn&amp;rsquo;t click
-&amp;ldquo;Create folder&amp;rdquo; when making the new project. That means the project was created
-in their home folder. Fortunately, that wasn&amp;rsquo;t too tough to correct, but I&amp;rsquo;m
-going to suggest a feature that warns when creating a new project in an non-empty
-folder.&lt;/p&gt;
-
-&lt;p&gt;As always with students, file management (moving the art assets into the project
-folder) was more painful and frustrating than any of the coding ever is.&lt;/p&gt;
-
-&lt;p&gt;Some first reactions:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&amp;ldquo;Whoa, this looks complicated!&amp;rdquo;&lt;/li&gt;
-&lt;li&gt;&amp;ldquo;Cool! It&amp;rsquo;s all black!&amp;rdquo;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;creating-the-player&#34;&gt;Creating the player&lt;/h2&gt;
-
-&lt;p&gt;The first part of the tutorial is setting up the &lt;code&gt;Player&lt;/code&gt; scene. This is an
-&lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_area2d.html&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_area_2d&#34; target=&#34;_blank&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_area_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;Area2D&lt;/code&gt;&lt;/a&gt; with
-&lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animatedsprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;AnimatedSprite&lt;/code&gt;&lt;/a&gt;
-and &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_collisionshape2D.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_collision_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;CollisionShape2D&lt;/code&gt;&lt;/a&gt;
-children.&lt;/p&gt;
-
-&lt;p&gt;Adding the children led to a couple instances of this:
-&lt;img src=&#34;/blog/blog/img/add_child_error.png&#34; width=&#34;250&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;Students must be reminded to click on the desired parent node &lt;em&gt;before&lt;/em&gt; clicking
-on &amp;ldquo;Add Node&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;Adding the frames to the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animatedsprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;AnimatedSprite&lt;/code&gt;&lt;/a&gt;
-went smoothly, but it was when adding the collision shape that some problems
-started to appear.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/collision_offset_problem.png&#34; width=&#34;250&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;It is far too easy and unnoticeable to wind up with the children offset and/or
-scaled relative to the parent. Nearly every student had trouble with this in one
-way or another. When looking at the collision shape, it is much too tempting and
-easy to grab the rectangular handles and move/stretch it. When scaling the
-capsule shape, if you don&amp;rsquo;t click exactly on the size handle, you wind up moving
-the shape instead.&lt;/p&gt;
-
-&lt;p&gt;I think that it must be emphasized &lt;em&gt;before&lt;/em&gt; adding a child that you probably
-want to click the &amp;ldquo;lock children&amp;rdquo; button (which has a very mystifying icon, by
-the way).&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/lock_children.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;scripting&#34;&gt;Scripting&lt;/h2&gt;
-
-&lt;p&gt;Once the player scene was created, it was time to add a script for movement. This
-part went very smoothly. I spent a couple of minutes talking about the minor
-differences between GDScript and Python (using &lt;code&gt;var&lt;/code&gt; to declare variables, and
-&lt;code&gt;func&lt;/code&gt; instead of &lt;code&gt;def&lt;/code&gt; mainly), and we were off.&lt;/p&gt;
-
-&lt;p&gt;The kids really liked the IDE. At the beginner level in my Python class, I don&amp;rsquo;t
-like to have them use autocompletion, so this was a big plus for them. One
-student declared that she&amp;rsquo;s never going to type a whole function name again! They
-also liked the real-time error checking.&lt;/p&gt;
-
-&lt;p&gt;Nothing in the code itself was a problem for them. Checking for key inputs,
-normalizing velocity, and clamping to the screen were all familiar concepts. It
-was a big help that I spend a lot of time in my Python class getting them used
-to working with vectors, so I didn&amp;rsquo;t need to explain any of that.&lt;/p&gt;
-
-&lt;h2 id=&#34;wrapping-up-week-1&#34;&gt;Wrapping up Week 1&lt;/h2&gt;
-
-&lt;p&gt;At this point we were out of time, so adding the enemies and the UI will have
-to wait for next week&amp;rsquo;s class. They really didn&amp;rsquo;t want to stop, which I expected,
-and they&amp;rsquo;re all excited for next week. I asked them what they thought so far and
-they were all happy with the Godot experience.&lt;/p&gt;
-
-&lt;p&gt;Long term, my goal with these students is to work through a couple of projects
-together and then turn them loose to develop their own games. Two of the girls
-really like working together and I expect they&amp;rsquo;ll want to collaborate on a game,
-so we may even touch on some source control and project management topics.&lt;/p&gt;
-
-&lt;h2 id=&#34;pain-points-for-me&#34;&gt;Pain points for me&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Dark UI&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Dark UIs are great, I love them. But in the classroom, it means I did have
-to turn the lights off in order for it to be at all visible using the projector.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Resolution&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The Godot editor really likes to have a lot of screen space. My projector has a
-native resolution of 1280x800, and that makes things pretty tight, especially
-in the code editor. Adding a keyboard shortcut to toggle &amp;ldquo;Distraction Free Mode&amp;rdquo;
-was a must.&lt;/p&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://godotengine.org&#34;&gt;Download Godot Engine&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Us on Patreon&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>
     
