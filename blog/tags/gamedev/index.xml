@@ -15,9 +15,7 @@
       <pubDate>Tue, 10 Jul 2018 08:12:12 PDT</pubDate>
       
       <guid>/blog/2018/07/godot3_splitscreen/</guid>
-      <description>
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;introduction&#34;&gt;Introduction&lt;/h1&gt;
 
@@ -29,6 +27,11 @@ we&amp;rsquo;ll want to have a &amp;ldquo;split screen&amp;rdquo; view tracking 
 &lt;p&gt;&lt;img src=&#34;/blog/blog/img/splitscreen2.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;We&amp;rsquo;ll also look at a quick way to set up a minimap display.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this tutorial here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/QsfG8J50hP8&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;game-setup&#34;&gt;Game setup&lt;/h2&gt;
 
@@ -231,8 +234,7 @@ and examples are coming soon.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+&lt;/ul&gt;</description>
     </item>
     
     <item>
