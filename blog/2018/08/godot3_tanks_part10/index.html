@@ -1,0 +1,433 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.45.1" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Topdown Tank Battle: Part 10 &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">48</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">31</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">48</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Topdown Tank Battle: Part 10</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sat, Aug 4, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			</h6></span>
+
+			      <p>In this tutorial series, we&rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&rsquo;s workflow and show you various techniques that you can apply to your own projects.</p>
+
+<p>This is Part 10: Homing missiles</p>
+
+<p></p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KAUP4nlJyz0" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>This time, we&rsquo;re going to build on the existing bullet object to create a heat-
+seeking missile. We&rsquo;ll also adjust the shooting code to allow for multiple shots
+in a spread.</p>
+
+<h2 id="adjusting-the-bullet-script">Adjusting the Bullet script</h2>
+
+<p>We&rsquo;re going to start by adding the homing functionality to the existing bullet
+script. First, we&rsquo;ll adding some new variables:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">export</span> <span class="p">(</span><span class="n">float</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">steer_force</span> <span class="p">=</span> <span class="mi">0</span>
+
+<span class="kd">var</span> <span class="nv">acceleration</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">()</span>
+<span class="kd">var</span> <span class="nv">target</span> <span class="p">=</span> <span class="n">null</span></code></pre></div>
+
+<p><code>steer_force</code> represents the missile&rsquo;s agility - how quickly it can turn and chase
+its target. A value of <code>0</code> will be a regular bullet that travels in a straight
+line.</p>
+
+<p>When the missile spawns, we can pass it a target, but we want to be able to ignore
+that when spawning &ldquo;dumb&rdquo; bullets, so adjust the <code>start()</code> function like so:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">start</span><span class="p">(</span><span class="n">_position</span><span class="p">,</span> <span class="n">_direction</span><span class="p">,</span> <span class="n">_target</span><span class="p">=</span><span class="n">null</span><span class="p">):</span>
+    <span class="n">position</span> <span class="p">=</span> <span class="n">_position</span>
+    <span class="n">rotation</span> <span class="p">=</span> <span class="n">_direction</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span>
+    <span class="n">velocity</span> <span class="p">=</span> <span class="n">_direction</span> <span class="o">*</span> <span class="n">speed</span>
+    <span class="n">target</span> <span class="p">=</span> <span class="n">_target</span></code></pre></div>
+
+<p>Next, in the <code>_process()</code> function, we need to apply a seeking behavior if there
+is a target assigned:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
+        <span class="n">acceleration</span> <span class="o">+=</span> <span class="n">seek</span><span class="p">()</span>
+        <span class="n">velocity</span> <span class="o">+=</span> <span class="n">acceleration</span> <span class="o">*</span> <span class="n">delta</span>
+        <span class="n">velocity</span> <span class="p">=</span> <span class="n">velocity</span><span class="p">.</span><span class="n">clamped</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
+        <span class="n">rotation</span> <span class="p">=</span> <span class="n">velocity</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span>
+    <span class="n">position</span> <span class="o">+=</span> <span class="n">velocity</span> <span class="o">*</span> <span class="n">delta</span></code></pre></div>
+
+<p>We&rsquo;ll find our needed acceleration via the <code>seek()</code> function (more about that in
+a moment), and apply that to the current velocity. We also need to clamp the velocity
+so that when heading straight for the target, the missile doesn&rsquo;t continue to
+accelerate above the maxiumum speed. Finally, we set the <code>rotation</code> so that the
+missile will point in the direction of motion.</p>
+
+<h3 id="seeking-behavior">Seeking behavior</h3>
+
+<p>&ldquo;Steering behaviors&rdquo; is the collective name for a number of algorithms that produce
+movement such as seeking, following, flocking, etc. If you&rsquo;re not familiar with
+the topic, I highly recommend reading <a href="https://natureofcode.com/book/">The Nature of Code</a>,
+which has a fantastic chapter on the subject, along with interactive demos.</p>
+
+<p>For our missile, we will be using the &ldquo;seek&rdquo; behavior:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">seek</span><span class="p">():</span>
+    <span class="kd">var</span> <span class="nv">desired</span> <span class="p">=</span> <span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">position</span><span class="p">).</span><span class="n">normalized</span><span class="p">()</span> <span class="o">*</span> <span class="n">speed</span>
+    <span class="kd">var</span> <span class="nv">steer</span> <span class="p">=</span> <span class="p">(</span><span class="n">desired</span> <span class="o">-</span> <span class="n">velocity</span><span class="p">).</span><span class="n">normalized</span><span class="p">()</span> <span class="o">*</span> <span class="n">steer_force</span>
+    <span class="k">return</span> <span class="n">steer</span></code></pre></div>
+
+<p>This works by first finding the <code>desired</code> movement vector, which is straight
+towards the target at maximum speed. However, to avoid &ldquo;instant&rdquo; turning, we then
+calculate the <code>steer</code> vector by finding the difference between the current velocity
+and the desired one. The &ldquo;amount&rdquo; we move our velocity (i.e. accelerate) is that
+difference scaled by the <code>steer_force</code>. The result: the bigger the <code>steer_force</code>,
+the faster the object turns to move towards its target.</p>
+
+<h2 id="missile-scene">Missile scene</h2>
+
+<p>The missile scene is an inherited scene created from <code>Bullet.tscn</code>. I&rsquo;ve chosen
+the following image from the spritesheet for the missile:</p>
+
+<p><img src="/blog/img/tanks_missile_sprite.png" alt="alt" /></p>
+
+<p>Set its <code>speed</code> to <code>400</code> and <code>steer_force</code> to <code>25</code> in the Inspector and save
+the scene. Drop it in to the <code>Bullet</code> property of one of the enemy tanks in your
+map scene.</p>
+
+<h3 id="launching-missiles">Launching missiles</h3>
+
+<p>If you ran it now, your missiles would still travel in a straight line, because
+they&rsquo;re not getting the <code>target</code> value from the enemy. Update the shooting line
+in <code>EnemyTank.gd</code> to pass this data (the enemy already has the player set as
+its target):</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">shoot</span><span class="p">(</span><span class="n">target</span><span class="p">)</span></code></pre></div>
+
+<p>Now update the base <code>Tank.gd</code> script to pass this data along to the missile
+when it spawns:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">shoot</span><span class="p">(</span><span class="n">target</span><span class="p">=</span><span class="n">null</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">can_shoot</span><span class="p">:</span>
+        <span class="n">can_shoot</span> <span class="p">=</span> <span class="kc">false</span>
+        <span class="err">$</span><span class="n">GunTimer</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="kd">var</span> <span class="nv">dir</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="n">rotated</span><span class="p">(</span><span class="err">$</span><span class="n">Turret</span><span class="p">.</span><span class="n">global_rotation</span><span class="p">)</span>
+        <span class="n">emit_signal</span><span class="p">(</span><span class="err">&#39;</span><span class="n">shoot</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">Bullet</span><span class="p">,</span> <span class="err">$</span><span class="n">Turret</span><span class="o">/</span><span class="n">Muzzle</span><span class="p">.</span><span class="n">global_position</span><span class="p">,</span> <span class="n">dir</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="err">$</span><span class="n">AnimationPlayer</span><span class="p">.</span><span class="n">play</span><span class="p">(</span><span class="err">&#39;</span><span class="n">muzzle_flash</span><span class="err">&#39;</span><span class="p">)</span></code></pre></div>
+
+<p>Finally, the <code>Map.gd</code> script, when it receives the signal, needs to pass the target
+to the missile:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_on_Tank_shoot</span><span class="p">(</span><span class="n">bullet</span><span class="p">,</span> <span class="n">_position</span><span class="p">,</span> <span class="n">_direction</span><span class="p">,</span> <span class="n">_target</span><span class="p">=</span><span class="n">null</span><span class="p">):</span>
+    <span class="kd">var</span> <span class="nv">b</span> <span class="p">=</span> <span class="n">bullet</span><span class="p">.</span><span class="n">instance</span><span class="p">()</span>
+    <span class="n">add_child</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="n">b</span><span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="n">_position</span><span class="p">,</span> <span class="n">_direction</span><span class="p">,</span> <span class="n">_target</span><span class="p">)</span></code></pre></div>
+
+<p>Try running the scene and testing that the missiles seek the player. Try changing
+the <code>steer_force</code> and <code>speed</code> (and the missile&rsquo;s <code>lifetime</code>) properties
+to see how they affect the missile&rsquo;s behavior.</p>
+
+<h2 id="missile-trail">Missile trail</h2>
+
+<p>To make the missile look more appealing, we&rsquo;re going to add a smoke trail. Add
+a <code>Particles2D</code> node to the missile scene. Particles nodes have a large number of
+properties, so I&rsquo;ll list the adjustments in the table below:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Property</th>
+<th align="left"><em>Value</em></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Amount</td>
+<td align="left"><code>35</code></td>
+</tr>
+
+<tr>
+<td align="left">Lifetime</td>
+<td align="left"><code>0.4</code></td>
+</tr>
+
+<tr>
+<td align="left">Visibility/Show Behind Parent</td>
+<td align="left"><code>On</code></td>
+</tr>
+
+<tr>
+<td align="left">RayCastUp</td>
+<td align="left"><code>(0, -32)</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>For the texture, I found the following smoke animation on <a href="http://opengameart.org">Open Game Art</a>:
+<img src="/blog/img/spr_smoke_strip24.png" alt="alt" /></p>
+
+<p>Add this to the <em>Texture</em> property and set the <em>HFrames</em> to <code>24</code>.</p>
+
+<p>Now add a new <code>ParticlesMaterial</code> in the <em>Process Material</em> property and set its
+values like so:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Property</th>
+<th align="left"><em>Value</em></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Gravity</td>
+<td align="left"><code>(0, 0, 0)</code></td>
+</tr>
+
+<tr>
+<td align="left">Initial Velocity</td>
+<td align="left"><code>0</code></td>
+</tr>
+
+<tr>
+<td align="left">Animation/Speed</td>
+<td align="left"><code>1</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>Finally, in the <em>Scale</em> section, add a new <em>Scale Curve</em> and set its endpoints
+like the picture below:</p>
+
+<p><img src="/blog/img/tanks_smoke_curve.png" alt="alt" /></p>
+
+<p>This will make the smoke grow gradually larger as it dissipates.</p>
+
+<p>The missiles should now have a pleasing smoke trail:</p>
+
+<p><img src="/blog/img/tanks_missile_trail.gif" alt="alt" /></p>
+
+<h2 id="multi-shot">Multi-shot</h2>
+
+<p>One more improvement we can make to shooting: multi-shot. This will allow us to
+have an enemy (or player) shoot multiple shots at once in a spread.</p>
+
+<p>Start by adding two more new properties to <code>Tank.gd</code>:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">export</span> <span class="p">(</span><span class="n">int</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">gun_shots</span> <span class="p">=</span> <span class="mi">1</span> <span class="p">#</span> <span class="n">number</span> <span class="n">of</span> <span class="n">projectiles</span> <span class="n">per</span> <span class="n">shot</span>
+<span class="n">export</span> <span class="p">(</span><span class="n">float</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">gun_spread</span> <span class="p">=</span> <span class="mf">0.2</span> <span class="p">#</span> <span class="n">angle</span> <span class="n">between</span> <span class="n">them</span></code></pre></div>
+
+<p>Once more, we need to update the <code>shoot()</code> function:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">shoot</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">spread</span><span class="p">,</span> <span class="n">target</span><span class="p">=</span><span class="n">null</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">can_shoot</span><span class="p">:</span>
+        <span class="n">can_shoot</span> <span class="p">=</span> <span class="kc">false</span>
+        <span class="err">$</span><span class="n">GunTimer</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="kd">var</span> <span class="nv">dir</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="n">rotated</span><span class="p">(</span><span class="err">$</span><span class="n">Turret</span><span class="p">.</span><span class="n">global_rotation</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+                <span class="kd">var</span> <span class="nv">a</span> <span class="p">=</span> <span class="o">-</span><span class="n">spread</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">spread</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">emit_signal</span><span class="p">(</span><span class="err">&#39;</span><span class="n">shoot</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">Bullet</span><span class="p">,</span> <span class="err">$</span><span class="n">Turret</span><span class="o">/</span><span class="n">Muzzle</span><span class="p">.</span><span class="n">global_position</span><span class="p">,</span> <span class="n">dir</span><span class="p">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">target</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">emit_signal</span><span class="p">(</span><span class="err">&#39;</span><span class="n">shoot</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">Bullet</span><span class="p">,</span> <span class="err">$</span><span class="n">Turret</span><span class="o">/</span><span class="n">Muzzle</span><span class="p">.</span><span class="n">global_position</span><span class="p">,</span> <span class="n">dir</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="err">$</span><span class="n">AnimationPlayer</span><span class="p">.</span><span class="n">play</span><span class="p">(</span><span class="err">&#39;</span><span class="n">muzzle_flash</span><span class="err">&#39;</span><span class="p">)</span></code></pre></div>
+
+<p>If the number of shots is 1, we can just do as we already are doing. However, if
+the number is greater, we need a counting loop to generate each one and set its
+angle based on the <code>spread</code>. Calculating that angle (<code>a</code>) is complicated by the
+fact that <code>num</code> may be even or odd. If it&rsquo;s odd, we want the center shot to go
+forward, and the others to its left and right. Howevef, if <code>num</code> is even, there
+is no center bullet, so we need an equal number to the left and right. The <code>a</code>
+formula will calculate that for us.</p>
+
+<p>Now our player and enemy tanks need to pass these properties when they call shoot:</p>
+
+<p><code>EnemyTank.gd</code>:
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="k">if</span> <span class="n">target_dir</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">current_dir</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.9</span><span class="p">:</span>
+    <span class="n">shoot</span><span class="p">(</span><span class="n">gun_shots</span><span class="p">,</span> <span class="n">gun_spread</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span></code></pre></div></p>
+
+<p><code>Player.gd</code>:
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="k">if</span> <span class="n">Input</span><span class="p">.</span><span class="n">is_action_just_pressed</span><span class="p">(</span><span class="err">&#39;</span><span class="n">click</span><span class="err">&#39;</span><span class="p">):</span>
+    <span class="n">shoot</span><span class="p">(</span><span class="n">gun_shots</span><span class="p">,</span> <span class="n">gun_spread</span><span class="p">)</span></code></pre></div></p>
+
+<p><img src="/blog/img/tanks_multimissile.gif" alt="alt" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>That completes Part 10 of this series. For coming features and ideas, I&rsquo;ve created
+a project tracker, which you can see here:</p>
+
+<p><a href="https://github.com/kidscancode/topdown_tanks/projects/1">Topdown Tanks Project Tracker</a></p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="download-the-code-for-this-part-https-github-com-kidscancode-topdown-tanks-releases-tag-part09"><a href="https://github.com/kidscancode/topdown_tanks/releases/tag/part09">Download the code for this part</a></h3>
+
+<h3 id="helpful-links">Helpful Links</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
