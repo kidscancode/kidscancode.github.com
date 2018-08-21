@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.45.1" />
+  <meta name="generator" content="Hugo 0.47" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">48</span>
+                        <span class="badge">49</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">48</span>
+                        <span class="badge">49</span>
                         tutorial
                     </a></li>
                     
@@ -232,7 +232,7 @@ them under <em>Limit</em> in the Inspector.</p>
 a new script to the map scene. <strong>Important:</strong> Name this script &ldquo;Map.gd&rdquo; because even if we
 make more than one map, they&rsquo;re all going to use this same script.</p>
 
-<p><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Node2D</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Node2D</span>
 
 <span class="n">func</span> <span class="n">_ready</span><span class="p">():</span>
     <span class="n">set_camera_limits</span><span class="p">()</span>
@@ -243,7 +243,7 @@ make more than one map, they&rsquo;re all going to use this same script.</p>
     <span class="err">$</span><span class="n">Player</span><span class="o">/</span><span class="n">Camera2D</span><span class="o">.</span><span class="n">limit_left</span> <span class="o">=</span> <span class="n">map_limits</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">map_cellsize</span><span class="o">.</span><span class="n">x</span>
     <span class="err">$</span><span class="n">Player</span><span class="o">/</span><span class="n">Camera2D</span><span class="o">.</span><span class="n">limit_right</span> <span class="o">=</span> <span class="n">map_limits</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">map_cellsize</span><span class="o">.</span><span class="n">x</span>
     <span class="err">$</span><span class="n">Player</span><span class="o">/</span><span class="n">Camera2D</span><span class="o">.</span><span class="n">limit_top</span> <span class="o">=</span> <span class="n">map_limits</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">map_cellsize</span><span class="o">.</span><span class="n">y</span>
-    <span class="err">$</span><span class="n">Player</span><span class="o">/</span><span class="n">Camera2D</span><span class="o">.</span><span class="n">limit_bottom</span> <span class="o">=</span> <span class="n">map_limits</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">map_cellsize</span><span class="o">.</span><span class="n">y</span></code></pre></div></p>
+    <span class="err">$</span><span class="n">Player</span><span class="o">/</span><span class="n">Camera2D</span><span class="o">.</span><span class="n">limit_bottom</span> <span class="o">=</span> <span class="n">map_limits</span><span class="o">.</span><span class="n">end</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">map_cellsize</span><span class="o">.</span><span class="n">y</span></code></pre></div>
 
 <p>At runtime, we call the camera limit function. It uses the camera&rsquo;s <code>get_used_rect()</code>
 method to find a rectangle enclosing the <em>used</em> cells in the map. We also need the

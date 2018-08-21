@@ -7,7 +7,161 @@
     <language>en-us</language>
     
     
-    <updated>Sat, 04 Aug 2018 14:14:12 PDT</updated>
+    <updated>Mon, 20 Aug 2018 14:14:12 PDT</updated>
+    
+    <item>
+      <title>Topdown Tank Battle: Part 11</title>
+      <link>/blog/2018/08/godot3_tanks_part11/</link>
+      <pubDate>Mon, 20 Aug 2018 14:14:12 PDT</pubDate>
+      
+      <guid>/blog/2018/08/godot3_tanks_part11/</guid>
+      <description>&lt;p&gt;In this tutorial series, we&amp;rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&amp;rsquo;s workflow and show you various techniques that you can apply to your own projects.&lt;/p&gt;
+
+&lt;p&gt;This is Part 11: Pickup items&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/lu6Zng8Byqk&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;In this installment, we&amp;rsquo;re going to create a &amp;ldquo;pickup&amp;rdquo; item: something the player can
+grab to provide them with healing/repairs, ammo, powerups, etc. To begin with, we&amp;rsquo;ll
+make a healing pickup, since we already have tank damage working.&lt;/p&gt;
+
+&lt;h2 id=&#34;pickup-scene&#34;&gt;Pickup scene&lt;/h2&gt;
+
+&lt;p&gt;For the pickup object, we&amp;rsquo;ll use an &lt;code&gt;Area2D&lt;/code&gt; node, with a &lt;code&gt;Sprite&lt;/code&gt; and &lt;code&gt;CollisionShape2D&lt;/code&gt;
+attached. I&amp;rsquo;ve chosen this crate image from the spritesheet:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/tanks_crate1.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a circular collision shape, sized to extend just past the edges of the crate.
+We don&amp;rsquo;t want enemy tanks to accidentally collect the pickups, so uncheck all of
+the &lt;em&gt;Collision Layers&lt;/em&gt; and set the &lt;em&gt;Collision Mask&lt;/em&gt; to &amp;ldquo;player&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Now add a script:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Area2D&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;enum&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Items&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;health&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ammo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Items&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Items&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;health&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;amount&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In the &lt;code&gt;enum&lt;/code&gt; we have a list of the pickup types we want to implement. Then we
+have a &lt;code&gt;Vector2&lt;/code&gt; representing the min/max value we want the pickup to supply. We&amp;rsquo;ll
+pick a random value in this range.&lt;/p&gt;
+
+&lt;p&gt;Attach the &lt;code&gt;body_entered&lt;/code&gt; signal:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_Pickup_body_entered&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;match&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Items&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;health&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;has_method&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;heal&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+                &lt;span class=&#34;bp&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;healing&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+                &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;heal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rand_range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;amount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;amount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Items&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ammo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;pass&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In this function, we&amp;rsquo;ll check the &lt;code&gt;type&lt;/code&gt;, and apply healing if the player has a
+&lt;code&gt;heal&lt;/code&gt; method (right now it doesn&amp;rsquo;t).&lt;/p&gt;
+
+&lt;p&gt;Instance one of these items in the map scene and verify that you can pick it up.&lt;/p&gt;
+
+&lt;h2 id=&#34;juicing-the-crate&#34;&gt;Juicing the crate&lt;/h2&gt;
+
+&lt;p&gt;The crate works, but it&amp;rsquo;s pretty boring to look at. It&amp;rsquo;s hard for the player to
+tell the crate apart from other obstacles that may be on the map. To make it stand
+out a bit, we&amp;rsquo;re going to add some animation effects to &amp;ldquo;juice&amp;rdquo; up the crate.&lt;/p&gt;
+
+&lt;p&gt;Add an &lt;code&gt;AnimationPlayer&lt;/code&gt; to the Pickup scene.&lt;/p&gt;
+
+&lt;h3 id=&#34;bouncing-animation&#34;&gt;Bouncing animation&lt;/h3&gt;
+
+&lt;p&gt;First, we&amp;rsquo;re going to make the crate bounce up and down a bit. Create a new
+animation called &amp;ldquo;bounce&amp;rdquo; and set it to &lt;em&gt;Autoplay&lt;/em&gt; and &lt;em&gt;Loop&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Click on the &lt;code&gt;Sprite&lt;/code&gt; and add a keyframe for its
+&lt;em&gt;Transform/Position&lt;/em&gt; property (which should be &lt;code&gt;(0, 0)&lt;/code&gt; at this point). Then move
+the scrubber to &lt;code&gt;0.5&lt;/code&gt;, change the position to &lt;code&gt;(0, -20)&lt;/code&gt;, and add another
+keyframe.&lt;/p&gt;
+
+&lt;p&gt;Press the &lt;em&gt;Play&lt;/em&gt; button and you will see the crate bounce up and down. However,
+it&amp;rsquo;s very linear and doesn&amp;rsquo;t look very bouncy. In the timeline, click on the dot
+for the first keyframe, then select the &amp;ldquo;edit keyframe&amp;rdquo; button. This will let you
+change the &amp;ldquo;Transition&amp;rdquo; curve of the keyframe. I selected a sine curve and adjusted
+it as shown (you can drag the line with the mouse, or click and type the &lt;code&gt;-1.5&lt;/code&gt;
+directly):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/tanks_crate2.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The bounce should look smoother at the ends now.&lt;/p&gt;
+
+&lt;h3 id=&#34;drop-shadow&#34;&gt;Drop shadow&lt;/h3&gt;
+
+&lt;p&gt;We can also give a sense of depth by adding a drop shadow to the crate. Add another
+&lt;code&gt;Sprite&lt;/code&gt; named &amp;ldquo;Shadow&amp;rdquo; and use the shadow texture:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/shadow_circle.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Set the shadow&amp;rsquo;s &lt;em&gt;Position&lt;/em&gt; to &lt;code&gt;(0, 25)&lt;/code&gt; and its scale to &lt;code&gt;(.25, .5)&lt;/code&gt;. Add the scale
+as a new track in the &amp;ldquo;bounce&amp;rdquo; animation, then move the scrubber to &lt;code&gt;0.5&lt;/code&gt; and
+keyframe the scale at &lt;sup&gt;2&lt;/sup&gt;&amp;frasl;&lt;sub&gt;3&lt;/sub&gt; (you can type &lt;code&gt;(0.25/1.5, 0.5/1.5)&lt;/code&gt; in the Inspector
+and it will do the math).&lt;/p&gt;
+
+&lt;p&gt;We also want to animate the opacity of the shadow, as it&amp;rsquo;s a bit too dark, so
+put the scrubber back at the start and keyframe the &lt;em&gt;Self Modulate&lt;/em&gt; with an alpha
+of a little over 50%. Then at the halfway point of the animation, key the alpha
+at around 25%. You should see a nice fading/shrinking effect on the shadow:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/tanks_crate_bounce.gif&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;icon&#34;&gt;Icon&lt;/h3&gt;
+
+&lt;p&gt;The last thing we need to add to the crate is a way to indicate what type of crate
+it is. The player needs to be able to see it and tell that it&amp;rsquo;s a repair crate.&lt;/p&gt;
+
+&lt;p&gt;Add another &lt;code&gt;Sprite&lt;/code&gt; called &amp;ldquo;Icon&amp;rdquo; and use the wrench texture from the assets
+folder:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/wrench_white.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Move the &lt;em&gt;Position&lt;/em&gt; to &lt;code&gt;(0, -85)&lt;/code&gt; and &lt;em&gt;Scale&lt;/em&gt; to &lt;code&gt;(0.7, 0.7)&lt;/code&gt;. Then we&amp;rsquo;re going
+to animate its scale and opacity. At the start of the animation track, keyframe
+both the &lt;em&gt;Scale&lt;/em&gt; and &lt;em&gt;Self Modulate&lt;/em&gt; properties. Then, at the end of the track,
+key them at values of &lt;code&gt;(0.5, 0.5)&lt;/code&gt; and &lt;em&gt;alpha&lt;/em&gt; of &lt;code&gt;0&lt;/code&gt; respectively.&lt;/p&gt;
+
+&lt;p&gt;Finally, in the &lt;em&gt;Modulate&lt;/em&gt; property, choose a nice bright shade of green. The
+result will be a flashing green wrench icon making it clear that this is a
+repair crate.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/tanks_crate_bounce2.gif&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;We&amp;rsquo;ve added some very simple effects to the pickup crate. In a later installment,
+we might get fancier with some shader effects and a repair animation on the
+tank itself.&lt;/p&gt;
+
+&lt;p&gt;That completes Part 11 of this series. For coming features and ideas, I&amp;rsquo;ve created
+a project tracker, which you can see here:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/projects/1&#34;&gt;Topdown Tanks Project Tracker&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
+
+&lt;h3 id=&#34;download-the-code-for-this-part-https-github-com-kidscancode-topdown-tanks-releases-tag-part11&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part11&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
     
     <item>
       <title>Topdown Tank Battle: Part 10</title>
@@ -270,7 +424,7 @@ a project tracker, which you can see here:&lt;/p&gt;
 
 &lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
 
-&lt;h3 id=&#34;download-the-code-for-this-part-https-github-com-kidscancode-topdown-tanks-releases-tag-part09&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part09&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;download-the-code-for-this-part-https-github-com-kidscancode-topdown-tanks-releases-tag-part10&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part10&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links&lt;/h3&gt;
 
@@ -894,7 +1048,7 @@ rectangle&amp;rsquo;s top-left corner, we also have to subtract &lt;code&gt;h&lt
 
 &lt;p&gt;Here is the Python script to do all that:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Extract sprite coordinates from rotated&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Extract sprite coordinates from rotated&lt;/span&gt;
 &lt;span class=&#34;c1&#34;&gt;# Kenney spritesheet&lt;/span&gt;
 &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;xml.etree.ElementTree&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;as&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;ET&lt;/span&gt;
 
@@ -936,7 +1090,7 @@ rectangle&amp;rsquo;s top-left corner, we also have to subtract &lt;code&gt;h&lt
     &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sheet_width&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sheet_height&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;
     &lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\t&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;: Rect2(&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;, &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;, &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;, &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;),&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;enum_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;w&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;h&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
-&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;span class=&#34;k&#34;&gt;print&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;In addition to applying the transform, we&amp;rsquo;re also printing the result in a particular
 format, so that we can use it in our GDScript code. We will be left with an &lt;code&gt;enum&lt;/code&gt;
@@ -947,7 +1101,7 @@ containing the coordinates as &lt;code&gt;Rect2&lt;/code&gt; objects.&lt;/p&gt;
 
 &lt;p&gt;Paste the Python script&amp;rsquo;s output into the Obstacle script:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;StaticBody2D&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;StaticBody2D&lt;/span&gt;
 
 &lt;span class=&#34;kd&#34;&gt;enum&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;Items&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;barrelBlack_side&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;barrelBlack_top&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;barrelGreen_side&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
             &lt;span class=&#34;n&#34;&gt;barrelGreen_top&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;barrelRed_side&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;barrelRed_top&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
@@ -978,12 +1132,12 @@ containing the coordinates as &lt;code&gt;Rect2&lt;/code&gt; objects.&lt;/p&gt;
     &lt;span class=&#34;n&#34;&gt;Items&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;treeBrown_small&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Rect2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;694&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;118&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;72&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;72&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;Items&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;treeGreen_large&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Rect2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;128&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;654&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;128&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;128&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;Items&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;treeGreen_small&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Rect2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;694&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;190&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;72&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;72&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Next, we want to be able to choose the item from the Inspector, so we need to
 export a variable that uses the &lt;code&gt;Items&lt;/code&gt; enum:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Items&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;setget&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_update&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Items&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;type&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;setget&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_update&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Setting the &lt;code&gt;type&lt;/code&gt; variable will trigger the &lt;code&gt;_update()&lt;/code&gt; function, which sets
 the &lt;em&gt;Region&lt;/em&gt; and creates a correctly sized collision rectangle:&lt;/p&gt;
@@ -2279,7 +2433,7 @@ them under &lt;em&gt;Limit&lt;/em&gt; in the Inspector.&lt;/p&gt;
 a new script to the map scene. &lt;strong&gt;Important:&lt;/strong&gt; Name this script &amp;ldquo;Map.gd&amp;rdquo; because even if we
 make more than one map, they&amp;rsquo;re all going to use this same script.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Node2D&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Node2D&lt;/span&gt;
 
 &lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;set_camera_limits&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
@@ -2290,7 +2444,7 @@ make more than one map, they&amp;rsquo;re all going to use this same script.&lt;
     &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Camera2D&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;limit_left&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_limits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_cellsize&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;
     &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Camera2D&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;limit_right&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_limits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_cellsize&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;
     &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Camera2D&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;limit_top&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_limits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_cellsize&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Camera2D&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;limit_bottom&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_limits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_cellsize&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Player&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Camera2D&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;limit_bottom&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_limits&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;end&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;map_cellsize&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;At runtime, we call the camera limit function. It uses the camera&amp;rsquo;s &lt;code&gt;get_used_rect()&lt;/code&gt;
 method to find a rectangle enclosing the &lt;em&gt;used&lt;/em&gt; cells in the map. We also need the
@@ -2618,10 +2772,10 @@ scene with all the necessary nodes ready to go.&lt;/p&gt;
 
 &lt;p&gt;Change the code in &lt;code&gt;_physics_process()&lt;/code&gt; to the following:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_physics_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_physics_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
     &lt;span class=&#34;n&#34;&gt;update&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
     &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;aim&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+        &lt;span class=&#34;n&#34;&gt;aim&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Instead of just shooting the target, we&amp;rsquo;re going to try and aim at them first. We also want to be able to visualize what&amp;rsquo;s going on, so add a &lt;code&gt;var hit_pos&lt;/code&gt; at the top - this variable will store the position where the raycast hit so that we can draw it.&lt;/p&gt;
 
@@ -3156,342 +3310,6 @@ more uses. Please comment below if you have ideas or suggestions for other examp
 like to see.&lt;/p&gt;
 
 &lt;h3 id=&#34;a-href-blog-img-kyn3-0-kinematicbody2d-zip-download-the-sample-project-a&#34;&gt;&lt;a href=&#34;/blog/blog/img/KYN3.0_KinematicBody2D.zip&#34;&gt;Download the sample project&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Godot 3.0: Inheritance</title>
-      <link>/blog/2018/01/godot3_inheritance/</link>
-      <pubDate>Fri, 19 Jan 2018 15:12:12 -0700</pubDate>
-      
-      <guid>/blog/2018/01/godot3_inheritance/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;In this tutorial, we&amp;rsquo;ll explore how inheritance works in Godot. You can use
-inheritance in Godot to reuse code and create powerful hierarchies of object and
-scenes in your game.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;ll imagine we&amp;rsquo;re making a classic top-down RPG and use Godot&amp;rsquo;s inheritance
-capabilities to create two different kinds of characters in the game.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/Z0w9Jviq57c&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-
-&lt;p&gt;In object oriented programming (OOP), &lt;em&gt;inheritance&lt;/em&gt; is a powerful tool. Put briefly, you can
-define a class that &lt;em&gt;inherits&lt;/em&gt; from another class. An object created using the first class will
-contain the methods and member variables of the &amp;ldquo;master&amp;rdquo; class as well as its own.&lt;/p&gt;
-
-&lt;p&gt;Godot is strongly object-oriented, and offers the opportunity to use inheritance
-not just with objects (scripts) but also with scenes.&lt;/p&gt;
-
-&lt;p&gt;Here&amp;rsquo;s a preview of what we&amp;rsquo;re making:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/inh_preview.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/inh_preview.gif&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;The green character is controlled by the player, and the other characters are NPCs,
-walking around the tile-based map semi-randomly.&lt;/p&gt;
-
-&lt;h2 id=&#34;project-setup&#34;&gt;Project setup&lt;/h2&gt;
-
-&lt;p&gt;In &lt;em&gt;Project Settings&lt;/em&gt; create four new input actions called &amp;ldquo;left&amp;rdquo;, &amp;ldquo;right&amp;rdquo;, &amp;ldquo;up&amp;rdquo;, and &amp;ldquo;down&amp;rdquo; and assign
-each of them to the matching arrow key. We&amp;rsquo;ll be using those names as dictionary keys, so make sure to
-note the spelling and capitalization.&lt;/p&gt;
-
-&lt;p&gt;Set the display &lt;em&gt;Width&lt;/em&gt; and &lt;em&gt;Height&lt;/em&gt; to &lt;code&gt;640&lt;/code&gt; by &lt;code&gt;480&lt;/code&gt; (we&amp;rsquo;re using 32x32 tiles, so we don&amp;rsquo;t need much
-screen space for this demo).&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/inheritance_art.zip&#34;&gt;Download the art&lt;/a&gt; (character spritesheets) and unzip it in the project folder.&lt;/p&gt;
-
-&lt;h2 id=&#34;creating-characters&#34;&gt;Creating Characters&lt;/h2&gt;
-
-&lt;p&gt;Both kinds of characters share a number of properties and functions:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;A spritesheet containing the 4-directional movement animations&lt;/li&gt;
-&lt;li&gt;An AnimationPlayer to play the movement animations&lt;/li&gt;
-&lt;li&gt;Grid-based movement (the character can only move one full &amp;ldquo;square&amp;rdquo; at a time)&lt;/li&gt;
-&lt;li&gt;Collision detection with walls&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;We&amp;rsquo;ll start by creating a scene that will contain all of the above. Start with an
-&lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_area2d.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;Area2D&lt;/code&gt;&lt;/a&gt;
-and name it &amp;ldquo;Character&amp;rdquo;. Give it the following children:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;Sprite&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_collisionshape2d.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;CollisionShape2D&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_tween.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;Tween&lt;/code&gt;&lt;/a&gt; (named &lt;code&gt;MoveTween&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animationplayer.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;AnimationPlayer&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;We&amp;rsquo;ll leave the &lt;code&gt;Sprite&lt;/code&gt; without a texture for now, but in the Inspector set its &lt;em&gt;Vframes&lt;/em&gt; and &lt;em&gt;Hframes&lt;/em&gt; properties
-to &lt;code&gt;4&lt;/code&gt; and &lt;code&gt;3&lt;/code&gt; respectively.&lt;/p&gt;
-
-&lt;p&gt;Next, create a &lt;code&gt;RectangleShape2D&lt;/code&gt; in the collision shape and set its &lt;em&gt;Extents&lt;/em&gt; property in the Inspector to &lt;code&gt;(10, 18)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; Because all the characters are drawn to the same scale, we can be confident that the same sized collision
-shape will work for all characters. If this isn&amp;rsquo;t the case with the art you&amp;rsquo;re using, you can skip setting the collision
-shape here and configure it later for the inherited scenes.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&#34;animations&#34;&gt;Animations&lt;/h3&gt;
-
-&lt;p&gt;Create four animations in the &lt;code&gt;AnimationPlayer&lt;/code&gt; node. Name them to match the four directions we used in the input
-actions. For each animation, we&amp;rsquo;re going to set the length to &lt;code&gt;0.8&lt;/code&gt; and add a track for the &lt;code&gt;Sprite&lt;/code&gt;&amp;rsquo;s &lt;em&gt;Frame&lt;/em&gt; property.
-The pattern for each direction is listed below. See the screenshot for an example of the end result.&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&#34;left&#34;&gt;direction&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;frames&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;left&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;9, 10, 11, 10&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;down&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;6, 7, 8, 7&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;right&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;3, 4, 5, 4&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;up&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;0, 1, 2, 1&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/inh_animation_frames.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/inh_animation_frames.png&#34; width=&#34;400&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;collision-detection&#34;&gt;Collision Detection&lt;/h3&gt;
-
-&lt;p&gt;Because the characters are moving on a grid, they will either move the full amount to the next tile or not at all.
-This means that before moving, the character needs to check if the move is possible. Add four &lt;a href=&#34;http://docs.godotengine.org/en/latest/classes/class_raycast2d.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;RayCast2D&lt;/code&gt;&lt;/a&gt; nodes and
-set their names and &lt;em&gt;Cast To&lt;/em&gt; properties as follows:&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&#34;left&#34;&gt;Name&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;&lt;em&gt;Cast To&lt;/em&gt;&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;RayCastRight&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;code&gt;(32, 0)&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;RayCastLeft&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;code&gt;(-32, 0)&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;RayCastDown&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;code&gt;(0, 32)&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;RayCastUp&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;code&gt;(0, -32)&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Make sure to set the &lt;em&gt;Enabled&lt;/em&gt; property on each one (RayCast2Ds are disabled by default).
-Your final node setup should look something like this:
-&lt;img src=&#34;/blog/blog/img/inh_scene_char.png&#34; width=&#34;200&#34;&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;character-script&#34;&gt;Character Script&lt;/h3&gt;
-
-&lt;p&gt;Now add a script to the &lt;code&gt;Character&lt;/code&gt; node (it will automatically be named &amp;ldquo;Character.gd&amp;rdquo;).&lt;/p&gt;
-
-&lt;p&gt;First, we&amp;rsquo;ll define our class variables:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Area2D&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tile_size&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;32&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;right&amp;#39;&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;moves&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;right&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
-             &lt;span class=&#34;s1&#34;&gt;&amp;#39;left&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
-             &lt;span class=&#34;s1&#34;&gt;&amp;#39;up&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
-             &lt;span class=&#34;s1&#34;&gt;&amp;#39;down&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)}&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;raycasts&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;right&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;RayCastRight&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                &lt;span class=&#34;s1&#34;&gt;&amp;#39;left&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;RayCastLeft&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                &lt;span class=&#34;s1&#34;&gt;&amp;#39;up&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;RayCastUp&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                &lt;span class=&#34;s1&#34;&gt;&amp;#39;down&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;RayCastDown&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
- &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;code&gt;can_move&lt;/code&gt; is a flag that will track whether the character can move. It will be &lt;code&gt;false&lt;/code&gt;
-while a movement is already underway. &lt;code&gt;facing&lt;/code&gt; is the current direction of movement.
-Note that the &lt;code&gt;moves&lt;/code&gt; and &lt;code&gt;raycasts&lt;/code&gt; dictionaries&amp;rsquo; keys match the input actions we created.&lt;/p&gt;
-
-&lt;p&gt;Next is the code that will execute a movement from one square to another:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;raycasts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;dir&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;false&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AnimationPlayer&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MoveTween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;interpolate_property&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;bp&#34;&gt;self&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;position&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                      &lt;span class=&#34;n&#34;&gt;position&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;moves&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tile_size&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                      &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TRANS_SINE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;EASE_IN_OUT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;MoveTween&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;We pass a direction to &lt;code&gt;move()&lt;/code&gt;. If the RayCast2D for that direction detects a collision, the move
-is canceled. Otherwise, we change &lt;code&gt;facing&lt;/code&gt; to that direction, disable movement, and start playing
-the matching animation. To actually execute the movement, we use the &lt;code&gt;Tween&lt;/code&gt; node to interpolate
-the &lt;code&gt;position&lt;/code&gt; property from its current value to its current value plus a 32-pixel movement in
-the given direction. The duration is set to &lt;code&gt;0.8&lt;/code&gt; which matches the animation length.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; See the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tween.html&#34; target=&#34;_blank&#34;&gt;Tween
-documentation&lt;/a&gt; for details on how the &lt;code&gt;interpolate_property()&lt;/code&gt; method works.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Finally, to enable movement again, we need to reset &lt;code&gt;can_move&lt;/code&gt; when the movement has finished. Connect
-the &lt;code&gt;tween_completed&lt;/code&gt; signal from &lt;code&gt;MoveTween&lt;/code&gt; and add the following:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_MoveTween_tween_completed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;object&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;key&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id=&#34;implementing-the-player&#34;&gt;Implementing the Player&lt;/h2&gt;
-
-&lt;p&gt;The player character needs to inherit all the properties we gave to &lt;code&gt;Character&lt;/code&gt; as well as
-adding keyboard controlled movement.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;ll start by making a new scene. However, instead of making a new empty scene,
-click on &lt;em&gt;Scene -&amp;gt; New Inherited Scene&lt;/em&gt; in the menu. Select the &lt;code&gt;Character.tscn&lt;/code&gt;.
-Rename the root node from &amp;ldquo;Character&amp;rdquo; to &amp;ldquo;Player&amp;rdquo; and save the new scene.&lt;/p&gt;
-
-&lt;p&gt;All we need to do for the &lt;code&gt;Sprite&lt;/code&gt; is set the texture, so choose a character you like from the &amp;ldquo;res://art/rpgsprites1&amp;rdquo;
-folder and drag it to the &lt;em&gt;Texture&lt;/em&gt; property.&lt;/p&gt;
-
-&lt;p&gt;Next, we need a new script for the player, so remove the attached one (&amp;ldquo;Character.gd&amp;rdquo;) and
-attach a new one. In the &amp;ldquo;Attach Node Script&amp;rdquo; dialog, click the folder icon next to the &lt;em&gt;Inherits&lt;/em&gt; option
-and choose &amp;ldquo;Character.gd&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/inh_script.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/inh_script.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;sub&gt;Click to enlarge&lt;/sub&gt;&lt;/p&gt;
-
-&lt;p&gt;Here&amp;rsquo;s our player script (note that it &lt;code&gt;extends&lt;/code&gt; the character script):&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;res://Character.gd&amp;#34;&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;dir&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;moves&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;keys&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-            &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-                &lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Because we&amp;rsquo;ve inherited all the behavior from &amp;ldquo;Character.gd&amp;rdquo;, we only need to worry about control. Here, we&amp;rsquo;re
-using the &lt;code&gt;_process()&lt;/code&gt; function to check the keystate each frame. However, only if &lt;code&gt;can_move&lt;/code&gt; allows it do we
-actually check the keys and call &lt;code&gt;move()&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Run the scene and try it out.&lt;/p&gt;
-
-&lt;h2 id=&#34;npc-characters&#34;&gt;NPC characters&lt;/h2&gt;
-
-&lt;p&gt;Hopefully you&amp;rsquo;re seeing how inheritance works by now, but let&amp;rsquo;s make another type of character: an NPC that
-will wander around the screen randomly. Make another scene inheriting from &amp;ldquo;Character.tscn&amp;rdquo; and name it NPC.&lt;/p&gt;
-
-&lt;p&gt;This time, leave the sprite&amp;rsquo;s &lt;em&gt;Texture&lt;/em&gt; blank and add a new script, again inheriting from &amp;ldquo;Character.gd&amp;rdquo;.&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;res://Character.gd&amp;#34;&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;textures&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;mage_f.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;mage_m.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                &lt;span class=&#34;s1&#34;&gt;&amp;#39;healer_f.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;healer_m.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                &lt;span class=&#34;s1&#34;&gt;&amp;#39;townfolk1_f.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;townfolk1_m.png&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;randomize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;textures&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;randi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;textures&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;size&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()]&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;load&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;res://art/rpgsprites1/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;%s&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;texture&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;moves&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;keys&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;randi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;or&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;randi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-            &lt;span class=&#34;n&#34;&gt;facing&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;moves&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;keys&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;randi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;This time, we&amp;rsquo;re using &lt;code&gt;_ready()&lt;/code&gt; to select a random texture and assign it. We&amp;rsquo;re also choosing a
-random starting direction.&lt;/p&gt;
-
-&lt;p&gt;As with the player, we&amp;rsquo;ll use &lt;code&gt;_process()&lt;/code&gt; to trigger the movement, but this time we&amp;rsquo;ll use the
-fact that the &lt;code&gt;move()&lt;/code&gt; function returns &lt;code&gt;true&lt;/code&gt; if it successfully executes (if the raycast detects
-an obstacle, it returns &lt;code&gt;false&lt;/code&gt;). So if the NPC can&amp;rsquo;t move, it will pick a new random direction.
-For variety, we also add a 50% chance that it will change direction anyway.&lt;/p&gt;
-
-&lt;p&gt;Run the scene and observe the NPC wandering randomly around the screen.&lt;/p&gt;
-
-&lt;h2 id=&#34;testing-collisions&#34;&gt;Testing Collisions&lt;/h2&gt;
-
-&lt;p&gt;Finally, to confirm that the collision detection is working, let&amp;rsquo;s create a small scene for the
-characters to wander around in. We&amp;rsquo;ll use a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tilemap.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;TileMap&lt;/code&gt;&lt;/a&gt; to quickly draw our map.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; See my &lt;a href=&#34;https://youtu.be/LBK5GgMB988&#34; target=&#34;_blank&#34;&gt;Tilemap tutorial&lt;/a&gt; for details on using
-TileMaps in Godot.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;There are two tiles (&amp;ldquo;grass.png&amp;rdquo; and &amp;ldquo;stone.png&amp;rdquo;) in the art folder. There is also a &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tileset.html&#34; target=&#34;_blank&#34;&gt;&lt;code&gt;TileSet&lt;/code&gt;&lt;/a&gt; called
-&amp;ldquo;tiles.tres&amp;rdquo; to save you the step of making your own. In it, only the stone tile has a collision shape, so it
-will be our obstacle.&lt;/p&gt;
-
-&lt;p&gt;Create a new &amp;ldquo;Main&amp;rdquo; scene (I usually like to use a plain &lt;code&gt;Node&lt;/code&gt; as the root). Add a &lt;code&gt;TileMap&lt;/code&gt; and drag &amp;ldquo;tileset.tres&amp;rdquo;
-into its &lt;em&gt;Tile Set&lt;/em&gt; property. Also don&amp;rsquo;t forget to change the &lt;em&gt;Size&lt;/em&gt; to &lt;code&gt;(32, 32)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Draw some walls as you like, and then add a &lt;code&gt;Player&lt;/code&gt; instance and a few instances of &lt;code&gt;NPC&lt;/code&gt;. Remember, the characters
-won&amp;rsquo;t know anything about the map - they just know if they can move one tile or not. If you want them to line up properly,
-you need to make sure the characters&amp;rsquo; starting positions are centered on a tile. This is easy to do if you turn
-on &amp;ldquo;Snap to Grid&amp;rdquo;. Click the &amp;ldquo;Use Snap&amp;rdquo; button and then open the grid menu by clicking on the three dots next to it:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/inh_snap2.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/inh_snap2.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Under &amp;ldquo;Configure Snap&amp;hellip;&amp;rdquo; set the &lt;em&gt;Grid Step&lt;/em&gt; and &lt;em&gt;Grid Offset&lt;/em&gt;:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/inh_snap.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/inh_snap.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Now you can drag the instanced characters around and they&amp;rsquo;ll always snap to the center of a tile.&lt;/p&gt;
-
-&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;Imagine we had built this project without using inheritance. The Player and NPC would each have their own scene
-setup and individual scripts. If we decided to change how we wanted movement to work, we would have to change
-everything twice. If we added more character types (Monsters, Pets, etc.) the duplicated code would
-multiply and quickly become unmanageable. With the setup we created above, everything is in one place, and any
-change to the character automatically propagates to everything that extends it.&lt;/p&gt;
-
-&lt;p&gt;As you&amp;rsquo;re working on your own projects, look for opportunities to consolidate code and use inheritance for
-your scenes and/or scripts. As your projects grow in size and complexity, it will quickly become a lifesaver.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-blog-img-inheritance-demo-zip-download-the-full-project-a&#34;&gt;&lt;a href=&#34;/blog/blog/img/Inheritance_Demo.zip&#34;&gt;Download the full project&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 

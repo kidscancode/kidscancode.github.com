@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.45.1" />
+  <meta name="generator" content="Hugo 0.47" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">48</span>
+                        <span class="badge">49</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">48</span>
+                        <span class="badge">49</span>
                         tutorial
                     </a></li>
                     
@@ -193,10 +193,10 @@
 
 <p>And lastly, we need to check the <code>power_time</code> by adding this to the player&rsquo;s <code>update</code>:</p>
 
-<p><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># timeout for powerups</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># timeout for powerups</span>
 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">&gt;</span> <span class="n">POWERUP_TIME</span><span class="p">:</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">power</span> <span class="o">-=</span> <span class="mi">1</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span></code></pre></div></p>
+    <span class="bp">self</span><span class="o">.</span><span class="n">power_time</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span></code></pre></div>
 
 <p>Don&rsquo;t forget to set <code>POWERUP_TIME</code> to 5000 (5 seconds) at the top.</p>
 

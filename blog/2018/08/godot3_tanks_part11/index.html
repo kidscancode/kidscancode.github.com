@@ -1,0 +1,316 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.47" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Topdown Tank Battle: Part 11 &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">49</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">32</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">49</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Topdown Tank Battle: Part 11</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Mon, Aug 20, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			</h6></span>
+
+			      <p>In this tutorial series, we&rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&rsquo;s workflow and show you various techniques that you can apply to your own projects.</p>
+
+<p>This is Part 11: Pickup items</p>
+
+<p></p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lu6Zng8Byqk" frameborder="0" allowfullscreen></iframe></p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>In this installment, we&rsquo;re going to create a &ldquo;pickup&rdquo; item: something the player can
+grab to provide them with healing/repairs, ammo, powerups, etc. To begin with, we&rsquo;ll
+make a healing pickup, since we already have tank damage working.</p>
+
+<h2 id="pickup-scene">Pickup scene</h2>
+
+<p>For the pickup object, we&rsquo;ll use an <code>Area2D</code> node, with a <code>Sprite</code> and <code>CollisionShape2D</code>
+attached. I&rsquo;ve chosen this crate image from the spritesheet:</p>
+
+<p><img src="/blog/img/tanks_crate1.png" alt="alt" /></p>
+
+<p>Add a circular collision shape, sized to extend just past the edges of the crate.
+We don&rsquo;t want enemy tanks to accidentally collect the pickups, so uncheck all of
+the <em>Collision Layers</em> and set the <em>Collision Mask</em> to &ldquo;player&rdquo;.</p>
+
+<p>Now add a script:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">Area2D</span>
+
+<span class="kd">enum</span> <span class="nc">Items</span> <span class="p">{</span><span class="n">health</span><span class="p">,</span> <span class="n">ammo</span><span class="p">}</span>
+
+<span class="n">export</span> <span class="p">(</span><span class="n">Items</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">type</span> <span class="p">=</span> <span class="n">Items</span><span class="p">.</span><span class="n">health</span>
+<span class="n">export</span> <span class="p">(</span><span class="n">Vector2</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">amount</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span></code></pre></div>
+
+<p>In the <code>enum</code> we have a list of the pickup types we want to implement. Then we
+have a <code>Vector2</code> representing the min/max value we want the pickup to supply. We&rsquo;ll
+pick a random value in this range.</p>
+
+<p>Attach the <code>body_entered</code> signal:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_on_Pickup_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="n">match</span> <span class="n">type</span><span class="p">:</span>
+        <span class="n">Items</span><span class="p">.</span><span class="n">health</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">body</span><span class="p">.</span><span class="n">has_method</span><span class="p">(</span><span class="err">&#39;</span><span class="n">heal</span><span class="err">&#39;</span><span class="p">):</span>
+                <span class="bp">print</span><span class="p">(</span><span class="s">&#34;healing&#34;</span><span class="p">)</span>
+                <span class="n">body</span><span class="p">.</span><span class="n">heal</span><span class="p">(</span><span class="n">int</span><span class="p">(</span><span class="n">rand_range</span><span class="p">(</span><span class="n">amount</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">amount</span><span class="p">.</span><span class="n">y</span><span class="p">)))</span>
+        <span class="n">Items</span><span class="p">.</span><span class="n">ammo</span><span class="p">:</span>
+            <span class="n">pass</span>
+    <span class="n">queue_free</span><span class="p">()</span></code></pre></div>
+
+<p>In this function, we&rsquo;ll check the <code>type</code>, and apply healing if the player has a
+<code>heal</code> method (right now it doesn&rsquo;t).</p>
+
+<p>Instance one of these items in the map scene and verify that you can pick it up.</p>
+
+<h2 id="juicing-the-crate">Juicing the crate</h2>
+
+<p>The crate works, but it&rsquo;s pretty boring to look at. It&rsquo;s hard for the player to
+tell the crate apart from other obstacles that may be on the map. To make it stand
+out a bit, we&rsquo;re going to add some animation effects to &ldquo;juice&rdquo; up the crate.</p>
+
+<p>Add an <code>AnimationPlayer</code> to the Pickup scene.</p>
+
+<h3 id="bouncing-animation">Bouncing animation</h3>
+
+<p>First, we&rsquo;re going to make the crate bounce up and down a bit. Create a new
+animation called &ldquo;bounce&rdquo; and set it to <em>Autoplay</em> and <em>Loop</em>.</p>
+
+<p>Click on the <code>Sprite</code> and add a keyframe for its
+<em>Transform/Position</em> property (which should be <code>(0, 0)</code> at this point). Then move
+the scrubber to <code>0.5</code>, change the position to <code>(0, -20)</code>, and add another
+keyframe.</p>
+
+<p>Press the <em>Play</em> button and you will see the crate bounce up and down. However,
+it&rsquo;s very linear and doesn&rsquo;t look very bouncy. In the timeline, click on the dot
+for the first keyframe, then select the &ldquo;edit keyframe&rdquo; button. This will let you
+change the &ldquo;Transition&rdquo; curve of the keyframe. I selected a sine curve and adjusted
+it as shown (you can drag the line with the mouse, or click and type the <code>-1.5</code>
+directly):</p>
+
+<p><img src="/blog/img/tanks_crate2.png" alt="alt" /></p>
+
+<p>The bounce should look smoother at the ends now.</p>
+
+<h3 id="drop-shadow">Drop shadow</h3>
+
+<p>We can also give a sense of depth by adding a drop shadow to the crate. Add another
+<code>Sprite</code> named &ldquo;Shadow&rdquo; and use the shadow texture:</p>
+
+<p><img src="/blog/img/shadow_circle.png" alt="alt" /></p>
+
+<p>Set the shadow&rsquo;s <em>Position</em> to <code>(0, 25)</code> and its scale to <code>(.25, .5)</code>. Add the scale
+as a new track in the &ldquo;bounce&rdquo; animation, then move the scrubber to <code>0.5</code> and
+keyframe the scale at <sup>2</sup>&frasl;<sub>3</sub> (you can type <code>(0.25/1.5, 0.5/1.5)</code> in the Inspector
+and it will do the math).</p>
+
+<p>We also want to animate the opacity of the shadow, as it&rsquo;s a bit too dark, so
+put the scrubber back at the start and keyframe the <em>Self Modulate</em> with an alpha
+of a little over 50%. Then at the halfway point of the animation, key the alpha
+at around 25%. You should see a nice fading/shrinking effect on the shadow:</p>
+
+<p><img src="/blog/img/tanks_crate_bounce.gif" alt="alt" /></p>
+
+<h3 id="icon">Icon</h3>
+
+<p>The last thing we need to add to the crate is a way to indicate what type of crate
+it is. The player needs to be able to see it and tell that it&rsquo;s a repair crate.</p>
+
+<p>Add another <code>Sprite</code> called &ldquo;Icon&rdquo; and use the wrench texture from the assets
+folder:</p>
+
+<p><img src="/blog/img/wrench_white.png" alt="alt" /></p>
+
+<p>Move the <em>Position</em> to <code>(0, -85)</code> and <em>Scale</em> to <code>(0.7, 0.7)</code>. Then we&rsquo;re going
+to animate its scale and opacity. At the start of the animation track, keyframe
+both the <em>Scale</em> and <em>Self Modulate</em> properties. Then, at the end of the track,
+key them at values of <code>(0.5, 0.5)</code> and <em>alpha</em> of <code>0</code> respectively.</p>
+
+<p>Finally, in the <em>Modulate</em> property, choose a nice bright shade of green. The
+result will be a flashing green wrench icon making it clear that this is a
+repair crate.</p>
+
+<p><img src="/blog/img/tanks_crate_bounce2.gif" alt="alt" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>We&rsquo;ve added some very simple effects to the pickup crate. In a later installment,
+we might get fancier with some shader effects and a repair animation on the
+tank itself.</p>
+
+<p>That completes Part 11 of this series. For coming features and ideas, I&rsquo;ve created
+a project tracker, which you can see here:</p>
+
+<p><a href="https://github.com/kidscancode/topdown_tanks/projects/1">Topdown Tanks Project Tracker</a></p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="download-the-code-for-this-part-https-github-com-kidscancode-topdown-tanks-releases-tag-part11"><a href="https://github.com/kidscancode/topdown_tanks/releases/tag/part11">Download the code for this part</a></h3>
+
+<h3 id="helpful-links">Helpful Links</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>

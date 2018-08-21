@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.45.1" />
+  <meta name="generator" content="Hugo 0.47" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">48</span>
+                        <span class="badge">49</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">48</span>
+                        <span class="badge">49</span>
                         tutorial
                     </a></li>
                     
@@ -252,7 +252,7 @@ rectangle&rsquo;s top-left corner, we also have to subtract <code>h</code> from 
 
 <p>Here is the Python script to do all that:</p>
 
-<p><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Extract sprite coordinates from rotated</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Extract sprite coordinates from rotated</span>
 <span class="c1"># Kenney spritesheet</span>
 <span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">as</span> <span class="nn">ET</span>
 
@@ -294,7 +294,7 @@ rectangle&rsquo;s top-left corner, we also have to subtract <code>h</code> from 
     <span class="n">x</span> <span class="o">+=</span> <span class="n">sheet_width</span><span class="o">//</span><span class="mi">2</span>
     <span class="n">y</span> <span class="o">+=</span> <span class="n">sheet_height</span><span class="o">//</span><span class="mi">2</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\t</span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">: Rect2(</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">),&#34;</span> <span class="o">%</span> <span class="p">(</span><span class="n">enum_name</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&#34;}&#34;</span><span class="p">)</span></code></pre></div></p>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;}&#34;</span><span class="p">)</span></code></pre></div>
 
 <p>In addition to applying the transform, we&rsquo;re also printing the result in a particular
 format, so that we can use it in our GDScript code. We will be left with an <code>enum</code>
@@ -305,7 +305,7 @@ containing the coordinates as <code>Rect2</code> objects.</p>
 
 <p>Paste the Python script&rsquo;s output into the Obstacle script:</p>
 
-<p><div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">StaticBody2D</span>
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">StaticBody2D</span>
 
 <span class="kd">enum</span> <span class="nc">Items</span> <span class="p">{</span><span class="n">barrelBlack_side</span><span class="p">,</span> <span class="n">barrelBlack_top</span><span class="p">,</span> <span class="n">barrelGreen_side</span><span class="p">,</span>
             <span class="n">barrelGreen_top</span><span class="p">,</span> <span class="n">barrelRed_side</span><span class="p">,</span> <span class="n">barrelRed_top</span><span class="p">,</span>
@@ -336,12 +336,12 @@ containing the coordinates as <code>Rect2</code> objects.</p>
     <span class="n">Items</span><span class="p">.</span><span class="n">treeBrown_small</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">694</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">72</span><span class="p">),</span>
     <span class="n">Items</span><span class="p">.</span><span class="n">treeGreen_large</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">654</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
     <span class="n">Items</span><span class="p">.</span><span class="n">treeGreen_small</span><span class="p">:</span> <span class="n">Rect2</span><span class="p">(</span><span class="mi">694</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">72</span><span class="p">)</span>
-<span class="p">}</span></code></pre></div></p>
+<span class="p">}</span></code></pre></div>
 
 <p>Next, we want to be able to choose the item from the Inspector, so we need to
 export a variable that uses the <code>Items</code> enum:</p>
 
-<p><div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">export</span> <span class="p">(</span><span class="n">Items</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">type</span> <span class="n">setget</span> <span class="n">_update</span></code></pre></div></p>
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">export</span> <span class="p">(</span><span class="n">Items</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">type</span> <span class="n">setget</span> <span class="n">_update</span></code></pre></div>
 
 <p>Setting the <code>type</code> variable will trigger the <code>_update()</code> function, which sets
 the <em>Region</em> and creates a correctly sized collision rectangle:</p>

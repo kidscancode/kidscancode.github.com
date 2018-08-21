@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.45.1" />
+  <meta name="generator" content="Hugo 0.47" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">48</span>
+                        <span class="badge">49</span>
                         gamedev
                     </a></li>
                     
@@ -80,7 +80,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">31</span>
+                        <span class="badge">32</span>
                         godot
                     </a></li>
                     
@@ -105,7 +105,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">48</span>
+                        <span class="badge">49</span>
                         tutorial
                     </a></li>
                     
@@ -224,7 +224,7 @@
 
 <p>As a last step, we&rsquo;re going to randomize the velocity and spin using the <code>rand_range()</code> function:</p>
 
-<p><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Sprite</span>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">extends</span> <span class="n">Sprite</span>
 
 <span class="n">var</span> <span class="n">screensize</span>
 <span class="n">var</span> <span class="n">extents</span>
@@ -256,7 +256,7 @@
 	<span class="k">if</span> <span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span><span class="p">:</span>
 		<span class="n">pos</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">extents</span><span class="o">.</span><span class="n">height</span>
 		<span class="n">vel</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
-	<span class="n">set_pos</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span></code></pre></div></p>
+	<span class="n">set_pos</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span></code></pre></div>
 
 <p>One important thing to keep in mind when using randomized commands:  by default, Godot will produce the same sequence of &ldquo;random&rdquo; numbers every time you run the game unless you first use <code>randomize()</code>.</p>
 
