@@ -21,7 +21,7 @@
     <item>
       <title>Gamedev</title>
       <link>/blog/tags/gamedev/</link>
-      <pubDate>Mon, 20 Aug 2018 14:14:12 PDT</pubDate>
+      <pubDate>Tue, 28 Aug 2018 09:14:12 PDT</pubDate>
       
       <guid>/blog/tags/gamedev/</guid>
       <description></description>
@@ -39,9 +39,18 @@
     <item>
       <title>Godot</title>
       <link>/blog/tags/godot/</link>
-      <pubDate>Mon, 20 Aug 2018 14:14:12 PDT</pubDate>
+      <pubDate>Tue, 28 Aug 2018 09:14:12 PDT</pubDate>
       
       <guid>/blog/tags/godot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Procgen</title>
+      <link>/blog/tags/procgen/</link>
+      <pubDate>Tue, 28 Aug 2018 09:14:12 PDT</pubDate>
+      
+      <guid>/blog/tags/procgen/</guid>
       <description></description>
     </item>
     
@@ -84,7 +93,7 @@
     <item>
       <title>Tutorial</title>
       <link>/blog/tags/tutorial/</link>
-      <pubDate>Mon, 20 Aug 2018 14:14:12 PDT</pubDate>
+      <pubDate>Tue, 28 Aug 2018 09:14:12 PDT</pubDate>
       
       <guid>/blog/tags/tutorial/</guid>
       <description></description>

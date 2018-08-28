@@ -1,0 +1,417 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.47" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Procedural Generation in Godot - Part 1: Mazes &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">50</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">33</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/procgen" class="list-group-item">
+                        <span class="badge">1</span>
+                        procgen
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">50</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Procedural Generation in Godot - Part 1: Mazes</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Tue, Aug 28, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/procgen">procgen</a>
+			  
+			</h6></span>
+
+			      <p>In this series, we&rsquo;ll explore the applications of procedural generation to game
+development. While we&rsquo;ll be using Godot 3.0 as our platform, much of the concepts
+and algorithms related to this subject are universal, and you can apply them to
+whatever platform you may be working on.</p>
+
+<p></p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YShYWaGF3Nc" frameborder="0" allowfullscreen></iframe></p>
+
+<h1 id="what-is-procedural-generation">What is Procedural Generation?</h1>
+
+<p>In game development, procedural generation (&ldquo;procgen&rdquo; for short) is a method of
+creating game content via automated, rather than manual, means. In practice, it
+can cover a wide range of applications, from simple: such as random mazes or
+character names, to more complex: dungeons (including keys, locks, bosses, etc.)
+or spaceships, to the ultra-complex: like Dwarf Fortress, where everything in
+the world is generated - environmental and cultural history, weather, biology,
+personality traits, and much, much more.</p>
+
+<blockquote>
+<p>If you don&rsquo;t know about Dwarf Fortress, I highly recommend checking it out. Even
+if you don&rsquo;t play the game - and the learning curve is tough - it can be
+fascinating and entertaining to read about. <a href="https://arstechnica.com/gaming/2013/02/dwarf-fortress-ten-hours-with-the-most-inscrutable-video-game-of-all-time/">Start here</a></p>
+</blockquote>
+
+<p>You can learn a lot about procgen and its applications at the
+<a href="http://pcg.wikidot.com/category-pcg-algorithms">Procedural Generation Wiki</a>.</p>
+
+<p>For this series, we&rsquo;ll start by looking at one of the most popular applications
+of procgen: mazes. Maze generation is a well-explored area, and there are many
+algorithms you can use, depending on the type of maze you need.</p>
+
+<p>You can read an overview of maze generation here:</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm">Wikipedia: Maze Generation Algorithm</a></p>
+
+<h1 id="making-mazes">Making mazes</h1>
+
+<p>For this part, we&rsquo;ll use the &ldquo;Recursive Backtracker&rdquo; algorithm. This is also
+known as &ldquo;depth-first search&rdquo;, and is one of the easiest maze algorithms to
+implement.</p>
+
+<p><img src="/blog/img/maze_demo1.gif" alt="alt" /></p>
+
+<p>It works by exploring a grid (technically it works on a <em>graph</em>, which doesn&rsquo;t
+have to be grid-shaped, but for this demo we&rsquo;ll stick to a standard square grid)
+cell-by-cell, connecting each cell, but never crossing over.. In mathematical
+terms, it produces a <em>spanning tree</em>, meaning there are no loops and only one
+path from any one point to another.</p>
+
+<h2 id="the-algorithm">The algorithm</h2>
+
+<p>The recursive backtracker algorithm works like this:</p>
+
+<ol>
+<li>Set all cell walls to solid and mark each cell unvisited</li>
+<li>Pick a starting cell and mark it visited</li>
+<li>If any neighboring cell has not been visited
+
+<ol>
+<li>Pick a random neighboring cell that has not yet been visited</li>
+<li>Remove the wall between the two cells</li>
+<li>Add the current cell to the stack</li>
+<li>Make the chosen cell the current cell and mark it visited</li>
+</ol></li>
+<li>If the current cell has no unvisited neighbors, take the top cell from the stack and make it current</li>
+<li>Repeat from #3 until there are no more unvisited cells</li>
+</ol>
+
+<h2 id="data-representation">Data representation</h2>
+
+<p>First we need to decide how to represent the maze data. We&rsquo;ll be using a Godot&rsquo;s
+TileMap node which, like our maze itself, will be based on a grid. Each cell of
+the grid has four walls, which can be either open or closed:</p>
+
+<p><img src="/blog/img/cell_walls.png" alt="alt" /></p>
+
+<p>With two states (open or closed), we can use a single bit to represent the state
+of each wall: <code>0</code> for open and <code>1</code> for closed. That means that a <em>4-bit</em> (i.e. 4
+digit) number can represent any given cell. We can do this in any order, but I&rsquo;m
+going to use the order <code>WSEN</code>. So a cell with walls <code>1001</code> (<code>9</code> in decimal) for
+example, would mean the N and W walls are present.</p>
+
+<p>As a result, we can use the decimal numbers 0-15 to represent all of the possible
+cell configurations, and therefore all of the possible tiles:</p>
+
+<p><img src="/blog/img/cells_4bit.png" alt="alt" /></p>
+
+<p>A tile can be placed next to any tile that has the matching side value. This
+means you can use any tileset that matches this arrangement. For this demo I&rsquo;ll
+be using Kenney&rsquo;s <a href="https://kenney.nl/assets/road-textures">Road Textures</a> pack,
+which contains the following tiles following our pattern:</p>
+
+<p><img src="/blog/img/4bit_road_tiles.png" alt="alt" /></p>
+
+<p>If we make these into a <code>TileSet</code> in Godot, with the tile <code>id</code> matching the wall
+pattern, we can use the TileMap data to record our maze data as well. This is
+really nice, because we won&rsquo;t need a separate data structure to store information
+about the walls.</p>
+
+<p>Download the <a href="/blog/img/Godot3_procgen1_start.zip">Starting Project</a>.</p>
+
+<p>When you download the starting project, you&rsquo;ll find I&rsquo;ve created a TileSet for
+the 16 tiles we need, along with collision polygons for the walls (green areas).
+The filename for the TileSet resource is <code>road_tiles.tres</code>.</p>
+
+<p>For the starting scene setup, we need a parent Node2D and a <code>TileMap</code>:</p>
+
+<p><img src="/blog/img/maze_tilemap1.png" alt="alt" /></p>
+
+<h2 id="the-script">The script</h2>
+
+<p>A lot of the code we need for this project is very generic: it can apply to
+many similar types of problems. Keep that in mind as we move forward - what
+other applications of these algorithms can you think of?</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">Node2D</span>
+
+<span class="n">const</span> <span class="n">N</span> <span class="p">=</span> <span class="mi">1</span>
+<span class="n">const</span> <span class="n">E</span> <span class="p">=</span> <span class="mi">2</span>
+<span class="n">const</span> <span class="n">S</span> <span class="p">=</span> <span class="mi">4</span>
+<span class="n">const</span> <span class="n">W</span> <span class="p">=</span> <span class="mi">8</span>
+
+<span class="kd">var</span> <span class="nv">cell_walls</span> <span class="p">=</span> <span class="p">{</span><span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="n">E</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="n">W</span><span class="p">,</span>
+                  <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span> <span class="n">N</span><span class="p">}</span></code></pre></div>
+
+<p>We start by defining the four direction values for our tiles. Assigning them to
+the compass direction names isn&rsquo;t strictly necessary, but makes it easier to
+reference them. You can see that in the <code>cell_walls</code> dictionary, where we
+establish the relationship between the direction vectors and the walls&rsquo; values.</p>
+
+<p>Next, we have a few parameters to define:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">var</span> <span class="nv">tile_size</span> <span class="p">=</span> <span class="mi">64</span>  <span class="p">#</span> <span class="n">tile</span> <span class="n">size</span> <span class="p">(</span><span class="k">in</span> <span class="n">pixels</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nv">width</span> <span class="p">=</span> <span class="mi">25</span>  <span class="p">#</span> <span class="n">width</span> <span class="n">of</span> <span class="bp">map</span> <span class="p">(</span><span class="k">in</span> <span class="n">tiles</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nv">height</span> <span class="p">=</span> <span class="mi">15</span>  <span class="p">#</span> <span class="n">height</span> <span class="n">of</span> <span class="bp">map</span> <span class="p">(</span><span class="k">in</span> <span class="n">tiles</span><span class="p">)</span>
+
+<span class="p">#</span> <span class="kr">get</span> <span class="n">a</span> <span class="n">reference</span> <span class="n">to</span> <span class="n">the</span> <span class="bp">map</span> <span class="k">for</span> <span class="kr">convenience</span>
+<span class="n">onready</span> <span class="kd">var</span> <span class="nv">Map</span> <span class="p">=</span> <span class="err">$</span><span class="n">TileMap</span></code></pre></div>
+
+<p>The <code>_ready()</code> function is fairly self-explanatory:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_ready</span><span class="p">():</span>
+    <span class="n">randomize</span><span class="p">()</span>
+    <span class="n">tile_size</span> <span class="p">=</span> <span class="n">Map</span><span class="p">.</span><span class="n">cell_size</span>
+    <span class="n">make_maze</span><span class="p">()</span></code></pre></div>
+
+<p>Before we can generate the maze, we&rsquo;re going to need a helper function that,
+given a cell, returns a list of its unvisited neighbors:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">check_neighbors</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">unvisited</span><span class="p">):</span>
+    <span class="p">#</span> <span class="n">returns</span> <span class="n">an</span> <span class="n">array</span> <span class="n">of</span> <span class="n">cell</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">unvisited</span> <span class="n">neighbors</span>
+    <span class="kd">var</span> <span class="nv">list</span> <span class="p">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="k">in</span> <span class="n">cell_walls</span><span class="p">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">cell</span> <span class="o">+</span> <span class="n">n</span> <span class="k">in</span> <span class="n">unvisited</span><span class="p">:</span>
+            <span class="n">list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">cell</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">list</span></code></pre></div>
+
+<p>Now, on to our <code>make_maze()</code> function, where the magic happens:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">make_maze</span><span class="p">():</span>
+    <span class="kd">var</span> <span class="nv">unvisited</span> <span class="p">=</span> <span class="p">[]</span>  <span class="p">#</span> <span class="n">array</span> <span class="n">of</span> <span class="n">unvisited</span> <span class="n">tiles</span>
+    <span class="kd">var</span> <span class="nv">stack</span> <span class="p">=</span> <span class="p">[]</span>
+    <span class="p">#</span> <span class="n">fill</span> <span class="n">the</span> <span class="bp">map</span> <span class="n">with</span> <span class="n">solid</span> <span class="n">tiles</span>
+    <span class="n">Map</span><span class="p">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="n">range</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="k">in</span> <span class="n">range</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
+            <span class="n">unvisited</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">Vector2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+            <span class="n">Map</span><span class="p">.</span><span class="n">set_cellv</span><span class="p">(</span><span class="n">Vector2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">N</span><span class="o">|</span><span class="n">E</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">W</span><span class="p">)</span>
+    <span class="kd">var</span> <span class="nv">current</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">unvisited</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">current</span><span class="p">)</span></code></pre></div>
+
+<p>First, we&rsquo;re initializing the map and the variables we&rsquo;ll need to keep track
+of unvisited tiles and the stack of tiles to process.</p>
+
+<blockquote>
+<p><strong>Note:</strong> GDScript doesn&rsquo;t have an actual stack data type, but an Array will
+work just fine, as long as we use <code>append()</code> to add items to the end and
+<code>pop_back()</code> to remove them from the same end.</p>
+</blockquote>
+
+<p>Then we loop through the map setting all of its tiles to solid ones (<code>N|E|S|W</code>)
+and adding each cell to the <code>unvisited</code> list. We&rsquo;re using the top-left corner as
+the start tile, but you can start anywhere in the grid.</p>
+
+<blockquote>
+<p><strong>NOTE:</strong> The <code>|</code> symbol in GDScript (as in many languages) indicates <em>bitwise OR</em>.
+Combining the four direction values with <code>|</code> results in <code>1111</code> (decimal: <code>15</code>),
+or our value for a tile with all four walls present.</p>
+
+<p>A full explanation of bitwise operations is beyond the scope of this tutorial,
+but you can find out more here: <a href="https://en.wikipedia.org/wiki/Bitwise_operation">Wikipedia: Bitwise operation</a></p>
+</blockquote>
+
+<p>Now we can implement the algorithm:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="k">while</span> <span class="n">unvisited</span><span class="p">:</span>
+    <span class="kd">var</span> <span class="nv">neighbors</span> <span class="p">=</span> <span class="n">check_neighbors</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">unvisited</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">neighbors</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="kd">var</span> <span class="nv">next</span> <span class="p">=</span> <span class="n">neighbors</span><span class="p">[</span><span class="n">randi</span><span class="p">()</span> <span class="o">%</span> <span class="n">neighbors</span><span class="p">.</span><span class="n">size</span><span class="p">()]</span>
+        <span class="n">stack</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+        <span class="p">#</span> <span class="n">remove</span> <span class="n">walls</span> <span class="n">from</span> <span class="o">*</span><span class="n">both</span><span class="o">*</span> <span class="n">cells</span>
+        <span class="kd">var</span> <span class="nv">dir</span> <span class="p">=</span> <span class="n">next</span> <span class="o">-</span> <span class="n">current</span>
+        <span class="kd">var</span> <span class="nv">current_walls</span> <span class="p">=</span> <span class="n">Map</span><span class="p">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">current</span><span class="p">)</span> <span class="o">-</span> <span class="n">cell_walls</span><span class="p">[</span><span class="n">dir</span><span class="p">]</span>
+        <span class="kd">var</span> <span class="nv">next_walls</span> <span class="p">=</span> <span class="n">Map</span><span class="p">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">next</span><span class="p">)</span> <span class="o">-</span> <span class="n">cell_walls</span><span class="p">[</span><span class="o">-</span><span class="n">dir</span><span class="p">]</span>
+        <span class="n">Map</span><span class="p">.</span><span class="n">set_cellv</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">current_walls</span><span class="p">)</span>
+        <span class="n">Map</span><span class="p">.</span><span class="n">set_cellv</span><span class="p">(</span><span class="n">next</span><span class="p">,</span> <span class="n">next_walls</span><span class="p">)</span>
+        <span class="n">current</span> <span class="p">=</span> <span class="n">next</span>
+        <span class="n">unvisited</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+    <span class="n">elif</span> <span class="n">stack</span><span class="p">:</span>
+        <span class="n">current</span> <span class="p">=</span> <span class="n">stack</span><span class="p">.</span><span class="n">pop_back</span><span class="p">()</span></code></pre></div>
+
+<p>If you run this, you should see the map filled out with a nice branching path. If
+you want to see the process happen more slowly, add this line at the end of the
+<code>while</code> loop:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">yield</span><span class="p">(</span><span class="n">get_tree</span><span class="p">(),</span> <span class="err">&#39;</span><span class="n">idle_frame</span><span class="err">&#39;</span><span class="p">)</span></code></pre></div>
+
+<p><img src="/blog/img/maze_gen1.gif" alt="alt" /></p>
+
+<p>Pick two random tiles, one for &ldquo;start&rdquo; and one for &ldquo;end&rdquo;, and you have a solvable
+maze!</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Now that we have a working maze generator, there are a lot of things we can do
+with it. In the next part, we&rsquo;ll discuss some variations we can make to this
+algorithm, as well as some examples of using the maze in a project.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="download-the-code-for-this-part-https-github-com-kidscancode-godot3-procgen-demos"><a href="https://github.com/kidscancode/godot3_procgen_demos">Download the code for this part</a></h3>
+
+<h3 id="helpful-links">Helpful Links</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>

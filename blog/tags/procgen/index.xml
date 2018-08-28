@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Procgen on KCC Blog </title>
+      <generator uri="https://gohugo.io">Hugo</generator>
+    <link>/blog/tags/procgen/</link>
+    <language>en-us</language>
+    
+    
+    <updated>Tue, 28 Aug 2018 09:14:12 PDT</updated>
+    
+    <item>
+      <title>Procedural Generation in Godot - Part 1: Mazes</title>
+      <link>/blog/2018/08/godot3_procgen1/</link>
+      <pubDate>Tue, 28 Aug 2018 09:14:12 PDT</pubDate>
+      
+      <guid>/blog/2018/08/godot3_procgen1/</guid>
+      <description>&lt;p&gt;In this series, we&amp;rsquo;ll explore the applications of procedural generation to game
+development. While we&amp;rsquo;ll be using Godot 3.0 as our platform, much of the concepts
+and algorithms related to this subject are universal, and you can apply them to
+whatever platform you may be working on.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;You can watch a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/YShYWaGF3Nc&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;what-is-procedural-generation&#34;&gt;What is Procedural Generation?&lt;/h1&gt;
+
+&lt;p&gt;In game development, procedural generation (&amp;ldquo;procgen&amp;rdquo; for short) is a method of
+creating game content via automated, rather than manual, means. In practice, it
+can cover a wide range of applications, from simple: such as random mazes or
+character names, to more complex: dungeons (including keys, locks, bosses, etc.)
+or spaceships, to the ultra-complex: like Dwarf Fortress, where everything in
+the world is generated - environmental and cultural history, weather, biology,
+personality traits, and much, much more.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;If you don&amp;rsquo;t know about Dwarf Fortress, I highly recommend checking it out. Even
+if you don&amp;rsquo;t play the game - and the learning curve is tough - it can be
+fascinating and entertaining to read about. &lt;a href=&#34;https://arstechnica.com/gaming/2013/02/dwarf-fortress-ten-hours-with-the-most-inscrutable-video-game-of-all-time/&#34;&gt;Start here&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You can learn a lot about procgen and its applications at the
+&lt;a href=&#34;http://pcg.wikidot.com/category-pcg-algorithms&#34;&gt;Procedural Generation Wiki&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For this series, we&amp;rsquo;ll start by looking at one of the most popular applications
+of procgen: mazes. Maze generation is a well-explored area, and there are many
+algorithms you can use, depending on the type of maze you need.&lt;/p&gt;
+
+&lt;p&gt;You can read an overview of maze generation here:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Maze_generation_algorithm&#34;&gt;Wikipedia: Maze Generation Algorithm&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;making-mazes&#34;&gt;Making mazes&lt;/h1&gt;
+
+&lt;p&gt;For this part, we&amp;rsquo;ll use the &amp;ldquo;Recursive Backtracker&amp;rdquo; algorithm. This is also
+known as &amp;ldquo;depth-first search&amp;rdquo;, and is one of the easiest maze algorithms to
+implement.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/maze_demo1.gif&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It works by exploring a grid (technically it works on a &lt;em&gt;graph&lt;/em&gt;, which doesn&amp;rsquo;t
+have to be grid-shaped, but for this demo we&amp;rsquo;ll stick to a standard square grid)
+cell-by-cell, connecting each cell, but never crossing over.. In mathematical
+terms, it produces a &lt;em&gt;spanning tree&lt;/em&gt;, meaning there are no loops and only one
+path from any one point to another.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-algorithm&#34;&gt;The algorithm&lt;/h2&gt;
+
+&lt;p&gt;The recursive backtracker algorithm works like this:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Set all cell walls to solid and mark each cell unvisited&lt;/li&gt;
+&lt;li&gt;Pick a starting cell and mark it visited&lt;/li&gt;
+&lt;li&gt;If any neighboring cell has not been visited
+
+&lt;ol&gt;
+&lt;li&gt;Pick a random neighboring cell that has not yet been visited&lt;/li&gt;
+&lt;li&gt;Remove the wall between the two cells&lt;/li&gt;
+&lt;li&gt;Add the current cell to the stack&lt;/li&gt;
+&lt;li&gt;Make the chosen cell the current cell and mark it visited&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;If the current cell has no unvisited neighbors, take the top cell from the stack and make it current&lt;/li&gt;
+&lt;li&gt;Repeat from #3 until there are no more unvisited cells&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;data-representation&#34;&gt;Data representation&lt;/h2&gt;
+
+&lt;p&gt;First we need to decide how to represent the maze data. We&amp;rsquo;ll be using a Godot&amp;rsquo;s
+TileMap node which, like our maze itself, will be based on a grid. Each cell of
+the grid has four walls, which can be either open or closed:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/cell_walls.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;With two states (open or closed), we can use a single bit to represent the state
+of each wall: &lt;code&gt;0&lt;/code&gt; for open and &lt;code&gt;1&lt;/code&gt; for closed. That means that a &lt;em&gt;4-bit&lt;/em&gt; (i.e. 4
+digit) number can represent any given cell. We can do this in any order, but I&amp;rsquo;m
+going to use the order &lt;code&gt;WSEN&lt;/code&gt;. So a cell with walls &lt;code&gt;1001&lt;/code&gt; (&lt;code&gt;9&lt;/code&gt; in decimal) for
+example, would mean the N and W walls are present.&lt;/p&gt;
+
+&lt;p&gt;As a result, we can use the decimal numbers 0-15 to represent all of the possible
+cell configurations, and therefore all of the possible tiles:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/cells_4bit.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;A tile can be placed next to any tile that has the matching side value. This
+means you can use any tileset that matches this arrangement. For this demo I&amp;rsquo;ll
+be using Kenney&amp;rsquo;s &lt;a href=&#34;https://kenney.nl/assets/road-textures&#34;&gt;Road Textures&lt;/a&gt; pack,
+which contains the following tiles following our pattern:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/4bit_road_tiles.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If we make these into a &lt;code&gt;TileSet&lt;/code&gt; in Godot, with the tile &lt;code&gt;id&lt;/code&gt; matching the wall
+pattern, we can use the TileMap data to record our maze data as well. This is
+really nice, because we won&amp;rsquo;t need a separate data structure to store information
+about the walls.&lt;/p&gt;
+
+&lt;p&gt;Download the &lt;a href=&#34;/blog/blog/img/Godot3_procgen1_start.zip&#34;&gt;Starting Project&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;When you download the starting project, you&amp;rsquo;ll find I&amp;rsquo;ve created a TileSet for
+the 16 tiles we need, along with collision polygons for the walls (green areas).
+The filename for the TileSet resource is &lt;code&gt;road_tiles.tres&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;For the starting scene setup, we need a parent Node2D and a &lt;code&gt;TileMap&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/maze_tilemap1.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;the-script&#34;&gt;The script&lt;/h2&gt;
+
+&lt;p&gt;A lot of the code we need for this project is very generic: it can apply to
+many similar types of problems. Keep that in mind as we move forward - what
+other applications of these algorithms can you think of?&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Node2D&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;E&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;S&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;W&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;8&lt;/span&gt;
+
+&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;cell_walls&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;E&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;W&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                  &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;S&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We start by defining the four direction values for our tiles. Assigning them to
+the compass direction names isn&amp;rsquo;t strictly necessary, but makes it easier to
+reference them. You can see that in the &lt;code&gt;cell_walls&lt;/code&gt; dictionary, where we
+establish the relationship between the direction vectors and the walls&amp;rsquo; values.&lt;/p&gt;
+
+&lt;p&gt;Next, we have a few parameters to define:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;tile_size&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;64&lt;/span&gt;  &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tile&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;size&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pixels&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;width&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;25&lt;/span&gt;  &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;width&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;of&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;map&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tiles&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;height&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;15&lt;/span&gt;  &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;height&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;of&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;map&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tiles&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;kr&#34;&gt;get&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reference&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;the&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;map&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;kr&#34;&gt;convenience&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;onready&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;Map&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TileMap&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code&gt;_ready()&lt;/code&gt; function is fairly self-explanatory:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;randomize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;tile_size&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cell_size&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;make_maze&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Before we can generate the maze, we&amp;rsquo;re going to need a helper function that,
+given a cell, returns a list of its unvisited neighbors:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;check_neighbors&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cell&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unvisited&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;returns&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;an&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;array&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;of&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cell&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unvisited&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;neighbors&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;list&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cell_walls&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;keys&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cell&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unvisited&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;append&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cell&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;list&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, on to our &lt;code&gt;make_maze()&lt;/code&gt; function, where the magic happens:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;make_maze&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;unvisited&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;  &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;array&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;of&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unvisited&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tiles&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;stack&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[]&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fill&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;the&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;map&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;with&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;solid&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tiles&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;clear&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;width&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;range&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;height&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;unvisited&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;append&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_cellv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;E&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;S&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;|&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;W&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;current&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;unvisited&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;erase&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;First, we&amp;rsquo;re initializing the map and the variables we&amp;rsquo;ll need to keep track
+of unvisited tiles and the stack of tiles to process.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; GDScript doesn&amp;rsquo;t have an actual stack data type, but an Array will
+work just fine, as long as we use &lt;code&gt;append()&lt;/code&gt; to add items to the end and
+&lt;code&gt;pop_back()&lt;/code&gt; to remove them from the same end.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Then we loop through the map setting all of its tiles to solid ones (&lt;code&gt;N|E|S|W&lt;/code&gt;)
+and adding each cell to the &lt;code&gt;unvisited&lt;/code&gt; list. We&amp;rsquo;re using the top-left corner as
+the start tile, but you can start anywhere in the grid.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; The &lt;code&gt;|&lt;/code&gt; symbol in GDScript (as in many languages) indicates &lt;em&gt;bitwise OR&lt;/em&gt;.
+Combining the four direction values with &lt;code&gt;|&lt;/code&gt; results in &lt;code&gt;1111&lt;/code&gt; (decimal: &lt;code&gt;15&lt;/code&gt;),
+or our value for a tile with all four walls present.&lt;/p&gt;
+
+&lt;p&gt;A full explanation of bitwise operations is beyond the scope of this tutorial,
+but you can find out more here: &lt;a href=&#34;https://en.wikipedia.org/wiki/Bitwise_operation&#34;&gt;Wikipedia: Bitwise operation&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Now we can implement the algorithm:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unvisited&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;neighbors&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;check_neighbors&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unvisited&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;neighbors&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;size&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;next&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;neighbors&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;randi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;neighbors&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;size&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()]&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;stack&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;append&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;remove&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;walls&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;both&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cells&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;dir&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;next&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;current&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;current_walls&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_cellv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cell_walls&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+        &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;next_walls&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_cellv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cell_walls&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_cellv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;current_walls&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;Map&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_cellv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;next&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;next_walls&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;current&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;next&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;unvisited&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;erase&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;stack&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;current&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;stack&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pop_back&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you run this, you should see the map filled out with a nice branching path. If
+you want to see the process happen more slowly, add this line at the end of the
+&lt;code&gt;while&lt;/code&gt; loop:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;yield&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_tree&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;idle_frame&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/maze_gen1.gif&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Pick two random tiles, one for &amp;ldquo;start&amp;rdquo; and one for &amp;ldquo;end&amp;rdquo;, and you have a solvable
+maze!&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Now that we have a working maze generator, there are a lot of things we can do
+with it. In the next part, we&amp;rsquo;ll discuss some variations we can make to this
+algorithm, as well as some examples of using the maze in a project.&lt;/p&gt;
+
+&lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
+
+&lt;h3 id=&#34;download-the-code-for-this-part-https-github-com-kidscancode-godot3-procgen-demos&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/godot3_procgen_demos&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
