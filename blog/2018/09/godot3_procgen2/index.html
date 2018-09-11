@@ -1,0 +1,363 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.47" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Procedural Generation in Godot - Part 2: Using Mazes &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">51</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">34</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/procgen" class="list-group-item">
+                        <span class="badge">2</span>
+                        procgen
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">51</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Procedural Generation in Godot - Part 2: Using Mazes</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Mon, Sep 10, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/procgen">procgen</a>
+			  
+			</h6></span>
+
+			      <p>In this series, we&rsquo;ll explore the applications of procedural generation to game
+development. While we&rsquo;ll be using Godot 3.0 as our platform, much of the concepts
+and algorithms related to this subject are universal, and you can apply them to
+whatever platform you may be working on.</p>
+
+<p>In the <a href="/blog/2018/08/godot3_procgen1/">previous part</a> we explored how to generate
+a random maze using Godot&rsquo;s TileMap node. In this part, we&rsquo;ll look at some ways
+to use these mazes in your game projects.</p>
+
+<p></p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qkiyzjTqm9o" frameborder="0" allowfullscreen></iframe></p>
+
+<h1 id="maze-applications">Maze applications</h1>
+
+<p>In the sections below, we&rsquo;ll be using the project we built in part 1. You can
+download the <a href="/blog/img/Godot3_procgen2_start.zip">project here</a>.</p>
+
+<blockquote>
+<p><strong>Note:</strong> many of the following features can be combined for even more variety
+and effect. If you do so, it&rsquo;s likely that they can be coded in a much more
+efficient way, but I&rsquo;ve chosen to demonstrate them separately for clarity.</p>
+</blockquote>
+
+<h2 id="on-random-seeds">On random seeds</h2>
+
+<p>While using random generation guarantees you&rsquo;ll get a unique maze every time you
+run the game, there are times when you want to be able to also get repeatable
+results. By using the same <em>seed</em> for the random number generator, you can ensure
+you&rsquo;ll get the same sequence of &ldquo;random&rdquo; numbers every time.</p>
+
+<p>Here is a brief example of how to do this. Add the following to the maze script:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">var</span> <span class="nv">map_seed</span> <span class="p">=</span> <span class="mi">0</span>
+
+<span class="kd">func</span> <span class="nf">_ready</span><span class="p">():</span>
+    <span class="n">randomize</span><span class="p">()</span>
+    <span class="k">if</span> <span class="o">!</span><span class="n">map_seed</span><span class="p">:</span>
+        <span class="n">map_seed</span> <span class="p">=</span> <span class="n">randi</span><span class="p">()</span>
+    <span class="n">seed</span><span class="p">(</span><span class="n">map_seed</span><span class="p">)</span>
+    <span class="bp">print</span><span class="p">(</span><span class="s">&#34;Seed: &#34;</span><span class="p">,</span> <span class="n">map_seed</span><span class="p">)</span>
+    <span class="n">tile_size</span> <span class="p">=</span> <span class="n">Map</span><span class="p">.</span><span class="n">cell_size</span>
+    <span class="n">make_maze</span><span class="p">()</span></code></pre></div>
+
+<p>Here, we are creating a variable to store the seed for our map. Setting this to
+<code>0</code> indicates we want a random seed. When you run, you&rsquo;ll see printed a value
+something like <code>111556094</code>. If you make this number your seed, you&rsquo;ll always
+get the same map.</p>
+
+<p>Games such as <em>Minecraft</em> use this technique to allow users to share their
+randomly generated worlds. They only need to share a single number, their map&rsquo;s
+seed, and no matter how far they explore the vast, generated world, both players&rsquo;
+worlds will match.</p>
+
+<p>If you want to use something like this in your game, you can save the <code>seed</code>
+value as part of your game&rsquo;s save file.</p>
+
+<h2 id="adding-loops">Adding loops</h2>
+
+<p>The recursive backtracker algorithm we&rsquo;re using creates &ldquo;perfect&rdquo; mazes -
+meaning there are no loops and only one path between any two points in the maze.
+However, you might want the map to feel more &ldquo;natural&rdquo;, and add more connections
+allowing the player to explore different paths through the map.</p>
+
+<p>To do this, after the maze generation is complete, we randomly go through
+the map and remove walls. Depending on how many walls you remove, you can get
+just a few extra connections, or an almost fully connected grid.</p>
+
+<p>Call this function after the maze generation finishes:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">var</span> <span class="nv">erase_fraction</span> <span class="p">=</span> <span class="mf">0.2</span>  <span class="p">#</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">wall</span> <span class="n">removal</span>
+
+<span class="kd">func</span> <span class="nf">erase_walls</span><span class="p">():</span>
+    <span class="p">#</span> <span class="n">randomly</span> <span class="n">remove</span> <span class="n">a</span> <span class="n">percentage</span> <span class="n">of</span> <span class="n">the</span> <span class="bp">map</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">walls</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">range</span><span class="p">(</span><span class="n">int</span><span class="p">(</span><span class="n">width</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="n">erase_fraction</span><span class="p">)):</span>
+        <span class="p">#</span> <span class="n">pick</span> <span class="n">a</span> <span class="n">random</span> <span class="n">tile</span> <span class="n">not</span> <span class="n">on</span> <span class="n">the</span> <span class="n">edge</span>
+        <span class="kd">var</span> <span class="nv">x</span> <span class="p">=</span> <span class="n">int</span><span class="p">(</span><span class="n">rand_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">width</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="kd">var</span> <span class="nv">y</span> <span class="p">=</span> <span class="n">int</span><span class="p">(</span><span class="n">rand_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">height</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="kd">var</span> <span class="nv">cell</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="p">#</span> <span class="n">pick</span> <span class="n">a</span> <span class="n">random</span> <span class="n">neighbor</span>
+        <span class="kd">var</span> <span class="nv">neighbor</span> <span class="p">=</span> <span class="n">cell_walls</span><span class="p">.</span><span class="n">keys</span><span class="p">()[</span><span class="n">randi</span><span class="p">()</span> <span class="o">%</span> <span class="n">cell_walls</span><span class="p">.</span><span class="n">size</span><span class="p">()]</span>
+        <span class="p">#</span> <span class="k">if</span> <span class="n">there</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">a</span> <span class="n">wall</span> <span class="n">between</span> <span class="n">cell</span> <span class="n">and</span> <span class="n">neighbor</span><span class="p">,</span> <span class="n">remove</span> <span class="n">it</span>
+        <span class="k">if</span> <span class="n">Map</span><span class="p">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">cell_walls</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]:</span>
+            <span class="kd">var</span> <span class="nv">walls</span> <span class="p">=</span> <span class="n">Map</span><span class="p">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span> <span class="o">-</span> <span class="n">cell_walls</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span>
+            <span class="kd">var</span> <span class="nv">n_walls</span> <span class="p">=</span> <span class="n">Map</span><span class="p">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">cell</span><span class="o">+</span><span class="n">neighbor</span><span class="p">)</span> <span class="o">-</span> <span class="n">cell_walls</span><span class="p">[</span><span class="o">-</span><span class="n">neighbor</span><span class="p">]</span>
+            <span class="n">Map</span><span class="p">.</span><span class="n">set_cellv</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">walls</span><span class="p">)</span>
+            <span class="n">Map</span><span class="p">.</span><span class="n">set_cellv</span><span class="p">(</span><span class="n">cell</span><span class="o">+</span><span class="n">neighbor</span><span class="p">,</span> <span class="n">n_walls</span><span class="p">)</span></code></pre></div>
+
+<h2 id="spacing-out-the-path">Spacing out the path</h2>
+
+<p>Since we&rsquo;re using roads, a natural extension would be to also generate
+decorations, buildings, and other objects in the green areas. However, our maze
+generating algorithm explores <em>every</em> tile and makes it part of the path. This
+means that there is not much space between adjacent roads. Let&rsquo;s space out the
+road tiles so that there are empty tiles between them.</p>
+
+<p>To begin, we change the <code>cell_walls</code> dictionary to indicate that each cell&rsquo;s
+neighbors should be considered <strong>2</strong> spaces apart.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">var</span> <span class="nv">cell_walls</span> <span class="p">=</span> <span class="p">{</span><span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">):</span> <span class="n">N</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="n">E</span><span class="p">,</span>
+                  <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="n">W</span><span class="p">}</span></code></pre></div>
+
+<p>In the maze generator, we also need to make sure we only count the even-numbered
+tiles or else our <code>unvisited</code> list will never be completed. Change the code at
+the start of the <code>make_maze()</code> function as follows:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift">    <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="n">range</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="k">in</span> <span class="n">range</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
+            <span class="n">Map</span><span class="p">.</span><span class="n">set_cellv</span><span class="p">(</span><span class="n">Vector2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">N</span><span class="o">|</span><span class="n">E</span><span class="o">|</span><span class="n">S</span><span class="o">|</span><span class="n">W</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="k">in</span> <span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">unvisited</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">Vector2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span></code></pre></div>
+
+<p>If we only do this, the map is generated every two spaces, like so:</p>
+
+<p><img src="/blog/img/maze_2space1.png" alt="alt" /></p>
+
+<p>To keep the path continuous, whenever we remove the wall to a new adjacent cell,
+we need to include either a vertical or horizontal tile (tiles <code>10</code> and <code>5</code> )
+between them.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="k">if</span> <span class="n">dir</span><span class="p">.</span><span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">Map</span><span class="p">.</span><span class="n">set_cellv</span><span class="p">(</span><span class="n">current</span> <span class="o">+</span> <span class="n">dir</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>  <span class="p">#</span> <span class="n">vertical</span> <span class="n">road</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">Map</span><span class="p">.</span><span class="n">set_cellv</span><span class="p">(</span><span class="n">current</span> <span class="o">+</span> <span class="n">dir</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="p">#</span> <span class="n">horizontal</span> <span class="n">road</span></code></pre></div>
+
+<p>Now our path is continuous again, and we have more green space available to
+place features such as trees, rocks, buildings, etc.</p>
+
+<p><img src="/blog/img/maze_2space2.png" alt="alt" /></p>
+
+<p>If you&rsquo;re also using the <code>erase_walls()</code> function above, you&rsquo;ll need to modify
+it to insert the &ldquo;in-between&rdquo; tiles as well:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="p">#</span> <span class="bp">insert</span> <span class="n">intermediate</span> <span class="n">cell</span>
+<span class="k">if</span> <span class="n">neighbor</span><span class="p">.</span><span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">Map</span><span class="p">.</span><span class="n">set_cellv</span><span class="p">(</span><span class="n">cell</span><span class="o">+</span><span class="n">neighbor</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">Map</span><span class="p">.</span><span class="n">set_cellv</span><span class="p">(</span><span class="n">cell</span><span class="o">+</span><span class="n">neighbor</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span></code></pre></div>
+
+<p><img src="/blog/img/maze_2space3.png" alt="alt" /></p>
+
+<p>To be more flexible, you could generalize this process to use a <code>spacing</code>
+variable, which would allow you to create your map with an arbitrary number of
+spaces between paths.</p>
+
+<h2 id="isometric">Isometric</h2>
+
+<p>One of the coolest things about using this TileMap method to store the map data
+is that it is independent of the map type (orthogonal or isometric). An
+isometric version of the road tiles looks like this:</p>
+
+<p><img src="/blog/img/maze_iso_tiles.png" alt="alt" /></p>
+
+<p>For an isometric map, you only need to change the <em>Mode</em> to &ldquo;Isometric&rdquo;, replace
+the TileSet with the one above (<code>res://iso_roads.tres</code> in the start project),
+and set the <code>cell_size</code> to <code>(100, 50)</code> and the map will be generated in the same
+way:</p>
+
+<p><img src="/blog/img/maze_iso.gif" alt="alt" /></p>
+
+<p>In the next part, we&rsquo;ll explore mazes a bit further by generating some
+decorations and other features, as well as make a simple maze-navigation game
+using our maze generator.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This was just an introduction to the many possibile uses of maze generation in
+your game projects. In many cases, a maze generator such as the one(s) we&rsquo;ve
+explored here is just the start of your content generation. For example, you
+might be making a dungeon by arranging a set of rooms, and then use the maze
+generator to fill in the &ldquo;gaps&rdquo; between the rooms with twisty corridors. You
+may see this technique appear again in later installments.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="download-the-code-for-this-lesson-https-github-com-kidscancode-godot3-procgen-demos"><a href="https://github.com/kidscancode/godot3_procgen_demos">Download the code for this lesson</a></h3>
+
+<h3 id="helpful-links">Helpful Links</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+<li>Thanks to <a href="https://kenney.nl/">kenney.nl</a> for the art!</li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
