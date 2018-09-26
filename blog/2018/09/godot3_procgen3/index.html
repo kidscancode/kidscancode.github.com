@@ -1,0 +1,392 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.48" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Procedural Generation in Godot - Part 3: Tile-based Infinite Worlds &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">52</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">35</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/procgen" class="list-group-item">
+                        <span class="badge">3</span>
+                        procgen
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">52</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Procedural Generation in Godot - Part 3: Tile-based Infinite Worlds</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Mon, Sep 24, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/procgen">procgen</a>
+			  
+			</h6></span>
+
+			      <p>In this series, we&rsquo;ll explore the applications of procedural generation to game
+development. While we&rsquo;ll be using Godot 3.0 as our platform, much of the concepts
+and algorithms related to this subject are universal, and you can apply them to
+whatever platform you may be working on.</p>
+
+<p>In the <a href="/blog/2018/08/godot3_procgen1/">previous parts</a> we looked at using
+maze generation algorithms. In this part, we&rsquo;ll look at some other ways to
+generate a tile-based world.</p>
+
+<p></p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lc34v8pjTXk" frameborder="0" allowfullscreen></iframe></p>
+
+<h1 id="project-setup">Project setup</h1>
+
+<p>In the <a href="/blog/img/Godot3_procgen4_start.zip">starting project download</a> you&rsquo;ll
+find all the scenes and resources you&rsquo;ll need to build the project below. Let&rsquo;s
+review them briefly.</p>
+
+<p>For this example, we&rsquo;ll use an isometric TileMap using the Kenney road textures
+we used in the previous projects.</p>
+
+<p><img src="/blog/img/maze_iso_tiles.png" alt="alt" /></p>
+
+<blockquote>
+<p>Note that this procedure will work in exactly the same way if you&rsquo;re using
+standard orthogonal tiles.</p>
+</blockquote>
+
+<h2 id="player-vehicle">Player Vehicle</h2>
+
+<p>We also have a scene for the vehicle the player will control (<code>Truck.tscn</code>).</p>
+
+<p>Here&rsquo;s a quick overview of how the truck is set up. An AnimatedSprite contains
+frames for each of the facing directions, and we&rsquo;ll use a Tween to perform
+the movement from tile-to-tile.</p>
+
+<p>First, the variables we&rsquo;ll need - mapping the directions to the matching
+animations and direction vectors.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">Area2D</span>
+
+<span class="n">const</span> <span class="n">N</span> <span class="p">=</span> <span class="mh">0x1</span>
+<span class="n">const</span> <span class="n">E</span> <span class="p">=</span> <span class="mh">0x2</span>
+<span class="n">const</span> <span class="n">S</span> <span class="p">=</span> <span class="mh">0x4</span>
+<span class="n">const</span> <span class="n">W</span> <span class="p">=</span> <span class="mh">0x8</span>
+
+<span class="kd">var</span> <span class="nv">animations</span> <span class="p">=</span> <span class="p">{</span><span class="n">N</span><span class="p">:</span> <span class="err">&#39;</span><span class="n">n</span><span class="err">&#39;</span><span class="p">,</span>
+                  <span class="n">S</span><span class="p">:</span> <span class="err">&#39;</span><span class="n">s</span><span class="err">&#39;</span><span class="p">,</span>
+                  <span class="n">E</span><span class="p">:</span> <span class="err">&#39;</span><span class="n">e</span><span class="err">&#39;</span><span class="p">,</span>
+                  <span class="n">W</span><span class="p">:</span> <span class="err">&#39;</span><span class="n">w</span><span class="err">&#39;</span><span class="p">}</span>
+<span class="kd">var</span> <span class="nv">moves</span> <span class="p">=</span> <span class="p">{</span><span class="n">N</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+             <span class="n">S</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+             <span class="n">E</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+             <span class="n">W</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span>
+
+<span class="kd">var</span> <span class="nv">map</span> <span class="p">=</span> <span class="n">null</span>
+<span class="kd">var</span> <span class="nv">map_pos</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">()</span>
+<span class="kd">var</span> <span class="nv">speed</span> <span class="p">=</span> <span class="mi">1</span> <span class="p">#</span> <span class="n">time</span> <span class="k">in</span> <span class="n">seconds</span>
+<span class="kd">var</span> <span class="nv">moving</span> <span class="p">=</span> <span class="kc">false</span></code></pre></div>
+
+<p>Now we can capture the user&rsquo;s input (arrow keys). Note that our movement vectors
+are orthogonal (ie <code>(0, 1)</code>) even though we&rsquo;re on an isometric map. That&rsquo;s because
+we&rsquo;re only concerned with our <em>tile</em> position, not our screen position.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_input</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">moving</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">event</span><span class="p">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ui_up</span><span class="err">&#39;</span><span class="p">):</span>
+        <span class="n">move</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">event</span><span class="p">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ui_down</span><span class="err">&#39;</span><span class="p">):</span>
+        <span class="n">move</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">event</span><span class="p">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ui_right</span><span class="err">&#39;</span><span class="p">):</span>
+        <span class="n">move</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">event</span><span class="p">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ui_left</span><span class="err">&#39;</span><span class="p">):</span>
+        <span class="n">move</span><span class="p">(</span><span class="n">W</span><span class="p">)</span></code></pre></div>
+
+<p>Next, we need a function to test if the move is possible. This will return
+<code>true</code> if the move is legal:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">can_move</span><span class="p">(</span><span class="n">dir</span><span class="p">):</span>
+    <span class="kd">var</span> <span class="nv">t</span> <span class="p">=</span> <span class="bp">map</span><span class="p">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">map_pos</span><span class="p">)</span>
+    <span class="p">#</span> <span class="k">if</span> <span class="n">there</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">a</span> <span class="n">wall</span> <span class="k">in</span> <span class="n">the</span> <span class="n">desired</span> <span class="n">direction</span><span class="p">,</span> <span class="n">no</span> <span class="n">move</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&amp;</span> <span class="n">dir</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">false</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">true</span></code></pre></div>
+
+<p>Finally, we have the <code>move()</code> function itself. We use the <code>map_to_world()</code> function
+to let the TileMap handle the translation from map position to screen position.</p>
+
+<p>If the tile we&rsquo;re moving into has a value of <code>-1</code> that means it&rsquo;s unexplored. In
+that case we tell the map to fill that tile using <code>generate_tile()</code> which we&rsquo;ll
+define in the next section.</p>
+
+<p>Connect the Tween&rsquo;s <code>tween_completed</code> signal so that the player will know it&rsquo;s
+ok to move again.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">move</span><span class="p">(</span><span class="n">dir</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">not</span> <span class="n">can_move</span><span class="p">(</span><span class="n">dir</span><span class="p">):</span>
+        <span class="k">return</span>
+    <span class="n">moving</span> <span class="p">=</span> <span class="kc">true</span>
+    <span class="err">$</span><span class="n">AnimatedSprite</span><span class="p">.</span><span class="n">play</span><span class="p">(</span><span class="n">animations</span><span class="p">[</span><span class="n">dir</span><span class="p">])</span>
+    <span class="n">map_pos</span> <span class="o">+=</span> <span class="n">moves</span><span class="p">[</span><span class="n">dir</span><span class="p">]</span>
+    <span class="k">if</span> <span class="bp">map</span><span class="p">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">map_pos</span><span class="p">)</span> <span class="p">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">get_parent</span><span class="p">().</span><span class="n">generate_tile</span><span class="p">(</span><span class="n">map_pos</span><span class="p">)</span>
+    <span class="kd">var</span> <span class="nv">destination</span> <span class="p">=</span> <span class="bp">map</span><span class="p">.</span><span class="n">map_to_world</span><span class="p">(</span><span class="n">map_pos</span><span class="p">)</span> <span class="o">+</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="err">$</span><span class="n">Tween</span><span class="p">.</span><span class="n">interpolate_property</span><span class="p">(</span><span class="kc">self</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">position</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span>
+                                <span class="n">Tween</span><span class="p">.</span><span class="n">TRANS_QUAD</span><span class="p">,</span> <span class="n">Tween</span><span class="p">.</span><span class="n">EASE_IN_OUT</span><span class="p">)</span>
+    <span class="err">$</span><span class="n">Tween</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="kd">func</span> <span class="nf">_on_Tween_tween_completed</span><span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="n">moving</span> <span class="p">=</span> <span class="kc">false</span></code></pre></div>
+
+<h2 id="tilemap-scene">TileMap Scene</h2>
+
+<p>In this scene we have a TileMap node and an instance of the Truck.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">Node2D</span>
+
+<span class="n">const</span> <span class="n">N</span> <span class="p">=</span> <span class="mh">0x1</span>
+<span class="n">const</span> <span class="n">E</span> <span class="p">=</span> <span class="mh">0x2</span>
+<span class="n">const</span> <span class="n">S</span> <span class="p">=</span> <span class="mh">0x4</span>
+<span class="n">const</span> <span class="n">W</span> <span class="p">=</span> <span class="mh">0x8</span>
+
+<span class="kd">var</span> <span class="nv">cell_walls</span> <span class="p">=</span> <span class="p">{</span><span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span> <span class="n">N</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="n">E</span><span class="p">,</span>
+                  <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="n">W</span><span class="p">}</span>
+
+<span class="n">onready</span> <span class="kd">var</span> <span class="nv">Map</span> <span class="p">=</span> <span class="err">$</span><span class="n">TileMap</span></code></pre></div>
+
+<p>First, we&rsquo;ll initialize the Truck by passing it a reference to the TileMap
+node and setting its position to the <code>(0, 0)</code> tile.</p>
+
+<p>The <code>generate_tile()</code> function is called by the truck when it moves into an
+empty tile.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_ready</span><span class="p">():</span>
+        <span class="err">$</span><span class="n">Truck</span><span class="p">.</span><span class="bp">map</span> <span class="p">=</span> <span class="n">Map</span>
+        <span class="err">$</span><span class="n">Truck</span><span class="p">.</span><span class="n">map_pos</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="err">$</span><span class="n">Truck</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="n">Map</span><span class="p">.</span><span class="n">map_to_world</span><span class="p">(</span><span class="err">$</span><span class="n">Truck</span><span class="p">.</span><span class="n">map_pos</span><span class="p">)</span> <span class="o">+</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="nf">generate_tile</span><span class="p">(</span><span class="n">cell</span><span class="p">):</span>
+        <span class="kd">var</span> <span class="nv">cells</span> <span class="p">=</span> <span class="n">find_valid_tiles</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span>
+        <span class="n">Map</span><span class="p">.</span><span class="n">set_cellv</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">cells</span><span class="p">[</span><span class="n">randi</span><span class="p">()</span> <span class="o">%</span> <span class="n">cells</span><span class="p">.</span><span class="n">size</span><span class="p">()])</span></code></pre></div>
+
+<p>Here&rsquo;s where the magic happens. We need to try each tile from the set, checking its walls against each of the target space&rsquo;s neighbors. Any mismatch we find
+means the tile is discarded. Any tiles that don&rsquo;t conflict are added to the
+<code>valid_tiles</code> array to be returned.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">find_valid_tiles</span><span class="p">(</span><span class="n">cell</span><span class="p">):</span>
+    <span class="kd">var</span> <span class="nv">valid_tiles</span> <span class="p">=</span> <span class="p">[]</span>
+    <span class="p">#</span> <span class="n">check</span> <span class="n">all</span> <span class="n">possible</span> <span class="n">tiles</span><span class="p">,</span> <span class="mi">0</span> <span class="o">-</span> <span class="mi">15</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+        <span class="p">#</span> <span class="n">check</span> <span class="n">the</span> <span class="n">target</span> <span class="n">space</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">neighbors</span> <span class="p">(</span><span class="k">if</span> <span class="n">they</span> <span class="n">exist</span><span class="p">)</span>
+        <span class="kd">var</span> <span class="nv">is_match</span> <span class="p">=</span> <span class="kc">false</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="k">in</span> <span class="n">cell_walls</span><span class="p">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="kd">var</span> <span class="nv">neighbor_id</span> <span class="p">=</span> <span class="n">Map</span><span class="p">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">cell</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">neighbor_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="p">#</span> <span class="n">id</span> <span class="p">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">is</span> <span class="n">a</span> <span class="n">blank</span> <span class="n">tile</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">neighbor_id</span> <span class="o">&amp;</span> <span class="n">cell_walls</span><span class="p">[</span><span class="o">-</span><span class="n">n</span><span class="p">])</span><span class="o">/</span><span class="n">cell_walls</span><span class="p">[</span><span class="o">-</span><span class="n">n</span><span class="p">]</span> <span class="p">==</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">cell_walls</span><span class="p">[</span><span class="n">n</span><span class="p">])</span><span class="o">/</span><span class="n">cell_walls</span><span class="p">[</span><span class="n">n</span><span class="p">]:</span>
+                    <span class="n">is_match</span> <span class="p">=</span> <span class="kc">true</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">is_match</span> <span class="p">=</span> <span class="kc">false</span>
+                    <span class="p">#</span> <span class="k">if</span> <span class="n">we</span> <span class="n">found</span> <span class="n">a</span> <span class="n">mismatch</span><span class="p">,</span> <span class="n">we</span> <span class="n">don</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">need</span> <span class="n">to</span> <span class="n">check</span> <span class="n">the</span> <span class="n">remaining</span> <span class="n">sides</span>
+                    <span class="k">break</span>
+        <span class="k">if</span> <span class="n">is_match</span> <span class="n">and</span> <span class="n">not</span> <span class="n">i</span> <span class="k">in</span> <span class="n">valid_tiles</span><span class="p">:</span>
+            <span class="n">valid_tiles</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">valid_tiles</span></code></pre></div>
+
+<h3 id="comparing-walls">Comparing walls</h3>
+
+<p>In reading the code above, you may find be confused by the wall comparison,
+specifically the division: <code>i &amp; cell_walls[n])/cell_walls[n]</code>. This is necessary
+because of the way the <code>&amp;</code> (bitwise and) operator works.</p>
+
+<p>Say we have tile #15 (all walls solid). We can check if the <code>E</code> wall is
+there by using <code>15 &amp; E</code> which returns <code>1</code>. However, if we are checking the <code>S</code>
+wall we use <code>15 &amp; S</code> which gives <code>2</code>. Similarly, <code>15 &amp; W == 4</code> and <code>15 % N == 8</code>.
+This is fine if we are just checking for the wall&rsquo;s presence - the result is
+either <code>0</code> or a number.</p>
+
+<p>However, if we&rsquo;re comparing two tiles for compatibility, we need to check the
+opposite walls:</p>
+
+<p><img src="/blog/img/maze_tiles_7_11.png" alt="alt" /></p>
+
+<p>In this case we need to see if the <code>E</code> wall of tile &ldquo;7&rdquo; matches the <code>W</code> wall of
+tile &ldquo;11&rdquo;. <code>7 &amp; E</code> is <code>2</code> while <code>11 &amp; W</code> is <code>4</code>. These values are not equal,
+but if we divide each result by the wall value itself, we&rsquo;ll &ldquo;normalize&rdquo; them
+to <code>1</code>:</p>
+
+<p><code>(7 &amp; E) / E == (11 &amp; W) / W</code></p>
+
+<p>Run the project and you can explore in any direction, expanding the world as you
+go.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>Now that we have the basic functionality of our tile-exploration map, there are
+many things we could do to build on top of it. In the next video we&rsquo;ll look at
+ways to expand it, as well as some of the issues to watch out for when using
+this technique.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="download-the-code-for-this-lesson-https-github-com-kidscancode-godot3-procgen-demos"><a href="https://github.com/kidscancode/godot3_procgen_demos">Download the code for this lesson</a></h3>
+
+<h3 id="helpful-links">Helpful Links</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+<li>Thanks to <a href="https://kenney.nl/">kenney.nl</a> for the art!</li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
