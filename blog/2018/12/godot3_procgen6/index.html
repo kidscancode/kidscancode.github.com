@@ -1,0 +1,381 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.51" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Procedural Generation in Godot - Part 6: Dungeons &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">53</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">36</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/procgen" class="list-group-item">
+                        <span class="badge">4</span>
+                        procgen
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">53</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Procedural Generation in Godot - Part 6: Dungeons</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Tue, Dec 4, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/procgen">procgen</a>
+			  
+			</h6></span>
+
+			      <p>In this series, we&rsquo;ll explore the applications of procedural generation to game
+development. While we&rsquo;ll be using Godot 3.0 as our platform, much of the concepts
+and algorithms related to this subject are universal, and you can apply them to
+whatever platform you may be working on.</p>
+
+<p>In this part, we&rsquo;ll look at a technique for generating random dungeon maps.</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/G2_SGhmdYFo" frameborder="0" allowfullscreen></iframe></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>For this demo, we want to randomly generate a dungeon - a series of rooms connected
+by corridors - that the player can explore.</p>
+
+<p>There are many different ways to approach this. Some popular methods use maze
+generation techniques like we have discussed
+<a href="/blog/2018/08/godot3_procgen1/">previously</a>. However, for this demo, I wanted
+to try a different approach. In this algorithm, we take advantage of Godot&rsquo;s
+built-in physics engine to create the map.</p>
+
+<p>Broadly speaking, we&rsquo;ll break this up into three steps:</p>
+
+<ol>
+<li>Generate the rooms</li>
+<li>Find a &ldquo;path&rdquo; connecting the rooms</li>
+<li>Create a TileMap to use in game</li>
+</ol>
+
+<p>You can download the <a href="/blog/img/Godot3_procgen5_start.zip">starting project</a>
+which contains the minimal art assets we&rsquo;ll use for this demo.</p>
+
+<h1 id="generating-rooms">Generating Rooms</h1>
+
+<p>Because we&rsquo;re going to use the physics engine to generate the basic layout of
+the dungeon, we&rsquo;ll need to do a little bit of setup first. Let&rsquo;s start by
+defining what we mean by a &ldquo;room&rdquo;.</p>
+
+<h2 id="room-object">Room object</h2>
+
+<p>A &ldquo;room&rdquo; in this context is a rectangular space, typically large enough for the
+player to walk around in and/or contain objects of interest like treasures or
+mobs. We&rsquo;ll use a RigidBody2D to represent a room (remember, we&rsquo;re going to be
+using physics here). Create a new scene with a RigidBody2D named &ldquo;Room&rdquo; and a CollisionShape2D child (but don&rsquo;t add a shape to it yet). Attach a script to the<br />
+Room.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">extends</span> <span class="ne">RigidBody2D</span>
+
+<span class="k">var</span> <span class="n">size</span>
+
+<span class="k">func</span> <span class="n">make_room</span><span class="p">(</span><span class="n">_pos</span><span class="p">,</span> <span class="n">_size</span><span class="p">):</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">_pos</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">_size</span>
+    <span class="k">var</span> <span class="n">s</span> <span class="o">=</span> <span class="ne">RectangleShape2D</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">extents</span> <span class="o">=</span> <span class="n">size</span>
+    <span class="o">$</span><span class="ne">CollisionShape2D</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">s</span></code></pre></div>
+
+<p>In this script, we have a <code>size</code> property, which we will be able to randomize.
+It&rsquo;s then used in <code>make_room()</code> to generate a <code>RectangleShape2D</code> for collision.</p>
+
+<p>Make sure to set <em>Default Gravity</em> to <code>0</code> in the &ldquo;Physics/2d&rdquo; section of Project
+Settings. Also, in the Inspector, set the <em>Mode</em> of the <code>Room</code> to &ldquo;Character&rdquo;.
+This will ensure that the rooms can&rsquo;t rotate.</p>
+
+<h2 id="main-scene">Main scene</h2>
+
+<p>Now, let&rsquo;s make a &ldquo;Main&rdquo; scene using a <code>Node2D</code>. Give it a <code>Node</code> child called
+&ldquo;Rooms&rdquo;, which will act as a container. Attach a script:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">extends</span> <span class="ne">Node2D</span>
+
+<span class="k">var</span> <span class="ne">Room</span> <span class="o">=</span> <span class="nb">preload</span><span class="p">(</span><span class="s2">&#34;res://Room.tscn&#34;</span><span class="p">)</span>
+
+<span class="k">var</span> <span class="n">tile_size</span> <span class="o">=</span> <span class="mi">32</span>  <span class="c1"># size of a tile in the TileMap</span>
+<span class="k">var</span> <span class="n">num_rooms</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># number of rooms to generate</span>
+<span class="k">var</span> <span class="n">min_size</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># minimum room size (in tiles)</span>
+<span class="k">var</span> <span class="n">max_size</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># maximum room size (in tiles)</span></code></pre></div>
+
+<p>Here are our main input properties for the dungeon.</p>
+
+<p>In <code>_ready()</code> we need to initialize the random number generator and then call
+our function to create the rooms:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">_ready</span><span class="p">():</span>
+    <span class="nb">randomize</span><span class="p">()</span>
+    <span class="n">make_rooms</span><span class="p">()</span></code></pre></div>
+
+<p>The <code>make_rooms()</code> function is going to use our parameters to create the
+randomly sized rooms. For now, we&rsquo;ll put them all at <code>(0, 0)</code>:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">make_rooms</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rooms</span><span class="p">):</span>
+        <span class="k">var</span> <span class="n">pos</span> <span class="o">=</span> <span class="ne">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">var</span> <span class="n">r</span> <span class="o">=</span> <span class="ne">Room</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="k">var</span> <span class="n">w</span> <span class="o">=</span> <span class="n">min_size</span> <span class="o">+</span> <span class="nb">randi</span><span class="p">()</span> <span class="o">%</span> <span class="p">(</span><span class="n">max_size</span> <span class="o">-</span> <span class="n">min_size</span><span class="p">)</span>
+        <span class="k">var</span> <span class="n">h</span> <span class="o">=</span> <span class="n">min_size</span> <span class="o">+</span> <span class="nb">randi</span><span class="p">()</span> <span class="o">%</span> <span class="p">(</span><span class="n">max_size</span> <span class="o">-</span> <span class="n">min_size</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">make_room</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="ne">Vector2</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">*</span> <span class="n">tile_size</span><span class="p">)</span>
+        <span class="o">$</span><span class="n">Rooms</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">r</span><span class="p">)</span></code></pre></div>
+
+<h2 id="visualization">Visualization</h2>
+
+<p>If you run the scene, you won&rsquo;t be able to see anything on the screen. Try
+turning on &ldquo;Visible Collision Shapes&rdquo; from the &ldquo;Debug&rdquo; menu.</p>
+
+<p><img src="/blog/img/dungen_1.png" alt="alt" /></p>
+
+<p>We can see the shapes, but they&rsquo;re much larger than the screen. Add a <code>Camera2D</code>
+to the scene. Change its <em>Zoom</em> to <code>(10, 10)</code> and <em>Current</em> to &ldquo;On&rdquo;. Now you
+should be able to see most of the rooms as they sort themselves out.</p>
+
+<p>It would be more convenient to draw the outlines rather than using the debug option (so turn that back off). Add this code to draw our room outlines:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">_draw</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="o">$</span><span class="n">Rooms</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+        <span class="n">draw_rect</span><span class="p">(</span><span class="ne">Rect2</span><span class="p">(</span><span class="n">room</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">room</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">room</span><span class="o">.</span><span class="n">size</span><span class="o">*</span><span class="mi">2</span><span class="p">),</span>
+                <span class="ne">Color</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">228</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="bp">false</span><span class="p">)</span>
+
+<span class="k">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="n">update</span><span class="p">()</span></code></pre></div>
+
+<p>Let&rsquo;s also add a way to redraw without starting the program all over again:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">_input</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_select&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="o">$</span><span class="n">Rooms</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+            <span class="n">n</span><span class="o">.</span><span class="n">queue_free</span><span class="p">()</span>
+        <span class="n">make_rooms</span><span class="p">()</span></code></pre></div>
+
+<p>Now you can press the spacebar to generate a new set of rooms:</p>
+
+<p><img src="/blog/img/dungen_3.gif" alt="alt" /></p>
+
+<h2 id="room-adjustments">Room Adjustments</h2>
+
+<p>Now we can make a couple of adjustments to how the rooms are being generated.
+First, since they&rsquo;re all starting from the same place you may end up with a &ldquo;tall&rdquo;
+or &ldquo;wide&rdquo; dungeon. That may be fine with you, but in some games, it may make
+more sense if the player travels horizontally more than vertically. Here&rsquo;s
+how we can influence that:</p>
+
+<p>Add this variable to <code>Main</code>:
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">var</span> <span class="n">hspread</span> <span class="o">=</span> <span class="mi">400</span>  <span class="c1"># horizontal spread</span></code></pre></div></p>
+
+<p>Then, in <code>make_rooms()</code> change the position code to this:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">var</span> <span class="n">pos</span> <span class="o">=</span> <span class="ne">Vector2</span><span class="p">(</span><span class="nb">rand_range</span><span class="p">(</span><span class="o">-</span><span class="n">hspread</span><span class="p">,</span> <span class="n">hspread</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span></code></pre></div>
+
+<p>The larger you make this value, the more horizontally spread out the rooms will
+be.</p>
+
+<p>Secondly, you may notice that it takes some time for the rooms to stop moving as
+they settle into their final locations. We can influence that by adding the
+following line to the <code>make_room()</code> function in <code>Room.gd</code>:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="n">s</span><span class="o">.</span><span class="n">custom_solver_bias</span> <span class="o">=</span> <span class="mf">0.75</span></code></pre></div>
+
+<h2 id="culling-rooms">Culling rooms</h2>
+
+<p>Finally, we want to be able to remove some rooms to make the dungeon more or
+less &ldquo;sparse&rdquo;. For this, we&rsquo;ll add another input parameter:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">var</span> <span class="n">cull</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="c1"># chance to cull room</span></code></pre></div>
+
+<p>And update <code>make_rooms()</code> like so:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">make_rooms</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rooms</span><span class="p">):</span>
+        <span class="k">var</span> <span class="n">pos</span> <span class="o">=</span> <span class="ne">Vector2</span><span class="p">(</span><span class="nb">rand_range</span><span class="p">(</span><span class="o">-</span><span class="n">hspread</span><span class="p">,</span> <span class="n">hspread</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">var</span> <span class="n">r</span> <span class="o">=</span> <span class="ne">Room</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="k">var</span> <span class="n">w</span> <span class="o">=</span> <span class="n">min_size</span> <span class="o">+</span> <span class="nb">randi</span><span class="p">()</span> <span class="o">%</span> <span class="p">(</span><span class="n">max_size</span> <span class="o">-</span> <span class="n">min_size</span><span class="p">)</span>
+        <span class="k">var</span> <span class="n">h</span> <span class="o">=</span> <span class="n">min_size</span> <span class="o">+</span> <span class="nb">randi</span><span class="p">()</span> <span class="o">%</span> <span class="p">(</span><span class="n">max_size</span> <span class="o">-</span> <span class="n">min_size</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">make_room</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="ne">Vector2</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">*</span> <span class="n">tile_size</span><span class="p">)</span>
+        <span class="o">$</span><span class="n">Rooms</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="c1"># wait for movement to stop</span>
+    <span class="nb">yield</span><span class="p">(</span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.1</span><span class="p">),</span> <span class="s1">&#39;timeout&#39;</span><span class="p">)</span>
+    <span class="c1"># cull rooms</span>
+    <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="o">$</span><span class="n">Rooms</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">randf</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">cull</span><span class="p">:</span>
+            <span class="n">room</span><span class="o">.</span><span class="n">queue_free</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">room</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="ne">RigidBody2D</span><span class="o">.</span><span class="n">MODE_STATIC</span></code></pre></div>
+
+<p>Note the use of <code>yield()</code> here. We need to wait until the physics engine has
+finished separating the rooms before we start removing them. The ones that are
+left can now be set to <code>MODE_STATIC</code> so they will no longer move at all.</p>
+
+<p><img src="/blog/img/dungen_4.gif" alt="alt" /></p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>We&rsquo;ll stop here, as this is getting a bit long-winded - remember we said there
+were 3 main parts? In the next installment, we&rsquo;ll look at how to connect the
+rooms together.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="download-the-code-for-this-lesson-https-github-com-kidscancode-godot3-procgen-demos"><a href="https://github.com/kidscancode/godot3_procgen_demos">Download the code for this lesson</a></h3>
+
+<h3 id="helpful-links">Helpful Links</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>

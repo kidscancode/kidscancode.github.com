@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.48" />
+  <meta name="generator" content="Hugo 0.51" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">52</span>
+                        <span class="badge">53</span>
                         gamedev
                     </a></li>
                     
@@ -80,12 +80,12 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">35</span>
+                        <span class="badge">36</span>
                         godot
                     </a></li>
                     
                     <li><a href="/blog//tags/procgen" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         procgen
                     </a></li>
                     
@@ -110,7 +110,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">52</span>
+                        <span class="badge">53</span>
                         tutorial
                     </a></li>
                     
@@ -148,8 +148,6 @@
 
 <p>This is Part 11: Pickup items</p>
 
-<p></p>
-
 <p>You can watch a video version of this lesson here:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/lu6Zng8Byqk" frameborder="0" allowfullscreen></iframe></p>
 
@@ -172,12 +170,12 @@ the <em>Collision Layers</em> and set the <em>Collision Mask</em> to &ldquo;play
 
 <p>Now add a script:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">Area2D</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">extends</span> <span class="ne">Area2D</span>
 
-<span class="kd">enum</span> <span class="nc">Items</span> <span class="p">{</span><span class="n">health</span><span class="p">,</span> <span class="n">ammo</span><span class="p">}</span>
+<span class="k">enum</span> <span class="n">Items</span> <span class="p">{</span><span class="n">health</span><span class="p">,</span> <span class="n">ammo</span><span class="p">}</span>
 
-<span class="n">export</span> <span class="p">(</span><span class="n">Items</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">type</span> <span class="p">=</span> <span class="n">Items</span><span class="p">.</span><span class="n">health</span>
-<span class="n">export</span> <span class="p">(</span><span class="n">Vector2</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">amount</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span></code></pre></div>
+<span class="k">export</span> <span class="p">(</span><span class="n">Items</span><span class="p">)</span> <span class="k">var</span> <span class="n">type</span> <span class="o">=</span> <span class="n">Items</span><span class="o">.</span><span class="n">health</span>
+<span class="k">export</span> <span class="p">(</span><span class="ne">Vector2</span><span class="p">)</span> <span class="k">var</span> <span class="n">amount</span> <span class="o">=</span> <span class="ne">Vector2</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span></code></pre></div>
 
 <p>In the <code>enum</code> we have a list of the pickup types we want to implement. Then we
 have a <code>Vector2</code> representing the min/max value we want the pickup to supply. We&rsquo;ll
@@ -185,14 +183,14 @@ pick a random value in this range.</p>
 
 <p>Attach the <code>body_entered</code> signal:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_on_Pickup_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">_on_Pickup_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
     <span class="n">match</span> <span class="n">type</span><span class="p">:</span>
-        <span class="n">Items</span><span class="p">.</span><span class="n">health</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">body</span><span class="p">.</span><span class="n">has_method</span><span class="p">(</span><span class="err">&#39;</span><span class="n">heal</span><span class="err">&#39;</span><span class="p">):</span>
-                <span class="bp">print</span><span class="p">(</span><span class="s">&#34;healing&#34;</span><span class="p">)</span>
-                <span class="n">body</span><span class="p">.</span><span class="n">heal</span><span class="p">(</span><span class="n">int</span><span class="p">(</span><span class="n">rand_range</span><span class="p">(</span><span class="n">amount</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">amount</span><span class="p">.</span><span class="n">y</span><span class="p">)))</span>
-        <span class="n">Items</span><span class="p">.</span><span class="n">ammo</span><span class="p">:</span>
-            <span class="n">pass</span>
+        <span class="n">Items</span><span class="o">.</span><span class="n">health</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">body</span><span class="o">.</span><span class="n">has_method</span><span class="p">(</span><span class="s1">&#39;heal&#39;</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;healing&#34;</span><span class="p">)</span>
+                <span class="n">body</span><span class="o">.</span><span class="n">heal</span><span class="p">(</span><span class="ne">int</span><span class="p">(</span><span class="nb">rand_range</span><span class="p">(</span><span class="n">amount</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">amount</span><span class="o">.</span><span class="n">y</span><span class="p">)))</span>
+        <span class="n">Items</span><span class="o">.</span><span class="n">ammo</span><span class="p">:</span>
+            <span class="k">pass</span>
     <span class="n">queue_free</span><span class="p">()</span></code></pre></div>
 
 <p>In this function, we&rsquo;ll check the <code>type</code>, and apply healing if the player has a

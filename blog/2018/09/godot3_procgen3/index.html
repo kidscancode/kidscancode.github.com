@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.48" />
+  <meta name="generator" content="Hugo 0.51" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">52</span>
+                        <span class="badge">53</span>
                         gamedev
                     </a></li>
                     
@@ -80,12 +80,12 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">35</span>
+                        <span class="badge">36</span>
                         godot
                     </a></li>
                     
                     <li><a href="/blog//tags/procgen" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         procgen
                     </a></li>
                     
@@ -110,7 +110,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">52</span>
+                        <span class="badge">53</span>
                         tutorial
                     </a></li>
                     
@@ -155,8 +155,6 @@ whatever platform you may be working on.</p>
 maze generation algorithms. In this part, we&rsquo;ll look at some other ways to
 generate a tile-based world.</p>
 
-<p></p>
-
 <p>You can watch a video version of this lesson here:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/lc34v8pjTXk" frameborder="0" allowfullscreen></iframe></p>
 
@@ -187,53 +185,53 @@ the movement from tile-to-tile.</p>
 <p>First, the variables we&rsquo;ll need - mapping the directions to the matching
 animations and direction vectors.</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">Area2D</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">extends</span> <span class="ne">Area2D</span>
 
-<span class="n">const</span> <span class="n">N</span> <span class="p">=</span> <span class="mh">0x1</span>
-<span class="n">const</span> <span class="n">E</span> <span class="p">=</span> <span class="mh">0x2</span>
-<span class="n">const</span> <span class="n">S</span> <span class="p">=</span> <span class="mh">0x4</span>
-<span class="n">const</span> <span class="n">W</span> <span class="p">=</span> <span class="mh">0x8</span>
+<span class="k">const</span> <span class="n">N</span> <span class="o">=</span> <span class="mh">0x1</span>
+<span class="k">const</span> <span class="n">E</span> <span class="o">=</span> <span class="mh">0x2</span>
+<span class="k">const</span> <span class="n">S</span> <span class="o">=</span> <span class="mh">0x4</span>
+<span class="k">const</span> <span class="n">W</span> <span class="o">=</span> <span class="mh">0x8</span>
 
-<span class="kd">var</span> <span class="nv">animations</span> <span class="p">=</span> <span class="p">{</span><span class="n">N</span><span class="p">:</span> <span class="err">&#39;</span><span class="n">n</span><span class="err">&#39;</span><span class="p">,</span>
-                  <span class="n">S</span><span class="p">:</span> <span class="err">&#39;</span><span class="n">s</span><span class="err">&#39;</span><span class="p">,</span>
-                  <span class="n">E</span><span class="p">:</span> <span class="err">&#39;</span><span class="n">e</span><span class="err">&#39;</span><span class="p">,</span>
-                  <span class="n">W</span><span class="p">:</span> <span class="err">&#39;</span><span class="n">w</span><span class="err">&#39;</span><span class="p">}</span>
-<span class="kd">var</span> <span class="nv">moves</span> <span class="p">=</span> <span class="p">{</span><span class="n">N</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
-             <span class="n">S</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-             <span class="n">E</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-             <span class="n">W</span><span class="p">:</span> <span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span>
+<span class="k">var</span> <span class="n">animations</span> <span class="o">=</span> <span class="p">{</span><span class="n">N</span><span class="p">:</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span>
+                  <span class="n">S</span><span class="p">:</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span>
+                  <span class="n">E</span><span class="p">:</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span>
+                  <span class="n">W</span><span class="p">:</span> <span class="s1">&#39;w&#39;</span><span class="p">}</span>
+<span class="k">var</span> <span class="n">moves</span> <span class="o">=</span> <span class="p">{</span><span class="n">N</span><span class="p">:</span> <span class="ne">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+             <span class="n">S</span><span class="p">:</span> <span class="ne">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+             <span class="n">E</span><span class="p">:</span> <span class="ne">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+             <span class="n">W</span><span class="p">:</span> <span class="ne">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span>
 
-<span class="kd">var</span> <span class="nv">map</span> <span class="p">=</span> <span class="n">null</span>
-<span class="kd">var</span> <span class="nv">map_pos</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">()</span>
-<span class="kd">var</span> <span class="nv">speed</span> <span class="p">=</span> <span class="mi">1</span> <span class="p">#</span> <span class="n">time</span> <span class="k">in</span> <span class="n">seconds</span>
-<span class="kd">var</span> <span class="nv">moving</span> <span class="p">=</span> <span class="kc">false</span></code></pre></div>
+<span class="k">var</span> <span class="n">map</span> <span class="o">=</span> <span class="n">null</span>
+<span class="k">var</span> <span class="n">map_pos</span> <span class="o">=</span> <span class="ne">Vector2</span><span class="p">()</span>
+<span class="k">var</span> <span class="n">speed</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># time in seconds</span>
+<span class="k">var</span> <span class="n">moving</span> <span class="o">=</span> <span class="bp">false</span></code></pre></div>
 
 <p>Now we can capture the user&rsquo;s input (arrow keys). Note that our movement vectors
 are orthogonal (ie <code>(0, 1)</code>) even though we&rsquo;re on an isometric map. That&rsquo;s because
 we&rsquo;re only concerned with our <em>tile</em> position, not our screen position.</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_input</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">_input</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">moving</span><span class="p">:</span>
         <span class="k">return</span>
-    <span class="k">if</span> <span class="n">event</span><span class="p">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ui_up</span><span class="err">&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_up&#39;</span><span class="p">):</span>
         <span class="n">move</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">event</span><span class="p">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ui_down</span><span class="err">&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_down&#39;</span><span class="p">):</span>
         <span class="n">move</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">event</span><span class="p">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ui_right</span><span class="err">&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_right&#39;</span><span class="p">):</span>
         <span class="n">move</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">event</span><span class="p">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="err">&#39;</span><span class="n">ui_left</span><span class="err">&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_left&#39;</span><span class="p">):</span>
         <span class="n">move</span><span class="p">(</span><span class="n">W</span><span class="p">)</span></code></pre></div>
 
 <p>Next, we need a function to test if the move is possible. This will return
 <code>true</code> if the move is legal:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">can_move</span><span class="p">(</span><span class="n">dir</span><span class="p">):</span>
-    <span class="kd">var</span> <span class="nv">t</span> <span class="p">=</span> <span class="bp">map</span><span class="p">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">map_pos</span><span class="p">)</span>
-    <span class="p">#</span> <span class="k">if</span> <span class="n">there</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">a</span> <span class="n">wall</span> <span class="k">in</span> <span class="n">the</span> <span class="n">desired</span> <span class="n">direction</span><span class="p">,</span> <span class="n">no</span> <span class="n">move</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">can_move</span><span class="p">(</span><span class="n">dir</span><span class="p">):</span>
+    <span class="k">var</span> <span class="n">t</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">map_pos</span><span class="p">)</span>
+    <span class="c1"># if there&#39;s a wall in the desired direction, no move</span>
     <span class="k">if</span> <span class="n">t</span> <span class="o">&amp;</span> <span class="n">dir</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">false</span>
+        <span class="k">return</span> <span class="bp">false</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">true</span></code></pre></div>
+        <span class="k">return</span> <span class="bp">true</span></code></pre></div>
 
 <p>Finally, we have the <code>move()</code> function itself. We use the <code>map_to_world()</code> function
 to let the TileMap handle the translation from map position to screen position.</p>
@@ -245,37 +243,37 @@ define in the next section.</p>
 <p>Connect the Tween&rsquo;s <code>tween_completed</code> signal so that the player will know it&rsquo;s
 ok to move again.</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">move</span><span class="p">(</span><span class="n">dir</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">not</span> <span class="n">can_move</span><span class="p">(</span><span class="n">dir</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">move</span><span class="p">(</span><span class="n">dir</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">can_move</span><span class="p">(</span><span class="n">dir</span><span class="p">):</span>
         <span class="k">return</span>
-    <span class="n">moving</span> <span class="p">=</span> <span class="kc">true</span>
-    <span class="err">$</span><span class="n">AnimatedSprite</span><span class="p">.</span><span class="n">play</span><span class="p">(</span><span class="n">animations</span><span class="p">[</span><span class="n">dir</span><span class="p">])</span>
+    <span class="n">moving</span> <span class="o">=</span> <span class="bp">true</span>
+    <span class="o">$</span><span class="ne">AnimatedSprite</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">animations</span><span class="p">[</span><span class="n">dir</span><span class="p">])</span>
     <span class="n">map_pos</span> <span class="o">+=</span> <span class="n">moves</span><span class="p">[</span><span class="n">dir</span><span class="p">]</span>
-    <span class="k">if</span> <span class="bp">map</span><span class="p">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">map_pos</span><span class="p">)</span> <span class="p">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-        <span class="n">get_parent</span><span class="p">().</span><span class="n">generate_tile</span><span class="p">(</span><span class="n">map_pos</span><span class="p">)</span>
-    <span class="kd">var</span> <span class="nv">destination</span> <span class="p">=</span> <span class="bp">map</span><span class="p">.</span><span class="n">map_to_world</span><span class="p">(</span><span class="n">map_pos</span><span class="p">)</span> <span class="o">+</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-    <span class="err">$</span><span class="n">Tween</span><span class="p">.</span><span class="n">interpolate_property</span><span class="p">(</span><span class="kc">self</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">position</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span>
-                                <span class="n">Tween</span><span class="p">.</span><span class="n">TRANS_QUAD</span><span class="p">,</span> <span class="n">Tween</span><span class="p">.</span><span class="n">EASE_IN_OUT</span><span class="p">)</span>
-    <span class="err">$</span><span class="n">Tween</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">map</span><span class="o">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">map_pos</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">get_parent</span><span class="p">()</span><span class="o">.</span><span class="n">generate_tile</span><span class="p">(</span><span class="n">map_pos</span><span class="p">)</span>
+    <span class="k">var</span> <span class="n">destination</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="n">map_to_world</span><span class="p">(</span><span class="n">map_pos</span><span class="p">)</span> <span class="o">+</span> <span class="ne">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="o">$</span><span class="ne">Tween</span><span class="o">.</span><span class="n">interpolate_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;position&#39;</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span>
+                                <span class="ne">Tween</span><span class="o">.</span><span class="n">TRANS_QUAD</span><span class="p">,</span> <span class="ne">Tween</span><span class="o">.</span><span class="n">EASE_IN_OUT</span><span class="p">)</span>
+    <span class="o">$</span><span class="ne">Tween</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
-<span class="kd">func</span> <span class="nf">_on_Tween_tween_completed</span><span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-    <span class="n">moving</span> <span class="p">=</span> <span class="kc">false</span></code></pre></div>
+<span class="k">func</span> <span class="n">_on_Tween_tween_completed</span><span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="n">moving</span> <span class="o">=</span> <span class="bp">false</span></code></pre></div>
 
 <h2 id="tilemap-scene">TileMap Scene</h2>
 
 <p>In this scene we have a TileMap node and an instance of the Truck.</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">extends</span> <span class="n">Node2D</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">extends</span> <span class="ne">Node2D</span>
 
-<span class="n">const</span> <span class="n">N</span> <span class="p">=</span> <span class="mh">0x1</span>
-<span class="n">const</span> <span class="n">E</span> <span class="p">=</span> <span class="mh">0x2</span>
-<span class="n">const</span> <span class="n">S</span> <span class="p">=</span> <span class="mh">0x4</span>
-<span class="n">const</span> <span class="n">W</span> <span class="p">=</span> <span class="mh">0x8</span>
+<span class="k">const</span> <span class="n">N</span> <span class="o">=</span> <span class="mh">0x1</span>
+<span class="k">const</span> <span class="n">E</span> <span class="o">=</span> <span class="mh">0x2</span>
+<span class="k">const</span> <span class="n">S</span> <span class="o">=</span> <span class="mh">0x4</span>
+<span class="k">const</span> <span class="n">W</span> <span class="o">=</span> <span class="mh">0x8</span>
 
-<span class="kd">var</span> <span class="nv">cell_walls</span> <span class="p">=</span> <span class="p">{</span><span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span> <span class="n">N</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="n">E</span><span class="p">,</span>
-                  <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="n">W</span><span class="p">}</span>
+<span class="k">var</span> <span class="n">cell_walls</span> <span class="o">=</span> <span class="p">{</span><span class="ne">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span> <span class="n">N</span><span class="p">,</span> <span class="ne">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="n">E</span><span class="p">,</span>
+                  <span class="ne">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="n">S</span><span class="p">,</span> <span class="ne">Vector2</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span> <span class="n">W</span><span class="p">}</span>
 
-<span class="n">onready</span> <span class="kd">var</span> <span class="nv">Map</span> <span class="p">=</span> <span class="err">$</span><span class="n">TileMap</span></code></pre></div>
+<span class="k">onready</span> <span class="k">var</span> <span class="n">Map</span> <span class="o">=</span> <span class="o">$</span><span class="ne">TileMap</span></code></pre></div>
 
 <p>First, we&rsquo;ll initialize the Truck by passing it a reference to the TileMap
 node and setting its position to the <code>(0, 0)</code> tile.</p>
@@ -283,37 +281,37 @@ node and setting its position to the <code>(0, 0)</code> tile.</p>
 <p>The <code>generate_tile()</code> function is called by the truck when it moves into an
 empty tile.</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_ready</span><span class="p">():</span>
-        <span class="err">$</span><span class="n">Truck</span><span class="p">.</span><span class="bp">map</span> <span class="p">=</span> <span class="n">Map</span>
-        <span class="err">$</span><span class="n">Truck</span><span class="p">.</span><span class="n">map_pos</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="err">$</span><span class="n">Truck</span><span class="p">.</span><span class="n">position</span> <span class="p">=</span> <span class="n">Map</span><span class="p">.</span><span class="n">map_to_world</span><span class="p">(</span><span class="err">$</span><span class="n">Truck</span><span class="p">.</span><span class="n">map_pos</span><span class="p">)</span> <span class="o">+</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">_ready</span><span class="p">():</span>
+        <span class="o">$</span><span class="n">Truck</span><span class="o">.</span><span class="n">map</span> <span class="o">=</span> <span class="n">Map</span>
+        <span class="o">$</span><span class="n">Truck</span><span class="o">.</span><span class="n">map_pos</span> <span class="o">=</span> <span class="ne">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="o">$</span><span class="n">Truck</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">Map</span><span class="o">.</span><span class="n">map_to_world</span><span class="p">(</span><span class="o">$</span><span class="n">Truck</span><span class="o">.</span><span class="n">map_pos</span><span class="p">)</span> <span class="o">+</span> <span class="ne">Vector2</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 
-<span class="kd">func</span> <span class="nf">generate_tile</span><span class="p">(</span><span class="n">cell</span><span class="p">):</span>
-        <span class="kd">var</span> <span class="nv">cells</span> <span class="p">=</span> <span class="n">find_valid_tiles</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span>
-        <span class="n">Map</span><span class="p">.</span><span class="n">set_cellv</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">cells</span><span class="p">[</span><span class="n">randi</span><span class="p">()</span> <span class="o">%</span> <span class="n">cells</span><span class="p">.</span><span class="n">size</span><span class="p">()])</span></code></pre></div>
+<span class="k">func</span> <span class="n">generate_tile</span><span class="p">(</span><span class="n">cell</span><span class="p">):</span>
+        <span class="k">var</span> <span class="n">cells</span> <span class="o">=</span> <span class="n">find_valid_tiles</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span>
+        <span class="n">Map</span><span class="o">.</span><span class="n">set_cellv</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">cells</span><span class="p">[</span><span class="nb">randi</span><span class="p">()</span> <span class="o">%</span> <span class="n">cells</span><span class="o">.</span><span class="n">size</span><span class="p">()])</span></code></pre></div>
 
 <p>Here&rsquo;s where the magic happens. We need to try each tile from the set, checking its walls against each of the target space&rsquo;s neighbors. Any mismatch we find
 means the tile is discarded. Any tiles that don&rsquo;t conflict are added to the
 <code>valid_tiles</code> array to be returned.</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">find_valid_tiles</span><span class="p">(</span><span class="n">cell</span><span class="p">):</span>
-    <span class="kd">var</span> <span class="nv">valid_tiles</span> <span class="p">=</span> <span class="p">[]</span>
-    <span class="p">#</span> <span class="n">check</span> <span class="n">all</span> <span class="n">possible</span> <span class="n">tiles</span><span class="p">,</span> <span class="mi">0</span> <span class="o">-</span> <span class="mi">15</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
-        <span class="p">#</span> <span class="n">check</span> <span class="n">the</span> <span class="n">target</span> <span class="n">space</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">neighbors</span> <span class="p">(</span><span class="k">if</span> <span class="n">they</span> <span class="n">exist</span><span class="p">)</span>
-        <span class="kd">var</span> <span class="nv">is_match</span> <span class="p">=</span> <span class="kc">false</span>
-        <span class="k">for</span> <span class="n">n</span> <span class="k">in</span> <span class="n">cell_walls</span><span class="p">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="kd">var</span> <span class="nv">neighbor_id</span> <span class="p">=</span> <span class="n">Map</span><span class="p">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">cell</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">find_valid_tiles</span><span class="p">(</span><span class="n">cell</span><span class="p">):</span>
+    <span class="k">var</span> <span class="n">valid_tiles</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># check all possible tiles, 0 - 15</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+        <span class="c1"># check the target space&#39;s neighbors (if they exist)</span>
+        <span class="k">var</span> <span class="n">is_match</span> <span class="o">=</span> <span class="bp">false</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">cell_walls</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">var</span> <span class="n">neighbor_id</span> <span class="o">=</span> <span class="n">Map</span><span class="o">.</span><span class="n">get_cellv</span><span class="p">(</span><span class="n">cell</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">neighbor_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="p">#</span> <span class="n">id</span> <span class="p">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">is</span> <span class="n">a</span> <span class="n">blank</span> <span class="n">tile</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">neighbor_id</span> <span class="o">&amp;</span> <span class="n">cell_walls</span><span class="p">[</span><span class="o">-</span><span class="n">n</span><span class="p">])</span><span class="o">/</span><span class="n">cell_walls</span><span class="p">[</span><span class="o">-</span><span class="n">n</span><span class="p">]</span> <span class="p">==</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">cell_walls</span><span class="p">[</span><span class="n">n</span><span class="p">])</span><span class="o">/</span><span class="n">cell_walls</span><span class="p">[</span><span class="n">n</span><span class="p">]:</span>
-                    <span class="n">is_match</span> <span class="p">=</span> <span class="kc">true</span>
+                <span class="c1"># id == -1 is a blank tile</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">neighbor_id</span> <span class="o">&amp;</span> <span class="n">cell_walls</span><span class="p">[</span><span class="o">-</span><span class="n">n</span><span class="p">])</span><span class="o">/</span><span class="n">cell_walls</span><span class="p">[</span><span class="o">-</span><span class="n">n</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="n">cell_walls</span><span class="p">[</span><span class="n">n</span><span class="p">])</span><span class="o">/</span><span class="n">cell_walls</span><span class="p">[</span><span class="n">n</span><span class="p">]:</span>
+                    <span class="n">is_match</span> <span class="o">=</span> <span class="bp">true</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">is_match</span> <span class="p">=</span> <span class="kc">false</span>
-                    <span class="p">#</span> <span class="k">if</span> <span class="n">we</span> <span class="n">found</span> <span class="n">a</span> <span class="n">mismatch</span><span class="p">,</span> <span class="n">we</span> <span class="n">don</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">need</span> <span class="n">to</span> <span class="n">check</span> <span class="n">the</span> <span class="n">remaining</span> <span class="n">sides</span>
+                    <span class="n">is_match</span> <span class="o">=</span> <span class="bp">false</span>
+                    <span class="c1"># if we found a mismatch, we don&#39;t need to check the remaining sides</span>
                     <span class="k">break</span>
-        <span class="k">if</span> <span class="n">is_match</span> <span class="n">and</span> <span class="n">not</span> <span class="n">i</span> <span class="k">in</span> <span class="n">valid_tiles</span><span class="p">:</span>
-            <span class="n">valid_tiles</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_match</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">valid_tiles</span><span class="p">:</span>
+            <span class="n">valid_tiles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">valid_tiles</span></code></pre></div>
 
 <h3 id="comparing-walls">Comparing walls</h3>

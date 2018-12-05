@@ -3,7 +3,7 @@
 <head>
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.48" />
+  <meta name="generator" content="Hugo 0.51" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -70,7 +70,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/gamedev" class="list-group-item">
-                        <span class="badge">52</span>
+                        <span class="badge">53</span>
                         gamedev
                     </a></li>
                     
@@ -80,12 +80,12 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/godot" class="list-group-item">
-                        <span class="badge">35</span>
+                        <span class="badge">36</span>
                         godot
                     </a></li>
                     
                     <li><a href="/blog//tags/procgen" class="list-group-item">
-                        <span class="badge">3</span>
+                        <span class="badge">4</span>
                         procgen
                     </a></li>
                     
@@ -110,7 +110,7 @@
                     </a></li>
                     
                     <li><a href="/blog//tags/tutorial" class="list-group-item">
-                        <span class="badge">52</span>
+                        <span class="badge">53</span>
                         tutorial
                     </a></li>
                     
@@ -148,8 +148,6 @@
 
 <p>This is Part 10: Homing missiles</p>
 
-<p></p>
-
 <p>You can watch a video version of this lesson here:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/KAUP4nlJyz0" frameborder="0" allowfullscreen></iframe></p>
 
@@ -164,10 +162,10 @@ in a spread.</p>
 <p>We&rsquo;re going to start by adding the homing functionality to the existing bullet
 script. First, we&rsquo;ll adding some new variables:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">export</span> <span class="p">(</span><span class="n">float</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">steer_force</span> <span class="p">=</span> <span class="mi">0</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">export</span> <span class="p">(</span><span class="ne">float</span><span class="p">)</span> <span class="k">var</span> <span class="n">steer_force</span> <span class="o">=</span> <span class="mi">0</span>
 
-<span class="kd">var</span> <span class="nv">acceleration</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">()</span>
-<span class="kd">var</span> <span class="nv">target</span> <span class="p">=</span> <span class="n">null</span></code></pre></div>
+<span class="k">var</span> <span class="n">acceleration</span> <span class="o">=</span> <span class="ne">Vector2</span><span class="p">()</span>
+<span class="k">var</span> <span class="n">target</span> <span class="o">=</span> <span class="n">null</span></code></pre></div>
 
 <p><code>steer_force</code> represents the missile&rsquo;s agility - how quickly it can turn and chase
 its target. A value of <code>0</code> will be a regular bullet that travels in a straight
@@ -176,21 +174,21 @@ line.</p>
 <p>When the missile spawns, we can pass it a target, but we want to be able to ignore
 that when spawning &ldquo;dumb&rdquo; bullets, so adjust the <code>start()</code> function like so:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">start</span><span class="p">(</span><span class="n">_position</span><span class="p">,</span> <span class="n">_direction</span><span class="p">,</span> <span class="n">_target</span><span class="p">=</span><span class="n">null</span><span class="p">):</span>
-    <span class="n">position</span> <span class="p">=</span> <span class="n">_position</span>
-    <span class="n">rotation</span> <span class="p">=</span> <span class="n">_direction</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span>
-    <span class="n">velocity</span> <span class="p">=</span> <span class="n">_direction</span> <span class="o">*</span> <span class="n">speed</span>
-    <span class="n">target</span> <span class="p">=</span> <span class="n">_target</span></code></pre></div>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">start</span><span class="p">(</span><span class="n">_position</span><span class="p">,</span> <span class="n">_direction</span><span class="p">,</span> <span class="n">_target</span><span class="o">=</span><span class="n">null</span><span class="p">):</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">_position</span>
+    <span class="n">rotation</span> <span class="o">=</span> <span class="n">_direction</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span>
+    <span class="n">velocity</span> <span class="o">=</span> <span class="n">_direction</span> <span class="o">*</span> <span class="n">speed</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">_target</span></code></pre></div>
 
 <p>Next, in the <code>_process()</code> function, we need to apply a seeking behavior if there
 is a target assigned:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
         <span class="n">acceleration</span> <span class="o">+=</span> <span class="n">seek</span><span class="p">()</span>
         <span class="n">velocity</span> <span class="o">+=</span> <span class="n">acceleration</span> <span class="o">*</span> <span class="n">delta</span>
-        <span class="n">velocity</span> <span class="p">=</span> <span class="n">velocity</span><span class="p">.</span><span class="n">clamped</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
-        <span class="n">rotation</span> <span class="p">=</span> <span class="n">velocity</span><span class="p">.</span><span class="n">angle</span><span class="p">()</span>
+        <span class="n">velocity</span> <span class="o">=</span> <span class="n">velocity</span><span class="o">.</span><span class="n">clamped</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
+        <span class="n">rotation</span> <span class="o">=</span> <span class="n">velocity</span><span class="o">.</span><span class="n">angle</span><span class="p">()</span>
     <span class="n">position</span> <span class="o">+=</span> <span class="n">velocity</span> <span class="o">*</span> <span class="n">delta</span></code></pre></div>
 
 <p>We&rsquo;ll find our needed acceleration via the <code>seek()</code> function (more about that in
@@ -208,9 +206,9 @@ which has a fantastic chapter on the subject, along with interactive demos.</p>
 
 <p>For our missile, we will be using the &ldquo;seek&rdquo; behavior:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">seek</span><span class="p">():</span>
-    <span class="kd">var</span> <span class="nv">desired</span> <span class="p">=</span> <span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">position</span><span class="p">).</span><span class="n">normalized</span><span class="p">()</span> <span class="o">*</span> <span class="n">speed</span>
-    <span class="kd">var</span> <span class="nv">steer</span> <span class="p">=</span> <span class="p">(</span><span class="n">desired</span> <span class="o">-</span> <span class="n">velocity</span><span class="p">).</span><span class="n">normalized</span><span class="p">()</span> <span class="o">*</span> <span class="n">steer_force</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">seek</span><span class="p">():</span>
+    <span class="k">var</span> <span class="n">desired</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span> <span class="o">*</span> <span class="n">speed</span>
+    <span class="k">var</span> <span class="n">steer</span> <span class="o">=</span> <span class="p">(</span><span class="n">desired</span> <span class="o">-</span> <span class="n">velocity</span><span class="p">)</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span> <span class="o">*</span> <span class="n">steer_force</span>
     <span class="k">return</span> <span class="n">steer</span></code></pre></div>
 
 <p>This works by first finding the <code>desired</code> movement vector, which is straight
@@ -238,26 +236,26 @@ they&rsquo;re not getting the <code>target</code> value from the enemy. Update t
 in <code>EnemyTank.gd</code> to pass this data (the enemy already has the player set as
 its target):</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">shoot</span><span class="p">(</span><span class="n">target</span><span class="p">)</span></code></pre></div>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="n">shoot</span><span class="p">(</span><span class="n">target</span><span class="p">)</span></code></pre></div>
 
 <p>Now update the base <code>Tank.gd</code> script to pass this data along to the missile
 when it spawns:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">shoot</span><span class="p">(</span><span class="n">target</span><span class="p">=</span><span class="n">null</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">shoot</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">null</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">can_shoot</span><span class="p">:</span>
-        <span class="n">can_shoot</span> <span class="p">=</span> <span class="kc">false</span>
-        <span class="err">$</span><span class="n">GunTimer</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="kd">var</span> <span class="nv">dir</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="n">rotated</span><span class="p">(</span><span class="err">$</span><span class="n">Turret</span><span class="p">.</span><span class="n">global_rotation</span><span class="p">)</span>
-        <span class="n">emit_signal</span><span class="p">(</span><span class="err">&#39;</span><span class="n">shoot</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">Bullet</span><span class="p">,</span> <span class="err">$</span><span class="n">Turret</span><span class="o">/</span><span class="n">Muzzle</span><span class="p">.</span><span class="n">global_position</span><span class="p">,</span> <span class="n">dir</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-        <span class="err">$</span><span class="n">AnimationPlayer</span><span class="p">.</span><span class="n">play</span><span class="p">(</span><span class="err">&#39;</span><span class="n">muzzle_flash</span><span class="err">&#39;</span><span class="p">)</span></code></pre></div>
+        <span class="n">can_shoot</span> <span class="o">=</span> <span class="bp">false</span>
+        <span class="o">$</span><span class="n">GunTimer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">var</span> <span class="n">dir</span> <span class="o">=</span> <span class="ne">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="o">$</span><span class="n">Turret</span><span class="o">.</span><span class="n">global_rotation</span><span class="p">)</span>
+        <span class="n">emit_signal</span><span class="p">(</span><span class="s1">&#39;shoot&#39;</span><span class="p">,</span> <span class="n">Bullet</span><span class="p">,</span> <span class="o">$</span><span class="n">Turret</span><span class="o">/</span><span class="n">Muzzle</span><span class="o">.</span><span class="n">global_position</span><span class="p">,</span> <span class="n">dir</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="o">$</span><span class="ne">AnimationPlayer</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="s1">&#39;muzzle_flash&#39;</span><span class="p">)</span></code></pre></div>
 
 <p>Finally, the <code>Map.gd</code> script, when it receives the signal, needs to pass the target
 to the missile:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">_on_Tank_shoot</span><span class="p">(</span><span class="n">bullet</span><span class="p">,</span> <span class="n">_position</span><span class="p">,</span> <span class="n">_direction</span><span class="p">,</span> <span class="n">_target</span><span class="p">=</span><span class="n">null</span><span class="p">):</span>
-    <span class="kd">var</span> <span class="nv">b</span> <span class="p">=</span> <span class="n">bullet</span><span class="p">.</span><span class="n">instance</span><span class="p">()</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">_on_Tank_shoot</span><span class="p">(</span><span class="n">bullet</span><span class="p">,</span> <span class="n">_position</span><span class="p">,</span> <span class="n">_direction</span><span class="p">,</span> <span class="n">_target</span><span class="o">=</span><span class="n">null</span><span class="p">):</span>
+    <span class="k">var</span> <span class="n">b</span> <span class="o">=</span> <span class="n">bullet</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
     <span class="n">add_child</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-    <span class="n">b</span><span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="n">_position</span><span class="p">,</span> <span class="n">_direction</span><span class="p">,</span> <span class="n">_target</span><span class="p">)</span></code></pre></div>
+    <span class="n">b</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">_position</span><span class="p">,</span> <span class="n">_direction</span><span class="p">,</span> <span class="n">_target</span><span class="p">)</span></code></pre></div>
 
 <p>Try running the scene and testing that the missiles seek the player. Try changing
 the <code>steer_force</code> and <code>speed</code> (and the missile&rsquo;s <code>lifetime</code>) properties
@@ -352,23 +350,23 @@ have an enemy (or player) shoot multiple shots at once in a spread.</p>
 
 <p>Start by adding two more new properties to <code>Tank.gd</code>:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="n">export</span> <span class="p">(</span><span class="n">int</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">gun_shots</span> <span class="p">=</span> <span class="mi">1</span> <span class="p">#</span> <span class="n">number</span> <span class="n">of</span> <span class="n">projectiles</span> <span class="n">per</span> <span class="n">shot</span>
-<span class="n">export</span> <span class="p">(</span><span class="n">float</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span> <span class="kd">var</span> <span class="nv">gun_spread</span> <span class="p">=</span> <span class="mf">0.2</span> <span class="p">#</span> <span class="n">angle</span> <span class="n">between</span> <span class="n">them</span></code></pre></div>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">export</span> <span class="p">(</span><span class="ne">int</span><span class="p">)</span> <span class="k">var</span> <span class="n">gun_shots</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># number of projectiles per shot</span>
+<span class="k">export</span> <span class="p">(</span><span class="ne">float</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span> <span class="k">var</span> <span class="n">gun_spread</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># angle between them</span></code></pre></div>
 
 <p>Once more, we need to update the <code>shoot()</code> function:</p>
 
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">func</span> <span class="nf">shoot</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">spread</span><span class="p">,</span> <span class="n">target</span><span class="p">=</span><span class="n">null</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">shoot</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">spread</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">null</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">can_shoot</span><span class="p">:</span>
-        <span class="n">can_shoot</span> <span class="p">=</span> <span class="kc">false</span>
-        <span class="err">$</span><span class="n">GunTimer</span><span class="p">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="kd">var</span> <span class="nv">dir</span> <span class="p">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="n">rotated</span><span class="p">(</span><span class="err">$</span><span class="n">Turret</span><span class="p">.</span><span class="n">global_rotation</span><span class="p">)</span>
+        <span class="n">can_shoot</span> <span class="o">=</span> <span class="bp">false</span>
+        <span class="o">$</span><span class="n">GunTimer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">var</span> <span class="n">dir</span> <span class="o">=</span> <span class="ne">Vector2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="o">$</span><span class="n">Turret</span><span class="o">.</span><span class="n">global_rotation</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
-                <span class="kd">var</span> <span class="nv">a</span> <span class="p">=</span> <span class="o">-</span><span class="n">spread</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">spread</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">emit_signal</span><span class="p">(</span><span class="err">&#39;</span><span class="n">shoot</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">Bullet</span><span class="p">,</span> <span class="err">$</span><span class="n">Turret</span><span class="o">/</span><span class="n">Muzzle</span><span class="p">.</span><span class="n">global_position</span><span class="p">,</span> <span class="n">dir</span><span class="p">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">target</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+                <span class="k">var</span> <span class="n">a</span> <span class="o">=</span> <span class="o">-</span><span class="n">spread</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">spread</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">emit_signal</span><span class="p">(</span><span class="s1">&#39;shoot&#39;</span><span class="p">,</span> <span class="n">Bullet</span><span class="p">,</span> <span class="o">$</span><span class="n">Turret</span><span class="o">/</span><span class="n">Muzzle</span><span class="o">.</span><span class="n">global_position</span><span class="p">,</span> <span class="n">dir</span><span class="o">.</span><span class="n">rotated</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">target</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">emit_signal</span><span class="p">(</span><span class="err">&#39;</span><span class="n">shoot</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">Bullet</span><span class="p">,</span> <span class="err">$</span><span class="n">Turret</span><span class="o">/</span><span class="n">Muzzle</span><span class="p">.</span><span class="n">global_position</span><span class="p">,</span> <span class="n">dir</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-        <span class="err">$</span><span class="n">AnimationPlayer</span><span class="p">.</span><span class="n">play</span><span class="p">(</span><span class="err">&#39;</span><span class="n">muzzle_flash</span><span class="err">&#39;</span><span class="p">)</span></code></pre></div>
+            <span class="n">emit_signal</span><span class="p">(</span><span class="s1">&#39;shoot&#39;</span><span class="p">,</span> <span class="n">Bullet</span><span class="p">,</span> <span class="o">$</span><span class="n">Turret</span><span class="o">/</span><span class="n">Muzzle</span><span class="o">.</span><span class="n">global_position</span><span class="p">,</span> <span class="n">dir</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="o">$</span><span class="ne">AnimationPlayer</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="s1">&#39;muzzle_flash&#39;</span><span class="p">)</span></code></pre></div>
 
 <p>If the number of shots is 1, we can just do as we already are doing. However, if
 the number is greater, we need a counting loop to generate each one and set its
@@ -381,11 +379,11 @@ formula will calculate that for us.</p>
 <p>Now our player and enemy tanks need to pass these properties when they call shoot:</p>
 
 <p><code>EnemyTank.gd</code>:
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="k">if</span> <span class="n">target_dir</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">current_dir</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.9</span><span class="p">:</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">if</span> <span class="n">target_dir</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">current_dir</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.9</span><span class="p">:</span>
     <span class="n">shoot</span><span class="p">(</span><span class="n">gun_shots</span><span class="p">,</span> <span class="n">gun_spread</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span></code></pre></div></p>
 
 <p><code>Player.gd</code>:
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="k">if</span> <span class="n">Input</span><span class="p">.</span><span class="n">is_action_just_pressed</span><span class="p">(</span><span class="err">&#39;</span><span class="n">click</span><span class="err">&#39;</span><span class="p">):</span>
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">if</span> <span class="ne">Input</span><span class="o">.</span><span class="n">is_action_just_pressed</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">):</span>
     <span class="n">shoot</span><span class="p">(</span><span class="n">gun_shots</span><span class="p">,</span> <span class="n">gun_spread</span><span class="p">)</span></code></pre></div></p>
 
 <p><img src="/blog/img/tanks_multimissile.gif" alt="alt" /></p>

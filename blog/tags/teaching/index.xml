@@ -22,8 +22,6 @@ They have never used a game engine before.&lt;/p&gt;
 
 &lt;p&gt;Here&amp;rsquo;s how it went.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
 &lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;Part of the reason for doing this was to get some real-world experience taking
@@ -163,8 +161,7 @@ was a must.&lt;/p&gt;
 
 &lt;p&gt;We teach science because we want children to understand the world around them, and the scientific method is a fantastic intellectual tool for investigating the world around you. In a modern society, where scientific advancements directly affect so many aspects of our lives, it is advantageous to have a good understanding of how science works.&lt;/p&gt;
 
-&lt;p&gt;In the same way, learning about history or math contribute to a better understanding of the world by providing perspectives and ways of thinking that we wouldn&amp;rsquo;t otherwise know.  In particular, I&amp;rsquo;ll talk about the use of math in more detail below.
-&lt;/p&gt;
+&lt;p&gt;In the same way, learning about history or math contribute to a better understanding of the world by providing perspectives and ways of thinking that we wouldn&amp;rsquo;t otherwise know.  In particular, I&amp;rsquo;ll talk about the use of math in more detail below.&lt;/p&gt;
 
 &lt;h3 id=&#34;but-what-about-kids-who-aren-t-interested-in-becoming-programmers&#34;&gt;&amp;ldquo;But what about kids who aren&amp;rsquo;t interested in becoming programmers?&amp;rdquo;&lt;/h3&gt;
 
@@ -220,8 +217,7 @@ Programming has many practical applications to other areas of knowledge. --&gt;
 
 &lt;p&gt;I prefer Python for teaching kids for a &lt;a href=&#34;http://kidscancode.org/blog/2015/09/whypython/&#34;&gt;number of reasons&lt;/a&gt;, foremost because it&amp;rsquo;s a very beginner-friendly language.  That said, however, there are still a number of very common areas where kids tend to struggle the most.&lt;/p&gt;
 
-&lt;p&gt;
-Below is a list of the problems I encounter most often in the classroom:&lt;/p&gt;
+&lt;p&gt;Below is a list of the problems I encounter most often in the classroom:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Nested parentheses&lt;/li&gt;
@@ -330,8 +326,6 @@ Below is a list of the problems I encounter most often in the classroom:&lt;/p&g
 &lt;li&gt;It&amp;rsquo;s not a &amp;ldquo;teaching&amp;rdquo; language&lt;/li&gt;
 &lt;li&gt;It&amp;rsquo;s very widely used&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;programming-languages-are-tools&#34;&gt;Programming languages are tools&lt;/h2&gt;
 
