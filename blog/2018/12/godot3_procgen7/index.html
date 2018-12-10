@@ -1,0 +1,299 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.51" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Procedural Generation in Godot - Part 7: Dungeons (part 2) &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">54</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">37</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/procgen" class="list-group-item">
+                        <span class="badge">5</span>
+                        procgen
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">54</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Procedural Generation in Godot - Part 7: Dungeons (part 2)</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sun, Dec 9, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/procgen">procgen</a>
+			  
+			</h6></span>
+
+			      <p>In this series, we&rsquo;ll explore the applications of procedural generation to game
+development. While we&rsquo;ll be using Godot 3.0 as our platform, much of the concepts
+and algorithms related to this subject are universal, and you can apply them to
+whatever platform you may be working on.</p>
+
+<p>In this part, we&rsquo;ll continue working on the random dungeon generator, adding
+corridors to connect the rooms.</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/U9B39sDIupc" frameborder="0" allowfullscreen></iframe></p>
+
+<h1 id="connecting-the-rooms">Connecting the rooms</h1>
+
+<p>In the <a href="/blog/2018/12/godot3_procgen6/">last part</a> we created a random collection
+of rooms, using the physics engine to ensure they are spread out and not
+overlapping. Now we need to figure out how to connect the rooms together.</p>
+
+<p>There are many different ways to approach this, but we&rsquo;re going to use the
+<em>minimum spanning tree</em> (MST) method. Given a set of points (represented as
+a graph), an MST identifies the minimum number of connections that connects all
+points with the shortest total path length.</p>
+
+<p>We&rsquo;ll be using <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Prim&rsquo;s Algorithm</a>
+to generate our MST. We&rsquo;ll also use Godot&rsquo;s <code>AStar</code> node to store the data, as it
+is a built-in graph data structure.</p>
+
+<p>Start by adding a variable to store the data in:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">var</span> <span class="n">path</span>  <span class="c1"># AStar pathfinding object</span></code></pre></div>
+
+<p>Now in the <code>make_rooms()</code> function, as we cull the rooms, we want to create an
+array of the positions of the remaining rooms. We&rsquo;ll pass this array to the
+MST algorithm.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript">    <span class="c1"># cull rooms</span>
+    <span class="k">var</span> <span class="n">room_positions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="o">$</span><span class="n">Rooms</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">randf</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">cull</span><span class="p">:</span>
+            <span class="n">room</span><span class="o">.</span><span class="n">queue_free</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">room</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="ne">RigidBody2D</span><span class="o">.</span><span class="n">MODE_STATIC</span>
+            <span class="n">room_positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="ne">Vector3</span><span class="p">(</span><span class="n">room</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">room</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="nb">yield</span><span class="p">(</span><span class="n">get_tree</span><span class="p">(),</span> <span class="s1">&#39;idle_frame&#39;</span><span class="p">)</span>
+    <span class="c1"># generate spanning tree (path)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">find_mst</span><span class="p">(</span><span class="n">room_positions</span><span class="p">)</span></code></pre></div>
+
+<p>Now we get to where the action happens. See the comments below in the code for
+a summary of what&rsquo;s happening. You can read the link above if you&rsquo;re curious
+about the details of the algorithm.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">find_mst</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
+    <span class="c1"># Prim&#39;s algorithm</span>
+    <span class="c1"># Given an array of positions (nodes), generates a minimum</span>
+    <span class="c1"># spanning tree</span>
+    <span class="c1"># Returns an AStar object</span>
+
+    <span class="c1"># Initialize the AStar and add the first point</span>
+    <span class="k">var</span> <span class="n">path</span> <span class="o">=</span> <span class="n">AStar</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">add_point</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">get_available_point_id</span><span class="p">(),</span> <span class="n">nodes</span><span class="o">.</span><span class="n">pop_front</span><span class="p">())</span>
+
+    <span class="c1"># Repeat until no more nodes remain</span>
+    <span class="k">while</span> <span class="n">nodes</span><span class="p">:</span>
+        <span class="k">var</span> <span class="n">min_dist</span> <span class="o">=</span> <span class="bp">INF</span>  <span class="c1"># Minimum distance found so far</span>
+        <span class="k">var</span> <span class="n">min_p</span> <span class="o">=</span> <span class="n">null</span>  <span class="c1"># Position of that node</span>
+        <span class="k">var</span> <span class="n">p</span> <span class="o">=</span> <span class="n">null</span>  <span class="c1"># Current position</span>
+        <span class="c1"># Loop through the points in the path</span>
+        <span class="k">for</span> <span class="n">p1</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">get_points</span><span class="p">():</span>
+            <span class="n">p1</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">get_point_position</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+            <span class="c1"># Loop through the remaining nodes in the given array</span>
+            <span class="k">for</span> <span class="n">p2</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+                <span class="c1"># If the node is closer, make it the closest</span>
+                <span class="k">if</span> <span class="n">p1</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="n">p2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">min_dist</span><span class="p">:</span>
+                    <span class="n">min_dist</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">distance_to</span><span class="p">(</span><span class="n">p2</span><span class="p">)</span>
+                    <span class="n">min_p</span> <span class="o">=</span> <span class="n">p2</span>
+                    <span class="n">p</span> <span class="o">=</span> <span class="n">p1</span>
+        <span class="c1"># Insert the resulting node into the path and add</span>
+        <span class="c1"># its connection</span>
+        <span class="k">var</span> <span class="n">n</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">get_available_point_id</span><span class="p">()</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">add_point</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">min_p</span><span class="p">)</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">connect_points</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">get_closest_point</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
+        <span class="c1"># Remove the node from the array so it isn&#39;t visited again</span>
+        <span class="n">nodes</span><span class="o">.</span><span class="n">erase</span><span class="p">(</span><span class="n">min_p</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path</span></code></pre></div>
+
+<p>Now we&rsquo;ll have a path, so all that&rsquo;s left is to draw it on the screen so we
+can see it. We&rsquo;ll use <code>CanvasItem.draw_line()</code> to draw each connection in the
+AStar path.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">_draw</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="o">$</span><span class="n">Rooms</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+        <span class="n">draw_rect</span><span class="p">(</span><span class="ne">Rect2</span><span class="p">(</span><span class="n">room</span><span class="o">.</span><span class="n">position</span> <span class="o">-</span> <span class="n">room</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">room</span><span class="o">.</span><span class="n">size</span><span class="o">*</span><span class="mi">2</span><span class="p">),</span>
+                  <span class="ne">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="bp">false</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">path</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">get_points</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">get_point_connections</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+                <span class="k">var</span> <span class="n">pp</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">get_point_position</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="k">var</span> <span class="n">cp</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">get_point_position</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="n">draw_line</span><span class="p">(</span><span class="ne">Vector2</span><span class="p">(</span><span class="n">pp</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pp</span><span class="o">.</span><span class="n">y</span><span class="p">),</span>
+                          <span class="ne">Vector2</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">y</span><span class="p">),</span>
+                          <span class="ne">Color</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">15</span><span class="p">,</span> <span class="bp">true</span><span class="p">)</span></code></pre></div>
+
+<p>Run the game and you should see a beautiful minimum spanning tree connecting
+your rooms!</p>
+
+<p><img src="/blog/img/dungen5.png" alt="alt" /></p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>We&rsquo;re almost there! We have a collection of rooms and a path connecting them. The
+final step is to convert all of this into a TileMap so that we can actually walk
+around the dungeon. We&rsquo;ll do that in the next part.</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="download-the-code-for-this-lesson-https-github-com-kidscancode-godot3-procgen-demos"><a href="https://github.com/kidscancode/godot3_procgen_demos">Download the code for this lesson</a></h3>
+
+<h3 id="helpful-links">Helpful Links</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
