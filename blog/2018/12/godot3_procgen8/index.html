@@ -1,0 +1,393 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.52" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Procedural Generation in Godot - Part 8: Dungeons (part 3) &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">55</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">38</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/procgen" class="list-group-item">
+                        <span class="badge">6</span>
+                        procgen
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">55</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2018 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Procedural Generation in Godot - Part 8: Dungeons (part 3)</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Tue, Dec 18, 2018</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/procgen">procgen</a>
+			  
+			</h6></span>
+
+			      <p>In this series, we&rsquo;ll explore the applications of procedural generation to game
+development. While we&rsquo;ll be using Godot 3.0 as our platform, much of the concepts
+and algorithms related to this subject are universal, and you can apply them to
+whatever platform you may be working on.</p>
+
+<p>In this part, we&rsquo;ll wrap up the procedurally generated dungeon by making it into
+a TileMap that we can explore.</p>
+
+<p>You can watch a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/U9B39sDIupc" frameborder="0" allowfullscreen></iframe></p>
+
+<h1 id="generating-a-tilemap">Generating a TileMap</h1>
+
+<p>Now that we&rsquo;ve <a href="/blog/2018/12/godot3_procgen6/">generated the rooms</a> and
+<a href="/blog/2018/12/godot3_procgen7/">connected them with a path</a>, there&rsquo;s one more
+step to having a dungeon to explore. We will use Godot&rsquo;s <a href="http://docs.godotengine.org/en/3.0/classes/class_tilemap.html">TileMap node</a> to create the
+walls. In a nutshell, we&rsquo;ll fill the entire map with walls, carve out
+the locations of our rooms, and then carve paths between them according to our
+minumum spanning tree.</p>
+
+<p>The tileset we&rsquo;ll be using is a simple one with two tiles:</p>
+
+<p>Grass tile: <img src="/blog/img/grass.png" alt="grass" />
+Stone tile: <img src="/blog/img/stone.png" alt="stone" /></p>
+
+<p>Add a <code>TileMap</code> node to the Main scene and set its <em>Cell/Size</em> to <code>(32, 32)</code>. Add
+the <code>res://assets/tiles.tres</code> TileSet resource to the <em>Tile Set</em> property (you
+can find this in the project download at the end of this document).</p>
+
+<p>Since we still have the visualization running of our room generation, we&rsquo;ll
+manually trigger building the TileMap by pressing <code>&lt;Tab&gt;</code>. Add this to <code>_input()</code>:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_focus_next&#39;</span><span class="p">):</span>
+    <span class="n">make_map</span><span class="p">()</span></code></pre></div>
+
+<p>And then we&rsquo;ll define the <code>make_map()</code> function:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">make_map</span><span class="p">():</span>
+    <span class="c1"># Creates a TileMap from the generated rooms &amp; path</span>
+    <span class="c1"># find_start_room()</span>
+    <span class="c1"># find_end_room()</span>
+    <span class="n">Map</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="c1"># Fill TileMap with walls and carve out empty spaces</span>
+    <span class="k">var</span> <span class="n">full_rect</span> <span class="o">=</span> <span class="ne">Rect2</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="o">$</span><span class="n">Rooms</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+        <span class="k">var</span> <span class="n">r</span> <span class="o">=</span> <span class="ne">Rect2</span><span class="p">(</span><span class="n">room</span><span class="o">.</span><span class="n">position</span><span class="o">-</span><span class="n">room</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+                    <span class="n">room</span><span class="o">.</span><span class="n">get_node</span><span class="p">(</span><span class="s2">&#34;CollisionShape2D&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">extents</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">full_rect</span> <span class="o">=</span> <span class="n">full_rect</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="k">var</span> <span class="n">topleft</span> <span class="o">=</span> <span class="n">Map</span><span class="o">.</span><span class="n">world_to_map</span><span class="p">(</span><span class="n">full_rect</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+    <span class="k">var</span> <span class="n">bottomright</span> <span class="o">=</span> <span class="n">Map</span><span class="o">.</span><span class="n">world_to_map</span><span class="p">(</span><span class="n">full_rect</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">topleft</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">bottomright</span><span class="o">.</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">topleft</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">bottomright</span><span class="o">.</span><span class="n">y</span><span class="p">):</span>
+            <span class="n">Map</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Carve rooms and corridors</span>
+    <span class="k">var</span> <span class="n">corridors</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># One corridor per connection</span>
+    <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="o">$</span><span class="n">Rooms</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+        <span class="k">var</span> <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">room</span><span class="o">.</span><span class="n">size</span> <span class="o">/</span> <span class="n">tile_size</span><span class="p">)</span><span class="o">.</span><span class="nb">floor</span><span class="p">()</span>
+        <span class="k">var</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">Map</span><span class="o">.</span><span class="n">world_to_map</span><span class="p">(</span><span class="n">room</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+        <span class="k">var</span> <span class="n">ul</span> <span class="o">=</span> <span class="p">(</span><span class="n">room</span><span class="o">.</span><span class="n">position</span><span class="o">/</span><span class="n">tile_size</span><span class="p">)</span><span class="o">.</span><span class="nb">floor</span><span class="p">()</span> <span class="o">-</span> <span class="n">s</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">Map</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="n">ul</span><span class="o">.</span><span class="n">x</span><span class="o">+</span><span class="n">x</span><span class="p">,</span> <span class="n">ul</span><span class="o">.</span><span class="n">y</span><span class="o">+</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Carve corridors</span>
+        <span class="k">var</span> <span class="n">p</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">get_closest_point</span><span class="p">(</span><span class="ne">Vector3</span><span class="p">(</span><span class="n">room</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="p">,</span>
+                                    <span class="n">room</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">conn</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">get_point_connections</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">conn</span> <span class="ow">in</span> <span class="n">corridors</span><span class="p">:</span>
+                <span class="k">var</span> <span class="n">start</span> <span class="o">=</span> <span class="n">Map</span><span class="o">.</span><span class="n">world_to_map</span><span class="p">(</span><span class="ne">Vector2</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">get_point_position</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">get_point_position</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+                <span class="k">var</span> <span class="n">end</span> <span class="o">=</span> <span class="n">Map</span><span class="o">.</span><span class="n">world_to_map</span><span class="p">(</span><span class="ne">Vector2</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">get_point_position</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">get_point_position</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+                <span class="n">carve_path</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+        <span class="n">corridors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></code></pre></div>
+
+<p>In the first part, we&rsquo;re finding the rectangle that encloses the entire map,
+using the <code>Rect2</code> method <code>merge()</code>. Then we fill the entire TileMap with stone
+tiles.</p>
+
+<blockquote>
+<p><strong>Note:</strong> For very large and/or sparse maps, this may take a bit of time. In those
+cases you may prefer to start with a pre-generated &ldquo;solid&rdquo; map and only do the
+&ldquo;carving&rdquo; for your created rooms.</p>
+</blockquote>
+
+<p>The next step is to carve the rooms and corridors. We loop through the rooms
+and convert their coordinates to map space (<code>world_to_map()</code>). Note we&rsquo;re carving
+out the room a bit smaller than the room&rsquo;s actual size. This is so that adjacent
+rooms will still have walls between them, rather than merging into a single large
+room.</p>
+
+<h2 id="carving-corridors">Carving corridors</h2>
+
+<p>To make the corridors, we check the mst <code>path</code> and carve a path for each
+connection the current room has. So that we don&rsquo;t carve the same path twice, we
+keep a list (<code>corridors</code>) of the ones we&rsquo;ve already done.</p>
+
+<p>Finally, we need to call the <code>carve_path()</code> function to actually make the
+connection:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">carve_path</span><span class="p">(</span><span class="n">pos1</span><span class="p">,</span> <span class="n">pos2</span><span class="p">):</span>
+    <span class="c1"># Carves a path between two points</span>
+    <span class="k">var</span> <span class="n">x_diff</span> <span class="o">=</span> <span class="nb">sign</span><span class="p">(</span><span class="n">pos2</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">pos1</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">var</span> <span class="n">y_diff</span> <span class="o">=</span> <span class="nb">sign</span><span class="p">(</span><span class="n">pos2</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">pos1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">x_diff</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="n">x_diff</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="nb">randi</span><span class="p">()</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">y_diff</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="n">y_diff</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="nb">randi</span><span class="p">()</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="c1"># Carve either x/y or y/x</span>
+    <span class="k">var</span> <span class="n">x_y</span> <span class="o">=</span> <span class="n">pos1</span>
+    <span class="k">var</span> <span class="n">y_x</span> <span class="o">=</span> <span class="n">pos2</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">randi</span><span class="p">()</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">x_y</span> <span class="o">=</span> <span class="n">pos2</span>
+        <span class="n">y_x</span> <span class="o">=</span> <span class="n">pos1</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pos1</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pos2</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">x_diff</span><span class="p">):</span>
+        <span class="n">Map</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_y</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">Map</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_y</span><span class="o">.</span><span class="n">y</span><span class="o">+</span><span class="n">y_diff</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># widen the corridor</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pos1</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">pos2</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">y_diff</span><span class="p">):</span>
+        <span class="n">Map</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="n">y_x</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">Map</span><span class="o">.</span><span class="n">set_cell</span><span class="p">(</span><span class="n">y_x</span><span class="o">.</span><span class="n">x</span><span class="o">+</span><span class="n">x_diff</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># widen the corridor</span></code></pre></div>
+
+<p>There are a few important things going on in this function. First, we calculate
+the direction of the <code>x</code> and <code>y</code> difference in the start and end positions. If
+it&rsquo;s <code>0</code>, we pick a random direction. This is because we&rsquo;re going to carve
+corridors that are 2 tiles wide.</p>
+
+<p>Second, we need to randomize which of two options we choose when carving the
+path:</p>
+
+<p><img src="/blog/img/dungeon_corridor1.png" alt="alt" />
+<img src="/blog/img/dungeon_corridor2.png" alt="alt" /></p>
+
+<h1 id="adding-a-player">Adding a Player</h1>
+
+<p>As the final step, we&rsquo;re going to add a player-controlled character that can
+walk around the map. <code>Character.tscn</code> and <code>Character.gd</code> are a generic top-down
+KinematicBody2D character with an attached camera, which we&rsquo;ll instance when
+the dungeon is complete.</p>
+
+<p>Add the following new variables to the main script:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">var</span> <span class="n">Player</span> <span class="o">=</span> <span class="nb">preload</span><span class="p">(</span><span class="s2">&#34;res://Character.tscn&#34;</span><span class="p">)</span>
+
+<span class="k">var</span> <span class="n">start_room</span> <span class="o">=</span> <span class="n">null</span>
+<span class="k">var</span> <span class="n">end_room</span> <span class="o">=</span> <span class="n">null</span>
+<span class="k">var</span> <span class="n">play_mode</span> <span class="o">=</span> <span class="bp">false</span>
+<span class="k">var</span> <span class="n">player</span> <span class="o">=</span> <span class="n">null</span></code></pre></div>
+
+<p>Uncomment <code>find_start_room()</code> and <code>find_end_room()</code> from the start of <code>make_map()</code>
+and add the following functions:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">find_start_room</span><span class="p">():</span>
+    <span class="k">var</span> <span class="n">min_x</span> <span class="o">=</span> <span class="bp">INF</span>
+    <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="o">$</span><span class="n">Rooms</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">room</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">min_x</span><span class="p">:</span>
+            <span class="n">start_room</span> <span class="o">=</span> <span class="n">room</span>
+            <span class="n">min_x</span> <span class="o">=</span> <span class="n">room</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span>
+
+<span class="k">func</span> <span class="n">find_end_room</span><span class="p">():</span>
+    <span class="k">var</span> <span class="n">max_x</span> <span class="o">=</span> <span class="o">-</span><span class="bp">INF</span>
+    <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="o">$</span><span class="n">Rooms</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">room</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">max_x</span><span class="p">:</span>
+            <span class="n">end_room</span> <span class="o">=</span> <span class="n">room</span>
+            <span class="n">max_x</span> <span class="o">=</span> <span class="n">room</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span></code></pre></div>
+
+<p>These functions pick the leftmost room as the <code>start_room</code> and the rightmost
+as the <code>end_room</code>. By making them separate functions, you can change the
+criteria as you choose.</p>
+
+<p>As with the map generation, we&rsquo;re going to manually choose &ldquo;play mode&rdquo; by
+pressing a key (<code>&lt;esc&gt;</code> in this case). Make the following changes to <code>_input()</code>:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">_input</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="c1"># Spacebar restarts and creates a new set of rooms</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_select&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">play_mode</span><span class="p">:</span>
+            <span class="n">player</span><span class="o">.</span><span class="n">queue_free</span><span class="p">()</span>
+            <span class="n">play_mode</span> <span class="o">=</span> <span class="bp">false</span>
+        <span class="n">Map</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="o">$</span><span class="n">Rooms</span><span class="o">.</span><span class="n">get_children</span><span class="p">():</span>
+            <span class="n">n</span><span class="o">.</span><span class="n">queue_free</span><span class="p">()</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">null</span>
+        <span class="n">start_room</span> <span class="o">=</span> <span class="n">null</span>
+        <span class="n">end_room</span> <span class="o">=</span> <span class="n">null</span>
+        <span class="n">make_rooms</span><span class="p">()</span>
+    <span class="c1"># Tab generates the TileMap</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_focus_next&#39;</span><span class="p">):</span>
+        <span class="n">make_map</span><span class="p">()</span>
+    <span class="c1"># Esc spawns a player to explore the map</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s1">&#39;ui_cancel&#39;</span><span class="p">):</span>
+        <span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="n">add_child</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+        <span class="n">player</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">start_room</span><span class="o">.</span><span class="n">position</span>
+        <span class="n">play_mode</span> <span class="o">=</span> <span class="bp">true</span></code></pre></div>
+
+<p><img src="/blog/img/dungeon_player.gif" alt="alt" /></p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>That wraps up our randomly generated dungeon tutorial. We used the physics
+engine to distribute the rooms, learned how to use a minimum spanning tree to
+connect them together, and turned the whole thing into a TileMap that can be
+used in a game.</p>
+
+<p>Obviously this dungeon is very plain and uninteresting. Decorating the dungeon
+and populating it with treasure, monsters, and other features is beyond the scope
+of this demo (but might make a great future one!).</p>
+
+<p>Please comment below with your questions and suggestions.</p>
+
+<h3 id="download-the-code-for-this-lesson-https-github-com-kidscancode-godot3-procgen-demos"><a href="https://github.com/kidscancode/godot3_procgen_demos">Download the code for this lesson</a></h3>
+
+<h3 id="helpful-links">Helpful Links</h3>
+
+<ul>
+<li><a href="https://godotengine.org/download">Download Godot 3.0</a></li>
+<li><a href="https://www.patreon.com/kidscancode">Support Me on Patreon</a></li>
+</ul>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
