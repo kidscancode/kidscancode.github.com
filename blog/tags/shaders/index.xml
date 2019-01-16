@@ -26,7 +26,7 @@
 
 &lt;p&gt;&lt;img src=&#34;/blog/blog/img/anim_tile1.gif&#34; width=&#34;250&#34;&gt;&lt;/p&gt;
 
-&lt;p&gt;It is possible to do this using an &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animationplayer.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animation_player&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_animation_player&#34;&gt;&lt;/svg&gt;AnimationPlayer&lt;/a&gt; node (see &lt;a href=&#34; https://youtu.be/jYTGvlCQd0E&#34; target=&#34;_blank&#34;&gt;this video&lt;/a&gt; for details).  However, for this lesson, we are instead going to implement the tile animation using a &lt;a href=&#34;http://docs.godotengine.org/en/2.1/learning/features/shading/shading_language.html&#34; target=&#34;_blank&#34;&gt;Shader&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;It is possible to do this using an &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animationplayer.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animation_player&#34;&gt;&lt;use xlink:href=&#34;/blog/blog/img/symbol-defs.svg#icon-icon_animation_player&#34;&gt;&lt;/svg&gt;AnimationPlayer&lt;/a&gt; node (see &lt;a href=&#34; https://youtu.be/jYTGvlCQd0E&#34; target=&#34;_blank&#34;&gt;this video&lt;/a&gt; for details).  However, for this lesson, we are instead going to implement the tile animation using a &lt;a href=&#34;http://docs.godotengine.org/en/2.1/learning/features/shading/shading_language.html&#34; target=&#34;_blank&#34;&gt;Shader&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h3 id=&#34;about-shaders&#34;&gt;About Shaders&lt;/h3&gt;
 
@@ -40,9 +40,9 @@
 
 &lt;h3 id=&#34;creating-a-new-shader&#34;&gt;Creating a new shader&lt;/h3&gt;
 
-&lt;p&gt;We will start with a regular TileSet, which is just a collection of &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; Sprite&lt;/a&gt; nodes. You can use your own art, or download the &lt;a href=&#34;/blog/blog/img/anim_water.zip&#34;&gt;example water pack&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We will start with a regular TileSet, which is just a collection of &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; Sprite&lt;/a&gt; nodes. You can use your own art, or download the &lt;a href=&#34;/blog/blog/img/anim_water.zip&#34;&gt;example water pack&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Add a new &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; Sprite&lt;/a&gt; and name it &lt;code&gt;water shader&lt;/code&gt;.  You can use any texture you like, as the image will be replaced when our shader is working.&lt;/p&gt;
+&lt;p&gt;Add a new &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_sprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_sprite&#34;&gt;&lt;use xlink:href=&#34;/blog/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt; Sprite&lt;/a&gt; and name it &lt;code&gt;water shader&lt;/code&gt;.  You can use any texture you like, as the image will be replaced when our shader is working.&lt;/p&gt;
 
 &lt;p&gt;Add a shader to the sprite by adding a new &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_canvasitemmaterial.html&#34; target=&#34;_blank&#34;&gt;CanvasItemMaterial&lt;/a&gt; followed by a new &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_canvasitemshader.html&#34; target=&#34;_blank&#34;&gt;CanvasItemShader&lt;/a&gt; like so:&lt;/p&gt;
 
@@ -117,7 +117,7 @@
 
 &lt;h3 id=&#34;creating-the-tileset&#34;&gt;Creating the tileset&lt;/h3&gt;
 
-&lt;p&gt;Now it just remains to save the sprites as a TileSet (&lt;code&gt;Scene -&amp;gt; Convert To.. -&amp;gt; TileSet..&lt;/code&gt;) and load it in your &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tilemap.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_tile_map&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_tile_map&#34;&gt;&lt;/svg&gt; TileMap&lt;/a&gt;.  You can use the tile like any other, but when placed it will animate.&lt;/p&gt;
+&lt;p&gt;Now it just remains to save the sprites as a TileSet (&lt;code&gt;Scene -&amp;gt; Convert To.. -&amp;gt; TileSet..&lt;/code&gt;) and load it in your &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_tilemap.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_tile_map&#34;&gt;&lt;use xlink:href=&#34;/blog/blog/img/symbol-defs.svg#icon-icon_tile_map&#34;&gt;&lt;/svg&gt; TileMap&lt;/a&gt;.  You can use the tile like any other, but when placed it will animate.&lt;/p&gt;
 
 &lt;h2 id=&#34;wrapping-up&#34;&gt;Wrapping up&lt;/h2&gt;
 

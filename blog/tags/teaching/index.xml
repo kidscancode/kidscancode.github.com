@@ -64,9 +64,9 @@ folder) was more painful and frustrating than any of the coding ever is.&lt;/p&g
 &lt;h2 id=&#34;creating-the-player&#34;&gt;Creating the player&lt;/h2&gt;
 
 &lt;p&gt;The first part of the tutorial is setting up the &lt;code&gt;Player&lt;/code&gt; scene. This is an
-&lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_area2d.html&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_area_2d&#34; target=&#34;_blank&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_area_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;Area2D&lt;/code&gt;&lt;/a&gt; with
-&lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animatedsprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;AnimatedSprite&lt;/code&gt;&lt;/a&gt;
-and &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_collisionshape2D.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_collision_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;CollisionShape2D&lt;/code&gt;&lt;/a&gt;
+&lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_area2d.html&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_area_2d&#34; target=&#34;_blank&#34;&gt;&lt;use xlink:href=&#34;/blog/blog/img/symbol-defs.svg#icon-icon_area_2d&#34;&gt;&lt;/svg&gt; &lt;code&gt;Area2D&lt;/code&gt;&lt;/a&gt; with
+&lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animatedsprite&#34;&gt;&lt;use xlink:href=&#34;/blog/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;AnimatedSprite&lt;/code&gt;&lt;/a&gt;
+and &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_collisionshape2D.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_collision_shape_2d&#34;&gt;&lt;use xlink:href=&#34;/blog/blog/img/symbol-defs.svg#icon-icon_collision_shape_2d&#34;&gt;&lt;/svg&gt;&lt;code&gt;CollisionShape2D&lt;/code&gt;&lt;/a&gt;
 children.&lt;/p&gt;
 
 &lt;p&gt;Adding the children led to a couple instances of this:
@@ -75,7 +75,7 @@ children.&lt;/p&gt;
 &lt;p&gt;Students must be reminded to click on the desired parent node &lt;em&gt;before&lt;/em&gt; clicking
 on &amp;ldquo;Add Node&amp;rdquo;.&lt;/p&gt;
 
-&lt;p&gt;Adding the frames to the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animatedsprite&#34;&gt;&lt;use xlink:href=&#34;/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;AnimatedSprite&lt;/code&gt;&lt;/a&gt;
+&lt;p&gt;Adding the frames to the &lt;a href=&#34;http://docs.godotengine.org/en/stable/classes/class_animatedsprite.html&#34; target=&#34;_blank&#34;&gt;&lt;svg width=&#34;18&#34; height=&#34;18&#34; class=&#34;icon-icon_animatedsprite&#34;&gt;&lt;use xlink:href=&#34;/blog/blog/img/symbol-defs.svg#icon-icon_sprite&#34;&gt;&lt;/svg&gt;&lt;code&gt;AnimatedSprite&lt;/code&gt;&lt;/a&gt;
 went smoothly, but it was when adding the collision shape that some problems
 started to appear.&lt;/p&gt;
 
