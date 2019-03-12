@@ -7,7 +7,189 @@
     <language>en-us</language>
     
     
-    <updated>Tue, 18 Dec 2018 09:14:12 -0700</updated>
+    <updated>Fri, 08 Mar 2019 05:22:12 -0700</updated>
+    
+    <item>
+      <title>Godot 101: Intro to 3D</title>
+      <link>/blog/2019/03/godot_31_3d_intro/</link>
+      <pubDate>Fri, 08 Mar 2019 05:22:12 -0700</pubDate>
+      
+      <guid>/blog/2019/03/godot_31_3d_intro/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot3_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;In this tutorial, we&amp;rsquo;ll look at how to start working in 3D in Godot. You&amp;rsquo;ll
+learn how to navigate in the 3D editor, how to create and manipulate 3D objects,
+and how to work with some of Godot&amp;rsquo;s essential 3D nodes, such as cameras and
+lighting.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
+
+&lt;p&gt;A word of warning: 3D development can be quite a bit more complex than working
+in 2D. While many of the same principles apply - such as working with nodes,
+writing scripts, and handling logic/data - 3D brings with it a number of other
+considerations. For this reason, it&amp;rsquo;s a good idea to stick to 2D for your first
+few projects, moving to 3D once you have a good understanding of the game
+development process. This tutorial will assume you have completed at least
+an &lt;a href=&#34;https://docs.godotengine.org/en/latest/getting_started/step_by_step/your_first_game.html&#34;&gt;introductory Godot 2D project&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can also find a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/SQ7soQ-N-eQ&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;getting-started-in-3d&#34;&gt;Getting Started in 3D&lt;/h1&gt;
+
+&lt;p&gt;One of Godot&amp;rsquo;s strengths is its ability to handle both 2D and 3D games. While
+much of what you&amp;rsquo;ve learned working on 2D projects (nodes, scenes, signals, etc.)
+applies equally well in 3D, there is also a whole new layer of complexity and
+capabilities. First, you&amp;rsquo;ll find that there are some additional features
+available in the 3D editor window, so we&amp;rsquo;ll start there:&lt;/p&gt;
+
+&lt;h2 id=&#34;orienting-in-3d-space&#34;&gt;Orienting in 3D Space&lt;/h2&gt;
+
+&lt;p&gt;When you first open a new project in Godot, you will see the 3D project view:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_intro_01.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The first thing you should notice is the three colored lines in the center.
+These are the &lt;strong&gt;x&lt;/strong&gt; (red), &lt;strong&gt;y&lt;/strong&gt; (green), and &lt;strong&gt;z&lt;/strong&gt; (blue) axes. The point where
+they meet is the &lt;em&gt;origin&lt;/em&gt;, which has the coordinates &lt;code&gt;(0, 0, 0)&lt;/code&gt;. You&amp;rsquo;ll find
+that this color scheme will also apply elsewhere in the Inspector.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Different 3D applications follow different conventions for orientation.
+Godot uses &lt;em&gt;Y-Up&lt;/em&gt; orientation, so that when looking at the axes, if &lt;strong&gt;x&lt;/strong&gt; is
+pointing to the left/right, then &lt;strong&gt;y&lt;/strong&gt; is up/down, and &lt;strong&gt;z&lt;/strong&gt; is forward/back.
+Some other popular 3D software uses &lt;em&gt;Z-UP&lt;/em&gt;. It&amp;rsquo;s good to keep this in mind when
+moving between applications.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Navigation in 3D is performed using the mouse and keyboard. Here are the basic
+controls for the view camera:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Mousewheel up/down&lt;/em&gt;: zoom in/out&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Middle button + drag&lt;/em&gt;: orbit camera around current target&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Shift + middle button + drag&lt;/em&gt;: pan camera&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Right-click + drag&lt;/em&gt;: rotate camera in place&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In addition, if you&amp;rsquo;re familiar with popular 3D games, you might prefer &lt;em&gt;Freelook&lt;/em&gt;
+mode, which you can toggle on/off using &lt;em&gt;Shift+F&lt;/em&gt;. In this mode, you can use the
+WASD keys to fly around the scene while aiming with the mouse.&lt;/p&gt;
+
+&lt;p&gt;You can also alter the camera&amp;rsquo;s view by clicking on the &lt;code&gt;[Perspective]&lt;/code&gt; label
+in the upper-left corner. Here, you can snap the camera to a particular
+orientation.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_intro_perspective.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;adding-3d-objects&#34;&gt;Adding 3D Objects&lt;/h2&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s add our first 3D node. Just as all 2D nodes inherit from &lt;code&gt;Node2D&lt;/code&gt;,
+which provides properties such as &lt;code&gt;position&lt;/code&gt; and &lt;code&gt;rotation&lt;/code&gt;, 3D nodes inherit
+from &lt;code&gt;Spatial&lt;/code&gt;. Add one to your scene and you&amp;rsquo;ll see the following object
+appear at the origin:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_intro_gizmo.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This object is not the node. It is something called a 3D &lt;em&gt;gizmo&lt;/em&gt;. Gizmos are
+tools that allow you to move and rotate objects in space. The three rings
+control rotation, while the three arrows move (translate) the object along
+the three axes. Note that the rings and arrows are color-coded to match the
+axis colors.&lt;/p&gt;
+
+&lt;p&gt;Take a few minutes to experiment and get familiar with the gizmo. Use Undo if
+you find yourself getting lost.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Sometimes you may feel the gizmos are getting in your way. You can
+click on the mode icons to restrict yourself to only one type of transformation:
+move, rotate, or scale:
+&lt;img src=&#34;/blog/blog/img/3d_intro_mode_buttons.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;global-vs-local-space&#34;&gt;Global vs. Local Space&lt;/h2&gt;
+
+&lt;p&gt;By default, the gizmo controls operate in &lt;em&gt;global space&lt;/em&gt;. When you rotate the
+object, the gizmo&amp;rsquo;s arrows still point along the axes. However, if you click
+the &amp;ldquo;Local Space Mode&amp;rdquo; button, the gizmo will switch to moving the body in
+&lt;em&gt;local space&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_intro_local_space.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now when you rotate the object, the gizmo arrows point along the &lt;em&gt;object&amp;rsquo;s&lt;/em&gt;
+axes and not the world&amp;rsquo;s. Switching back and forth between Local and World
+space can make it much easier to place an object exactly where you want it.&lt;/p&gt;
+
+&lt;h1 id=&#34;transforms&#34;&gt;Transforms&lt;/h1&gt;
+
+&lt;p&gt;Look at the Inspector for the &lt;code&gt;Spatial&lt;/code&gt; node. Instead of a &lt;em&gt;Position&lt;/em&gt; property,
+you have &lt;em&gt;Translation&lt;/em&gt;, as well as &lt;em&gt;Rotation Degrees&lt;/em&gt;, and &lt;em&gt;Scale&lt;/em&gt;. Drag the
+object around with the gizmo and observe how these values change.&lt;/p&gt;
+
+&lt;p&gt;You&amp;rsquo;ll also find a &lt;em&gt;Transform&lt;/em&gt; property, which changes as you move the object.
+A transform is a &lt;em&gt;matrix&lt;/em&gt; that describes an object&amp;rsquo;s translation, rotation, and
+scale all in one. The math behind transforms can get quite complex - you&amp;rsquo;ll
+start working with them in a later tutorial.&lt;/p&gt;
+
+&lt;h1 id=&#34;meshes&#34;&gt;Meshes&lt;/h1&gt;
+
+&lt;p&gt;Just like a &lt;code&gt;Node2D&lt;/code&gt;, a &lt;code&gt;Spatial&lt;/code&gt; has no size or appearance of its own. In 2D,
+you would use a &lt;code&gt;Sprite&lt;/code&gt; to add a texture to the node. In 3D, you need to add
+a &lt;em&gt;mesh&lt;/em&gt;. A mesh is a mathematical description of a shape. It consists of a
+collection of points, called &lt;em&gt;vertices&lt;/em&gt;. These vertices are connected by lines,
+called &lt;em&gt;edges&lt;/em&gt;, and multiple edges (at least three) together make a &lt;em&gt;face&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_intro_cube_labels.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For example, a cube is made up of 8 vertices, 12 edges, and 6 faces.&lt;/p&gt;
+
+&lt;h2 id=&#34;adding-meshes&#34;&gt;Adding Meshes&lt;/h2&gt;
+
+&lt;p&gt;Typically, meshes are created by using 3D modeling software, such as Blender.
+You can also find many collections of 3D models available for download, if
+you&amp;rsquo;re unable to create your own. However, often you just need a basic shape
+such as a cube or sphere. In this case, Godot provides a way to create
+simple meshes called &lt;em&gt;primitives&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Add a &lt;code&gt;MeshInstance&lt;/code&gt; node as a child of the &lt;code&gt;Spatial&lt;/code&gt; and in the Inspector,
+click its &lt;em&gt;Mesh&lt;/em&gt; property:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_intro_primitives.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Here you can see the list of available primitives. They represent a handy
+collection of common useful shapes. Select &amp;ldquo;New CubeMesh&amp;rdquo; and you&amp;rsquo;ll see a
+plain cube appear on the screen. Note that the cube is white by default, although
+it may appear slightly blue on your screen due to the default ambient lighting.
+We&amp;rsquo;ll talk about lighting a little bit later.&lt;/p&gt;
+
+&lt;h1 id=&#34;cameras&#34;&gt;Cameras&lt;/h1&gt;
+
+&lt;p&gt;Try running the scene with your cube object. Did you see anything? In 3D, you
+won&amp;rsquo;t see anything in the game viewport without adding a &lt;code&gt;Camera&lt;/code&gt;. Add one and
+use the camera&amp;rsquo;s gizmo to position it pointing towards the cube:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_intro_camera01.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The pinkish-purple pyramid shape on the camera is called the &lt;em&gt;fustrum&lt;/em&gt; and
+represents the camera&amp;rsquo;s view. Notice the small triangular arrow which represents
+the camera&amp;rsquo;s &amp;ldquo;up&amp;rdquo; orientation. As you&amp;rsquo;re moving the camera around, try pressing
+the &amp;ldquo;Preview&amp;rdquo; button in the upper-left to see what the camera sees. Play the
+scene to verify everything is working as expected.&lt;/p&gt;
+
+&lt;h1 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h1&gt;
+
+&lt;p&gt;In this tutorial you learned how to use Godot&amp;rsquo;s 3D editor, how to add 3D
+nodes such as &lt;code&gt;Spatial&lt;/code&gt;, &lt;code&gt;MeshInstance&lt;/code&gt;, and &lt;code&gt;Camera&lt;/code&gt;, and how to use gizmos to place
+your objects. You also learned a bunch of new terminology. Hopefully you&amp;rsquo;re
+not overwhelmed.&lt;/p&gt;
+
+&lt;p&gt;In the next part, we&amp;rsquo;ll look at how to build a 3D scene by importing 3D assets
+and how to use more of Godot&amp;rsquo;s 3D nodes.&lt;/p&gt;
+
+&lt;h3 id=&#34;next-godot-101-intro-to-3d-part-2-blog-2019-03-godot-31-3d-part02&#34;&gt;Next: &lt;a href=&#34;/blog/blog/2019/03/godot_31_3d_part02/&#34;&gt;Godot 101: Intro to 3D, Part 2&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Support these lessons: &lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;&lt;img src=&#34;/blog/blog/img/become_a_patron_button.png&#34; alt=&#34;alt&#34; /&gt;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Procedural Generation in Godot - Part 8: Dungeons (part 3)</title>
@@ -2896,160 +3078,6 @@ visuals with individual unit healthbars on the enemy tanks and explosions for th
 &lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
 
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part06-download-the-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part06&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Topdown Tank Battle: Part 5</title>
-      <link>/blog/2018/04/godot3_tanks_part5/</link>
-      <pubDate>Thu, 26 Apr 2018 14:14:12 PDT</pubDate>
-      
-      <guid>/blog/2018/04/godot3_tanks_part5/</guid>
-      <description>&lt;p&gt;In this tutorial series, we&amp;rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&amp;rsquo;s workflow and show you various techniques that you can apply to your own projects.&lt;/p&gt;
-
-&lt;p&gt;This is Part 5: Enemy shooting and improved enemy movement&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/kStPQXu3X7c&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-
-&lt;p&gt;In the last part, we added shooting to the player, so this time we need to do the
-same for the enemy tank. But first, there&amp;rsquo;s a small fix we need to make:&lt;/p&gt;
-
-&lt;p&gt;In the enemy tank&amp;rsquo;s &lt;code&gt;Detect&lt;/code&gt; area, we attached a &lt;code&gt;CollisionShape2D&lt;/code&gt; with a circle shape.
-The problem is that when we instance the enemies, the shape is &lt;em&gt;shared&lt;/em&gt; between them.
-This means that when we set that shape&amp;rsquo;s radius in &lt;code&gt;_ready()&lt;/code&gt; all the tanks wind
-up with the same size, ignoring our &lt;code&gt;detect_radius&lt;/code&gt; property.&lt;/p&gt;
-
-&lt;p&gt;To fix this, clear the shape from the &lt;code&gt;CollisionShape2D&lt;/code&gt; in the scene, and change
-the &lt;code&gt;EnemyTank.gd&lt;/code&gt; code like so:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;circle&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CircleShape2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;new&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DetectRadius&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CollisionShape2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shape&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;circle&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;DetectRadius&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CollisionShape2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shape&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;radius&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;detect_radius&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;This ensures that each enemy gets its own unique shape resource, set to its
-desired size.&lt;/p&gt;
-
-&lt;h2 id=&#34;enemy-bullets&#34;&gt;Enemy Bullets&lt;/h2&gt;
-
-&lt;p&gt;First, we create a new &lt;code&gt;EnemyBullet&lt;/code&gt; scene exactly like the player bullet we made
-in the last part. The only difference should be which texture you use for the
-appearance. Make sure you set the collision layer/mask properties. The enemy
-bullet should be in the &amp;ldquo;bullets&amp;rdquo; layer, and its mask should see &amp;ldquo;environment&amp;rdquo;
-and &amp;ldquo;player&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;After saving the scene, make sure to drop it in the EnemyTank&amp;rsquo;s &lt;em&gt;Bullet&lt;/em&gt;
-property.&lt;/p&gt;
-
-&lt;h3 id=&#34;aiming&#34;&gt;Aiming&lt;/h3&gt;
-
-&lt;p&gt;We already have our enemy tank aiming its turret at the player. Now we want it to
-fire, but only when it&amp;rsquo;s pointing towards the player (i.e. the angle between the
-turret and the player is small).&lt;/p&gt;
-
-&lt;p&gt;In the enemy&amp;rsquo;s &lt;code&gt;_process()&lt;/code&gt; function, we already have a direction vector pointing
-at the player, &lt;code&gt;target_dir&lt;/code&gt;, and one representing the turret&amp;rsquo;s direction, &lt;code&gt;current_dir&lt;/code&gt;.
-To check the angle between them, we can use the dot product.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Quick review of dot product:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;The dot product of two unit vectors (vectors of length &lt;code&gt;1&lt;/code&gt;), is a number between
-&lt;code&gt;-1&lt;/code&gt; and &lt;code&gt;1&lt;/code&gt;. &lt;code&gt;0&lt;/code&gt; means the two vectors are exactly 90 degrees apart, and &lt;code&gt;1&lt;/code&gt; means
-they are pointing in the same direction. For a review of vector math, including
-dot product, see &lt;a href=&#34;http://docs.godotengine.org/en/latest/tutorials/math/vector_math.html&#34;&gt;http://docs.godotengine.org/en/latest/tutorials/math/vector_math.html&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;If the dot product of the two vectors is close to &lt;code&gt;1&lt;/code&gt; then the tank is aiming near
-the player, and should attempt to shoot. Update the enemy tank&amp;rsquo;s code:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-		&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;target_dir&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;target&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;global_position&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;global_position&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;normalized&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-		&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;current_dir&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotated&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Turret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;global_rotation&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-		&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Turret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;global_rotation&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;current_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;linear_interpolate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;target_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;turret_speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;angle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-		&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;target_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;current_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.9&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-			&lt;span class=&#34;n&#34;&gt;shoot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;We defined &lt;code&gt;shoot()&lt;/code&gt; in the base &lt;code&gt;Tank&lt;/code&gt; script, so the bullet will be emitted using
-the &lt;code&gt;shoot&lt;/code&gt; signal just like the player&amp;rsquo;s bullet.&lt;/p&gt;
-
-&lt;p&gt;The &lt;code&gt;Main&lt;/code&gt; script already has a function, &lt;code&gt;_on_Tank_shoot&lt;/code&gt;, that can receive an
-emitted bullet. Connect each enemy instance&amp;rsquo;s &lt;code&gt;shoot&lt;/code&gt; signal to that function.&lt;/p&gt;
-
-&lt;h2 id=&#34;enemy-movement&#34;&gt;Enemy movement&lt;/h2&gt;
-
-&lt;p&gt;We can also make some improvements to the enemy&amp;rsquo;s movement. Right now, if we drive
-in front of the enemy, the collision is a bit glitchy as the two bodies try and
-slide around each other.&lt;/p&gt;
-
-&lt;p&gt;Instead, let&amp;rsquo;s make the enemy tank hit the brakes if there&amp;rsquo;s an obstacle in front
-of it. We can accomplish this by adding a &lt;code&gt;RayCast2D&lt;/code&gt; to the enemy tank scene.&lt;/p&gt;
-
-&lt;p&gt;Set the &lt;em&gt;Enabled&lt;/em&gt; property to &amp;ldquo;On&amp;rdquo; (it&amp;rsquo;s off by default), and the &amp;ldquo;Cast To&amp;rdquo; to &lt;code&gt;(100, 0)&lt;/code&gt;
-so that it projects ahead of the tank.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_raycast.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_raycast.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;The &lt;em&gt;Collision Mask&lt;/em&gt; of the raycast should be set to &amp;ldquo;environment&amp;rdquo;, &amp;ldquo;enemies&amp;rdquo;, and &amp;ldquo;player&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;Now we also need the enemy to change its speed. In &lt;code&gt;Tank.gd&lt;/code&gt;, change the &lt;code&gt;speed&lt;/code&gt;
-export variable to &lt;code&gt;max_speed&lt;/code&gt;. Note: this means we need to change the variable name
-in the player&amp;rsquo;s script too!&lt;/p&gt;
-
-&lt;p&gt;Add &lt;code&gt;var speed&lt;/code&gt; to the top of the enemy script. This will now be our &amp;ldquo;current&amp;rdquo; speed,
-which may change over time. If the raycast detects something, &lt;code&gt;speed&lt;/code&gt; will ramp down
-to &lt;code&gt;0&lt;/code&gt; and if it doesn&amp;rsquo;t, it will ramp up to &lt;code&gt;max_speed&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;We can accomplish this &amp;ldquo;ramping&amp;rdquo; effect using GDScript&amp;rsquo;s linear interpolation function: &lt;code&gt;lerp&lt;/code&gt;.
-Update the enemy tank&amp;rsquo;s &lt;code&gt;control()&lt;/code&gt; function:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;control&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LookAhead&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-		&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;lerp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ramp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;down&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
-	&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-		&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;lerp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max_speed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.05&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ramp&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;up&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;to&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;max&lt;/span&gt;
-	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;parent&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;PathFollow2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-		&lt;span class=&#34;n&#34;&gt;parent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_offset&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;parent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_offset&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-		&lt;span class=&#34;n&#34;&gt;position&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-	&lt;span class=&#34;k&#34;&gt;else&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-		&lt;span class=&#34;p&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;other&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;movement&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;code&lt;/span&gt;
-		&lt;span class=&#34;n&#34;&gt;pass&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Run the scene and try it out. If you drive the player in front of the enemy tank,
-it should stop moving.&lt;/p&gt;
-
-&lt;p&gt;However, we still have a small problem: if the collision happens with an offset or
-around a corner, the ray may not &amp;ldquo;see&amp;rdquo; anything. We can improve the obstacle detection
-if we use two raycasts instead of one:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_raycast2.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_raycast2.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;If you click on the &lt;code&gt;LookAhead&lt;/code&gt; node and press &lt;em&gt;Ctrl+D&lt;/em&gt; you can duplicate the node
-with all of its settings. Adjust the &lt;em&gt;Position&lt;/em&gt; of each so that one is shifted
-&lt;code&gt;30&lt;/code&gt; pixels up and the other  down.&lt;/p&gt;
-
-&lt;p&gt;Now we just need to make sure we check both of them:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;	&lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LookAhead1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;or&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;LookAhead2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_colliding&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;That&amp;rsquo;ll do it for Part 5 of this series. In the next part we&amp;rsquo;ll continue to work
-on the shooting by adding some effects (explosions) and handle damage.&lt;/p&gt;
-
-&lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part05-download-the-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part05&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
