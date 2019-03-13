@@ -1,0 +1,338 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 101: Intro to 3D, Part 2 &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">57</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">40</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/procgen" class="list-group-item">
+                        <span class="badge">6</span>
+                        procgen
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">57</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2019 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 101: Intro to 3D, Part 2</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sat, Mar 9, 2019</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			</h6></span>
+
+			      <p><img src="/blog/img/godot3_logo.png" width="450"></p>
+
+<p>In the <a href="/blog/2019/03/godot_31_3d_intro/">previous tutorial</a>, we started a 3D
+project and looked at how to navigate and create 3D objects. In this part, you&rsquo;ll
+learn how to import existing 3D objects that you&rsquo;ve made or downloaded and how
+to use more of Godot&rsquo;s 3D nodes.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>A word of warning: 3D development can be quite a bit more complex than working
+in 2D. While many of the same principles apply - such as working with nodes,
+writing scripts, and handling logic/data - 3D brings with it a number of other
+considerations. For this reason, it&rsquo;s a good idea to stick to 2D for your first
+few projects, moving to 3D once you have a good understanding of the game
+development process. This tutorial will assume you have completed at least
+an <a href="https://docs.godotengine.org/en/latest/getting_started/step_by_step/your_first_game.html">introductory Godot 2D project</a>.</p>
+
+<p>You can also find a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/3lWro1V0klY" frameborder="0" allowfullscreen></iframe></p>
+
+<h1 id="importing-3d-objects">Importing 3D Objects</h1>
+
+<p>If you&rsquo;re familiar with 3D modeling software such as Blender, you can make your
+own models to use in your game. If not, there are many sources where you can
+download objects or even collections of objects for particular game types. One
+of our favorite makers of free game art is <a href="https://kenney.nl/">Kenney.nl</a>.</p>
+
+<p>For our tutorials, we&rsquo;re going to use Kenney&rsquo;s <em>Platformer Kit</em>, which you can
+download here: <a href="https://kenney.nl/assets/platformer-kit">https://kenney.nl/assets/platformer-kit</a></p>
+
+<p>This kit has a wide selection of objects that we can use to practice our Godot
+3D skills. Here&rsquo;s a sample showing what the kit looks like:</p>
+
+<p><img src="/blog/img/kenney_3d_platform_sample.png" alt="alt" /></p>
+
+<p>Once you&rsquo;ve downloaded the kit, you&rsquo;ll find that the objects inside are provided
+in a variety of different formats. Godot is able to use several of these, but
+since GLTF is available in this pack, it&rsquo;s preferred over the others. Copy the
+&ldquo;GLTF Format&rdquo; folder into your Godot project&rsquo;s folder and rename it to &ldquo;platformer
+kit&rdquo;.</p>
+
+<blockquote>
+<p>If you&rsquo;re interested in the differences between the formats, here&rsquo;s a brief
+summary: <em>OBJ</em> files are the simplest, each representing a mesh which you can
+load into a <code>MeshInstance</code> node. This is likely the most common file type
+you&rsquo;ll find online. <em>DAE</em> (Collada) files are more robust -
+Godot loads them as individual scenes, and they can include additional data
+along with the mesh such as animations. <em>GLTF</em> files are similar, but represent
+a more modern format with additional features.</p>
+</blockquote>
+
+<p>When you switch back to your Godot window, you&rsquo;ll see progress bar while Godot
+scans the folder and imports all of the objects. Let&rsquo;s click on one of them to
+see what&rsquo;s going on. In the &ldquo;FileSystem&rdquo; tab, select the &ldquo;crate.glb&rdquo; and then
+click on the &ldquo;Import&rdquo; tab:</p>
+
+<p><img src="/blog/img/3d_02_01.png" alt="alt" /></p>
+
+<p>Here you can see the cube object will be imported as a scene, with its root type
+set to <code>Spatial</code> and named &ldquo;Scene Root&rdquo;. Let&rsquo;s change these: set the root type
+to <code>RigidBody</code> and the root name to &ldquo;Crate&rdquo;, then click the &ldquo;Reimport&rdquo; button.</p>
+
+<p>Now double-click on &ldquo;crate.glb&rdquo; and confirm that you want to make a new inherited
+scene. Here we have a classic game object: the crate. The root node of the scene
+is a <code>RigidBody</code> named &ldquo;Crate&rdquo; just as we wanted. However, there&rsquo;s one small
+problem: it seems Kenney exported this model with an offset:</p>
+
+<p><img src="/blog/img/3d_02_02.png" alt="alt" /></p>
+
+<p>It would much better if the crate were centered relative to the parent node, so
+that when the <code>RigidBody</code> rotates about its center, so will the mesh. To fix
+this, select the <code>MeshInstance</code> node and set its <em>Translation</em> property to
+<code>(-0.5, -0.25, 0.5)</code>.</p>
+
+<p>Finally, we need to add a collision shape to the body. Add a <code>CollisionShape</code>
+node as a child of the <code>Crate</code>. In its <em>Shape</em> property, choose &ldquo;New BoxShape&rdquo;.
+Use the three handles (they look like orange circles) to size the box to fit
+the mesh. You can also set the extents directly in the Inspector:</p>
+
+<p><img src="/blog/img/3d_02_03.png" alt="alt" /></p>
+
+<p>Note that since the crate is 0.5 units wide, the <em>Extents</em>, which represent the
+distance from the center, becomes 0.25 units.</p>
+
+<p>Now we&rsquo;re finished setting up the object. Save your <code>Crate</code> scene and let&rsquo;s
+see how we can use it.</p>
+
+<h1 id="building-a-3d-scene">Building a 3D Scene</h1>
+
+<p>Create a new scene with a <code>Spatial</code> root. The first child we&rsquo;ll add is one to
+give us a &ldquo;ground&rdquo; to stack some crates on. Add a <code>StaticBody</code> called &ldquo;Ground&rdquo;,
+and to that add a <code>MeshInstance</code>. In the <em>Mesh</em> property, select &ldquo;New PlaneMesh&rdquo;
+and then click it to open its properties. Set <em>Size</em> to <code>(10, 10)</code> so that we
+have a nice large surface. However, it would look better if it weren&rsquo;t plain
+white.</p>
+
+<p>Also in the mesh properties is a <em>Material</em> property. Materials are how you
+define the appearance of an object. Select &ldquo;New SpatialMaterial&rdquo; and then click
+it to open a large list of properties. To set the color of the mesh, we need
+the <em>Albedo</em> property. Choose a color, such as brown or dark green.</p>
+
+<p>If we add a crate, it will fall right through the mesh, so we also need to give
+it a collision shape. With the crate, we added a <code>CollisionShape</code> node and
+assigned a shape. That&rsquo;s one way to add collision, let&rsquo;s look at another:
+select the mesh and in the menu at the of the viewport, choose &ldquo;Create
+Convex Collision Sibling&rdquo;. This will automatically create a <code>CollisionShape</code>
+node as a sibling of the mesh and assign it a shape that matches the mesh.</p>
+
+<p><img src="/blog/img/3d_02_06.png" alt="alt" /></p>
+
+<p>Now instance a few crates in the scene and arrange them in a rough stack. Add
+a <code>Camera</code> and place it where it has a good view of the crates. Run the scene
+and watch your crates go tumbling!</p>
+
+<h2 id="rotating-camera">Rotating Camera</h2>
+
+<p>Let&rsquo;s make the camera a little more dynamic by having it slowly orbit around the
+scene. Add a <code>Spatial</code>, which will be located at <code>(0, 0, 0)</code> and name it
+&ldquo;CameraHub&rdquo;. In the scene tree, drag the camera to make it a child of this new
+<code>Spatial</code>. Now, if the <code>Spatial</code> rotates around the <strong>y</strong> axis, it will drag
+the camera along with it.</p>
+
+<p>Add a script to the root node and add the following:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">extends</span> <span class="ne">Spatial</span>
+
+<span class="k">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="o">$</span><span class="n">CameraHub</span><span class="o">.</span><span class="n">rotate_y</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span></code></pre></div>
+
+<p>Run the scene to see what happens.</p>
+
+<h2 id="lighting">Lighting</h2>
+
+<p>There&rsquo;s another thing we can add to the scene to improve how it looks: light.
+There are multiple light nodes available in 3D, but we&rsquo;re going to start with
+<code>DirectionalLight</code>. Add one to the scene and use the green (<strong>Y</strong>) arrow to
+pull it up into the air.</p>
+
+<p>A <code>DirectionalLight</code> simulates an infinite number of parallel rays of light, as
+if from a distant source like the sun. It will not cast shadows by default; to
+add shadows, click <em>Enabled</em> in the &ldquo;Shadow&rdquo; section. There is also a
+&ldquo;DirectionalShadow&rdquo; section, which contains a number of advanced properties for
+fine-tuning the shadow appearance. For full details see <a href="https://docs.godotengine.org/en/latest/tutorials/3d/lights_and_shadows.html">this document</a>.</p>
+
+<p><img src="/blog/img/3d_02_05.png" alt="alt" /></p>
+
+<p>Note that it really doesn&rsquo;t matter where you place the node - only the
+direction of the light arrow matters.</p>
+
+<p><img src="/blog/img/3d_02_04.gif" alt="alt" /></p>
+
+<h1 id="wrapping-up">Wrapping Up</h1>
+
+<p>In this tutorial you learned how to import 3D objects from outside sources, and
+how to combine them into a simple scene. We also investigated lights and moving
+cameras.</p>
+
+<p>In the next part, we&rsquo;ll look at how to build a more complex scene and include
+a player-controlled character.</p>
+
+<h3 id="next-godot-101-intro-to-3d-part-3-blog-2019-03-godot-31-3d-part03">Next: <a href="/blog/2019/03/godot_31_3d_part03/">Godot 101: Intro to 3D, Part 3</a></h3>
+
+<p>Support these lessons: <a href="https://www.patreon.com/kidscancode"><img src="/blog/img/become_a_patron_button.png" alt="alt" /></a></p>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>

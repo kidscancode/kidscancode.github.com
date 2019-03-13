@@ -7,7 +7,178 @@
     <language>en-us</language>
     
     
-    <updated>Fri, 08 Mar 2019 05:22:12 -0700</updated>
+    <updated>Sat, 09 Mar 2019 05:22:12 -0700</updated>
+    
+    <item>
+      <title>Godot 101: Intro to 3D, Part 2</title>
+      <link>/blog/2019/03/godot_31_3d_part02/</link>
+      <pubDate>Sat, 09 Mar 2019 05:22:12 -0700</pubDate>
+      
+      <guid>/blog/2019/03/godot_31_3d_part02/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot3_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;In the &lt;a href=&#34;/blog/blog/2019/03/godot_31_3d_intro/&#34;&gt;previous tutorial&lt;/a&gt;, we started a 3D
+project and looked at how to navigate and create 3D objects. In this part, you&amp;rsquo;ll
+learn how to import existing 3D objects that you&amp;rsquo;ve made or downloaded and how
+to use more of Godot&amp;rsquo;s 3D nodes.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
+
+&lt;p&gt;A word of warning: 3D development can be quite a bit more complex than working
+in 2D. While many of the same principles apply - such as working with nodes,
+writing scripts, and handling logic/data - 3D brings with it a number of other
+considerations. For this reason, it&amp;rsquo;s a good idea to stick to 2D for your first
+few projects, moving to 3D once you have a good understanding of the game
+development process. This tutorial will assume you have completed at least
+an &lt;a href=&#34;https://docs.godotengine.org/en/latest/getting_started/step_by_step/your_first_game.html&#34;&gt;introductory Godot 2D project&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can also find a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/3lWro1V0klY&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;importing-3d-objects&#34;&gt;Importing 3D Objects&lt;/h1&gt;
+
+&lt;p&gt;If you&amp;rsquo;re familiar with 3D modeling software such as Blender, you can make your
+own models to use in your game. If not, there are many sources where you can
+download objects or even collections of objects for particular game types. One
+of our favorite makers of free game art is &lt;a href=&#34;https://kenney.nl/&#34;&gt;Kenney.nl&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For our tutorials, we&amp;rsquo;re going to use Kenney&amp;rsquo;s &lt;em&gt;Platformer Kit&lt;/em&gt;, which you can
+download here: &lt;a href=&#34;https://kenney.nl/assets/platformer-kit&#34;&gt;https://kenney.nl/assets/platformer-kit&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This kit has a wide selection of objects that we can use to practice our Godot
+3D skills. Here&amp;rsquo;s a sample showing what the kit looks like:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/kenney_3d_platform_sample.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once you&amp;rsquo;ve downloaded the kit, you&amp;rsquo;ll find that the objects inside are provided
+in a variety of different formats. Godot is able to use several of these, but
+since GLTF is available in this pack, it&amp;rsquo;s preferred over the others. Copy the
+&amp;ldquo;GLTF Format&amp;rdquo; folder into your Godot project&amp;rsquo;s folder and rename it to &amp;ldquo;platformer
+kit&amp;rdquo;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;If you&amp;rsquo;re interested in the differences between the formats, here&amp;rsquo;s a brief
+summary: &lt;em&gt;OBJ&lt;/em&gt; files are the simplest, each representing a mesh which you can
+load into a &lt;code&gt;MeshInstance&lt;/code&gt; node. This is likely the most common file type
+you&amp;rsquo;ll find online. &lt;em&gt;DAE&lt;/em&gt; (Collada) files are more robust -
+Godot loads them as individual scenes, and they can include additional data
+along with the mesh such as animations. &lt;em&gt;GLTF&lt;/em&gt; files are similar, but represent
+a more modern format with additional features.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;When you switch back to your Godot window, you&amp;rsquo;ll see progress bar while Godot
+scans the folder and imports all of the objects. Let&amp;rsquo;s click on one of them to
+see what&amp;rsquo;s going on. In the &amp;ldquo;FileSystem&amp;rdquo; tab, select the &amp;ldquo;crate.glb&amp;rdquo; and then
+click on the &amp;ldquo;Import&amp;rdquo; tab:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_02_01.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Here you can see the cube object will be imported as a scene, with its root type
+set to &lt;code&gt;Spatial&lt;/code&gt; and named &amp;ldquo;Scene Root&amp;rdquo;. Let&amp;rsquo;s change these: set the root type
+to &lt;code&gt;RigidBody&lt;/code&gt; and the root name to &amp;ldquo;Crate&amp;rdquo;, then click the &amp;ldquo;Reimport&amp;rdquo; button.&lt;/p&gt;
+
+&lt;p&gt;Now double-click on &amp;ldquo;crate.glb&amp;rdquo; and confirm that you want to make a new inherited
+scene. Here we have a classic game object: the crate. The root node of the scene
+is a &lt;code&gt;RigidBody&lt;/code&gt; named &amp;ldquo;Crate&amp;rdquo; just as we wanted. However, there&amp;rsquo;s one small
+problem: it seems Kenney exported this model with an offset:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_02_02.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It would much better if the crate were centered relative to the parent node, so
+that when the &lt;code&gt;RigidBody&lt;/code&gt; rotates about its center, so will the mesh. To fix
+this, select the &lt;code&gt;MeshInstance&lt;/code&gt; node and set its &lt;em&gt;Translation&lt;/em&gt; property to
+&lt;code&gt;(-0.5, -0.25, 0.5)&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Finally, we need to add a collision shape to the body. Add a &lt;code&gt;CollisionShape&lt;/code&gt;
+node as a child of the &lt;code&gt;Crate&lt;/code&gt;. In its &lt;em&gt;Shape&lt;/em&gt; property, choose &amp;ldquo;New BoxShape&amp;rdquo;.
+Use the three handles (they look like orange circles) to size the box to fit
+the mesh. You can also set the extents directly in the Inspector:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_02_03.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that since the crate is 0.5 units wide, the &lt;em&gt;Extents&lt;/em&gt;, which represent the
+distance from the center, becomes 0.25 units.&lt;/p&gt;
+
+&lt;p&gt;Now we&amp;rsquo;re finished setting up the object. Save your &lt;code&gt;Crate&lt;/code&gt; scene and let&amp;rsquo;s
+see how we can use it.&lt;/p&gt;
+
+&lt;h1 id=&#34;building-a-3d-scene&#34;&gt;Building a 3D Scene&lt;/h1&gt;
+
+&lt;p&gt;Create a new scene with a &lt;code&gt;Spatial&lt;/code&gt; root. The first child we&amp;rsquo;ll add is one to
+give us a &amp;ldquo;ground&amp;rdquo; to stack some crates on. Add a &lt;code&gt;StaticBody&lt;/code&gt; called &amp;ldquo;Ground&amp;rdquo;,
+and to that add a &lt;code&gt;MeshInstance&lt;/code&gt;. In the &lt;em&gt;Mesh&lt;/em&gt; property, select &amp;ldquo;New PlaneMesh&amp;rdquo;
+and then click it to open its properties. Set &lt;em&gt;Size&lt;/em&gt; to &lt;code&gt;(10, 10)&lt;/code&gt; so that we
+have a nice large surface. However, it would look better if it weren&amp;rsquo;t plain
+white.&lt;/p&gt;
+
+&lt;p&gt;Also in the mesh properties is a &lt;em&gt;Material&lt;/em&gt; property. Materials are how you
+define the appearance of an object. Select &amp;ldquo;New SpatialMaterial&amp;rdquo; and then click
+it to open a large list of properties. To set the color of the mesh, we need
+the &lt;em&gt;Albedo&lt;/em&gt; property. Choose a color, such as brown or dark green.&lt;/p&gt;
+
+&lt;p&gt;If we add a crate, it will fall right through the mesh, so we also need to give
+it a collision shape. With the crate, we added a &lt;code&gt;CollisionShape&lt;/code&gt; node and
+assigned a shape. That&amp;rsquo;s one way to add collision, let&amp;rsquo;s look at another:
+select the mesh and in the menu at the of the viewport, choose &amp;ldquo;Create
+Convex Collision Sibling&amp;rdquo;. This will automatically create a &lt;code&gt;CollisionShape&lt;/code&gt;
+node as a sibling of the mesh and assign it a shape that matches the mesh.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_02_06.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now instance a few crates in the scene and arrange them in a rough stack. Add
+a &lt;code&gt;Camera&lt;/code&gt; and place it where it has a good view of the crates. Run the scene
+and watch your crates go tumbling!&lt;/p&gt;
+
+&lt;h2 id=&#34;rotating-camera&#34;&gt;Rotating Camera&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s make the camera a little more dynamic by having it slowly orbit around the
+scene. Add a &lt;code&gt;Spatial&lt;/code&gt;, which will be located at &lt;code&gt;(0, 0, 0)&lt;/code&gt; and name it
+&amp;ldquo;CameraHub&amp;rdquo;. In the scene tree, drag the camera to make it a child of this new
+&lt;code&gt;Spatial&lt;/code&gt;. Now, if the &lt;code&gt;Spatial&lt;/code&gt; rotates around the &lt;strong&gt;y&lt;/strong&gt; axis, it will drag
+the camera along with it.&lt;/p&gt;
+
+&lt;p&gt;Add a script to the root node and add the following:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript&#34; data-lang=&#34;gdscript&#34;&gt;&lt;span class=&#34;k&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Spatial&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CameraHub&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rotate_y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mf&#34;&gt;0.01&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Run the scene to see what happens.&lt;/p&gt;
+
+&lt;h2 id=&#34;lighting&#34;&gt;Lighting&lt;/h2&gt;
+
+&lt;p&gt;There&amp;rsquo;s another thing we can add to the scene to improve how it looks: light.
+There are multiple light nodes available in 3D, but we&amp;rsquo;re going to start with
+&lt;code&gt;DirectionalLight&lt;/code&gt;. Add one to the scene and use the green (&lt;strong&gt;Y&lt;/strong&gt;) arrow to
+pull it up into the air.&lt;/p&gt;
+
+&lt;p&gt;A &lt;code&gt;DirectionalLight&lt;/code&gt; simulates an infinite number of parallel rays of light, as
+if from a distant source like the sun. It will not cast shadows by default; to
+add shadows, click &lt;em&gt;Enabled&lt;/em&gt; in the &amp;ldquo;Shadow&amp;rdquo; section. There is also a
+&amp;ldquo;DirectionalShadow&amp;rdquo; section, which contains a number of advanced properties for
+fine-tuning the shadow appearance. For full details see &lt;a href=&#34;https://docs.godotengine.org/en/latest/tutorials/3d/lights_and_shadows.html&#34;&gt;this document&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_02_05.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that it really doesn&amp;rsquo;t matter where you place the node - only the
+direction of the light arrow matters.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_02_04.gif&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h1&gt;
+
+&lt;p&gt;In this tutorial you learned how to import 3D objects from outside sources, and
+how to combine them into a simple scene. We also investigated lights and moving
+cameras.&lt;/p&gt;
+
+&lt;p&gt;In the next part, we&amp;rsquo;ll look at how to build a more complex scene and include
+a player-controlled character.&lt;/p&gt;
+
+&lt;h3 id=&#34;next-godot-101-intro-to-3d-part-3-blog-2019-03-godot-31-3d-part03&#34;&gt;Next: &lt;a href=&#34;/blog/blog/2019/03/godot_31_3d_part03/&#34;&gt;Godot 101: Intro to 3D, Part 3&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;Support these lessons: &lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;&lt;img src=&#34;/blog/blog/img/become_a_patron_button.png&#34; alt=&#34;alt&#34; /&gt;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Godot 101: Intro to 3D</title>
@@ -2843,241 +3014,6 @@ obstacles and items to the game.&lt;/p&gt;
 &lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
 
 &lt;h3 id=&#34;a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part07-download-the-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part07&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Topdown Tank Battle: Part 6</title>
-      <link>/blog/2018/05/godot3_tanks_part6/</link>
-      <pubDate>Sun, 06 May 2018 14:14:12 PDT</pubDate>
-      
-      <guid>/blog/2018/05/godot3_tanks_part6/</guid>
-      <description>&lt;p&gt;In this tutorial series, we&amp;rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&amp;rsquo;s workflow and show you various techniques that you can apply to your own projects.&lt;/p&gt;
-
-&lt;p&gt;This is Part 6: Tank damage and UI&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/87wtxNXx69Q&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-
-&lt;p&gt;In the last part, we added shooting, and the bullets are detecting contact
-with the tanks. Now we need them to deal damage.&lt;/p&gt;
-
-&lt;h2 id=&#34;dealing-damage&#34;&gt;Dealing damage&lt;/h2&gt;
-
-&lt;p&gt;We&amp;rsquo;ll start with the &lt;code&gt;Tank.gd&lt;/code&gt; script by changing the &lt;code&gt;health&lt;/code&gt; export variable
-to &lt;code&gt;max_health&lt;/code&gt;. This will be the &amp;ldquo;full&amp;rdquo; value, which can be configured per tank.
-Then, add a new &lt;code&gt;var health&lt;/code&gt; which will track the current health value.&lt;/p&gt;
-
-&lt;p&gt;Add code to the &lt;code&gt;_ready&lt;/code&gt; function to handle this. Note that when we emit the signal,
-we&amp;rsquo;re passing a &lt;em&gt;percentage&lt;/em&gt; rather than the raw health value:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;health&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;max_health&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;emit_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;health_changed&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;health&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;max_health&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GunTimer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;wait_time&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gun_cooldown&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Next, we add a method that will handle applying incoming damage:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;take_damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;amount&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;health&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;amount&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;emit_signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;health_changed&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;health&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;max_health&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;health&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;explode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;explode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;What we need to do now is make the bullet call that method when it collides.&lt;/p&gt;
-
-&lt;p&gt;In the &lt;code&gt;Bullet.gd&lt;/code&gt; script, we already have code that applies damage if the colliding
-body can accept it:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_Bullet_body_entered&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;explode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;has_method&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;take_damage&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;take_damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Run the game and you should be able to destroy the enemy tanks if you hit them
-enough times, depending on what health &amp;amp; damage values you assigned in the Inspector.&lt;/p&gt;
-
-&lt;h2 id=&#34;ui-setup&#34;&gt;UI Setup&lt;/h2&gt;
-
-&lt;p&gt;Now we need to display the player&amp;rsquo;s health, so we&amp;rsquo;ll create a HUD (&amp;ldquo;heads-up display&amp;rdquo;).
-This will eventually display a variety of game data, but we&amp;rsquo;ll start with a bar
-showing the player&amp;rsquo;s health.&lt;/p&gt;
-
-&lt;p&gt;Create a new scene with the following nodes and save it in a &amp;ldquo;ui&amp;rdquo; folder:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;CanvasLayer&lt;/code&gt; (&amp;ldquo;HUD&amp;rdquo;)
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;MarginContainer&lt;/code&gt; (&amp;ldquo;Margin&amp;rdquo;)
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;HBoxContainer&lt;/code&gt; (&amp;ldquo;Container&amp;rdquo;)
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;TextureRect&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;TextureProgress&lt;/code&gt; (&amp;ldquo;HealthBar&amp;rdquo;)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The &lt;code&gt;MarginContainer&lt;/code&gt; keeps its children from getting too close to the edges of the
-screen. In the &amp;ldquo;Layout&amp;rdquo; menu set it to &amp;ldquo;Full Rect&amp;rdquo; and in the Inspector set all
-four of its &lt;em&gt;Custom Constants&lt;/em&gt; values to &lt;code&gt;20&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Drag the &lt;code&gt;res://assets/shield_silver.png&lt;/code&gt; image into the &lt;em&gt;Texture&lt;/em&gt; property of the
-TextureRect.&lt;/p&gt;
-
-&lt;p&gt;The TextureProgress node will handle the health display. It works by displaying a
-portion of a given texture, determined by the &lt;code&gt;value&lt;/code&gt; property.&lt;/p&gt;
-
-&lt;p&gt;Drag &lt;code&gt;res://assets/UI/barHorizontal_green_mid 200.png&lt;/code&gt; to the &lt;em&gt;Texture/Progress&lt;/em&gt; property
-and &lt;code&gt;res://assets/UI/glassPanel_200.png&lt;/code&gt; to the &lt;em&gt;Texture/Over&lt;/em&gt; property. Set the
-&lt;em&gt;Value&lt;/em&gt; to &lt;code&gt;75&lt;/code&gt; to see a portion of the green bar displayed.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_healthbar1.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_healthbar1.png&#34; width=&#34;350&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;ui-script&#34;&gt;UI Script&lt;/h2&gt;
-
-&lt;p&gt;Add a script to the HUD with a function that updates the bar&amp;rsquo;s value to the one
-given:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CanvasLayer&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;update_healthbar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now that method needs to be connected to the player&amp;rsquo;s &lt;code&gt;health_changed&lt;/code&gt; signal.&lt;/p&gt;
-
-&lt;p&gt;Add an instance of the HUD scene to the map scene. Click on the Player instance and
-connect &lt;code&gt;health_changed&lt;/code&gt; to &lt;code&gt;update_healthbar&lt;/code&gt; in the HUD.&lt;/p&gt;
-
-&lt;p&gt;Run the game and you should see the bar going down when bullets hit you.&lt;/p&gt;
-
-&lt;h2 id=&#34;making-it-pretty&#34;&gt;Making it pretty&lt;/h2&gt;
-
-&lt;p&gt;Now that we have the healthbar working, we&amp;rsquo;re going to add a little &amp;ldquo;juice&amp;rdquo; to make
-it look more appealing. We&amp;rsquo;ll add a few effects:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Changing color from green -&amp;gt; yellow -&amp;gt; red as the value decreases&lt;/li&gt;
-&lt;li&gt;A gradual animation when the value changes&lt;/li&gt;
-&lt;li&gt;A flashing effect when hit&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&#34;changing-color&#34;&gt;Changing color&lt;/h3&gt;
-
-&lt;p&gt;The various colored bars are already in the &lt;code&gt;assets&lt;/code&gt; folder, we just need to load
-them and apply them to the bar&amp;rsquo;s &lt;code&gt;texture_progress&lt;/code&gt; property. Add the following to
-the hud script. Note: you can right-click on the file in the FileManager and choose
-&amp;ldquo;Copy Path&amp;rdquo; rather than type out the file locations.&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CanvasLayer&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_red&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;res://assets/UI/barHorizontal_red_mid 200.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_green&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;res://assets/UI/barHorizontal_green_mid 200.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_yellow&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;res://assets/UI/barHorizontal_yellow_mid 200.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_texture&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;update_healthbar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;bar_texture&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_green&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;60&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;bar_texture&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_yellow&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;bar_texture&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_red&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;texture_progress&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_texture&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Try running and the bar&amp;rsquo;s color should change as the value decreases.&lt;/p&gt;
-
-&lt;h3 id=&#34;gradually-changing-value&#34;&gt;Gradually changing value&lt;/h3&gt;
-
-&lt;p&gt;Next, we&amp;rsquo;re going to animate the change so that it doesn&amp;rsquo;t instantly jump to the
-new value. We&amp;rsquo;ll do this with a &lt;code&gt;Tween&lt;/code&gt; node. Add one as a child of the HealthBar.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;ll use the Tween to &lt;em&gt;interpolate&lt;/em&gt; the bar&amp;rsquo;s &lt;code&gt;value&lt;/code&gt; from its current value to
-the new value.&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CanvasLayer&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_red&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;res://assets/UI/barHorizontal_red_mid 200.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_green&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;res://assets/UI/barHorizontal_green_mid 200.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_yellow&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;res://assets/UI/barHorizontal_yellow_mid 200.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_texture&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;update_healthbar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;bar_texture&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_green&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;60&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;bar_texture&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_yellow&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;bar_texture&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_red&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;texture_progress&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_texture&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;interpolate_property&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-            &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-            &lt;span class=&#34;mf&#34;&gt;0.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TRANS_LINEAR&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;EASE_IN_OUT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Note that we don&amp;rsquo;t have to explicitly set the node&amp;rsquo;s &lt;code&gt;value&lt;/code&gt; because the tween
-ends at the value we want.&lt;/p&gt;
-
-&lt;h3 id=&#34;flashing-the-bar&#34;&gt;Flashing the bar&lt;/h3&gt;
-
-&lt;p&gt;For the flashing bar animation, we&amp;rsquo;ll use &lt;code&gt;AnimationPlayer&lt;/code&gt;. Add one to the HUD and
-create a new animation called &amp;ldquo;healthbar_flash&amp;rdquo;. Set the &lt;em&gt;Length&lt;/em&gt; to &lt;code&gt;0.2&lt;/code&gt; and the
-&lt;em&gt;Steps&lt;/em&gt; to &lt;code&gt;0.05&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;This animation will affect the &lt;code&gt;texture_progress&lt;/code&gt; property, so start by dragging the
-red texture into that property and clicking the keyframe button. Now alternate keyframes
-with the white and red textures until you reach the end of the 0.2 seconds.&lt;/p&gt;
-
-&lt;p&gt;After the animation plays, the bar will be left with the red texture, so we&amp;rsquo;ll
-connect the AnimationPlayer&amp;rsquo;s &lt;code&gt;animation_finished&lt;/code&gt; signal so that we can set the
-bar back to its correct color.&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CanvasLayer&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_red&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;res://assets/UI/barHorizontal_red_mid 200.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_green&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;res://assets/UI/barHorizontal_green_mid 200.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_yellow&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;res://assets/UI/barHorizontal_yellow_mid 200.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_texture&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;update_healthbar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;bar_texture&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_green&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;60&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;bar_texture&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_yellow&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;bar_texture&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_red&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;texture_progress&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_texture&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;interpolate_property&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-            &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-            &lt;span class=&#34;mf&#34;&gt;0.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TRANS_LINEAR&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;EASE_IN_OUT&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Tween&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;AnimationPlayer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;healthbar_flash&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_AnimationPlayer_animation_finished&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;anim_name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;anim_name&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;healthbar_flash&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Margin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Container&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;texture_progress&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_texture&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;That completes Part 6 of this series. In the next part we&amp;rsquo;ll continue adding
-visuals with individual unit healthbars on the enemy tanks and explosions for the bullets.&lt;/p&gt;
-
-&lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part06-download-the-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part06&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
