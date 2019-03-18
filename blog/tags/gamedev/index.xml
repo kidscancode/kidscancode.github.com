@@ -7,7 +7,252 @@
     <language>en-us</language>
     
     
-    <updated>Sat, 09 Mar 2019 05:22:12 -0700</updated>
+    <updated>Sun, 10 Mar 2019 05:22:12 PDT</updated>
+    
+    <item>
+      <title>Godot 101: Intro to 3D, Part 3</title>
+      <link>/blog/2019/03/godot_31_3d_part03/</link>
+      <pubDate>Sun, 10 Mar 2019 05:22:12 PDT</pubDate>
+      
+      <guid>/blog/2019/03/godot_31_3d_part03/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot3_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;In the &lt;a href=&#34;/blog/blog/2019/03/godot_31_3d_part02/&#34;&gt;previous tutorial&lt;/a&gt;, we covered how
+to import 3D objects and how to arrange them in a scene. In this installment,
+we&amp;rsquo;ll add more objects to the scene, including a user-controlled character.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
+
+&lt;p&gt;A word of warning: 3D development can be quite a bit more complex than working
+in 2D. While many of the same principles apply - such as working with nodes,
+writing scripts, and handling logic/data - 3D brings with it a number of other
+considerations. For this reason, it&amp;rsquo;s a good idea to stick to 2D for your first
+few projects, moving to 3D once you have a good understanding of the game
+development process. This tutorial will assume you have completed at least
+an &lt;a href=&#34;https://docs.godotengine.org/en/latest/getting_started/step_by_step/your_first_game.html&#34;&gt;introductory Godot 2D project&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can also find a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/SQ7soQ-N-eQ&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;building-the-scene&#34;&gt;Building the Scene&lt;/h1&gt;
+
+&lt;p&gt;We&amp;rsquo;re going to continue using the Kenney Platformer Kit we downloaded &lt;a href=&#34;/blog/blog/2019/03/godot_31_3d_part02/&#34;&gt;last time&lt;/a&gt;. Select all the &amp;ldquo;block*.glb&amp;rdquo; files and in the
+&amp;ldquo;Import&amp;rdquo; tab set their &amp;ldquo;Root Type&amp;rdquo; to &lt;code&gt;StaticBody&lt;/code&gt; and click &amp;ldquo;Reimport&amp;rdquo;. Select
+&amp;ldquo;blockLarge.glb&amp;rdquo; and make a new inherited scene. Add a &amp;ldquo;Convex Collision Sibling&amp;rdquo;
+to the mesh using the menu as you did in the last tutorial. Rename the root node
+to &amp;ldquo;BlockLarge&amp;rdquo; and save the scene - I recommend making a separate folder for
+this, as soon you&amp;rsquo;re going to have a bunch of scenes representing the
+differently shaped platform parts.&lt;/p&gt;
+
+&lt;p&gt;You can download a starter project with all the block objects already configured
+and ready to use here: &lt;strong&gt;LINK&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Open the scene from the last tutorial with the &amp;ldquo;Ground&amp;rdquo; plane and the crates.
+Delete the crates and add an instance of the large block. We want to be able
+to place these blocks so that they line up. To do this, select &amp;ldquo;Configure Snap&amp;rdquo;
+from the &amp;ldquo;Transform&amp;rdquo; menu at the top of the Viewport and set &lt;em&gt;Translate Snap&lt;/em&gt;
+to &lt;code&gt;0.5&lt;/code&gt;. Then click on the &amp;ldquo;Snap Mode&amp;rdquo; button (or press the &lt;strong&gt;&lt;code&gt;Y&lt;/code&gt;&lt;/strong&gt; key). Now
+duplicate the block a few times and drag them to arrange.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/g101_03_01.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you like, go ahead and add scenes for some of the other platform blocks and
+arrange them into a pleasing level. Be creative!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/g101_03_02.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;adding-a-character&#34;&gt;Adding a Character&lt;/h1&gt;
+
+&lt;p&gt;Now we&amp;rsquo;re going to make a character so we can walk around on the platforms.
+Open a new scene and start with a &lt;code&gt;KinematicBody&lt;/code&gt; named &amp;ldquo;Character&amp;rdquo;. This
+&lt;code&gt;PhysicsBody&lt;/code&gt; node behaves very much like its 2D equivalent (you&amp;rsquo;ve already
+done the 2D tutorials, right?). It has a &lt;code&gt;move_and_slide()&lt;/code&gt; method that we&amp;rsquo;ll
+use to perform the movement and collision detection. Gravity will be added
+manually each frame, accelerating in the &lt;strong&gt;-Y&lt;/strong&gt; direction.&lt;/p&gt;
+
+&lt;p&gt;Add a sphere-shaped &lt;code&gt;MeshInstance&lt;/code&gt; and a matching &lt;code&gt;CollisionShape&lt;/code&gt;. Remember,
+you can add a &lt;code&gt;SpatialMaterial&lt;/code&gt; to the mesh and set its &lt;em&gt;Albedo&lt;/em&gt; property to
+change the color.&lt;/p&gt;
+
+&lt;p&gt;The sphere is nice, but it&amp;rsquo;s going to be hard to tell what direction it&amp;rsquo;s
+facing. Let&amp;rsquo;s add another &lt;code&gt;MeshInstance&lt;/code&gt;, this time with a &lt;code&gt;PrismMesh&lt;/code&gt; shape.
+Set its &lt;em&gt;Size&lt;/em&gt; to &lt;code&gt;(0.5, 0.5, 0.1)&lt;/code&gt; and then its &lt;strong&gt;x&lt;/strong&gt; rotation to &lt;code&gt;-90&lt;/code&gt;
+degrees. Arrange it so it&amp;rsquo;s pointing along the &lt;em&gt;negative&lt;/em&gt; &lt;strong&gt;z&lt;/strong&gt; axis. (You can
+tell which way is negative because the gizmo arrows point in the positive
+direction).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/g101_03_03.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s also add a &lt;code&gt;Camera&lt;/code&gt; to the scene, so it will follow the player around.
+Position the camera behind and above the character, angling it down a bit. Click
+the &amp;ldquo;Preview&amp;rdquo; button to check the camera&amp;rsquo;s view.&lt;/p&gt;
+
+&lt;p&gt;Before we add a script, open the &amp;ldquo;Project Settings&amp;rdquo; and add the following inputs
+on the &amp;ldquo;Input Map&amp;rdquo; tab:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;Input Action&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Key&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;move_forward&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;W&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;move_back&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;S&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;strafe_right&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;D&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;strafe_left&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;A&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;jump&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;&lt;strong&gt;Space&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s add a script to the body.&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript&#34; data-lang=&#34;gdscript&#34;&gt;&lt;span class=&#34;k&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;KinematicBody&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gravity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;12&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# strength of gravity Vector3.DOWN * 12&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# movement speed&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;jump_speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# jump strength&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;spin&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;0.1&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# rotation speed&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Vector3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;jump&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;false&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;move_forward&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;move_back&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;strafe_right&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;strafe_left&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_physics_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;gravity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;get_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;move_and_slide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Vector3&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;UP&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The code in &lt;code&gt;_physics_process()&lt;/code&gt; is pretty straightforward: add gravity to
+accelerate in the positive &lt;strong&gt;Y&lt;/strong&gt; direction (downward), call &lt;code&gt;get_input()&lt;/code&gt; to
+check for input, and then use &lt;code&gt;move_and_slide()&lt;/code&gt; to move in the direction
+of the velocity vector.&lt;/p&gt;
+
+&lt;p&gt;In &lt;code&gt;get_input()&lt;/code&gt; we check to see which key is pressed and then move in that
+direction. Run the program and test:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/g101_03_04.gif&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is all good, but we need to be able to rotate. Let&amp;rsquo;s add a camera to the
+body and we&amp;rsquo;ll use the mouse to rotate. Place the camera above and behind the
+character so you have a good view, then add the following code to the character&amp;rsquo;s
+script:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript&#34; data-lang=&#34;gdscript&#34;&gt;&lt;span class=&#34;k&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_unhandled_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;InputEventMouseMotion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;relative&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;rotate_y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;lerp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;spin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;relative&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;elif&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;relative&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+            &lt;span class=&#34;n&#34;&gt;rotate_y&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;lerp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;spin&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;relative&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This will convert any mouse motion in the x direction into a rotation around
+the &lt;strong&gt;y&lt;/strong&gt; axis. We use &lt;code&gt;lerp()&lt;/code&gt; to smooth it out based on how fast you move
+the mouse.&lt;/p&gt;
+
+&lt;p&gt;Run the scene and confirm that moving the mouse rotates the character:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/g101_03_05.gif&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;However, there&amp;rsquo;s a problem. No matter which way we&amp;rsquo;re facing, pressing &lt;strong&gt;W&lt;/strong&gt;
+moves us along the &lt;strong&gt;Z&lt;/strong&gt; axis. Our movement is using global coordinates, but
+we need to move in the &lt;em&gt;object&amp;rsquo;s&lt;/em&gt; forward direction.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-power-of-transforms&#34;&gt;The Power of Transforms&lt;/h2&gt;
+
+&lt;p&gt;This is where &lt;em&gt;transforms&lt;/em&gt; come in. A transform is a mathematical &lt;em&gt;matrix&lt;/em&gt; that
+contains the object&amp;rsquo;s translation, rotation, and scale information all in one. In
+Godot it&amp;rsquo;s stored in the &lt;code&gt;Transform&lt;/code&gt; data type. The position information is
+called the &lt;code&gt;transform.origin&lt;/code&gt; and the orientation information is in the
+&lt;code&gt;transform.basis&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Remember how the 3D gizmo can be set to &amp;ldquo;Local Space Mode&amp;rdquo;? When in this mode,
+the gizmo&amp;rsquo;s &lt;strong&gt;X/Y/Z&lt;/strong&gt; axes point along the &lt;em&gt;object&amp;rsquo;s&lt;/em&gt; axes. This is the &lt;code&gt;basis&lt;/code&gt;
+of the transform. The basis contains three &lt;code&gt;Vector3&lt;/code&gt; objects callsd &lt;code&gt;x&lt;/code&gt;, &lt;code&gt;y&lt;/code&gt;,
+and &lt;code&gt;z&lt;/code&gt; that represent these directions. We can use this to ensure that pressing
+the &lt;strong&gt;W&lt;/strong&gt; key will always move us in the object&amp;rsquo;s forward direction.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/g101_03_07.gif&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Change the &lt;code&gt;get_input()&lt;/code&gt; function like so:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript&#34; data-lang=&#34;gdscript&#34;&gt;&lt;span class=&#34;k&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vy&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Vector3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;move_forward&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;transform&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;basis&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;move_back&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;transform&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;basis&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;strafe_right&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;transform&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;basis&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;strafe_left&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;transform&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;basis&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;vy&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now forward and back will always move along the objects&amp;rsquo; &lt;strong&gt;Z&lt;/strong&gt; axis, and the
+strafe keys along its &lt;strong&gt;X&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/g101_03_06.gif&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;jumping&#34;&gt;Jumping&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s add one more movement to the player: jumping.&lt;/p&gt;
+
+&lt;p&gt;Add these lines to the end of &lt;code&gt;get_input()&lt;/code&gt;:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript&#34; data-lang=&#34;gdscript&#34;&gt;    &lt;span class=&#34;n&#34;&gt;jump&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;false&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_just_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;jump&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;jump&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;And add these to the end of &lt;code&gt;_physics_process()&lt;/code&gt;:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript&#34; data-lang=&#34;gdscript&#34;&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;jump&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;and&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;is_on_floor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;jump_speed&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/g101_03_08.gif&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h1&gt;
+
+&lt;p&gt;In this tutorial you learned how to build a more complex scene, and how to write
+movement code for a user-controlled character. You also learned about transforms,
+which are a very important concept in 3D - you&amp;rsquo;re going to be using a lot in the
+future.&lt;/p&gt;
+
+&lt;p&gt;In the next part, we&amp;rsquo;ll&lt;/p&gt;
+
+&lt;h3 id=&#34;next-coming-soon&#34;&gt;Next: &lt;em&gt;Coming Soon&lt;/em&gt;&lt;/h3&gt;
+
+&lt;p&gt;Support these lessons: &lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;&lt;img src=&#34;/blog/blog/img/become_a_patron_button.png&#34; alt=&#34;alt&#34; /&gt;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Godot 101: Intro to 3D, Part 2</title>
@@ -2865,157 +3110,6 @@ part we&amp;rsquo;ll start adding some obstacles and pickup items to the game.&l
 &lt;h3 id=&#34;download-the-code-for-this-part-https-github-com-kidscancode-topdown-tanks-releases-tag-part08&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part08&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Topdown Tank Battle: Part 7</title>
-      <link>/blog/2018/05/godot3_tanks_part7/</link>
-      <pubDate>Sun, 13 May 2018 14:14:12 PDT</pubDate>
-      
-      <guid>/blog/2018/05/godot3_tanks_part7/</guid>
-      <description>&lt;p&gt;In this tutorial series, we&amp;rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&amp;rsquo;s workflow and show you various techniques that you can apply to your own projects.&lt;/p&gt;
-
-&lt;p&gt;This is Part 7: Enemy tank health and explosions&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/VnfQa_A2880&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-
-&lt;p&gt;In the last part we added a healthbar for the player, so now we need to do the
-same for the enemies. We&amp;rsquo;re also going to make some explosions!&lt;/p&gt;
-
-&lt;h2 id=&#34;unit-health-display&#34;&gt;Unit health display&lt;/h2&gt;
-
-&lt;p&gt;For the enemy units, we want the health to display as a small bar just above the
-unit, which moves with them. Since every enemy tank will have one, and possibly
-other things, we&amp;rsquo;re going to create this as a separate scene we can attach to any
-object.&lt;/p&gt;
-
-&lt;p&gt;Create a new scene with a &lt;code&gt;Node2D&lt;/code&gt; named &amp;ldquo;UnitDisplay&amp;rdquo; as its root. We&amp;rsquo;ll use this
-to display the health and any other enemy data (armor, invincibility, etc.) that we
-may add later in the game. Add a &lt;code&gt;TextureProgress&lt;/code&gt; as its child.&lt;/p&gt;
-
-&lt;p&gt;Add the green bar texture to the &lt;em&gt;Texture/Progress&lt;/em&gt; property and set &lt;em&gt;Value&lt;/em&gt; to
-&lt;code&gt;100&lt;/code&gt; so we can see it. Drag the bar so that it&amp;rsquo;s positioned above the &lt;code&gt;(0, 0)&lt;/code&gt;
-point of the parent node.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_unit_healthbar1.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_unit_healthbar1.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Set the &lt;em&gt;Scale&lt;/em&gt; of the root node to &lt;code&gt;(0.5, 0.5)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;With this attached to the unit, it will follow the unit as it moves, but also
-rotate along with its parent, which we don&amp;rsquo;t want. However, we can take care of
-that in the script.&lt;/p&gt;
-
-&lt;p&gt;In the script, we want to have a lot of the same behavior from the player healthbar,
-such as changing color as it shrinks. Add a script and the code below, which is
-very similar to that in the UI scene.&lt;/p&gt;
-
-&lt;p&gt;We also want the bar to be hidden until the enemy first takes damage, so
-we&amp;rsquo;ll make all the display elements hidden to begin, and the healthbar will
-show if it drops below 100%.&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Node2D&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_red&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;res://assets/UI/barHorizontal_red_mid 200.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_green&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;res://assets/UI/barHorizontal_green_mid 200.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kd&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;bar_yellow&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;res://assets/UI/barHorizontal_yellow_mid 200.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_ready&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;node&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;get_children&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;update_healthbar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;texture_progress&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_green&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;60&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;texture_progress&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_yellow&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;25&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;texture_progress&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;bar_red&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;show&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
-        &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;show&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HealthBar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;value&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;value&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;We also want the node to ignore its parent&amp;rsquo;s rotation, so add the following:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;global_rotation&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Now go to the &lt;code&gt;EnemyTank&lt;/code&gt; scene and attach an instance of the unit display.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_unit_healthbar2.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_unit_healthbar2.png&#34; width=&#34;300&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;We are already emittting the &lt;code&gt;health_changed&lt;/code&gt; signal in &lt;code&gt;Tank.gd&lt;/code&gt;, which the enemy
-tank inherits from, so we just need to connect that signal. Connect it to the
-UnitDisplay &lt;code&gt;update_healthbar()&lt;/code&gt; function.&lt;/p&gt;
-
-&lt;p&gt;Run the game and verify that when you shoot the enemy, the healthbar appears and
-reduces.&lt;/p&gt;
-
-&lt;h2 id=&#34;explosions&#34;&gt;Explosions&lt;/h2&gt;
-
-&lt;p&gt;Included in the tank art pack we&amp;rsquo;re using are two different styles of explosion
-animations. We&amp;rsquo;ll use them by creating a separate scene and attaching it to anything
-that needs to explode.&lt;/p&gt;
-
-&lt;p&gt;Create a new scene with an &lt;code&gt;AnimatedSprite&lt;/code&gt; node and call it &amp;ldquo;Explosion&amp;rdquo;. Save it
-in an &amp;ldquo;effects&amp;rdquo; folder. Add a new &lt;code&gt;SpriteFrames&lt;/code&gt; resource and in the SpriteFrames
-panel, create two animations: &amp;ldquo;smoke&amp;rdquo; and &amp;ldquo;fire&amp;rdquo;, containing the respective
-images.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_explosion_frames.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_explosion_frames.png&#34; width=&#34;450&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;ll start by adding the explosion to the Bullet scene. Set its &lt;em&gt;Scale&lt;/em&gt; to &lt;code&gt;(0.5, 0.5)&lt;/code&gt;
-and click the &amp;ldquo;eye&amp;rdquo; symbol to make it hidden.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_explosion_bullet.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_explosion_bullet.png&#34; width=&#34;250&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;We already created an &lt;code&gt;explode()&lt;/code&gt; method on the bullet. Now we&amp;rsquo;ll change that to
-play the animation.&lt;/p&gt;
-
-&lt;p&gt;We also need to connect the explosion&amp;rsquo;s &lt;code&gt;animation_finished&lt;/code&gt; signal so that we can
-remove the bullet.&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;explode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-	&lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-	&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Sprite&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-	&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Explosion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;show&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-	&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Explosion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;smoke&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_Explosion_animation_finished&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-	&lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_explosions1.gif&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_explosions1.gif&#34; width=&#34;250&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;cursor&#34;&gt;Cursor&lt;/h2&gt;
-
-&lt;p&gt;Finally, before we wrap up, let&amp;rsquo;s try using one of the custom cursor images from
-the UI pack:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/crossair_black.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/crossair_black.png&#34; width=&#34;32&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;To use it as our mouse cursor, add the following line to &lt;code&gt;Map.gd&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;set_custom_mouse_cursor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;load&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;res://assets/UI/crossair_black.png&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;Input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CURSOR_ARROW&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Vector2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;That completes Part 7 of this series. In the next part we&amp;rsquo;ll start adding some
-obstacles and items to the game.&lt;/p&gt;
-
-&lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
-
-&lt;h3 id=&#34;a-href-https-github-com-kidscancode-topdown-tanks-releases-tag-part07-download-the-code-for-this-part-a&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part07&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links:&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;

@@ -1,0 +1,412 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 101: Intro to 3D, Part 3 &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">58</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">41</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/procgen" class="list-group-item">
+                        <span class="badge">6</span>
+                        procgen
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">58</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2019 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 101: Intro to 3D, Part 3</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sun, Mar 10, 2019</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			</h6></span>
+
+			      <p><img src="/blog/img/godot3_logo.png" width="450"></p>
+
+<p>In the <a href="/blog/2019/03/godot_31_3d_part02/">previous tutorial</a>, we covered how
+to import 3D objects and how to arrange them in a scene. In this installment,
+we&rsquo;ll add more objects to the scene, including a user-controlled character.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>A word of warning: 3D development can be quite a bit more complex than working
+in 2D. While many of the same principles apply - such as working with nodes,
+writing scripts, and handling logic/data - 3D brings with it a number of other
+considerations. For this reason, it&rsquo;s a good idea to stick to 2D for your first
+few projects, moving to 3D once you have a good understanding of the game
+development process. This tutorial will assume you have completed at least
+an <a href="https://docs.godotengine.org/en/latest/getting_started/step_by_step/your_first_game.html">introductory Godot 2D project</a>.</p>
+
+<p>You can also find a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/SQ7soQ-N-eQ" frameborder="0" allowfullscreen></iframe></p>
+
+<h1 id="building-the-scene">Building the Scene</h1>
+
+<p>We&rsquo;re going to continue using the Kenney Platformer Kit we downloaded <a href="/blog/2019/03/godot_31_3d_part02/">last time</a>. Select all the &ldquo;block*.glb&rdquo; files and in the
+&ldquo;Import&rdquo; tab set their &ldquo;Root Type&rdquo; to <code>StaticBody</code> and click &ldquo;Reimport&rdquo;. Select
+&ldquo;blockLarge.glb&rdquo; and make a new inherited scene. Add a &ldquo;Convex Collision Sibling&rdquo;
+to the mesh using the menu as you did in the last tutorial. Rename the root node
+to &ldquo;BlockLarge&rdquo; and save the scene - I recommend making a separate folder for
+this, as soon you&rsquo;re going to have a bunch of scenes representing the
+differently shaped platform parts.</p>
+
+<p>You can download a starter project with all the block objects already configured
+and ready to use here: <strong>LINK</strong></p>
+
+<p>Open the scene from the last tutorial with the &ldquo;Ground&rdquo; plane and the crates.
+Delete the crates and add an instance of the large block. We want to be able
+to place these blocks so that they line up. To do this, select &ldquo;Configure Snap&rdquo;
+from the &ldquo;Transform&rdquo; menu at the top of the Viewport and set <em>Translate Snap</em>
+to <code>0.5</code>. Then click on the &ldquo;Snap Mode&rdquo; button (or press the <strong><code>Y</code></strong> key). Now
+duplicate the block a few times and drag them to arrange.</p>
+
+<p><img src="/blog/img/g101_03_01.png" alt="alt" /></p>
+
+<p>If you like, go ahead and add scenes for some of the other platform blocks and
+arrange them into a pleasing level. Be creative!</p>
+
+<p><img src="/blog/img/g101_03_02.png" alt="alt" /></p>
+
+<h1 id="adding-a-character">Adding a Character</h1>
+
+<p>Now we&rsquo;re going to make a character so we can walk around on the platforms.
+Open a new scene and start with a <code>KinematicBody</code> named &ldquo;Character&rdquo;. This
+<code>PhysicsBody</code> node behaves very much like its 2D equivalent (you&rsquo;ve already
+done the 2D tutorials, right?). It has a <code>move_and_slide()</code> method that we&rsquo;ll
+use to perform the movement and collision detection. Gravity will be added
+manually each frame, accelerating in the <strong>-Y</strong> direction.</p>
+
+<p>Add a sphere-shaped <code>MeshInstance</code> and a matching <code>CollisionShape</code>. Remember,
+you can add a <code>SpatialMaterial</code> to the mesh and set its <em>Albedo</em> property to
+change the color.</p>
+
+<p>The sphere is nice, but it&rsquo;s going to be hard to tell what direction it&rsquo;s
+facing. Let&rsquo;s add another <code>MeshInstance</code>, this time with a <code>PrismMesh</code> shape.
+Set its <em>Size</em> to <code>(0.5, 0.5, 0.1)</code> and then its <strong>x</strong> rotation to <code>-90</code>
+degrees. Arrange it so it&rsquo;s pointing along the <em>negative</em> <strong>z</strong> axis. (You can
+tell which way is negative because the gizmo arrows point in the positive
+direction).</p>
+
+<p><img src="/blog/img/g101_03_03.png" alt="alt" /></p>
+
+<p>Let&rsquo;s also add a <code>Camera</code> to the scene, so it will follow the player around.
+Position the camera behind and above the character, angling it down a bit. Click
+the &ldquo;Preview&rdquo; button to check the camera&rsquo;s view.</p>
+
+<p>Before we add a script, open the &ldquo;Project Settings&rdquo; and add the following inputs
+on the &ldquo;Input Map&rdquo; tab:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Input Action</th>
+<th align="left">Key</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">move_forward</td>
+<td align="left"><strong>W</strong></td>
+</tr>
+
+<tr>
+<td align="left">move_back</td>
+<td align="left"><strong>S</strong></td>
+</tr>
+
+<tr>
+<td align="left">strafe_right</td>
+<td align="left"><strong>D</strong></td>
+</tr>
+
+<tr>
+<td align="left">strafe_left</td>
+<td align="left"><strong>A</strong></td>
+</tr>
+
+<tr>
+<td align="left">jump</td>
+<td align="left"><strong>Space</strong></td>
+</tr>
+</tbody>
+</table>
+
+<p>Now let&rsquo;s add a script to the body.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">extends</span> <span class="ne">KinematicBody</span>
+
+<span class="k">var</span> <span class="n">gravity</span> <span class="o">=</span> <span class="o">-</span><span class="mi">12</span>  <span class="c1"># strength of gravity Vector3.DOWN * 12</span>
+<span class="k">var</span> <span class="n">speed</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># movement speed</span>
+<span class="k">var</span> <span class="n">jump_speed</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># jump strength</span>
+<span class="k">var</span> <span class="n">spin</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># rotation speed</span>
+
+<span class="k">var</span> <span class="n">velocity</span> <span class="o">=</span> <span class="ne">Vector3</span><span class="p">()</span>
+<span class="k">var</span> <span class="n">jump</span> <span class="o">=</span> <span class="bp">false</span>
+
+<span class="k">func</span> <span class="n">get_input</span><span class="p">():</span>
+    <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">velocity</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="ne">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&#34;move_forward&#34;</span><span class="p">):</span>
+        <span class="n">velocity</span><span class="o">.</span><span class="n">z</span> <span class="o">-=</span> <span class="n">speed</span>
+    <span class="k">if</span> <span class="ne">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&#34;move_back&#34;</span><span class="p">):</span>
+        <span class="n">velocity</span><span class="o">.</span><span class="n">z</span> <span class="o">+=</span> <span class="n">speed</span>
+    <span class="k">if</span> <span class="ne">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&#34;strafe_right&#34;</span><span class="p">):</span>
+        <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">speed</span>
+    <span class="k">if</span> <span class="ne">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&#34;strafe_left&#34;</span><span class="p">):</span>
+        <span class="n">velocity</span><span class="o">.</span><span class="n">x</span> <span class="o">-=</span> <span class="n">speed</span>
+
+<span class="k">func</span> <span class="n">_physics_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="n">velocity</span> <span class="o">+=</span> <span class="n">gravity</span> <span class="o">*</span> <span class="n">delta</span>
+    <span class="n">get_input</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+    <span class="n">velocity</span> <span class="o">=</span> <span class="n">move_and_slide</span><span class="p">(</span><span class="n">velocity</span><span class="p">,</span> <span class="ne">Vector3</span><span class="o">.</span><span class="n">UP</span><span class="p">)</span></code></pre></div>
+
+<p>The code in <code>_physics_process()</code> is pretty straightforward: add gravity to
+accelerate in the positive <strong>Y</strong> direction (downward), call <code>get_input()</code> to
+check for input, and then use <code>move_and_slide()</code> to move in the direction
+of the velocity vector.</p>
+
+<p>In <code>get_input()</code> we check to see which key is pressed and then move in that
+direction. Run the program and test:</p>
+
+<p><img src="/blog/img/g101_03_04.gif" alt="alt" /></p>
+
+<p>This is all good, but we need to be able to rotate. Let&rsquo;s add a camera to the
+body and we&rsquo;ll use the mouse to rotate. Place the camera above and behind the
+character so you have a good view, then add the following code to the character&rsquo;s
+script:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">_unhandled_input</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">event</span> <span class="n">is</span> <span class="ne">InputEventMouseMotion</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">relative</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">rotate_y</span><span class="p">(</span><span class="o">-</span><span class="nb">lerp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">spin</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">relative</span><span class="o">.</span><span class="n">x</span><span class="o">/</span><span class="mi">10</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">relative</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">rotate_y</span><span class="p">(</span><span class="o">-</span><span class="nb">lerp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">spin</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">relative</span><span class="o">.</span><span class="n">x</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span></code></pre></div>
+
+<p>This will convert any mouse motion in the x direction into a rotation around
+the <strong>y</strong> axis. We use <code>lerp()</code> to smooth it out based on how fast you move
+the mouse.</p>
+
+<p>Run the scene and confirm that moving the mouse rotates the character:</p>
+
+<p><img src="/blog/img/g101_03_05.gif" alt="alt" /></p>
+
+<p>However, there&rsquo;s a problem. No matter which way we&rsquo;re facing, pressing <strong>W</strong>
+moves us along the <strong>Z</strong> axis. Our movement is using global coordinates, but
+we need to move in the <em>object&rsquo;s</em> forward direction.</p>
+
+<h2 id="the-power-of-transforms">The Power of Transforms</h2>
+
+<p>This is where <em>transforms</em> come in. A transform is a mathematical <em>matrix</em> that
+contains the object&rsquo;s translation, rotation, and scale information all in one. In
+Godot it&rsquo;s stored in the <code>Transform</code> data type. The position information is
+called the <code>transform.origin</code> and the orientation information is in the
+<code>transform.basis</code>.</p>
+
+<p>Remember how the 3D gizmo can be set to &ldquo;Local Space Mode&rdquo;? When in this mode,
+the gizmo&rsquo;s <strong>X/Y/Z</strong> axes point along the <em>object&rsquo;s</em> axes. This is the <code>basis</code>
+of the transform. The basis contains three <code>Vector3</code> objects callsd <code>x</code>, <code>y</code>,
+and <code>z</code> that represent these directions. We can use this to ensure that pressing
+the <strong>W</strong> key will always move us in the object&rsquo;s forward direction.</p>
+
+<p><img src="/blog/img/g101_03_07.gif" alt="alt" /></p>
+
+<p>Change the <code>get_input()</code> function like so:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">func</span> <span class="n">get_input</span><span class="p">():</span>
+    <span class="k">var</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">velocity</span><span class="o">.</span><span class="n">y</span>
+    <span class="n">velocity</span> <span class="o">=</span> <span class="ne">Vector3</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ne">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&#34;move_forward&#34;</span><span class="p">):</span>
+        <span class="n">velocity</span> <span class="o">+=</span> <span class="o">-</span><span class="n">transform</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">speed</span>
+    <span class="k">if</span> <span class="ne">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&#34;move_back&#34;</span><span class="p">):</span>
+        <span class="n">velocity</span> <span class="o">+=</span> <span class="n">transform</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">speed</span>
+    <span class="k">if</span> <span class="ne">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&#34;strafe_right&#34;</span><span class="p">):</span>
+        <span class="n">velocity</span> <span class="o">+=</span> <span class="n">transform</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">speed</span>
+    <span class="k">if</span> <span class="ne">Input</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&#34;strafe_left&#34;</span><span class="p">):</span>
+        <span class="n">velocity</span> <span class="o">+=</span> <span class="o">-</span><span class="n">transform</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">speed</span>
+    <span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">vy</span></code></pre></div>
+
+<p>Now forward and back will always move along the objects&rsquo; <strong>Z</strong> axis, and the
+strafe keys along its <strong>X</strong>.</p>
+
+<p><img src="/blog/img/g101_03_06.gif" alt="alt" /></p>
+
+<h2 id="jumping">Jumping</h2>
+
+<p>Let&rsquo;s add one more movement to the player: jumping.</p>
+
+<p>Add these lines to the end of <code>get_input()</code>:
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript">    <span class="n">jump</span> <span class="o">=</span> <span class="bp">false</span>
+    <span class="k">if</span> <span class="ne">Input</span><span class="o">.</span><span class="n">is_action_just_pressed</span><span class="p">(</span><span class="s2">&#34;jump&#34;</span><span class="p">):</span>
+        <span class="n">jump</span> <span class="o">=</span> <span class="bp">true</span></code></pre></div></p>
+
+<p>And add these to the end of <code>_physics_process()</code>:
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript">    <span class="k">if</span> <span class="n">jump</span> <span class="ow">and</span> <span class="n">is_on_floor</span><span class="p">():</span>
+        <span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">jump_speed</span></code></pre></div></p>
+
+<p><img src="/blog/img/g101_03_08.gif" alt="alt" /></p>
+
+<h1 id="wrapping-up">Wrapping Up</h1>
+
+<p>In this tutorial you learned how to build a more complex scene, and how to write
+movement code for a user-controlled character. You also learned about transforms,
+which are a very important concept in 3D - you&rsquo;re going to be using a lot in the
+future.</p>
+
+<p>In the next part, we&rsquo;ll</p>
+
+<h3 id="next-coming-soon">Next: <em>Coming Soon</em></h3>
+
+<p>Support these lessons: <a href="https://www.patreon.com/kidscancode"><img src="/blog/img/become_a_patron_button.png" alt="alt" /></a></p>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
