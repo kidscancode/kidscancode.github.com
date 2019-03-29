@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/blog/2019/03/godot_31_3d_part04/</loc>
+    <lastmod>2019-03-23T05:22:12-07:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/2019/03/godot_31_3d_part03/</loc>
     <lastmod>2019-03-10T05:22:12-07:00</lastmod>
   </url>
@@ -330,7 +335,7 @@
   
   <url>
     <loc>/blog/tags/gamedev/</loc>
-    <lastmod>2019-03-10T05:22:12-07:00</lastmod>
+    <lastmod>2019-03-23T05:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -342,19 +347,19 @@
   
   <url>
     <loc>/blog/tags/godot/</loc>
-    <lastmod>2019-03-10T05:22:12-07:00</lastmod>
+    <lastmod>2019-03-23T05:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/blog/</loc>
-    <lastmod>2019-03-10T05:22:12-07:00</lastmod>
+    <lastmod>2019-03-23T05:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/blog/post/</loc>
-    <lastmod>2019-03-10T05:22:12-07:00</lastmod>
+    <lastmod>2019-03-23T05:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -396,7 +401,7 @@
   
   <url>
     <loc>/blog/tags/tutorial/</loc>
-    <lastmod>2019-03-10T05:22:12-07:00</lastmod>
+    <lastmod>2019-03-23T05:22:12-07:00</lastmod>
     <priority>0</priority>
   </url>
   

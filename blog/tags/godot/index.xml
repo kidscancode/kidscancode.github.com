@@ -7,7 +7,181 @@
     <language>en-us</language>
     
     
-    <updated>Sun, 10 Mar 2019 05:22:12 PDT</updated>
+    <updated>Sat, 23 Mar 2019 05:22:12 PDT</updated>
+    
+    <item>
+      <title>Godot 101: Intro to 3D, Part 4</title>
+      <link>/blog/2019/03/godot_31_3d_part04/</link>
+      <pubDate>Sat, 23 Mar 2019 05:22:12 PDT</pubDate>
+      
+      <guid>/blog/2019/03/godot_31_3d_part04/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;/blog/blog/img/godot3_logo.png&#34; width=&#34;450&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;In the &lt;a href=&#34;/blog/blog/2019/03/godot_31_3d_part03/&#34;&gt;previous tutorial&lt;/a&gt;, we learned about
+transforms, a very important concept in 3D that records an object&amp;rsquo;s local
+orientation in space, and used it to move our KinematicBody character. This time,
+we&amp;rsquo;re going to look at another type of 3D node: the &lt;code&gt;Area&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;about-this-series&#34;&gt;About this series&lt;/h3&gt;
+
+&lt;p&gt;A word of warning: 3D development can be quite a bit more complex than working
+in 2D. While many of the same principles apply - such as working with nodes,
+writing scripts, and handling logic/data - 3D brings with it a number of other
+considerations. For this reason, it&amp;rsquo;s a good idea to stick to 2D for your first
+few projects, moving to 3D once you have a good understanding of the game
+development process. This tutorial will assume you have completed at least
+an &lt;a href=&#34;https://docs.godotengine.org/en/latest/getting_started/step_by_step/your_first_game.html&#34;&gt;introductory Godot 2D project&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can also find a video version of this lesson here:
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/d1XK5sFy1PM&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;areas&#34;&gt;Areas&lt;/h1&gt;
+
+&lt;p&gt;&lt;code&gt;Area&lt;/code&gt; nodes are used for &lt;em&gt;detection&lt;/em&gt; and &lt;em&gt;influence&lt;/em&gt;. They can detect when
+objects overlap, and when an object enters or exits a region. An &lt;code&gt;Area&lt;/code&gt; can
+also be used to override physics properties, such as gravity or damping, in
+a region.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;re going to use &lt;code&gt;Area&lt;/code&gt; to create three types of objects:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A coin the character can pick up&lt;/li&gt;
+&lt;li&gt;A bullet the character can shoot&lt;/li&gt;
+&lt;li&gt;Spikes that damage the character&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To begin, let&amp;rsquo;s set up some collision layers so that we can more easily control
+what objects the areas can interact with. Open the Project Settings and find
+the &amp;ldquo;Layer Names/3D Physics&amp;rdquo; section. Name the first three layers &amp;ldquo;environment&amp;rdquo;,
+&amp;ldquo;player&amp;rdquo;, and &amp;ldquo;pickups&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_04_01.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;coin&#34;&gt;Coin&lt;/h2&gt;
+
+&lt;p&gt;Create a new inherited scene from the &lt;code&gt;CoinGold.glb&lt;/code&gt; object in the Kenney Platformer
+Kit (see &lt;a href=&#34;/blog/blog/2019/03/godot_31_3d_part03/&#34;&gt;Part 03&lt;/a&gt;). Right-click on the root
+node, choose &amp;ldquo;Change Type&amp;rdquo;, and pick &lt;code&gt;Area&lt;/code&gt;. In the Inspector, set the collision
+mask and layer so that the coin is in &amp;ldquo;pickups&amp;rdquo; and scans &amp;ldquo;player&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_04_02.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we need a collision shape, so add a &lt;code&gt;CollisionShape&lt;/code&gt; node and choose a
+&lt;code&gt;CylinderShape&lt;/code&gt; for it. If you rotate it 90 degrees around &lt;strong&gt;z&lt;/strong&gt;, it will fit
+the coin shape pretty well.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_04_03.png&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a script to the Area and connect its &lt;code&gt;body_entered&lt;/code&gt; signal, which we&amp;rsquo;ll use
+to remove the coin:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript&#34; data-lang=&#34;gdscript&#34;&gt;&lt;span class=&#34;k&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Area&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_Coin_body_entered&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Add a few coins to your scene and see if you can pick them up:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_04_04.gif&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;bullets&#34;&gt;Bullets&lt;/h2&gt;
+
+&lt;p&gt;Make a new scene with an Area2D root, and name it &amp;ldquo;Bullet&amp;rdquo;. Add a &lt;code&gt;MeshInstance&lt;/code&gt;,
+a &lt;code&gt;CollisionShape&lt;/code&gt;, and a &lt;code&gt;Timer&lt;/code&gt;. I&amp;rsquo;m using a sphere shape for the mesh and
+collision, scaled to a radius of &lt;code&gt;0.2&lt;/code&gt; so that it won&amp;rsquo;t be too big compared
+with the character. The &lt;code&gt;Timer&lt;/code&gt; is to give the bullet a time limit. Set its
+&lt;em&gt;One Shot&lt;/em&gt; and &lt;em&gt;Autostart&lt;/em&gt; properties both on.&lt;/p&gt;
+
+&lt;p&gt;Add a script and connect the &lt;code&gt;Timer&lt;/code&gt;&amp;rsquo;s &lt;code&gt;timeout&lt;/code&gt; signal and the &lt;code&gt;Area&lt;/code&gt;&amp;rsquo;s
+&lt;code&gt;body_entered&lt;/code&gt; signal. Then add the following:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript&#34; data-lang=&#34;gdscript&#34;&gt;&lt;span class=&#34;k&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Area&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;15&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Vector3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;xform&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;transform&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xform&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;transform&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;basis&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;speed&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_process&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;transform&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;origin&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;delta&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_Timer_timeout&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_Bullet_body_entered&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;is&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;StaticBody&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Since we want the bullet to start at a certain location and travel directly
+ahead of the player, we&amp;rsquo;ll pass the player&amp;rsquo;s transform to &lt;code&gt;start()&lt;/code&gt; and use it
+to orient the bullet and make it move forward (remember in Godot&amp;rsquo;s orientation,
+&amp;ldquo;forward&amp;rdquo; is along the negative &lt;strong&gt;z&lt;/strong&gt; axis).&lt;/p&gt;
+
+&lt;p&gt;Now we can go to the character scene and add a &lt;code&gt;Position3D&lt;/code&gt; node, placing it
+at the tip of the character&amp;rsquo;s &amp;ldquo;arrow&amp;rdquo; mesh. Name this node &amp;ldquo;Muzzle&amp;rdquo;. Next, add
+the following code to the character&amp;rsquo;s script:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript&#34; data-lang=&#34;gdscript&#34;&gt;&lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Bullet&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;preload&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;res://Bullet.tscn&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_unhandled_input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;is_action_pressed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;shoot&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Bullet&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;instance&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;start&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Muzzle&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;global_transform&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;get_parent&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add_child&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;b&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_04_05.gif&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;spikes&#34;&gt;Spikes&lt;/h2&gt;
+
+&lt;p&gt;Finally, we&amp;rsquo;re going to add some danger to the environment. Make in instance
+of the &lt;code&gt;spikes.glb&lt;/code&gt; object and make it an Area like we did with the coin.
+Add a script and connect the &lt;code&gt;body_entered&lt;/code&gt; signal, but this time, we want
+the object to do something to the character:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript&#34; data-lang=&#34;gdscript&#34;&gt;&lt;span class=&#34;k&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;ne&#34;&gt;Area&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;_on_Spikes_body_entered&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;has_method&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;take_damage&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;take_damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we need to define how the character reacts to taking &amp;ldquo;damage&amp;rdquo;. Since we
+haven&amp;rsquo;t really built a health system, we&amp;rsquo;re just going to &amp;ldquo;bounce&amp;rdquo; the
+character as if it got hurt. We need to add the following to the character
+script:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript&#34; data-lang=&#34;gdscript&#34;&gt;&lt;span class=&#34;k&#34;&gt;var&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;true&lt;/span&gt;
+
+&lt;span class=&#34;k&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;take_damage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;velocity&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;y&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;jump_speed&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;false&lt;/span&gt;
+    &lt;span class=&#34;nb&#34;&gt;yield&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;get_tree&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;create_timer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;timeout&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;true&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The purpose of this code is to disable input temporarily so the player will
+fly backwards from the spikes. If we just tried to set the velocity, it would
+immediately be overridden by the velocity set by the key inputs. So add this at
+the beginning of &lt;code&gt;get_input()&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript&#34; data-lang=&#34;gdscript&#34;&gt;    &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;can_move&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Add a spike instance to your level and try it out:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/blog/blog/img/3d_04_06.gif&#34; alt=&#34;alt&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;wrapping-up&#34;&gt;Wrapping Up&lt;/h1&gt;
+
+&lt;p&gt;In this tutorial you learned how to use &lt;code&gt;Area&lt;/code&gt; nodes to detect and react to 3D bodies.&lt;/p&gt;
+
+&lt;p&gt;In the next part: all about raycasting!&lt;/p&gt;
+
+&lt;h3 id=&#34;next-coming-soon&#34;&gt;Next: &lt;em&gt;Coming Soon&lt;/em&gt;&lt;/h3&gt;
+
+&lt;p&gt;Support these lessons: &lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;&lt;img src=&#34;/blog/blog/img/become_a_patron_button.png&#34; alt=&#34;alt&#34; /&gt;&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Godot 101: Intro to 3D, Part 3</title>
@@ -249,7 +423,7 @@ future.&lt;/p&gt;
 
 &lt;p&gt;In the next part, we&amp;rsquo;ll add some more objects to our 3D world.&lt;/p&gt;
 
-&lt;h3 id=&#34;next-coming-soon&#34;&gt;Next: &lt;em&gt;Coming Soon&lt;/em&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;next-godot-101-intro-to-3d-part-4-blog-2019-03-godot-31-3d-part04&#34;&gt;Next: &lt;a href=&#34;/blog/blog/2019/03/godot_31_3d_part04/&#34;&gt;Godot 101: Intro to 3D, Part 4&lt;/a&gt;&lt;/h3&gt;
 
 &lt;p&gt;Support these lessons: &lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;&lt;img src=&#34;/blog/blog/img/become_a_patron_button.png&#34; alt=&#34;alt&#34; /&gt;&lt;/a&gt;&lt;/p&gt;</description>
     </item>
@@ -3005,109 +3179,6 @@ goals, etc.) and more weapon types.&lt;/p&gt;
 &lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
 
 &lt;h3 id=&#34;download-the-code-for-this-part-https-github-com-kidscancode-topdown-tanks-releases-tag-part09&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part09&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
-
-&lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://godotengine.org/download&#34;&gt;Download Godot 3.0&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.patreon.com/kidscancode&#34;&gt;Support Me on Patreon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-    
-    <item>
-      <title>Topdown Tank Battle: Part 8</title>
-      <link>/blog/2018/05/godot3_tanks_part8/</link>
-      <pubDate>Mon, 21 May 2018 14:14:12 PDT</pubDate>
-      
-      <guid>/blog/2018/05/godot3_tanks_part8/</guid>
-      <description>&lt;p&gt;In this tutorial series, we&amp;rsquo;ll walk through the steps of building a 2D top-down tank game using Godot 3.0. The goal of the series is to introduce you to Godot&amp;rsquo;s workflow and show you various techniques that you can apply to your own projects.&lt;/p&gt;
-
-&lt;p&gt;This is Part 8: Tank explosions and shooting effects&lt;/p&gt;
-
-&lt;p&gt;You can watch a video version of this lesson here:
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/iTBZwpDYfJU&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-
-&lt;p&gt;In this installment, we&amp;rsquo;ll add explosions to the enemy tanks (we already made them
-for bullets) and create a &amp;ldquo;muzzle flash&amp;rdquo; effect when the tanks shoot.&lt;/p&gt;
-
-&lt;h2 id=&#34;muzzle-flash&#34;&gt;Muzzle Flash&lt;/h2&gt;
-
-&lt;p&gt;Open &lt;code&gt;Tank.tscn&lt;/code&gt;, the master tank scene that the enemy and player both inherit from.
-Add a &lt;code&gt;Sprite&lt;/code&gt; node named &amp;ldquo;Flash&amp;rdquo; as a child of the &lt;code&gt;Muzzle&lt;/code&gt; and an &lt;code&gt;AnimationPlayer&lt;/code&gt;
-as the child of the root node. You can also add an instance of the &lt;code&gt;Explosion&lt;/code&gt;
-scene, which we&amp;rsquo;ll set up after. Here is the updated scene tree.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/tanks_muzzle_nodes.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Set the &lt;code&gt;Flash&lt;/code&gt; node&amp;rsquo;s &lt;em&gt;Region/Enabled&lt;/em&gt; property &amp;ldquo;On&amp;rdquo; (this will save you having to set
-it on the inherited scenes) and the &lt;code&gt;Explosion&lt;/code&gt;&amp;rsquo;s &lt;em&gt;Animation&lt;/em&gt; to &amp;ldquo;fire&amp;rdquo;.&lt;/p&gt;
-
-&lt;p&gt;We&amp;rsquo;ll set the actual image on the inherited scene, but the animation(s) will be the
-same, so we&amp;rsquo;ll create them here.&lt;/p&gt;
-
-&lt;p&gt;In the AnimationPlayer, we need to create two animations: &amp;ldquo;init&amp;rdquo;, which will set
-the animated properties to their initial values; and &amp;ldquo;muzzle_flash&amp;rdquo; for the effect.&lt;/p&gt;
-
-&lt;p&gt;In the &amp;ldquo;init&amp;rdquo; animation, click the &amp;ldquo;Autoplay on Load&amp;rdquo; button and add one track by
-setting the &amp;ldquo;Alpha&amp;rdquo; value in the&lt;code&gt;Flash&lt;/code&gt; sprite&amp;rsquo;s &lt;em&gt;Modulate&lt;/em&gt; property to &lt;code&gt;255&lt;/code&gt; and
-clicking the property&amp;rsquo;s &amp;ldquo;key&amp;rdquo; button.&lt;/p&gt;
-
-&lt;p&gt;Next, add the &amp;ldquo;muzzle_flash&amp;rdquo; animation, setting its &lt;em&gt;Length&lt;/em&gt; to &lt;code&gt;0.15&lt;/code&gt; and &lt;em&gt;Step&lt;/em&gt;
-to &lt;code&gt;0.01&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;This animation will have tracks for two properties: &lt;code&gt;modulate&lt;/code&gt; and &lt;code&gt;scale&lt;/code&gt;. See the
-image below for the values and keyframe positions:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;/blog/blog/img/tanks_muzzle_animation.png&#34;&gt;&lt;img src=&#34;/blog/blog/img/tanks_muzzle_animation.png&#34; width=&#34;450&#34;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Now open the &lt;code&gt;Player.tscn&lt;/code&gt; and drag the spritesheet into the &lt;code&gt;Flash&lt;/code&gt; sprite&amp;rsquo;s &lt;em&gt;Texture&lt;/em&gt;.
-Because we want the scaling to happen from the muzzle end of the flash and not its
-center, set the &lt;em&gt;Offset&lt;/em&gt; so that it is placed at the end, and then the &lt;em&gt;Transform/Position&lt;/em&gt;
-so that it is located at the tip of the barrel:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/tanks_muzzle_sprite.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;For this image, we set &lt;em&gt;Offset&lt;/em&gt; to &lt;code&gt;(25, 0)&lt;/code&gt; and &lt;em&gt;Position&lt;/em&gt; to &lt;code&gt;(55, 0)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Play the Player scene and try it out:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/blog/blog/img/tanks_muzzle_flash.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Follow the same process with the enemy tank&lt;/p&gt;
-
-&lt;h2 id=&#34;tank-explosion&#34;&gt;Tank Explosion&lt;/h2&gt;
-
-&lt;p&gt;We added an instance of the explosion, now change the Tank&amp;rsquo;s &lt;code&gt;explode()&lt;/code&gt; function
-as follows:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;explode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;CollisionShape2D&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;disabled&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;alive&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;false&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Turret&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hide&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Explosion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;show&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
-    &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Explosion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;play&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;When playing the explosion, this ensures that the tank disapears, stops moving,
-and stops detecting collisions. However, now we need to delete it when the explosion
-finishes, so connect the Explosion&amp;rsquo;s &lt;code&gt;animation_finished&lt;/code&gt; signal:&lt;/p&gt;
-
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-swift&#34; data-lang=&#34;swift&#34;&gt;&lt;span class=&#34;kd&#34;&gt;func&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;_on_Explosion_animation_finished&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;queue_free&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;You may want to scale up the explosion a bit: try setting its &lt;em&gt;Scale&lt;/em&gt; in the Inspector to
-&lt;code&gt;(1.5, 1.5)&lt;/code&gt; for example.&lt;/p&gt;
-
-&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;That completes Part 8 of this series. This was a fairly short one, but in the next
-part we&amp;rsquo;ll start adding some obstacles and pickup items to the game.&lt;/p&gt;
-
-&lt;p&gt;Please comment below with your questions and suggestions.&lt;/p&gt;
-
-&lt;h3 id=&#34;download-the-code-for-this-part-https-github-com-kidscancode-topdown-tanks-releases-tag-part08&#34;&gt;&lt;a href=&#34;https://github.com/kidscancode/topdown_tanks/releases/tag/part08&#34;&gt;Download the code for this part&lt;/a&gt;&lt;/h3&gt;
 
 &lt;h3 id=&#34;helpful-links&#34;&gt;Helpful Links&lt;/h3&gt;
 

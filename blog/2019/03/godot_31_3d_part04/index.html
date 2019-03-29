@@ -1,0 +1,341 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Godot 101: Intro to 3D, Part 4 &middot; KCC Blog </title>
+
+  
+  <link rel="stylesheet" href="/blog/css/poole.css">
+  <link rel="stylesheet" href="/blog/css/syntax.css">
+  <link rel="stylesheet" href="/blog/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  
+  
+  
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="KCC Blog" />
+</head>
+
+	<body class="theme-base-0b">
+		<div class="sidebar">
+  <div class="container">
+      <a href="/blog/">
+      <img src="/blog//kcc-logo.png" width="150">
+    <div class="sidebar-about">
+          
+      </a>
+      <p class="lead">
+       Lessons and info about teaching kids to code. 
+      </p>
+    </div>
+
+    <ul class="sidebar-nav">
+      
+      
+    </ul>
+
+    
+    <div class="sidebar-nav">
+        Tags:
+        <ul class="sidebar-nav">
+                    
+                    
+                    <li><a href="/blog//tags/education" class="list-group-item">
+                        <span class="badge">4</span>
+                        education
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamedev" class="list-group-item">
+                        <span class="badge">59</span>
+                        gamedev
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/gamification" class="list-group-item">
+                        <span class="badge">1</span>
+                        gamification
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/godot" class="list-group-item">
+                        <span class="badge">42</span>
+                        godot
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/procgen" class="list-group-item">
+                        <span class="badge">6</span>
+                        procgen
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/pygame" class="list-group-item">
+                        <span class="badge">18</span>
+                        pygame
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/python" class="list-group-item">
+                        <span class="badge">20</span>
+                        python
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/shaders" class="list-group-item">
+                        <span class="badge">1</span>
+                        shaders
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/teaching" class="list-group-item">
+                        <span class="badge">5</span>
+                        teaching
+                    </a></li>
+                    
+                    <li><a href="/blog//tags/tutorial" class="list-group-item">
+                        <span class="badge">59</span>
+                        tutorial
+                    </a></li>
+                    
+        </ul>
+    </div>
+    
+    <ul class="soc">
+        <li><a class="soc-twitter" href="http://twitter.com/KidsCanCode"></a></li>
+        <li><a class="soc-facebook" href="http://facebook.com/Kidscancode"></a></li>
+        <li><a class="soc-github" href="https://github.com/kidscancode/"></a></li>
+        <li><a class="soc-youtube" href="https://www.youtube.com/c/KidsCanCodeOrg"></a></li>
+        <li><a class="soc-rss soc-icon-last" href="/blog/index.xml"></a></li>
+    </ul>
+    <p>&copy; 2019 KidsCanCode LLC.</p>
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Godot 101: Intro to 3D, Part 4</h1>
+			  <span class="post-author">by Chris Bradfield</span>
+			  <span class="post-date">Sat, Mar 23, 2019</span>
+			  <span id="tags"> <h6>Tags:
+			  
+			    <a href="/blog/tags/godot">godot</a>
+			  
+			    <a href="/blog/tags/tutorial">tutorial</a>
+			  
+			    <a href="/blog/tags/gamedev">gamedev</a>
+			  
+			</h6></span>
+
+			      <p><img src="/blog/img/godot3_logo.png" width="450"></p>
+
+<p>In the <a href="/blog/2019/03/godot_31_3d_part03/">previous tutorial</a>, we learned about
+transforms, a very important concept in 3D that records an object&rsquo;s local
+orientation in space, and used it to move our KinematicBody character. This time,
+we&rsquo;re going to look at another type of 3D node: the <code>Area</code>.</p>
+
+<h3 id="about-this-series">About this series</h3>
+
+<p>A word of warning: 3D development can be quite a bit more complex than working
+in 2D. While many of the same principles apply - such as working with nodes,
+writing scripts, and handling logic/data - 3D brings with it a number of other
+considerations. For this reason, it&rsquo;s a good idea to stick to 2D for your first
+few projects, moving to 3D once you have a good understanding of the game
+development process. This tutorial will assume you have completed at least
+an <a href="https://docs.godotengine.org/en/latest/getting_started/step_by_step/your_first_game.html">introductory Godot 2D project</a>.</p>
+
+<p>You can also find a video version of this lesson here:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/d1XK5sFy1PM" frameborder="0" allowfullscreen></iframe></p>
+
+<h1 id="areas">Areas</h1>
+
+<p><code>Area</code> nodes are used for <em>detection</em> and <em>influence</em>. They can detect when
+objects overlap, and when an object enters or exits a region. An <code>Area</code> can
+also be used to override physics properties, such as gravity or damping, in
+a region.</p>
+
+<p>We&rsquo;re going to use <code>Area</code> to create three types of objects:</p>
+
+<ul>
+<li>A coin the character can pick up</li>
+<li>A bullet the character can shoot</li>
+<li>Spikes that damage the character</li>
+</ul>
+
+<p>To begin, let&rsquo;s set up some collision layers so that we can more easily control
+what objects the areas can interact with. Open the Project Settings and find
+the &ldquo;Layer Names/3D Physics&rdquo; section. Name the first three layers &ldquo;environment&rdquo;,
+&ldquo;player&rdquo;, and &ldquo;pickups&rdquo;.</p>
+
+<p><img src="/blog/img/3d_04_01.png" alt="alt" /></p>
+
+<h2 id="coin">Coin</h2>
+
+<p>Create a new inherited scene from the <code>CoinGold.glb</code> object in the Kenney Platformer
+Kit (see <a href="/blog/2019/03/godot_31_3d_part03/">Part 03</a>). Right-click on the root
+node, choose &ldquo;Change Type&rdquo;, and pick <code>Area</code>. In the Inspector, set the collision
+mask and layer so that the coin is in &ldquo;pickups&rdquo; and scans &ldquo;player&rdquo;.</p>
+
+<p><img src="/blog/img/3d_04_02.png" alt="alt" /></p>
+
+<p>Now we need a collision shape, so add a <code>CollisionShape</code> node and choose a
+<code>CylinderShape</code> for it. If you rotate it 90 degrees around <strong>z</strong>, it will fit
+the coin shape pretty well.</p>
+
+<p><img src="/blog/img/3d_04_03.png" alt="alt" /></p>
+
+<p>Add a script to the Area and connect its <code>body_entered</code> signal, which we&rsquo;ll use
+to remove the coin:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">extends</span> <span class="ne">Area</span>
+
+<span class="k">func</span> <span class="n">_on_Coin_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="n">queue_free</span><span class="p">()</span></code></pre></div>
+
+<p>Add a few coins to your scene and see if you can pick them up:</p>
+
+<p><img src="/blog/img/3d_04_04.gif" alt="alt" /></p>
+
+<h2 id="bullets">Bullets</h2>
+
+<p>Make a new scene with an Area2D root, and name it &ldquo;Bullet&rdquo;. Add a <code>MeshInstance</code>,
+a <code>CollisionShape</code>, and a <code>Timer</code>. I&rsquo;m using a sphere shape for the mesh and
+collision, scaled to a radius of <code>0.2</code> so that it won&rsquo;t be too big compared
+with the character. The <code>Timer</code> is to give the bullet a time limit. Set its
+<em>One Shot</em> and <em>Autostart</em> properties both on.</p>
+
+<p>Add a script and connect the <code>Timer</code>&rsquo;s <code>timeout</code> signal and the <code>Area</code>&rsquo;s
+<code>body_entered</code> signal. Then add the following:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">extends</span> <span class="ne">Area</span>
+
+<span class="k">var</span> <span class="n">speed</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="k">var</span> <span class="n">velocity</span> <span class="o">=</span> <span class="ne">Vector3</span><span class="p">()</span>
+
+<span class="k">func</span> <span class="n">start</span><span class="p">(</span><span class="n">xform</span><span class="p">):</span>
+    <span class="n">transform</span> <span class="o">=</span> <span class="n">xform</span>
+    <span class="n">velocity</span> <span class="o">=</span> <span class="o">-</span><span class="n">transform</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">speed</span>
+
+<span class="k">func</span> <span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+    <span class="n">transform</span><span class="o">.</span><span class="n">origin</span> <span class="o">+=</span> <span class="n">velocity</span> <span class="o">*</span> <span class="n">delta</span>
+
+<span class="k">func</span> <span class="n">_on_Timer_timeout</span><span class="p">():</span>
+    <span class="n">queue_free</span><span class="p">()</span>
+
+<span class="k">func</span> <span class="n">_on_Bullet_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">body</span> <span class="n">is</span> <span class="ne">StaticBody</span><span class="p">:</span>
+        <span class="n">queue_free</span><span class="p">()</span></code></pre></div>
+
+<p>Since we want the bullet to start at a certain location and travel directly
+ahead of the player, we&rsquo;ll pass the player&rsquo;s transform to <code>start()</code> and use it
+to orient the bullet and make it move forward (remember in Godot&rsquo;s orientation,
+&ldquo;forward&rdquo; is along the negative <strong>z</strong> axis).</p>
+
+<p>Now we can go to the character scene and add a <code>Position3D</code> node, placing it
+at the tip of the character&rsquo;s &ldquo;arrow&rdquo; mesh. Name this node &ldquo;Muzzle&rdquo;. Next, add
+the following code to the character&rsquo;s script:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">var</span> <span class="n">Bullet</span> <span class="o">=</span> <span class="nb">preload</span><span class="p">(</span><span class="s2">&#34;res://Bullet.tscn&#34;</span><span class="p">)</span>
+
+<span class="k">func</span> <span class="n">_unhandled_input</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_action_pressed</span><span class="p">(</span><span class="s2">&#34;shoot&#34;</span><span class="p">):</span>
+        <span class="k">var</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Bullet</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="o">$</span><span class="n">Muzzle</span><span class="o">.</span><span class="n">global_transform</span><span class="p">)</span>
+        <span class="n">get_parent</span><span class="p">()</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">b</span><span class="p">)</span></code></pre></div>
+
+<p><img src="/blog/img/3d_04_05.gif" alt="alt" /></p>
+
+<h2 id="spikes">Spikes</h2>
+
+<p>Finally, we&rsquo;re going to add some danger to the environment. Make in instance
+of the <code>spikes.glb</code> object and make it an Area like we did with the coin.
+Add a script and connect the <code>body_entered</code> signal, but this time, we want
+the object to do something to the character:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">extends</span> <span class="ne">Area</span>
+
+<span class="k">func</span> <span class="n">_on_Spikes_body_entered</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">body</span><span class="o">.</span><span class="n">has_method</span><span class="p">(</span><span class="s2">&#34;take_damage&#34;</span><span class="p">):</span>
+        <span class="n">body</span><span class="o">.</span><span class="n">take_damage</span><span class="p">()</span></code></pre></div>
+
+<p>Now we need to define how the character reacts to taking &ldquo;damage&rdquo;. Since we
+haven&rsquo;t really built a health system, we&rsquo;re just going to &ldquo;bounce&rdquo; the
+character as if it got hurt. We need to add the following to the character
+script:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript"><span class="k">var</span> <span class="n">can_move</span> <span class="o">=</span> <span class="bp">true</span>
+
+<span class="k">func</span> <span class="n">take_damage</span><span class="p">():</span>
+    <span class="n">velocity</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">velocity</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">jump_speed</span>
+    <span class="n">can_move</span> <span class="o">=</span> <span class="bp">false</span>
+    <span class="nb">yield</span><span class="p">(</span><span class="n">get_tree</span><span class="p">()</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&#34;timeout&#34;</span><span class="p">)</span>
+    <span class="n">can_move</span> <span class="o">=</span> <span class="bp">true</span></code></pre></div>
+
+<p>The purpose of this code is to disable input temporarily so the player will
+fly backwards from the spikes. If we just tried to set the velocity, it would
+immediately be overridden by the velocity set by the key inputs. So add this at
+the beginning of <code>get_input()</code>:</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-gdscript" data-lang="gdscript">    <span class="k">if</span> <span class="o">!</span><span class="n">can_move</span><span class="p">:</span>
+        <span class="k">return</span></code></pre></div>
+
+<p>Add a spike instance to your level and try it out:</p>
+
+<p><img src="/blog/img/3d_04_06.gif" alt="alt" /></p>
+
+<h1 id="wrapping-up">Wrapping Up</h1>
+
+<p>In this tutorial you learned how to use <code>Area</code> nodes to detect and react to 3D bodies.</p>
+
+<p>In the next part: all about raycasting!</p>
+
+<h3 id="next-coming-soon">Next: <em>Coming Soon</em></h3>
+
+<p>Support these lessons: <a href="https://www.patreon.com/kidscancode"><img src="/blog/img/become_a_patron_button.png" alt="alt" /></a></p>
+			</div>
+
+
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+    
+    
+    
+
+     
+    var disqus_shortname = 'kidscancode'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+
+		</div>
+        
+  </body>
+</html>
